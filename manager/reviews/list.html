@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Reviews - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">Dashboard</a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="list.html" class="nav-item active">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">Account</div>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Reviews Management</h1>
+            </div>
+            
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Reviews</h3>
+                    <div class="value">342</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Moderation</h3>
+                    <div class="value" style="color: var(--warning);">8</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Rating</h3>
+                    <div class="value">4.6</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Flagged</h3>
+                    <div class="value" style="color: var(--danger);">2</div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters-bar">
+                <input type="text" class="search-input" id="search-input" placeholder="Search reviews...">
+                <select class="filter-select" id="status-filter">
+                    <option value="">All Status</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                    <option value="flagged">Flagged</option>
+                </select>
+                <select class="filter-select" id="rating-filter">
+                    <option value="">All Ratings</option>
+                    <option value="5">5 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="1">1 Star</option>
+                </select>
+            </div>
+            
+            <!-- Reviews Table -->
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Hotel</th>
+                            <th>User</th>
+                            <th>Rating</th>
+                            <th>Review</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviews-table">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px;">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- View/Respond Modal -->
+    <div class="modal-overlay" id="view-modal">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Review Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="review-details">
+                <!-- Dynamic content -->
+            </div>
+            <div style="padding: 0 24px 24px;">
+                <div class="form-group">
+                    <label>Manager Response</label>
+                    <textarea id="response-text" rows="3" placeholder="Write a response to this review..."></textarea>
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                    <button class="btn btn-secondary" onclick="updateStatus('approved')">Approve</button>
+                    <button class="btn btn-danger" onclick="updateStatus('flagged')">Flag</button>
+                    <button class="btn btn-primary" onclick="sendResponse()">Send Response</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/manager-service.js"></script>
+    <script>
+    var currentReviewId = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        loadReviews();
+        
+        document.getElementById('search-input').addEventListener('input', debounce(loadReviews, 300));
+        document.getElementById('status-filter').addEventListener('change', loadReviews);
+        document.getElementById('rating-filter').addEventListener('change', loadReviews);
+        
+        function loadReviews() {
+            var tbody = document.getElementById('reviews-table');
+            
+            var mockReviews = [
+                { id: 'r1', hotel: "Governors' Camp", user: 'John Smith', rating: 5, text: 'Absolutely amazing experience! The staff was incredibly friendly and the wildlife viewing was spectacular.', date: '2026-04-02', status: 'approved' },
+                { id: 'r2', hotel: 'Tortilis Camp', user: 'Sarah Johnson', rating: 4, text: 'Great location with stunning Kilimanjaro views. Food could be slightly better.', date: '2026-04-01', status: 'approved' },
+                { id: 'r3', hotel: 'Kicheche Laikipia', user: 'Mike Williams', rating: 5, text: 'Best safari ever! The guides knew exactly where to find the animals.', date: '2026-03-30', status: 'pending' },
+                { id: 'r4', hotel: 'Mara Budget Camp', user: 'Emily Davis', rating: 3, text: 'Good value for money but facilities were basic. Great for budget travelers.', date: '2026-03-28', status: 'flagged' },
+                { id: 'r5', hotel: "Governors' Camp", user: 'Robert Brown', rating: 5, text: 'Wonderful experience! Will definitely come back.', date: '2026-03-25', status: 'approved' },
+                { id: 'r6', hotel: 'Serena Amboseli', user: 'Lisa Anderson', rating: 2, text: 'Disappointed with the service. Not worth the price.', date: '2026-03-20', status: 'pending' }
+            ];
+            
+            var search = document.getElementById('search-input').value.toLowerCase();
+            var status = document.getElementById('status-filter').value;
+            var rating = document.getElementById('rating-filter').value;
+            
+            var filtered = mockReviews.filter(function(r) {
+                if (search && r.hotel.toLowerCase().indexOf(search) === -1 && r.user.toLowerCase().indexOf(search) === -1) return false;
+                if (status && r.status !== status) return false;
+                if (rating && r.rating !== parseInt(rating)) return false;
+                return true;
+            });
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">No reviews found</td></tr>';
+                return;
+            }
+            
+            var html = '';
+            filtered.forEach(function(r) {
+                var statusBadge = r.status === 'approved' ? 'badge-success' : 
+                                 r.status === 'pending' ? 'badge-warning' : 'badge-danger';
+                var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+                
+                html += '<tr>' +
+                    '<td><strong>' + r.hotel + '</strong></td>' +
+                    '<td>' + r.user + '</td>' +
+                    '<td style="color: var(--accent);">' + stars + '</td>' +
+                    '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + r.text + '</td>' +
+                    '<td>' + r.date + '</td>' +
+                    '<td><span class="badge ' + statusBadge + '">' + r.status + '</span></td>' +
+                    '<td class="actions">' +
+                        '<button class="btn btn-sm btn-secondary" onclick="viewReview(\'' + r.id + '\')">View</button>' +
+                    '</td>' +
+                '</tr>';
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        window.viewReview = function(id) {
+            var mockReviews = {
+                'r1': { id: 'r1', hotel: "Governors' Camp", user: 'John Smith', email: 'john@example.com', rating: 5, text: 'Absolutely amazing experience! The staff was incredibly friendly and the wildlife viewing was spectacular.', date: '2026-04-02', status: 'approved', response: null },
+                'r3': { id: 'r3', hotel: 'Kicheche Laikipia', user: 'Mike Williams', email: 'mike@example.com', rating: 5, text: 'Best safari ever! The guides knew exactly where to find the animals.', date: '2026-03-30', status: 'pending', response: null }
+            };
+            
+            var r = mockReviews[id] || mockReviews['r1'];
+            currentReviewId = id;
+            
+            var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+            
+            var detailsHtml = '<div style="display: grid; gap: 15px;">' +
+                '<div><strong>Hotel:</strong> ' + r.hotel + '</div>' +
+                '<div><strong>User:</strong> ' + r.user + ' (' + r.email + ')</div>' +
+                '<div><strong>Date:</strong> ' + r.date + '</div>' +
+                '<div><strong>Rating:</strong> <span style="color: var(--accent);">' + stars + '</span></div>' +
+                '<div><strong>Review:</strong></div>' +
+                '<div style="background: var(--bg-input); padding: 15px; border-radius: 8px;">' + r.text + '</div>' +
+                (r.response ? '<div><strong>Manager Response:</strong><div style="background: rgba(0,200,83,0.1); padding: 10px; border-radius: 8px; margin-top: 5px;">' + r.response + '</div></div>' : '') +
+            '</div>';
+            
+            document.getElementById('review-details').innerHTML = detailsHtml;
+            document.getElementById('response-text').value = r.response || '';
+            document.getElementById('view-modal').classList.add('show');
+        };
+        
+        window.closeModal = function() {
+            document.getElementById('view-modal').classList.remove('show');
+            currentReviewId = null;
+        };
+        
+        window.sendResponse = function() {
+            var response = document.getElementById('response-text').value.trim();
+            if (!response) {
+                showToast('Please enter a response', 'error');
+                return;
+            }
+            // In production, call API
+            showToast('Response sent successfully');
+            closeModal();
+            loadReviews();
+        };
+        
+        window.updateStatus = function(status) {
+            // In production, call API
+            showToast('Review ' + status);
+            closeModal();
+            loadReviews();
+        };
+        
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, wait);
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Add Tour - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="list.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    <span>Tours</span>
+                </a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Add New Tour</h1>
+            </div>
+            <form id="tour-form">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Tour Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Tour Name *</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration">Duration *</label>
+                                <input type="text" id="duration" placeholder="e.g., 3-7 Days" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Price ($) *</label>
+                                <input type="number" id="price" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="destination">Destination</label>
+                                <input type="text" id="destination" placeholder="e.g., Maasai Mara">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description *</label>
+                            <textarea id="description" rows="4" required></textarea>
+                        </div>
+                        
+                        <!-- Tour Image -->
+                        <div class="form-group">
+                            <label>Tour Image</label>
+                            <div id="tour-image-upload"></div>
+                            <small style="color: var(--text-muted);">Upload image or enter CDN URL. Recommended: 1200x800px</small>
+                        </div>
+                        
+                        <!-- Gallery Images -->
+                        <div class="form-group">
+                            <label>Gallery Images</label>
+                            <div id="tour-gallery-upload"></div>
+                            <small style="color: var(--text-muted);">Add multiple images. Max 10 images.</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 12px;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Publish</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+    
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/manager-image-service.js"></script>
+    <script src="../js/image-upload-component.js"></script>
+    <script>
+    var tourImages = {
+        main: '',
+        gallery: []
+    };
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        // Initialize main image upload
+        ImageUploadComponent.create(document.getElementById('tour-image-upload'), {
+            fieldId: 'tour-main-image',
+            multiple: false,
+            value: [],
+            onImageAdd: function(src, data) {
+                tourImages.main = data.url || data.data || src;
+            },
+            onImageRemove: function(data) {
+                tourImages.main = '';
+            }
+        });
+        
+        // Initialize gallery upload
+        ImageUploadComponent.create(document.getElementById('tour-gallery-upload'), {
+            fieldId: 'tour-gallery',
+            multiple: true,
+            maxImages: 10,
+            value: [],
+            onImageAdd: function(src, data) {
+                tourImages.gallery.push(data.url || data.data || src);
+            },
+            onImageRemove: function(data) {
+                var idx = tourImages.gallery.indexOf(data.url || data.data);
+                if (idx > -1) tourImages.gallery.splice(idx, 1);
+            }
+        });
+        
+        document.getElementById('tour-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            publishTour();
+        });
+        
+        function publishTour() {
+            var formData = getFormData();
+            formData.status = 'published';
+            showToast('Tour published successfully');
+            setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+        }
+        
+        function getFormData() {
+            return {
+                name: document.getElementById('name').value,
+                duration: document.getElementById('duration').value,
+                price: parseFloat(document.getElementById('price').value),
+                destination: document.getElementById('destination').value,
+                description: document.getElementById('description').value,
+                image: tourImages.main,
+                gallery: tourImages.gallery
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

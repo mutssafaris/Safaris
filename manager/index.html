@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Manager Login - Muts Safaris</title>
+    <link rel="stylesheet" href="css/manager.css">
+</head>
+<body>
+    <div class="manager-login">
+        <div class="login-card">
+            <div class="login-logo">
+                <h1>MUTS MANAGER</h1>
+                <p>Content Management System</p>
+            </div>
+            
+            <div class="login-error" id="login-error">
+                Invalid email or password.
+            </div>
+            
+            <div class="login-error" id="login-locked" style="display: none;">
+                Account locked. Too many failed attempts.
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="manager@mutssafaris.com" autocomplete="username">
+                    <div class="field-error" id="email-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Enter your password" autocomplete="current-password">
+                    <div class="field-error" id="password-error"></div>
+                </div>
+                
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: normal;">
+                        <input type="checkbox" id="remember" style="width: auto;">
+                        <span style="font-size: 0.85rem;">Remember me</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span>Login to Dashboard</span>
+                </button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="../index.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none;">
+                    ← Back to Main Website
+                </a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 15px; color: var(--text-muted); font-size: 0.75rem;">
+                <span id="attempt-info"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/manager-service.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        
+        var SESSION_KEY = 'muts_manager_session';
+        var ATTEMPTS_KEY = 'muts_login_attempts';
+        var LOCKOUT_KEY = 'muts_lockout_until';
+        var MAX_ATTEMPTS = 5;
+        var LOCKOUT_MINUTES = 15;
+        var SESSION_EXPIRY_HOURS = 8;
+        
+        function simpleHash(str) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                var char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return hash.toString(16);
+        }
+        
+        function hashPassword(password, salt) {
+            var combined = salt + password + 'MUTS_MANAGER_SALT_V1';
+            for (var i = 0; i < 10000; i++) {
+                combined = simpleHash(combined);
+            }
+            return combined;
+        }
+        
+        function generateToken() {
+            var array = new Uint8Array(32);
+            crypto.getRandomValues(array);
+            return Array.from(array, function(b) { 
+                return b.toString(16).padStart(2, '0'); 
+            }).join('');
+        }
+        
+        function generateSalt() {
+            var array = new Uint8Array(16);
+            crypto.getRandomValues(array);
+            return Array.from(array, function(b) { 
+                return b.toString(16).padStart(2, '0'); 
+            }).join('');
+        }
+        
+        function getManagerUsers() {
+            return JSON.parse(localStorage.getItem('muts_manager_users') || 'null');
+        }
+        
+        function initManagerUsers() {
+            var existing = getManagerUsers();
+            if (existing) return existing;
+            
+            var managers = [
+                {
+                    id: 'mgr-001',
+                    email: 'manager@mutssafaris.com',
+                    name: 'Manager',
+                    salt: generateSalt(),
+                    passwordHash: '',
+                    role: 'manager',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: 'mgr-002',
+                    email: 'admin@mutssafaris.com',
+                    name: 'Admin',
+                    salt: generateSalt(),
+                    passwordHash: '',
+                    role: 'admin',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: 'mgr-003',
+                    email: 'support@mutssafaris.com',
+                    name: 'Support',
+                    salt: generateSalt(),
+                    passwordHash: '',
+                    role: 'manager',
+                    createdAt: new Date().toISOString()
+                }
+            ];
+            
+            managers[0].passwordHash = hashPassword('admin123', managers[0].salt);
+            managers[1].passwordHash = hashPassword('admin123', managers[1].salt);
+            managers[2].passwordHash = hashPassword('support456', managers[2].salt);
+            
+            localStorage.setItem('muts_manager_users', JSON.stringify(managers));
+            return managers;
+        }
+        
+        function getAttempts() {
+            var attempts = parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0', 10);
+            var lockout = localStorage.getItem(LOCKOUT_KEY);
+            if (lockout && new Date(lockout) > new Date()) {
+                return MAX_ATTEMPTS;
+            }
+            return attempts;
+        }
+        
+        function incrementAttempts() {
+            var attempts = getAttempts() + 1;
+            localStorage.setItem(ATTEMPTS_KEY, attempts.toString());
+            
+            if (attempts >= MAX_ATTEMPTS) {
+                var lockoutUntil = new Date();
+                lockoutUntil.setMinutes(lockoutUntil.getMinutes() + LOCKOUT_MINUTES);
+                localStorage.setItem(LOCKOUT_KEY, lockoutUntil.toISOString());
+            }
+            return attempts;
+        }
+        
+        function resetAttempts() {
+            localStorage.removeItem(ATTEMPTS_KEY);
+            localStorage.removeItem(LOCKOUT_KEY);
+        }
+        
+        function isLockedOut() {
+            var lockout = localStorage.getItem(LOCKOUT_KEY);
+            if (lockout && new Date(lockout) > new Date()) {
+                var remaining = Math.ceil((new Date(lockout) - new Date()) / 1000 / 60);
+                return remaining;
+            }
+            localStorage.removeItem(LOCKOUT_KEY);
+            return 0;
+        }
+        
+        function updateAttemptInfo() {
+            var attempts = getAttempts();
+            var remaining = MAX_ATTEMPTS - attempts;
+            var locked = isLockedOut();
+            var infoEl = document.getElementById('attempt-info');
+            var lockedEl = document.getElementById('login-locked');
+            
+            if (locked > 0) {
+                lockedEl.style.display = 'block';
+                lockedEl.textContent = 'Account locked. Try again in ' + locked + ' minutes.';
+                infoEl.textContent = '';
+            } else if (remaining <= 2) {
+                lockedEl.style.display = 'none';
+                infoEl.textContent = remaining + ' attempts remaining before lockout';
+            } else {
+                lockedEl.style.display = 'none';
+                infoEl.textContent = '';
+            }
+        }
+        
+        function validateEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return 'Please enter a valid email address';
+            }
+            return null;
+        }
+        
+        function validatePassword(password) {
+            if (password.length < 6) {
+                return 'Password must be at least 6 characters';
+            }
+            return null;
+        }
+        
+        function setSession(user, rememberMe) {
+            var expiryHours = rememberMe ? SESSION_EXPIRY_HOURS * 7 : SESSION_EXPIRY_HOURS;
+            var expiresAt = new Date();
+            expiresAt.setHours(expiresAt.getHours() + expiryHours);
+            
+            var session = {
+                userId: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                token: generateToken(),
+                loginTime: new Date().toISOString(),
+                expiresAt: expiresAt.toISOString()
+            };
+            
+            localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+            return session;
+        }
+        
+        initManagerUsers();
+        updateAttemptInfo();
+        
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var emailInput = document.getElementById('email');
+            var passwordInput = document.getElementById('password');
+            var rememberInput = document.getElementById('remember');
+            var errorEl = document.getElementById('login-error');
+            var emailErrorEl = document.getElementById('email-error');
+            var passwordErrorEl = document.getElementById('password-error');
+            var submitBtn = this.querySelector('button[type="submit"]');
+            
+            var email = emailInput.value.trim().toLowerCase();
+            var password = passwordInput.value;
+            
+            emailErrorEl.textContent = '';
+            passwordErrorEl.textContent = '';
+            errorEl.classList.remove('show');
+            
+            var emailValidation = validateEmail(email);
+            if (emailValidation) {
+                emailErrorEl.textContent = emailValidation;
+                return;
+            }
+            
+            var passwordValidation = validatePassword(password);
+            if (passwordValidation) {
+                passwordErrorEl.textContent = passwordValidation;
+                return;
+            }
+            
+            var locked = isLockedOut();
+            if (locked > 0) {
+                errorEl.textContent = 'Account locked. Too many failed attempts.';
+                errorEl.classList.add('show');
+                updateAttemptInfo();
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Authenticating...</span>';
+            
+            setTimeout(function() {
+                var managers = getManagerUsers();
+                var manager = null;
+                
+                for (var i = 0; i < managers.length; i++) {
+                    if (managers[i].email === email) {
+                        manager = managers[i];
+                        break;
+                    }
+                }
+                
+                if (!manager) {
+                    incrementAttempts();
+                    errorEl.textContent = 'Invalid email or password.';
+                    errorEl.classList.add('show');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Login to Dashboard</span>';
+                    updateAttemptInfo();
+                    return;
+                }
+                
+                var hashedInput = hashPassword(password, manager.salt);
+                
+                if (hashedInput !== manager.passwordHash) {
+                    incrementAttempts();
+                    errorEl.textContent = 'Invalid email or password.';
+                    errorEl.classList.add('show');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Login to Dashboard</span>';
+                    updateAttemptInfo();
+                    return;
+                }
+                
+                resetAttempts();
+                setSession(manager, rememberInput.checked);
+                window.location.href = 'dashboard.html';
+                
+            }, 500);
+        });
+    })();
+    </script>
+</body>
+</html>

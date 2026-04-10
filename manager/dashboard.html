@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Dashboard - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="dashboard.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                
+                <div class="nav-section">Content</div>
+                <a href="hotels/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+                    <span>Hotels</span>
+                </a>
+                <a href="destinations/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span>Destinations</span>
+                </a>
+                <a href="tours/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    <span>Tours</span>
+                </a>
+                <a href="packages/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+                    <span>Packages</span>
+                </a>
+                <a href="blogs/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <span>Blogs</span>
+                </a>
+                <a href="africasa/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    <span>Africasa</span>
+                </a>
+                
+                <div class="nav-section">Operations</div>
+                <a href="bookings/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg>
+                    <span>Bookings</span>
+                </a>
+                <a href="messages/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>Messages</span>
+                    <span class="badge badge-danger" style="margin-left: auto;" id="unread-badge">0</span>
+                </a>
+                <a href="transactions/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    <span>Transactions</span>
+                </a>
+                <a href="users/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span>Users</span>
+                </a>
+                <a href="reviews/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>Reviews</span>
+                </a>
+                <a href="gallery/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                    <span>Gallery</span>
+                </a>
+                
+                <div class="nav-section">System</div>
+                <a href="settings/index.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <div style="color: var(--text-muted);">
+                    Welcome back, <span id="manager-name">Manager</span>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Bookings</h3>
+                    <div class="value" id="total-bookings">--</div>
+                    <div class="change positive">↑ 12% from last month</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Messages</h3>
+                    <div class="value" id="pending-messages">--</div>
+                    <div class="change" id="messages-change">--</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Published Hotels</h3>
+                    <div class="value" id="published-hotels">--</div>
+                    <div class="change" id="hotels-change">--</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Revenue</h3>
+                    <div class="value" id="total-revenue">--</div>
+                    <div class="change positive">↑ 8% from last month</div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="data-table-container" style="margin-bottom: 30px;">
+                <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                    <h2 style="font-size: 1.2rem;">Quick Actions</h2>
+                </div>
+                <div style="padding: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="hotels/create.html" class="btn btn-primary">+ Add New Hotel</a>
+                    <a href="destinations/create.html" class="btn btn-secondary">Add Destination</a>
+                    <a href="tours/create.html" class="btn btn-secondary">Add Tour</a>
+                    <a href="packages/create.html" class="btn btn-secondary">Add Package</a>
+                    <a href="blogs/create.html" class="btn btn-secondary">Write Blog Post</a>
+                    <a href="africasa/create.html" class="btn btn-secondary">Add Product</a>
+                </div>
+            </div>
+            
+            <!-- Recent Bookings -->
+            <div class="data-table-container">
+                <div style="padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="font-size: 1.2rem;">Recent Bookings</h2>
+                    <a href="bookings/list.html" class="btn btn-sm btn-secondary">View All</a>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Destination</th>
+                            <th>Guests</th>
+                            <th>Dates</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-bookings">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/manager-service.js"></script>
+    <script>
+    (function() {
+        // Check authentication
+        if (!ManagerService.checkAuth()) {
+            return;
+        }
+        
+        var user = ManagerService.getCurrentUser();
+        if (user) {
+            document.getElementById('manager-name').textContent = user.name || 'Manager';
+        }
+        
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        // Load dashboard data
+        loadDashboardData();
+        
+        function loadDashboardData() {
+            // Load stats
+            ManagerService.getDashboardStats().then(function(stats) {
+                document.getElementById('total-bookings').textContent = stats.totalBookings;
+                document.getElementById('pending-messages').textContent = stats.pendingMessages;
+                document.getElementById('published-hotels').textContent = stats.publishedHotels;
+                document.getElementById('total-revenue').textContent = '$' + stats.totalRevenue.toLocaleString();
+                
+                // Update change indicators
+                var bookingsChange = document.getElementById('messages-change');
+                var hotelsChange = document.getElementById('hotels-change');
+                
+                if (stats.bookingsChange !== undefined) {
+                    bookingsChange.className = 'change ' + (stats.bookingsChange >= 0 ? 'positive' : 'negative');
+                    bookingsChange.textContent = (stats.bookingsChange >= 0 ? '↑' : '↓') + Math.abs(stats.bookingsChange) + '% from last month';
+                }
+                
+                if (stats.hotelsChange !== undefined) {
+                    hotelsChange.className = 'change ' + (stats.hotelsChange >= 0 ? 'positive' : 'negative');
+                    hotelsChange.textContent = (stats.hotelsChange >= 0 ? '↑' : '↓') + Math.abs(stats.hotelsChange) + '% from last month';
+                }
+            }).catch(function() {
+                // Fallback to default values
+                document.getElementById('total-bookings').textContent = '24';
+                document.getElementById('pending-messages').textContent = '5';
+                document.getElementById('published-hotels').textContent = '18';
+                document.getElementById('total-revenue').textContent = '$45,200';
+            });
+            
+            // Load recent bookings
+            ManagerService.getRecentBookings(5).then(function(bookings) {
+                var bookingsHtml = '';
+                
+                bookings.forEach(function(booking) {
+                    var statusBadge = booking.status === 'upcoming' ? 'badge-success' : 
+                                      booking.status === 'pending' ? 'badge-warning' : 
+                                      booking.status === 'confirmed' ? 'badge-info' : 'badge-secondary';
+                    bookingsHtml += '<tr>' +
+                        '<td>' + booking.id + '</td>' +
+                        '<td>' + booking.destination + '</td>' +
+                        '<td>' + booking.adults + ' Adults, ' + booking.children + ' Children</td>' +
+                        '<td>' + booking.checkin + '</td>' +
+                        '<td><span class="badge ' + statusBadge + '">' + booking.status + '</span></td>' +
+                        '<td class="actions">' +
+                            '<a href="bookings/view.html?id=' + booking.id + '" class="btn btn-sm btn-secondary">View</a>' +
+                        '</td>' +
+                    '</tr>';
+                });
+                
+                document.getElementById('recent-bookings').innerHTML = bookingsHtml;
+            }).catch(function() {
+                // Fallback to mock data
+                document.getElementById('recent-bookings').innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: var(--text-muted);">No recent bookings</td></tr>';
+            });
+        }
+        
+        // Show toast notification
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+        
+        // Enable API mode if available
+        if (window.MutsAPI && window.MutsAPI.connect) {
+            window.MutsAPI.connect();
+            console.log('[Manager] API mode enabled via MutsAPI');
+        }
+        
+        // Check if API is live and update UI accordingly
+        if (ManagerService.isAPILive()) {
+            document.getElementById('total-bookings').parentElement.querySelector('.change').textContent += ' (Live)';
+        }
+    })();
+    </script>
+</body>
+</html>

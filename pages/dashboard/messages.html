@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>Muts Messenger - Sci-Fi HUD</title>
+    <link rel="stylesheet" href="../../css/dashboard-theme.css">
+    <link rel="icon" href="../../assets/favicon/favicon.ico">
+    <style>
+        /* Message Centre Specific Styles */
+        .messenger-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            height: calc(100vh - 160px);
+            background: rgba(255, 184, 0, 0.02);
+            border: 1px solid var(--border-glow);
+            clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Sidebar / Conversation List */
+        .messenger-sidebar {
+            border-right: 1px solid var(--border-glow);
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .messenger-sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-glow);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .new-message-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #000;
+            border: none;
+            padding: 0.6rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .new-message-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .messenger-search input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+        }
+
+        .conv-tabs {
+            display: flex;
+            padding: 0.5rem;
+            gap: 0.25rem;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .conv-tab {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.7rem;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .conv-tab.active {
+            color: var(--accent);
+            border: 1px solid var(--border-glow);
+            background: rgba(255, 184, 0, 0.05);
+        }
+
+        .conv-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .conv-item {
+            padding: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 184, 0, 0.05);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .conv-item:hover {
+            background: rgba(255, 184, 0, 0.05);
+        }
+
+        .conv-item.active {
+            background: rgba(255, 184, 0, 0.1);
+            border-left: 3px solid var(--accent);
+        }
+
+        .conv-avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--accent);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            flex-shrink: 0;
+        }
+
+        .conv-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.2rem;
+        }
+
+        .conv-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conv-time {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .conv-last {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conv-unread {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* Chat Window */
+        .messenger-main {
+            display: flex;
+            flex-direction: column;
+            background: rgba(5, 5, 16, 0.4);
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .chat-action-btn:hover {
+            color: var(--accent);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255, 184, 0, 0.02) 0%, transparent 100%);
+        }
+
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+        }
+
+        .message-wrapper.user {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message-wrapper.agent {
+            align-self: flex-start;
+        }
+
+        .message-bubble {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.9rem;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .message-wrapper.agent .message-bubble {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+        }
+
+        .message-wrapper.user .message-bubble {
+            background: rgba(255, 184, 0, 0.1);
+            border: 1px solid var(--accent-glow);
+            color: var(--accent);
+            clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px);
+        }
+
+        .message-time {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .chat-input-area {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-glow);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 1rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
+
+        .chat-input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+        }
+
+        .chat-send-btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            transition: transform 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .chat-send-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .no-chat-selected {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .no-chat-icon {
+            width: 80px;
+            height: 80px;
+            opacity: 0.2;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .messenger-container {
+                grid-template-columns: 1fr;
+                height: calc(100vh - 120px);
+            }
+            .messenger-sidebar.hidden {
+                display: none;
+            }
+            .messenger-main.hidden {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <div class="sidebar-brand">
+            <a href="../../index.html">
+                <span class="sidebar-brand-text">
+                    <span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span>
+                    <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
+                </span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+                <li><a href="travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+                <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+                <li><a href="gallery.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+                <li><a href="map.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg><span class="nav-label">Map</span></a></li>
+                <li><a href="beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z"/></svg><span class="nav-label">Beaches</span></a></li>
+                <li><a href="packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+                <li><a href="africasa.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+                <li><a href="blog.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+                <li><a href="faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+                <li><a href="about.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span class="nav-label">About</span></a></li>
+                <li><a href="contact.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Contact</span></a></li>
+                <li><a href="favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+                <li><a href="messages.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Messages</span><span class="badge" id="unread-badge"></span></a></li>
+                <li><a href="transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
+                <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer"><a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a></div>
+    </aside>
+
+    <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="user-profile">
+                <div class="user-info">
+                    <span class="user-name" id="user-name">Traveler</span>
+                    <span class="user-tier">Traveler Pro</span>
+                </div>
+                <div class="user-avatar" id="user-avatar">T</div>
+            </div>
+        </header>
+
+        <section class="dashboard-section">
+            <h1 class="page-title">Muts Messenger</h1>
+
+            <div class="messenger-container">
+                <!-- Sidebar -->
+                <aside class="messenger-sidebar" id="messenger-sidebar">
+                    <div class="messenger-sidebar-header">
+                        <button class="new-message-btn" id="new-message-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            NEW TRANSMISSION
+                        </button>
+                        <div class="messenger-search">
+                            <input type="text" placeholder="SEARCH COMMS..." id="conv-search">
+                        </div>
+                    </div>
+                    <div class="conv-tabs">
+                        <div class="conv-tab active" data-type="all">All</div>
+                        <div class="conv-tab" data-type="support">Support</div>
+                        <div class="conv-tab" data-type="direct">Guides</div>
+                        <div class="conv-tab" data-type="notification">Alerts</div>
+                    </div>
+                    <div class="conv-list" id="conv-list">
+                        <!-- Conversations will be injected here -->
+                    </div>
+                </aside>
+
+                <!-- Main Chat Window -->
+                <section class="messenger-main" id="messenger-main">
+                    <div id="chat-window" style="display: none; height: 100%; flex-direction: column;">
+                        <header class="chat-header">
+                            <div class="chat-user-info">
+                                <button class="chat-action-btn back-to-list" id="back-to-list" style="display: none;"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
+                                <div class="conv-avatar" id="active-avatar">S</div>
+                                <div>
+                                    <div class="conv-name" id="active-name">Muts Support</div>
+                                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                        <div class="status-dot"></div>
+                                        <span style="font-size: 0.65rem; color: var(--success);">ENCRYPTED LINK ACTIVE</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-actions">
+                                <button class="chat-action-btn"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M6.62 10.79c1.44 2.83 3.76 5.21 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></button>
+                                <button class="chat-action-btn"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></button>
+                            </div>
+                        </header>
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Messages will be injected here -->
+                        </div>
+                        <div class="chat-input-area">
+                            <form id="chat-form" class="input-wrapper">
+                                <input type="text" class="chat-input" id="chat-input" placeholder="TYPE HUD MESSAGE..." autocomplete="off">
+                                <button type="submit" class="chat-send-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder -->
+                    <div class="no-chat-selected" id="no-chat-placeholder">
+                        <div class="no-chat-icon">
+                            <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--accent)"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--accent); letter-spacing: 2px;">SECURE COMMS IDLE</h3>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">SELECT A FREQUENCY TO BEGIN TRANSMISSION</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="../../js/api-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/services/messages-service.js"></script>
+<script src="../../js/dashboard-theme.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var activeConvId = null;
+        var currentType = 'all';
+
+        // Load conversations
+        function loadConversations() {
+            window.MutsMessagesService.getConversations(currentType).then(function(convs) {
+                var list = document.getElementById('conv-list');
+                if (convs.length === 0) {
+                    list.innerHTML = '<div style="padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--text-muted);">NO CHANNELS FOUND</div>';
+                    return;
+                }
+
+                list.innerHTML = convs.map(function(c) {
+                    var time = new Date(c.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    var active = c.id === activeConvId ? 'active' : '';
+                    var unread = c.unreadCount > 0 ? '<div class="conv-unread">' + c.unreadCount + '</div>' : '';
+
+                    return '<div class="conv-item ' + active + '" data-id="' + c.id + '">' +
+                        '<div class="conv-avatar">' + c.participants[0].avatar + '</div>' +
+                        '<div class="conv-info">' +
+                            '<div class="conv-header">' +
+                                '<span class="conv-name">' + c.participants[0].name + '</span>' +
+                                '<span class="conv-time">' + time + '</span>' +
+                            '</div>' +
+                            '<div class="conv-last">' + c.lastMessage + '</div>' +
+                        '</div>' +
+                        unread +
+                    '</div>';
+                }).join('');
+
+                // Attach events
+                document.querySelectorAll('.conv-item').forEach(function(item) {
+                    item.onclick = function() {
+                        openChat(this.dataset.id);
+                    };
+                });
+            });
+        }
+
+        // Open chat
+        function openChat(id) {
+            activeConvId = id;
+            window.MutsMessagesService.getConversation(id).then(function(conv) {
+                if (!conv) return;
+
+                document.getElementById('no-chat-placeholder').style.display = 'none';
+                document.getElementById('chat-window').style.display = 'flex';
+
+                document.getElementById('active-name').textContent = conv.participants[0].name;
+                document.getElementById('active-avatar').textContent = conv.participants[0].avatar;
+
+                renderMessages(conv.messages);
+
+                // Update selection in list
+                document.querySelectorAll('.conv-item').forEach(function(item) {
+                    item.classList.toggle('active', item.dataset.id === id);
+                });
+
+                // Clear unread
+                window.MutsMessagesService.markAsRead(id);
+                loadConversations();
+
+                // Scroll to bottom
+                var msgs = document.getElementById('chat-messages');
+                msgs.scrollTop = msgs.scrollHeight;
+
+                // Mobile view toggle
+                if (window.innerWidth <= 768) {
+                    document.getElementById('messenger-sidebar').classList.add('hidden');
+                    document.getElementById('messenger-main').classList.remove('hidden');
+                    document.getElementById('back-to-list').style.display = 'block';
+                }
+            });
+        }
+
+        function renderMessages(messages) {
+            var container = document.getElementById('chat-messages');
+            container.innerHTML = messages.map(function(m) {
+                var time = new Date(m.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                return '<div class="message-wrapper ' + m.sender + '">' +
+                    '<div class="message-bubble">' + m.text + '</div>' +
+                    '<div class="message-time">' + time + '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        // Send message
+        document.getElementById('chat-form').onsubmit = function(e) {
+            e.preventDefault();
+            var input = document.getElementById('chat-input');
+            var text = input.value.trim();
+            if (!text || !activeConvId) return;
+
+            window.MutsMessagesService.sendMessage(activeConvId, text).then(function(msg) {
+                input.value = '';
+                openChat(activeConvId);
+            });
+        };
+
+        // New Message Button
+        document.getElementById('new-message-btn').onclick = function() {
+            // In a real app, this would open a participant selector.
+            // For now, let's just open the main support channel.
+            openChat('conv-1');
+        };
+
+        // Tab filtering
+        document.querySelectorAll('.conv-tab').forEach(function(tab) {
+            tab.onclick = function() {
+                document.querySelectorAll('.conv-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentType = this.dataset.type;
+                loadConversations();
+            };
+        });
+
+        // Search filtering
+        document.getElementById('conv-search').oninput = function() {
+            var q = this.value.toLowerCase();
+            document.querySelectorAll('.conv-item').forEach(function(item) {
+                var name = item.querySelector('.conv-name').textContent.toLowerCase();
+                var msg = item.querySelector('.conv-last').textContent.toLowerCase();
+                item.style.display = (name.indexOf(q) !== -1 || msg.indexOf(q) !== -1) ? '' : 'none';
+            });
+        };
+
+        // Mobile back button
+        document.getElementById('back-to-list').onclick = function() {
+            document.getElementById('messenger-sidebar').classList.remove('hidden');
+            document.getElementById('messenger-main').classList.add('hidden');
+        };
+
+        loadConversations();
+    });
+</script>
+</body>
+</html>

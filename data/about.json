@@ -1,0 +1,58 @@
+{
+  "hero": {
+    "title": "About Muts Safaris",
+    "subtitle": "Your trusted partner for authentic Kenyan safari experiences since 2010."
+  },
+  "story": {
+    "title": "Our Story",
+    "content": "Muts Safaris was founded in 2010 by experienced safari guides and conservationists who believed that tourism could be a force for good. The name \"Muts Safaris\" means \"Good Safari\" in Swahili — and that's exactly what we deliver. From the vast savannahs of the Maasai Mara to the pristine beaches of the Kenyan coast, we create journeys that connect travelers with the authentic beauty of Kenya."
+  },
+  "mission": {
+    "title": "Our Mission",
+    "quote": "To create authentic, sustainable safari experiences that foster conservation, support local communities, and create lifelong memories for our guests."
+  },
+  "values": [
+    {
+      "title": "Authenticity",
+      "description": "Genuine cultural interactions and wildlife encounters that go beyond the typical tourist experience."
+    },
+    {
+      "title": "Sustainability",
+      "description": "Responsible tourism practices that benefit local communities and minimize environmental impact."
+    },
+    {
+      "title": "Excellence",
+      "description": "Premium service and attention to detail at every step of your safari journey."
+    },
+    {
+      "title": "Conservation",
+      "description": "Active support for wildlife protection initiatives and habitat preservation programs."
+    }
+  ],
+  "team": [
+    {
+      "name": "James Kiprop",
+      "role": "Lead Safari Guide & Founder",
+      "description": "With over 20 years of experience leading safaris across Kenya, James is known for his encyclopedic wildlife knowledge and passion for conservation photography.",
+      "avatar": "JK"
+    },
+    {
+      "name": "Naima Wanjiku",
+      "role": "Cultural Guide & Community Liaison",
+      "description": "Born into a Maasai family, Naima bridges the gap between visitors and Kenya's rich cultural heritage, facilitating meaningful community interactions.",
+      "avatar": "NW"
+    },
+    {
+      "name": "David Mutua",
+      "role": "Operations Manager",
+      "description": "David ensures every safari runs smoothly, from logistics and accommodation to ground transportation and emergency protocols.",
+      "avatar": "DM"
+    }
+  ],
+  "stats": [
+    { "label": "Happy Travelers", "value": "5,000+" },
+    { "label": "Years Experience", "value": "15+" },
+    { "label": "Satisfaction Rate", "value": "98%" },
+    { "label": "Partner Communities", "value": "50+" }
+  ]
+}

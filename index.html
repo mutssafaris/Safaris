@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
+    <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Muts Safaris - Premium African Safari Experiences">
+    <meta property="og:description" content="Explore Kenya's most spectacular destinations with Muts Safaris. Book your dream safari adventure today.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mutssafaris.com/">
+    <meta property="og:image" content="https://mutssafaris.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Muts Safaris - Premium African Safari Experiences">
+    <meta name="twitter:description" content="Explore Kenya's most spectacular destinations with Muts Safaris.">
+    <link rel="canonical" href="https://mutssafaris.com/">
+    <link rel="alternate" hreflang="en" href="https://mutssafaris.com/">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "Muts Safaris",
+        "description": "Premium African Safari Experiences in Kenya",
+        "url": "https://mutssafaris.com",
+        "logo": "https://mutssafaris.com/assets/images/logo.png",
+        "image": "https://mutssafaris.com/assets/images/og-image.jpg",
+        "telephone": "+254700000000",
+        "email": "info@mutssafaris.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "KE",
+            "addressRegion": "Nairobi"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Kenya"
+        },
+        "sameAs": [
+            "https://facebook.com/mutssafaris",
+            "https://instagram.com/mutssafaris",
+            "https://twitter.com/mutssafaris"
+        ],
+        "priceRange": "$$"
+    }
+    </script>
+    <title>Muts Safaris - Initializing Terminal</title>
+    <link rel="icon" href="assets/favicon/favicon.ico">
+    <style>
+        body {
+            margin: 0;
+            background: #02020a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Share Tech Mono', monospace;
+            color: #FFB800;
+        }
+        .loader {
+            text-align: center;
+        }
+        .loader h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        .status-text {
+            color: #FFB800;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        .loading-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 184, 0, 0.1);
+            margin: 1.5rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .loading-progress {
+            position: absolute;
+            width: 50px;
+            height: 100%;
+            background: #FFB800;
+            box-shadow: 0 0 10px #FFB800;
+            animation: move 1.5s infinite ease-in-out;
+        }
+        @keyframes move {
+            0% { left: -50px; }
+            100% { left: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <h1>MUTS_SAFARIS</h1>
+        <div class="loading-bar"><div class="loading-progress"></div></div>
+        <p class="status-text">VALIDATING_SESSION...</p>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.MutsAuth && window.MutsAuth.getSession()) {
+                setTimeout(function() {
+                    window.location.href = 'pages/dashboard/index.html';
+                }, 800);
+            } else {
+                setTimeout(function() {
+                    window.location.href = 'login.html';
+                }, 800);
+            }
+        });
+        
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                    console.log('[App] Service Worker registered:', reg.scope);
+                }).catch(function(err) {
+                    console.log('[App] Service Worker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

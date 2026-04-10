@@ -1,0 +1,126 @@
+{
+  "categories": [
+    {
+      "id": "booking",
+      "name": "Booking",
+      "faqs": [
+        {
+          "question": "How far in advance should I book my safari?",
+          "answer": "We recommend booking 3-6 months in advance for the best availability and rates, especially during peak seasons (June-September and December-February). Last-minute bookings are sometimes possible, but popular camps and lodges fill up quickly."
+        },
+        {
+          "question": "Can I customize my safari itinerary?",
+          "answer": "Yes, all our safaris can be customized. Contact our team to discuss your preferences, and we'll create a tailored itinerary matching your interests, budget, and timeline."
+        },
+        {
+          "question": "What group sizes do you accommodate?",
+          "answer": "We accommodate solo travelers to groups of 20+. Standard game drives have max 6 guests per vehicle for optimal viewing. Private vehicles available at additional cost."
+        },
+        {
+          "question": "Do you offer airport transfers?",
+          "answer": "Yes, all our packages include airport transfers from Nairobi's Jomo Kenyatta International Airport. Domestic flight connections to safari destinations are also available."
+        },
+        {
+          "question": "What is included in the safari package?",
+          "answer": "Our packages typically include accommodation, all meals, game drives, park fees, professional guide, transport, and airport transfers. International flights, visas, and personal expenses are not included unless specified."
+        }
+      ]
+    },
+    {
+      "id": "payments",
+      "name": "Payments",
+      "faqs": [
+        {
+          "question": "What payment methods do you accept?",
+          "answer": "We accept credit/debit cards (Visa, Mastercard), bank transfers, PayPal, and mobile money (M-Pesa). Full payment or 30% deposit secures your booking."
+        },
+        {
+          "question": "What is your cancellation policy?",
+          "answer": "More than 60 days: full refund minus $200 admin fee. 30-60 days: 50% refund. Less than 30 days: no refund but free rescheduling within 12 months. We strongly recommend travel insurance."
+        },
+        {
+          "question": "Are prices per person or per group?",
+          "answer": "All prices quoted are per person based on double occupancy. Single supplements apply for solo travelers. Child discounts available for ages 3-11."
+        },
+        {
+          "question": "Do you offer payment plans?",
+          "answer": "Yes, we offer interest-free payment plans for bookings made 60+ days in advance. Pay a 30% deposit and the remainder in weekly or monthly installments before your trip."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "name": "Safety",
+      "faqs": [
+        {
+          "question": "Is Kenya safe for tourists?",
+          "answer": "Yes, Kenya is very safe for tourists in established safari destinations. We operate in secure areas with trained guides, 24/7 emergency support, and follow strict safety protocols recommended by tourism authorities."
+        },
+        {
+          "question": "What happens in case of a medical emergency?",
+          "answer": "All our guides carry first aid kits and satellite phones. We have partnerships with AMREF Flying Doctors for emergency evacuations. Comprehensive travel insurance is mandatory for all guests."
+        },
+        {
+          "question": "Are safari vehicles safe?",
+          "answer": "All our vehicles are regularly maintained, fully insured, and equipped with first aid kits, fire extinguishers, and communication radios. Our drivers hold valid professional licenses and defensive driving certifications."
+        },
+        {
+          "question": "What about wildlife safety?",
+          "answer": "Our guides are trained in wildlife safety protocols. We maintain safe distances from animals at all times and follow park regulations. Guests receive safety briefings before each game drive."
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "faqs": [
+        {
+          "question": "Do I need malaria medication?",
+          "answer": "Antimalarial medication is strongly recommended as a precaution. Consult your doctor 4-6 weeks before travel. Options include Malarone, Doxycycline, or Mefloquine. We provide mosquito nets in all accommodations."
+        },
+        {
+          "question": "What vaccinations are required?",
+          "answer": "Yellow Fever vaccination certificate is required if arriving from an endemic country. Recommended vaccines include Hepatitis A, Typhoid, and routine boosters. See our Travel Info section for details."
+        },
+        {
+          "question": "Is the water safe to drink?",
+          "answer": "Tap water is not recommended for drinking. We provide bottled water on all game drives and in accommodations. Use bottled water for brushing teeth. Avoid ice in drinks outside major hotels."
+        },
+        {
+          "question": "Are there medical facilities available?",
+          "answer": "Major cities have hospitals and clinics. Safari areas have basic health facilities. For serious medical issues, evacuation to Nairobi or home country may be required. Comprehensive travel insurance with medical evacuation is mandatory."
+        }
+      ]
+    },
+    {
+      "id": "travel-tips",
+      "name": "Travel Tips",
+      "faqs": [
+        {
+          "question": "What should I pack for a safari?",
+          "answer": "Light neutral-colored clothing, comfortable walking shoes, hat, sunscreen SPF 50+, insect repellent with DEET, binoculars, camera with extra batteries, and a light jacket for cool mornings. See our packing guide in Travel Info."
+        },
+        {
+          "question": "What is the best time to visit Kenya?",
+          "answer": "Dry seasons (Jun-Sep, Dec-Feb) offer the best wildlife viewing. The Great Migration peaks Jul-Oct in the Maasai Mara. Wet seasons (Mar-May, Oct-Nov) are greener with fewer tourists and lower prices. Each season has unique advantages."
+        },
+        {
+          "question": "Can I charge my devices on safari?",
+          "answer": "Most lodges and camps have charging facilities in rooms. Bring a universal power adapter (Type G plugs for Kenya). Some mobile camps use solar power with limited charging availability. Bring a power bank as backup."
+        },
+        {
+          "question": "What currency should I bring?",
+          "answer": "Kenyan Shilling (KES) for local purchases. US Dollars are widely accepted at lodges and for tips. Bring small denominations. Credit cards accepted at major establishments. ATMs available in cities and towns."
+        },
+        {
+          "question": "Do I need a visa to visit Kenya?",
+          "answer": "Most nationalities need a visa. The Kenya e-Visa ($80) is recommended — apply online at evisa.go.ke. East African Tourist Visa ($100) covers Kenya, Uganda, and Rwanda. See our Travel Info section for details."
+        },
+        {
+          "question": "What language is spoken in Kenya?",
+          "answer": "English is the official language and widely spoken in tourist areas. Swahili is the national language. You'll encounter various local languages depending on the region. Our guides are fluent in English and Swahili."
+        }
+      ]
+    }
+  ]
+}

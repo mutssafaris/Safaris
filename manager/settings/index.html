@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Settings - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+    <style>
+        .settings-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .settings-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .settings-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        .settings-header p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .settings-body {
+            padding: 20px;
+        }
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+        .setting-info h4 {
+            margin: 0 0 5px;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+        .setting-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .cache-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .cache-stat {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .cache-stat .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .cache-stat .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        .api-config-form {
+            max-width: 500px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+                    <span>Hotels</span>
+                </a>
+                <a href="../destinations/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span>Destinations</span>
+                </a>
+                <a href="../tours/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    <span>Tours</span>
+                </a>
+                <a href="../packages/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+                    <span>Packages</span>
+                </a>
+                <a href="../blogs/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <span>Blogs</span>
+                </a>
+                <a href="../africasa/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    <span>Africasa</span>
+                </a>
+                
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg>
+                    <span>Bookings</span>
+                </a>
+                <a href="../messages/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>Messages</span>
+                </a>
+                <a href="../transactions/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    <span>Transactions</span>
+                </a>
+                <a href="../users/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span>Users</span>
+                </a>
+                <a href="../reviews/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>Reviews</span>
+                </a>
+                <a href="../gallery/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                    <span>Gallery</span>
+                </a>
+                
+                <div class="nav-section">System</div>
+                <a href="index.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Settings</h1>
+                <div style="color: var(--text-muted);">
+                    Manage system configuration and cache
+                </div>
+            </div>
+            
+            <!-- Cache Management -->
+            <div class="settings-section">
+                <div class="settings-header">
+                    <h2>Cache Management</h2>
+                    <p>Manage browser cache and local storage data</p>
+                </div>
+                <div class="settings-body">
+                    <div class="cache-stats" id="cache-stats">
+                        <div class="cache-stat">
+                            <div class="value" id="stat-hotels">0</div>
+                            <div class="label">Hotels</div>
+                        </div>
+                        <div class="cache-stat">
+                            <div class="value" id="stat-destinations">0</div>
+                            <div class="label">Destinations</div>
+                        </div>
+                        <div class="cache-stat">
+                            <div class="value" id="stat-tours">0</div>
+                            <div class="label">Tours</div>
+                        </div>
+                        <div class="cache-stat">
+                            <div class="value" id="stat-packages">0</div>
+                            <div class="label">Packages</div>
+                        </div>
+                        <div class="cache-stat">
+                            <div class="value" id="stat-users">0</div>
+                            <div class="label">Users</div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Clear All Cache</h4>
+                            <p>Removes all cached data from localStorage</p>
+                        </div>
+                        <button class="btn btn-danger" id="clear-all-cache">Clear All Cache</button>
+                    </div>
+                    
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Clear Hotels Cache</h4>
+                            <p>Removes cached hotels data only</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="ManagerService.clearCache('hotels')">Clear Hotels</button>
+                    </div>
+                    
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Clear Destinations Cache</h4>
+                            <p>Removes cached destinations data only</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="ManagerService.clearCache('destinations')">Clear Destinations</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Configuration -->
+            <div class="settings-section">
+                <div class="settings-header">
+                    <h2>API Configuration</h2>
+                    <p>Configure the backend API endpoint</p>
+                </div>
+                <div class="settings-body">
+                    <form class="api-config-form" id="api-config-form">
+                        <div class="form-group">
+                            <label for="api-env">Environment</label>
+                            <select id="api-env" name="environment">
+                                <option value="development">Development</option>
+                                <option value="staging">Staging</option>
+                                <option value="production">Production</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="api-url">API Base URL</label>
+                            <input type="text" id="api-url" name="apiUrl" placeholder="https://api.mutssafaris.com">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save Configuration</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Session Management -->
+            <div class="settings-section">
+                <div class="settings-header">
+                    <h2>Session Management</h2>
+                    <p>Manage your current session</p>
+                </div>
+                <div class="settings-body">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Current Session</h4>
+                            <p id="session-info">Not logged in</p>
+                        </div>
+                        <button class="btn btn-secondary" id="refresh-session">Refresh Session</button>
+                    </div>
+                    
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Logout</h4>
+                            <p>Sign out from the manager dashboard</p>
+                        </div>
+                        <button class="btn btn-danger" id="logout-btn">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/manager-service.js"></script>
+    <script>
+    (function() {
+        if (!ManagerService.checkAuth()) {
+            return;
+        }
+        
+        var user = ManagerService.getCurrentUser();
+        if (user) {
+            document.getElementById('session-info').textContent = 'Logged in as ' + (user.name || 'Manager');
+        }
+        
+        loadCacheStats();
+        
+        function loadCacheStats() {
+            var stats = ManagerService.getCacheStats();
+            document.getElementById('stat-hotels').textContent = stats.hotels || 0;
+            document.getElementById('stat-destinations').textContent = stats.destinations || 0;
+            document.getElementById('stat-tours').textContent = stats.tours || 0;
+            document.getElementById('stat-packages').textContent = stats.packages || 0;
+            document.getElementById('stat-users').textContent = stats.users || 0;
+        }
+        
+        document.getElementById('clear-all-cache').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all cache data? This cannot be undone.')) {
+                ManagerService.clearCache();
+                showToast('All cache cleared successfully', 'success');
+                loadCacheStats();
+            }
+        });
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        document.getElementById('api-config-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var env = document.getElementById('api-env').value;
+            var url = document.getElementById('api-url').value;
+            ManagerService.saveApiConfig(env, url);
+            showToast('API configuration saved', 'success');
+        });
+        
+        var savedConfig = ManagerService.getApiConfig();
+        if (savedConfig) {
+            document.getElementById('api-env').value = savedConfig.environment || 'development';
+            document.getElementById('api-url').value = savedConfig.apiUrl || '';
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

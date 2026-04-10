@@ -1,0 +1,291 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "slug": "great-migration-guide",
+      "title": "The Great Migration Guide",
+      "excerpt": "Everything you need to know about witnessing the greatest wildlife spectacle on Earth in the Maasai Mara.",
+      "category": "Safari Guide",
+      "tags": ["wildlife", "maasai-mara", "migration", "safari"],
+      "author": {
+        "name": "Sarah Johnson",
+        "avatar": "SJ",
+        "bio": "Senior wildlife photographer and safari guide with 15 years of experience in East Africa."
+      },
+      "date": "2026-03-01",
+      "updated": "2026-03-01",
+      "readTime": 8,
+      "featured": true,
+      "image": "great-migration-guide.jpg",
+      "likes": 47,
+      "dislikes": 2
+    },
+    {
+      "id": 2,
+      "slug": "best-time-visit-kenya",
+      "title": "Best Time to Visit Kenya",
+      "excerpt": "A month-by-month breakdown of weather, wildlife activity, and crowd levels to help you plan the perfect trip.",
+      "category": "Travel Planning",
+      "tags": ["weather", "planning", "seasons", "kenya"],
+      "author": {
+        "name": "David Kimani",
+        "avatar": "DK",
+        "bio": "Travel specialist and weather expert with deep knowledge of Kenya's climate zones."
+      },
+      "date": "2026-02-28",
+      "updated": "2026-02-28",
+      "readTime": 6,
+      "featured": false,
+      "image": "family-safari-tips.jpg",
+      "likes": 35,
+      "dislikes": 1
+    },
+    {
+      "id": 3,
+      "slug": "family-safari-tips",
+      "title": "Family Safari Tips",
+      "excerpt": "Expert advice on planning a safari with kids — best parks, family-friendly lodges, and keeping children engaged.",
+      "category": "Family Travel",
+      "tags": ["family", "kids", "safety", "lodges"],
+      "author": {
+        "name": "Emma O'Connor",
+        "avatar": "EO",
+        "bio": "Mother of three and family travel consultant specializing in African safaris."
+      },
+      "date": "2026-03-12",
+      "updated": "2026-03-12",
+      "readTime": 7,
+      "featured": false,
+      "image": "family-safari-tips.jpg",
+      "likes": 62,
+      "dislikes": 3
+    },
+    {
+      "id": 4,
+      "slug": "maasai-culture-guide",
+      "title": "Maasai Culture Guide",
+      "excerpt": "Understand the rich traditions, ceremonies, and way of life of Kenya's most iconic indigenous community.",
+      "category": "Culture",
+      "tags": ["maasai", "culture", "traditions", "ceremonies"],
+      "author": {
+        "name": "James ole Moyie",
+        "avatar": "JM",
+        "bio": "Maasai cultural ambassador and community leader working in Maasai Mara region."
+      },
+      "date": "2026-02-20",
+      "updated": "2026-02-20",
+      "readTime": 9,
+      "featured": false,
+      "image": "maasai-culture-guide.jpg",
+      "likes": 89,
+      "dislikes": 4
+    },
+    {
+      "id": 5,
+      "slug": "birdwatching-guide",
+      "title": "Kenya Birdwatching Guide",
+      "excerpt": "From flamingo-covered lakes to forest eagles — discover Kenya's extraordinary avian diversity.",
+      "category": "Wildlife",
+      "tags": ["birds", "birdwatching", "lakes", "nature"],
+      "author": {
+        "name": "Dr. Peter Njoroge",
+        "avatar": "PN",
+        "bio": "Ornithologist and conservationist with 20 years of bird research in Kenya."
+      },
+      "date": "2026-02-15",
+      "updated": "2026-02-15",
+      "readTime": 5,
+      "featured": false,
+      "image": "birdwatching-guide.jpg",
+      "likes": 54,
+      "dislikes": 1
+    },
+    {
+      "id": 6,
+      "slug": "sustainable-tourism",
+      "title": "Sustainable Tourism in Kenya",
+      "excerpt": "How to travel responsibly, support local communities, and minimize your environmental footprint on safari.",
+      "category": "Travel Tips",
+      "tags": ["sustainable", "eco-friendly", "conservation", "community"],
+      "author": {
+        "name": "Maria Wanjiku",
+        "avatar": "MW",
+        "bio": "Environmental scientist and sustainable tourism advocate working across East Africa."
+      },
+      "date": "2026-02-10",
+      "updated": "2026-02-10",
+      "readTime": 6,
+      "featured": false,
+      "image": "sustainable-tourism.jpg",
+      "likes": 71,
+      "dislikes": 2
+    }
+  ],
+  "categories": [
+    { "id": 1, "name": "Safari Guide", "slug": "safari-guide", "count": 1 },
+    { "id": 2, "name": "Travel Planning", "slug": "travel-planning", "count": 1 },
+    { "id": 3, "name": "Family Travel", "slug": "family-travel", "count": 1 },
+    { "id": 4, "name": "Culture", "slug": "culture", "count": 1 },
+    { "id": 5, "name": "Wildlife", "slug": "wildlife", "count": 1 },
+    { "id": 6, "name": "Travel Tips", "slug": "travel-tips", "count": 1 }
+  ],
+  "tags": [
+    { "name": "wildlife", "count": 2 },
+    { "name": "safari", "count": 1 },
+    { "name": "migration", "count": 1 },
+    { "name": "maasai-mara", "count": 1 },
+    { "name": "weather", "count": 1 },
+    { "name": "planning", "count": 1 },
+    { "name": "seasons", "count": 1 },
+    { "name": "kenya", "count": 1 },
+    { "name": "family", "count": 1 },
+    { "name": "kids", "count": 1 },
+    { "name": "safety", "count": 1 },
+    { "name": "lodges", "count": 1 },
+    { "name": "maasai", "count": 1 },
+    { "name": "culture", "count": 1 },
+    { "name": "traditions", "count": 1 },
+    { "name": "ceremonies", "count": 1 },
+    { "name": "birds", "count": 1 },
+    { "name": "birdwatching", "count": 1 },
+    { "name": "lakes", "count": 1 },
+    { "name": "nature", "count": 1 },
+    { "name": "sustainable", "count": 1 },
+    { "name": "eco-friendly", "count": 1 },
+    { "name": "conservation", "count": 1 },
+    { "name": "community", "count": 1 }
+  ],
+  "comments": {
+    "great-migration-guide": [
+      {
+        "id": 1,
+        "author": "Michael Thompson",
+        "avatar": "MT",
+        "date": "2026-03-05",
+        "text": "We witnessed the river crossing in August 2025 - absolutely magical! The herds took hours to gather courage but when they went, it was incredible. Booked through Muts and couldn't recommend them more.",
+        "likes": 12,
+        "replies": [
+          {
+            "id": 101,
+            "author": "Sarah Johnson",
+            "avatar": "SJ",
+            "isAuthor": true,
+            "date": "2026-03-05",
+            "text": "So glad you had an amazing experience! August is indeed peak crossing season. Would you mind sharing which camp you stayed at?",
+            "likes": 3
+          },
+          {
+            "id": 102,
+            "author": "Michael Thompson",
+            "avatar": "MT",
+            "date": "2026-03-06",
+            "text": "We stayed at the Mara North Conservancy - fewer crowds and more intimate experience!",
+            "likes": 5
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "author": "Lisa Chen",
+        "avatar": "LC",
+        "date": "2026-03-08",
+        "text": "Planning our honeymoon for September - is 4 nights enough or should we do 6? Would love to see the crossings!",
+        "likes": 8,
+        "replies": [
+          {
+            "id": 201,
+            "author": "David Kimani",
+            "avatar": "DK",
+            "date": "2026-03-08",
+            "text": "For September, 5-6 nights would be ideal! This is peak crossing time and you'll want more chances to witness it. Also gives you time for other wildlife viewing.",
+            "likes": 4
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "author": "Robert Williams",
+        "avatar": "RW",
+        "date": "2026-03-10",
+        "text": "Great guide! Quick question - what's the typical weather like during the crossing season? Should we pack for rain or heat?",
+        "likes": 6,
+        "replies": []
+      }
+    ],
+    "best-time-visit-kenya": [
+      {
+        "id": 1,
+        "author": "Anna Martinez",
+        "avatar": "AM",
+        "date": "2026-03-02",
+        "text": "Just returned from a January trip - perfect weather! Dry, warm days and cool nights. Would highly recommend.",
+        "likes": 15,
+        "replies": []
+      }
+    ],
+    "family-safari-tips": [
+      {
+        "id": 1,
+        "author": "James Wilson",
+        "avatar": "JW",
+        "date": "2026-03-15",
+        "text": "Took our 5 and 8 year old to Maasai Mara - they loved it! The key was short game drives and lots of pool time at the lodge.",
+        "likes": 20,
+        "replies": [
+          {
+            "id": 101,
+            "author": "Emma O'Connor",
+            "avatar": "EO",
+            "isAuthor": true,
+            "date": "2026-03-15",
+            "text": "So happy to hear the kids enjoyed it! The pool time is so important - helps them burn energy after the morning drives.",
+            "likes": 8
+          }
+        ]
+      }
+    ],
+    "maasai-culture-guide": [
+      {
+        "id": 1,
+        "author": "Patricia Ngugi",
+        "avatar": "PN",
+        "date": "2026-02-25",
+        "text": "The cultural visit was the highlight of our trip! James ole Moyie's explanations really helped us understand the traditions. Highly recommend adding this to any safari.",
+        "likes": 18,
+        "replies": []
+      }
+    ],
+    "birdwatching-guide": [
+      {
+        "id": 1,
+        "author": "Tom Anderson",
+        "avatar": "TA",
+        "date": "2026-02-18",
+        "text": "Spotted over 150 species in 5 days! Lake Nakuru was incredible - thousands of flamingos.",
+        "likes": 22,
+        "replies": [
+          {
+            "id": 101,
+            "author": "Dr. Peter Njoroge",
+            "avatar": "PN",
+            "isAuthor": true,
+            "date": "2026-02-19",
+            "text": "Amazing count! The flamingos at Nakuru are something else. Did you also visit Lake Naivasha?",
+            "likes": 6
+          }
+        ]
+      }
+    ],
+    "sustainable-tourism": [
+      {
+        "id": 1,
+        "author": "Green Traveler",
+        "avatar": "GT",
+        "date": "2026-02-12",
+        "text": "Love that this guide highlights eco-friendly options. Made sure to use refillable bottles and support local communities. Small actions make big differences!",
+        "likes": 14,
+        "replies": []
+      }
+    ]
+  }
+}

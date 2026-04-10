@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>Gallery - Muts Safaris</title>
+    <link rel="stylesheet" href="../../css/dashboard-theme.css">
+    <link rel="icon" href="../../assets/favicon/favicon.ico">
+    <style>
+        /* Gallery-specific styles */
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gallery-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .gallery-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .upload-btn:hover {
+            box-shadow: 0 0 20px var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .upload-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .gallery-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-filter-btn {
+            padding: 0.4rem 1rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .gallery-filter-btn:hover,
+        .gallery-filter-btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+
+        /* Pinterest-style masonry grid */
+        .gallery-masonry {
+            column-count: 4;
+            column-gap: 1rem;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--shadow-glow);
+            transform: translateY(-4px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            filter: brightness(0.9) contrast(1.05);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            filter: brightness(1.1) contrast(1);
+            transform: scale(1.05);
+        }
+
+        /* Content Protection - Disable right-click, drag, save */
+        .gallery-item img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+        }
+        
+        /* Enable pointer events on container for click handling */
+        .gallery-item {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        /* Lightbox Viewer */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            cursor: zoom-out;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+        }
+
+        .lightbox-image {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 2px solid var(--border-glow);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .lightbox-info {
+            position: absolute;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            text-align: center;
+        }
+
+        .lightbox-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lightbox-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 2001;
+        }
+
+        .lightbox-close:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 2001;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .lightbox-nav.prev {
+            left: 1rem;
+        }
+
+        .lightbox-nav.next {
+            right: 1rem;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        /* Watermark overlay */
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item-title {
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            margin: 0 0 0.25rem;
+        }
+
+        .gallery-item-meta {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .gallery-item-user {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .gallery-item-user-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+
+        .gallery-item-user-name {
+            color: var(--accent);
+            font-size: 0.65rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* Upload Modal */
+        .upload-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .upload-modal.active {
+            display: flex;
+        }
+
+        .upload-modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .upload-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .upload-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .upload-form-group {
+            margin-bottom: 1rem;
+        }
+
+        .upload-form-label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-family: 'Share Tech Mono', monospace;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .upload-form-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFB800' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .upload-form-select option {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 0.5rem;
+        }
+
+        .upload-form-select option:disabled {
+            color: var(--text-muted);
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .custom-select-trigger:hover {
+            border-color: var(--accent);
+        }
+
+        .custom-select-placeholder {
+            color: var(--text-muted);
+        }
+
+        .custom-select-arrow {
+            color: var(--accent);
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .custom-select.active .custom-select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .custom-select-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1a1a2e;
+            border: 1px solid var(--border);
+            border-top: none;
+            z-index: 100;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 480px) {
+            .custom-select-options {
+                top: auto;
+                bottom: 100%;
+                border-top: 1px solid var(--border);
+                border-bottom: none;
+            }
+        }
+
+        .custom-select.active .custom-select-options {
+            display: block;
+        }
+
+        .custom-select-option {
+            padding: 0.75rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .custom-select-option:hover {
+            background: rgba(255, 184, 0, 0.2);
+        }
+
+        .custom-select-option.selected {
+            background: rgba(255, 184, 0, 0.3);
+            color: var(--accent);
+        }
+
+        .upload-form-input,
+        .upload-form-select,
+        .upload-form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .upload-form-input:focus,
+        .upload-form-select:focus,
+        .upload-form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .upload-dropzone {
+            border: 2px dashed var(--border);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-dropzone:hover,
+        .upload-dropzone.dragover {
+            border-color: var(--accent);
+            background: rgba(255, 184, 0, 0.05);
+        }
+
+        .upload-dropzone-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            fill: var(--accent);
+        }
+
+        .upload-dropzone-text {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .upload-dropzone-hint {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+        }
+
+        .upload-submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-submit-btn:hover {
+            box-shadow: 0 0 20px var(--shadow-glow);
+        }
+
+        /* Validation error display */
+        .validation-error {
+            background: rgba(255, 68, 102, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .validation-error.show {
+            display: block;
+        }
+
+        .validation-error ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .validation-error li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Empty state */
+        .gallery-empty {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .gallery-empty-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            fill: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 1024px) {
+            .gallery-masonry {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .gallery-masonry {
+                column-count: 2;
+            }
+
+            .gallery-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-masonry {
+                column-count: 1;
+            }
+
+            .gallery-filters {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 0.5rem;
+            }
+
+            .gallery-filter-btn {
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <div class="sidebar-brand">
+                <a href="../../index.html">
+                    <span class="sidebar-brand-text">
+                        <span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span>
+                        <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
+                    </span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+                    <li><a href="travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+                    <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+                    <li><a href="gallery.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+                    <li><a href="map.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg><span class="nav-label">Map</span></a></li>
+                    <li><a href="beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z"/></svg><span class="nav-label">Beaches</span></a></li>
+                    <li><a href="packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+                    <li><a href="africasa.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+                    <li><a href="blog.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+                    <li><a href="faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+                    <li><a href="about.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span class="nav-label">About</span></a></li>
+                    <li><a href="contact.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Contact</span></a></li>
+                    <li><a href="favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+                    <li><a href="messages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Messages</span><span class="badge" id="unread-badge"></span></a></li>
+                    <li><a href="transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
+                    <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a>
+            </div>
+        </aside>
+
+        <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <main class="dashboard-main">
+            <header class="dashboard-topbar">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search gallery..." id="dashboard-search">
+                </div>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name" id="user-name">Traveler</span>
+                        <span class="user-tier">Traveler Pro</span>
+                    </div>
+                    <div class="user-avatar" id="user-avatar">T</div>
+                </div>
+            </header>
+
+            <div class="gallery-header">
+                <h1 class="gallery-title">Gallery</h1>
+                <div class="gallery-actions">
+                    <button class="upload-btn" id="upload-btn">
+                        <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                        Upload
+                    </button>
+                </div>
+            </div>
+
+            <div class="gallery-filters">
+                <button class="gallery-filter-btn active" data-filter="all">All</button>
+                <button class="gallery-filter-btn" data-filter="wildlife">Wildlife</button>
+                <button class="gallery-filter-btn" data-filter="landscapes">Landscapes</button>
+                <button class="gallery-filter-btn" data-filter="beaches">Beaches</button>
+                <button class="gallery-filter-btn" data-filter="accommodations">Accommodations</button>
+                <button class="gallery-filter-btn" data-filter="experiences">Experiences</button>
+                <button class="gallery-filter-btn" data-filter="my-uploads">My Uploads</button>
+            </div>
+
+            <div class="gallery-masonry" id="gallery-masonry"></div>
+            <div class="gallery-empty" id="gallery-empty" style="display:none">
+                <svg class="gallery-empty-icon" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <p>No images found. Upload your own!</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="upload-modal" id="upload-modal">
+        <div class="upload-modal-content">
+            <button class="upload-modal-close" id="upload-modal-close">&times;</button>
+            <h2 class="upload-modal-title">Upload Image</h2>
+            <div class="validation-error" id="upload-validation-errors">
+                <ul id="validation-errors-list"></ul>
+            </div>
+            <form id="upload-form">
+                <div class="upload-form-group">
+                    <label class="upload-form-label">Image File</label>
+                    <div class="upload-dropzone" id="upload-dropzone">
+                        <svg class="upload-dropzone-icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                        <p class="upload-dropzone-text">Click to select or drag image here</p>
+                        <p class="upload-dropzone-hint">JPG, PNG up to 10MB</p>
+                    </div>
+                    <input type="file" id="upload-file-input" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp,image/svg+xml" style="display:none">
+                </div>
+                <div class="upload-form-group">
+                    <label class="upload-form-label">Title</label>
+                    <input type="text" class="upload-form-input" id="upload-title" placeholder="Give your image a title" required>
+                </div>
+                <div class="upload-form-group">
+                    <label class="upload-form-label">Category</label>
+                    <div class="custom-select" id="custom-category">
+                        <div class="custom-select-trigger">
+                            <span class="custom-select-placeholder">Select a category</span>
+                            <span class="custom-select-arrow">▼</span>
+                        </div>
+                        <div class="custom-select-options">
+                            <div class="custom-select-option" data-value="wildlife">Wildlife</div>
+                            <div class="custom-select-option" data-value="landscapes">Landscapes</div>
+                            <div class="custom-select-option" data-value="beaches">Beaches</div>
+                            <div class="custom-select-option" data-value="accommodations">Accommodations</div>
+                            <div class="custom-select-option" data-value="experiences">Experiences</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="upload-category" value="">
+                </div>
+                <div class="upload-form-group">
+                    <label class="upload-form-label">Description (optional)</label>
+                    <textarea class="upload-form-textarea" id="upload-description" rows="3" placeholder="Tell us about this moment..."></textarea>
+                </div>
+                <button type="submit" class="upload-submit-btn">Upload Image</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox Viewer -->
+    <div class="lightbox-modal" id="lightbox-modal">
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <div class="lightbox-counter" id="lightbox-counter">1 / 8</div>
+        <button class="lightbox-nav prev" id="lightbox-prev">&#8249;</button>
+        <button class="lightbox-nav next" id="lightbox-next">&#8250;</button>
+        <div class="lightbox-image-container">
+            <img class="lightbox-image" id="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <h3 class="lightbox-title" id="lightbox-title"></h3>
+                <p class="lightbox-meta" id="lightbox-meta"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/services/destinations-service.js"></script>
+    <script src="../../js/services/bookings-service.js"></script>
+    <script src="../../js/services/listings-service.js"></script>
+    <script src="../../js/gallery.js"></script>
+    <script src="../../js/dashboard-theme.js"></script>
+</body>
+</html>

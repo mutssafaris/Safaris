@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="description" content="Create and publish your own travel blog post on Muts Safaris. Share safari experiences, wildlife encounters, and travel tips.">
+    <title>Create Blog Post - Muts Safaris</title>
+    <link rel="stylesheet" href="../../../css/dashboard-theme.css">
+    <link rel="icon" href="../../../assets/favicon/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .publish-container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .publish-header { margin-bottom: 2rem; }
+        .publish-header h1 { color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .publish-header p { color: var(--text-muted); }
+        .publish-form { display: flex; flex-direction: column; gap: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { color: #fff; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group textarea, .form-group select { 
+            background: var(--bg-card); border: 1px solid var(--border-color); 
+            color: #fff; padding: 0.75rem; font-size: 1rem; border-radius: 4px;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--shadow-glow);
+        }
+        .form-group textarea { min-height: 200px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .tags-input { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 4px; }
+        .tags-input input { flex: 1; min-width: 100px; border: none; background: transparent; padding: 0.25rem; }
+        .tags-input input:focus { outline: none; box-shadow: none; }
+        .tag-badge { display: flex; align-items: center; gap: 0.25rem; background: var(--accent); color: #000; padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
+        .tag-badge button { background: none; border: none; cursor: pointer; padding: 0; line-height: 1; color: #000; }
+        .image-upload { border: 2px dashed var(--border-color); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .image-upload:hover { border-color: var(--accent); background: rgba(255, 184, 0, 0.05); }
+        .image-upload p { color: var(--text-muted); margin: 0; }
+        .image-preview { margin-top: 1rem; }
+        .image-preview img { max-width: 100%; border-radius: 4px; }
+        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem; }
+        .btn-cancel { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.75rem 1.5rem; cursor: pointer; transition: all 0.2s; }
+        .btn-cancel:hover { border-color: #e74c3c; color: #e74c3c; }
+        .btn-publish { background: var(--accent); border: none; color: #000; padding: 0.75rem 2rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-publish:hover { background: #ffb300; box-shadow: 0 0 20px var(--accent-glow); }
+        .publish-success { display: none; text-align: center; padding: 3rem; }
+        .publish-success.show { display: block; }
+        .publish-success svg { width: 80px; height: 80px; fill: #2ecc71; margin-bottom: 1rem; }
+        .publish-success h2 { color: #fff; margin-bottom: 0.5rem; }
+        .publish-success p { color: var(--text-muted); margin-bottom: 1.5rem; }
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+        .image-source-toggle { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+        .image-source-toggle .toggle-btn { flex: 1; padding: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); cursor: pointer; transition: all 0.3s; }
+        .image-source-toggle .toggle-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+        .image-upload-section { margin-bottom: 1rem; }
+        .url-input { width: 100%; padding: 0.75rem; background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; }
+        .gallery-manager { margin-top: 1rem; }
+        .gallery-uploads { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+        .gallery-item { position: relative; width: 80px; height: 80px; border: 1px solid var(--border-color); overflow: hidden; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item .remove-btn { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.7); border: none; color: #fff; width: 20px; height: 20px; cursor: pointer; font-size: 14px; line-height: 1; }
+        .gallery-add { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 80px; border: 2px dashed var(--border-color); cursor: pointer; color: var(--text-muted); transition: all 0.3s; }
+        .gallery-add:hover { border-color: var(--accent); color: var(--accent); }
+        .gallery-add svg { margin-bottom: 0.25rem; }
+        .gallery-add span { font-size: 0.7rem; }
+    </style>
+</head>
+<body>
+<div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboardSidebar"><div class="sidebar-brand"><a href="../../index.html"><span class="sidebar-brand-text"><span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span><span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span></span></a></div><nav class="sidebar-nav"><ul>
+    <li><a href="../index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+    <li><a href="../travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+    <li><a href="../my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+    <li><a href="../gallery.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+    <li><a href="../map.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg><span class="nav-label">Map</span></a></li>
+    <li><a href="../beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z"/></svg><span class="nav-label">Beaches</span></a></li>
+    <li><a href="../packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+    <li><a href="../africasa.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+    <li><a href="../blog.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+    <li><a href="../faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+    <li><a href="../about.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span class="nav-label">About</span></a></li>
+    <li><a href="../contact.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Contact</span></a></li>
+    <li><a href="../favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+    <li><a href="../messages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Messages</span><span class="badge" id="unread-badge"></span></a></li>
+    <li><a href="../transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
+    <li><a href="../profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+    </ul></nav><div class="sidebar-footer"><a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a></div></aside>
+    <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div><div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <main class="dashboard-main">
+        <header class="dashboard-topbar"><div class="user-profile"><div class="user-info"><span class="user-name" id="user-name">Traveler</span><span class="user-tier">Traveler Pro</span></div><div class="user-avatar" id="user-avatar">T</div></div></header>
+        <div class="publish-container" id="publish-container">
+            <div class="publish-header">
+                <h1>Create New Blog Post</h1>
+                <p>Share your safari experiences, travel tips, or wildlife stories with the community.</p>
+            </div>
+            <form class="publish-form" id="publish-form">
+                <div class="form-group">
+                    <label for="post-title">Title</label>
+                    <input type="text" id="post-title" placeholder="Enter a catchy title..." required>
+                </div>
+                <div class="form-group">
+                    <label for="post-excerpt">Short Description</label>
+                    <input type="text" id="post-excerpt" placeholder="A brief summary (will appear on cards)..." required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-category">Category</label>
+                        <select id="post-category" required>
+                            <option value="">Select category...</option>
+                            <option value="Safari Guide">Safari Guide</option>
+                            <option value="Travel Planning">Travel Planning</option>
+                            <option value="Family Travel">Family Travel</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Wildlife">Wildlife</option>
+                            <option value="Travel Tips">Travel Tips</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-readtime">Read Time (minutes)</label>
+                        <input type="number" id="post-readtime" min="1" max="60" value="5" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="post-content">Content</label>
+                    <textarea id="post-content" placeholder="Write your blog post content here... (HTML supported)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <div class="tags-input" id="tags-input-container">
+                        <input type="text" id="tag-input" placeholder="Type a tag and press Enter">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Featured Image</label>
+                    <div class="image-source-toggle">
+                        <button type="button" class="toggle-btn active" data-source="upload">Upload</button>
+                        <button type="button" class="toggle-btn" data-source="url">URL</button>
+                    </div>
+                    <div class="image-upload-section" id="upload-section">
+                        <div class="image-upload" id="image-upload">
+                            <p>Click to upload or drag image here</p>
+                            <input type="file" id="image-input" accept="image/*" style="display:none;">
+                        </div>
+                    </div>
+                    <div class="image-upload-section" id="url-section" style="display: none;">
+                        <input type="text" id="image-url-input" placeholder="https://example.com/image.jpg" class="url-input">
+                        <button type="button" class="btn btn-outline" id="add-url-btn">Add URL</button>
+                    </div>
+                    <div class="image-preview" id="image-preview"></div>
+                    <div class="gallery-manager" id="gallery-manager">
+                        <label>Additional Images (for content)</label>
+                        <div class="gallery-uploads" id="gallery-uploads">
+                            <div class="gallery-add" id="gallery-add">
+                                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                <span>Add Image</span>
+                            </div>
+                            <input type="file" id="gallery-input" accept="image/*" multiple style="display:none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="window.location.href='../blog.html'">Cancel</button>
+                    <button type="submit" class="btn-publish">Publish Post</button>
+                </div>
+            </form>
+        </div>
+        <div class="publish-success" id="publish-success">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <h2>Blog Published!</h2>
+            <p>Your post has been successfully published.</p>
+            <button class="btn btn-primary" onclick="window.location.href='../my-blogs.html'">View My Blogs</button>
+        </div>
+    </main>
+</div>
+<script src="../../../js/auth.js" defer></script><script src="../../../js/dashboard-theme.js" defer></script><script src="../../../js/blog-loader.js" defer></script>
+<script>
+(function() {
+    var tags = [];
+    var uploadedImage = null;
+    var uploadedImageUrl = null;
+    var galleryImages = [];
+    var userName = document.getElementById('user-name').textContent || 'Anonymous';
+    var userAvatar = document.getElementById('user-avatar').textContent || 'U';
+
+    // Image source toggle
+    var toggleBtns = document.querySelectorAll('.image-source-toggle .toggle-btn');
+    toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            toggleBtns.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var source = btn.dataset.source;
+            document.getElementById('upload-section').style.display = source === 'upload' ? 'block' : 'none';
+            document.getElementById('url-section').style.display = source === 'url' ? 'block' : 'none';
+        });
+    });
+
+    // URL input handler
+    var addUrlBtn = document.getElementById('add-url-btn');
+    var imageUrlInput = document.getElementById('image-url-input');
+    if (addUrlBtn && imageUrlInput) {
+        addUrlBtn.addEventListener('click', function() {
+            var url = imageUrlInput.value.trim();
+            if (url && (url.indexOf('http') === 0 || url.indexOf('data:') === 0)) {
+                uploadedImageUrl = url;
+                var preview = document.getElementById('image-preview');
+                preview.innerHTML = '<img src="' + url + '" alt="Preview">';
+                imageUrlInput.value = '';
+            } else {
+                alert('Please enter a valid URL');
+            }
+        });
+    }
+
+    // Gallery upload handler
+    var galleryAdd = document.getElementById('gallery-add');
+    var galleryInput = document.getElementById('gallery-input');
+    var galleryUploads = document.getElementById('gallery-uploads');
+    
+    if (galleryAdd && galleryInput) {
+        galleryAdd.addEventListener('click', function() { galleryInput.click(); });
+        
+        galleryInput.addEventListener('change', function(e) {
+            var files = e.target.files;
+            if (files) {
+                Array.from(files).forEach(function(file) {
+                    if (galleryImages.length >= 5) {
+                        alert('Maximum 5 additional images allowed');
+                        return;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function(evt) {
+                        galleryImages.push({ type: 'upload', src: evt.target.result });
+                        renderGallery();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            galleryInput.value = '';
+        });
+    }
+
+    function renderGallery() {
+        var existing = galleryUploads.querySelectorAll('.gallery-item');
+        existing.forEach(function(el) { el.remove(); });
+        
+        galleryImages.forEach(function(img, idx) {
+            var item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = '<img src="' + img.src + '" alt="Gallery ' + (idx + 1) + '"><button type="button" class="remove-btn" data-idx="' + idx + '">&times;</button>';
+            galleryUploads.insertBefore(item, galleryAdd);
+        });
+        
+        galleryUploads.querySelectorAll('.remove-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var idx = parseInt(btn.dataset.idx);
+                galleryImages.splice(idx, 1);
+                renderGallery();
+            });
+        });
+    }
+
+    var badWords = ['spam', 'fake', 'scam', 'xxx', 'porn', 'adult', '18+', 'sex', 'nude', 'naked', 'violent', 'hate', 'abuse', 'threat', 'terror', 'illegal', 'drug'];
+    var goodWords = ['safari', 'wildlife', 'nature', 'travel', 'kenya', 'tanzania', 'africa', 'lion', 'elephant', 'bird', 'photo', 'tour', 'guide'];
+
+    function moderateContent(text) {
+        var lower = text.toLowerCase();
+        var foundBad = [];
+        badWords.forEach(function(word) {
+            if (lower.indexOf(word) !== -1) {
+                foundBad.push(word);
+            }
+        });
+        var foundGood = [];
+        goodWords.forEach(function(word) {
+            if (lower.indexOf(word) !== -1) {
+                foundGood.push(word);
+            }
+        });
+        if (foundBad.length > 0 && foundGood.length === 0) {
+            return { approved: false, reason: 'Content flagged: contains inappropriate words (' + foundBad.join(', ') + ')' };
+        }
+        if (foundBad.length > 0 && foundGood.length > 0) {
+            return { approved: false, reason: 'Pending review: potentially sensitive content detected' };
+        }
+        return { approved: true };
+    }
+
+    var tagInput = document.getElementById('tag-input');
+    var tagsContainer = document.getElementById('tags-input-container');
+    tagInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            var tag = tagInput.value.trim().toLowerCase();
+            if (tag && tags.indexOf(tag) === -1 && tags.length < 5) {
+                tags.push(tag);
+                renderTags();
+                tagInput.value = '';
+            }
+        }
+    });
+
+    function renderTags() {
+        var existing = tagsContainer.querySelectorAll('.tag-badge');
+        existing.forEach(function(t) { t.remove(); });
+        tags.forEach(function(tag) {
+            var badge = document.createElement('span');
+            badge.className = 'tag-badge';
+            badge.innerHTML = tag + '<button type="button" data-tag="' + tag + '">&times;</button>';
+            tagsContainer.insertBefore(badge, tagInput);
+        });
+        tagsContainer.querySelectorAll('.tag-badge button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var tagToRemove = btn.dataset.tag;
+                tags = tags.filter(function(t) { return t !== tagToRemove; });
+                renderTags();
+            });
+        });
+    }
+
+    var imageUpload = document.getElementById('image-upload');
+    var imageInput = document.getElementById('image-input');
+    imageUpload.addEventListener('click', function() { imageInput.click(); });
+    imageInput.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                uploadedImage = evt.target.result;
+                var preview = document.getElementById('image-preview');
+                preview.innerHTML = '<img src="' + uploadedImage + '" alt="Preview">';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    var form = document.getElementById('publish-form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var title = document.getElementById('post-title').value.trim();
+        var excerpt = document.getElementById('post-excerpt').value.trim();
+        var category = document.getElementById('post-category').value;
+        var readTime = parseInt(document.getElementById('post-readtime').value);
+        var content = document.getElementById('post-content').value;
+
+        if (!title || !excerpt || !category || !content) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        var fullText = title + ' ' + excerpt + ' ' + content + ' ' + tags.join(' ');
+        var moderation = moderateContent(fullText);
+
+        var newPost = {
+            id: Date.now(),
+            slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+            title: title,
+            excerpt: excerpt,
+            category: category,
+            tags: tags,
+            author: {
+                name: userName,
+                avatar: userAvatar,
+                bio: 'Community contributor'
+            },
+            date: new Date().toISOString().split('T')[0],
+            updated: new Date().toISOString().split('T')[0],
+            readTime: readTime,
+            featured: false,
+            image: uploadedImage || uploadedImageUrl || 'sustainable-tourism.jpg',
+            images: galleryImages,
+            likes: 0,
+            dislikes: 0,
+            content: content,
+            isUserPost: true,
+            status: moderation.approved ? 'published' : 'waiting',
+            moderationNote: moderation.reason || null
+        };
+
+        window.MutsBlog.loadData(function(data) {
+            var userPosts = JSON.parse(localStorage.getItem('muts_user_posts') || '[]');
+            userPosts.unshift(newPost);
+            localStorage.setItem('muts_user_posts', JSON.stringify(userPosts));
+
+            document.getElementById('publish-container').style.display = 'none';
+            document.getElementById('publish-success').classList.add('show');
+            
+            var successMsg = document.querySelector('#publish-success h2');
+            var successDesc = document.querySelector('#publish-success p');
+            if (moderation.approved) {
+                successMsg.textContent = 'Blog Published!';
+                successDesc.textContent = 'Your post is now live and visible to everyone.';
+            } else {
+                successMsg.textContent = 'Pending Review';
+                successDesc.textContent = 'Your post is under review and will be published after approval.';
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>

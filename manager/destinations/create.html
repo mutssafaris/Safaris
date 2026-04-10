@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Add Destination - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+                    <span>Hotels</span>
+                </a>
+                <a href="list.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span>Destinations</span>
+                </a>
+                <a href="../tours/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    <span>Tours</span>
+                </a>
+                <a href="../packages/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+                    <span>Packages</span>
+                </a>
+                <a href="../blogs/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <span>Blogs</span>
+                </a>
+                <a href="../africasa/list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    <span>Africasa</span>
+                </a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Add New Destination</h1>
+            </div>
+            <form id="destination-form">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Basic Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Region *</label>
+                                <input type="text" id="region" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="type">Type *</label>
+                                <select id="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="safari">Safari</option>
+                                    <option value="beach">Beach</option>
+                                    <option value="mountain">Mountain</option>
+                                    <option value="lake">Lake</option>
+                                    <option value="city">City</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price From ($) *</label>
+                                <input type="number" id="price" min="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description *</label>
+                            <textarea id="description" rows="4" required></textarea>
+                        </div>
+                        
+                        <!-- Destination Image -->
+                        <div class="form-group">
+                            <label>Destination Image</label>
+                            <div id="destination-image-upload"></div>
+                            <small style="color: var(--text-muted);">Upload image or enter CDN URL. Recommended: 1200x800px</small>
+                        </div>
+                        
+                        <!-- Gallery Images -->
+                        <div class="form-group">
+                            <label>Gallery Images</label>
+                            <div id="destination-gallery-upload"></div>
+                            <small style="color: var(--text-muted);">Add multiple images. Max 10 images.</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Publish</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+    
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/manager-image-service.js"></script>
+    <script src="../js/image-upload-component.js"></script>
+    <script>
+    var destinationImages = {
+        main: '',
+        gallery: []
+    };
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        // Initialize main image upload
+        ImageUploadComponent.create(document.getElementById('destination-image-upload'), {
+            fieldId: 'destination-main-image',
+            multiple: false,
+            value: [],
+            onImageAdd: function(src, data) {
+                destinationImages.main = data.url || data.data || src;
+            },
+            onImageRemove: function(data) {
+                destinationImages.main = '';
+            }
+        });
+        
+        // Initialize gallery upload
+        ImageUploadComponent.create(document.getElementById('destination-gallery-upload'), {
+            fieldId: 'destination-gallery',
+            multiple: true,
+            maxImages: 10,
+            value: [],
+            onImageAdd: function(src, data) {
+                destinationImages.gallery.push(data.url || data.data || src);
+            },
+            onImageRemove: function(data) {
+                var idx = destinationImages.gallery.indexOf(data.url || data.data);
+                if (idx > -1) destinationImages.gallery.splice(idx, 1);
+            }
+        });
+        
+        document.getElementById('destination-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            publishDestination();
+        });
+        
+        function publishDestination() {
+            var formData = getFormData();
+            formData.status = 'published';
+            showToast('Destination published successfully');
+            setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+        }
+        
+        function getFormData() {
+            return {
+                name: document.getElementById('name').value,
+                region: document.getElementById('region').value,
+                type: document.getElementById('type').value,
+                price: parseFloat(document.getElementById('price').value),
+                description: document.getElementById('description').value,
+                image: destinationImages.main,
+                gallery: destinationImages.gallery
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

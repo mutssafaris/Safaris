@@ -1,0 +1,64 @@
+{
+  "contactInfo": {
+    "office": {
+      "type": "Office",
+      "details": "Koinange Street, Central Business District, Nairobi, Kenya"
+    },
+    "phones": [
+      { "type": "Phone", "details": "+254 700 123 456" },
+      { "type": "Phone", "details": "+254 722 123 456" }
+    ],
+    "emails": [
+      { "type": "Email", "details": "info@mutsafaris.com" },
+      { "type": "Email", "details": "bookings@mutsafaris.com" }
+    ],
+    "whatsapp": { "type": "WhatsApp", "details": "+254 700 123 456" },
+    "businessHours": {
+      "type": "Business Hours",
+      "details": "Mon-Fri: 8AM - 6PM EAT\nSat: 9AM - 4PM EAT\nSun: Emergency only"
+    },
+    "emergency": {
+      "type": "24/7 Emergency",
+      "details": "+254 700 999 999",
+      "note": "Available during active safaris"
+    }
+  },
+  "formOptions": {
+    "subjects": [
+      "Booking Inquiry",
+      "Custom Tour Planning",
+      "Hotel Information",
+      "Tour Packages",
+      "General Information",
+      "Feedback"
+    ],
+    "destinations": [
+      "Maasai Mara",
+      "Amboseli",
+      "Tsavo",
+      "Samburu",
+      "Nairobi National Park",
+      "Lake Nakuru",
+      "Hell's Gate",
+      "Mount Kenya",
+      "Diani Beach",
+      "Watamu",
+      "Lamu",
+      "Malindi",
+      "Nyali Beach"
+    ],
+    "groupSizes": [
+      "Solo",
+      "Couple",
+      "3-5 people",
+      "6-10 people",
+      "11+ people"
+    ],
+    "budgetRanges": [
+      "$1,000 - $2,000",
+      "$2,000 - $4,000",
+      "$4,000 - $7,000",
+      "$7,000+"
+    ]
+  }
+}

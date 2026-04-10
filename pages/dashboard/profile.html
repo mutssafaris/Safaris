@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>Account Settings - Muts Safaris</title>
+    <link rel="stylesheet" href="../../css/dashboard-theme.css">
+    <link rel="icon" href="../../assets/favicon/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <div class="sidebar-brand">
+            <a href="../../index.html">
+                <span class="sidebar-brand-text">
+                    <span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span>
+                    <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
+                </span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+                <li><a href="travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+                <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+                <li><a href="gallery.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+                <li><a href="map.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg><span class="nav-label">Map</span></a></li>
+                <li><a href="beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z"/></svg><span class="nav-label">Beaches</span></a></li>
+                <li><a href="packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+                <li><a href="africasa.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+                <li><a href="blog.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+                <li><a href="faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+                <li><a href="profile.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a>
+        </div>
+    </aside>
+
+    <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <main class="dashboard-main">
+        <header class="dashboard-topbar">
+            <div class="user-profile">
+                <div class="user-info">
+                    <span class="user-name" id="user-name">Traveler</span>
+                    <span class="user-tier">Traveler Pro</span>
+                </div>
+                <div class="user-avatar" id="user-avatar">T</div>
+            </div>
+        </header>
+
+        <section class="dashboard-section">
+            <h1 class="page-title">Command Center: Account</h1>
+
+            <div class="settings-layout">
+                <!-- Settings Navigation -->
+                <nav class="settings-nav">
+                    <div class="settings-nav-item active" data-section="profile">Personal Data</div>
+                    <div class="settings-nav-item" data-section="security">Security Protocol</div>
+                    <div class="settings-nav-item" data-section="preferences">Preferences</div>
+                    <div class="settings-nav-item" data-section="billing">Subscription</div>
+                    <div class="settings-nav-item" data-section="payments">Payment Methods</div>
+                </nav>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+
+                    <!-- Section: Profile -->
+                    <div class="settings-section active" id="section-profile">
+                        <div class="settings-card">
+                            <h2>Biometric Profile</h2>
+                            <div class="profile-avatar-section">
+                                <div class="profile-avatar-large" id="profile-avatar">T</div>
+                                <div>
+                                    <p class="avatar-name" id="profile-display-name">Traveler</p>
+                                    <span class="avatar-tier">Traveler Pro</span>
+                                    <button class="btn btn-outline" style="margin-top: 0.5rem; padding: 0.3rem 1rem; font-size: 0.7rem;">Update Avatar</button>
+                                </div>
+                            </div>
+                            <form id="profile-form">
+                                <div class="settings-grid">
+                                    <div class="form-group"><label>Full Name</label><input type="text" id="profile-name" required></div>
+                                    <div class="form-group"><label>Email Address</label><input type="email" id="profile-email" required></div>
+                                    <div class="form-group"><label>Phone Linked</label><input type="tel" id="profile-phone"></div>
+                                    <div class="form-group">
+                                        <label>Operational Region</label>
+                                        <select id="profile-country">
+                                            <option value="">Select Region</option>
+                                            <option value="KE">Kenya</option>
+                                            <option value="US">United States</option>
+                                            <option value="GB">United Kingdom</option>
+                                            <option value="ZA">South Africa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">Sync Profile</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Section: Security -->
+                    <div class="settings-section" id="section-security">
+                        <div class="settings-card">
+                            <h2>Authentication Protocols</h2>
+                            <form id="security-form">
+                                <div class="form-group"><label>Current Passkey</label><input type="password" id="current-password"></div>
+                                <div class="settings-grid">
+                                    <div class="form-group"><label>New Passkey</label><input type="password" id="new-password"></div>
+                                    <div class="form-group"><label>Confirm Passkey</label><input type="password" id="confirm-password"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">Update Security</button>
+                            </form>
+                        </div>
+                        <div class="settings-card">
+                            <h2>Two-Factor Auth</h2>
+                            <div class="preference-row">
+                                <div class="preference-info">
+                                    <h4>Multi-Factor Encryption</h4>
+                                    <p>Add an extra layer of security to your terminal login.</p>
+                                </div>
+                                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Preferences -->
+                    <div class="settings-section" id="section-preferences">
+                        <div class="settings-card">
+                            <h2>Terminal HUD Preferences</h2>
+                            <div class="preference-row">
+                                <div class="preference-info">
+                                    <h4>High-Contrast HUD</h4>
+                                    <p>Optimize visibility for low-light environments.</p>
+                                </div>
+                                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                            </div>
+                            <div class="preference-row">
+                                <div class="preference-info">
+                                    <h4>Neural Notifications</h4>
+                                    <p>Receive real-time trip updates and alerts.</p>
+                                </div>
+                                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                            </div>
+                            <div class="preference-row">
+                                <div class="preference-info">
+                                    <h4>Marketing Transmissions</h4>
+                                    <p>Exclusive deals and safari updates.</p>
+                                </div>
+                                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Subscription -->
+                    <div class="settings-section" id="section-billing">
+                        <div class="settings-card">
+                            <h2>Tier Status</h2>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;">TRAVELER PRO</h3>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted);">Renewal Date: October 24, 2024</p>
+                                </div>
+                                <button class="btn btn-outline">Change Plan</button>
+                            </div>
+                        </div>
+                        <div class="settings-card danger-zone">
+                            <h2>Terminal Deactivation</h2>
+                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem;">Permanently wipe all data and close your account. This action is irreversible.</p>
+                            <button class="btn btn-outline" style="color: var(--danger); border-color: rgba(255, 68, 102, 0.3);">Initialize Self-Destruct</button>
+                        </div>
+                    </div>
+
+                    <!-- Section: Payments -->
+                    <div class="settings-section" id="section-payments">
+                        <div class="settings-card">
+                            <h2>Payment Methods</h2>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Manage your payment options for booking safaris. Enable and configure your preferred payment methods.</p>
+                            
+                            <div class="payment-methods-list">
+                                <!-- MPesa -->
+                                <div class="payment-method-item" data-method="mpesa">
+                                    <div class="payment-method-header">
+                                        <div class="payment-method-icon">
+                                            <svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="10" fill="#00aa00"/><path fill="#fff" d="M8 10h8v4H8z"/></svg>
+                                        </div>
+                                        <div class="payment-method-info">
+                                            <h4>MPesa</h4>
+                                            <p>Mobile money payments (Kenya)</p>
+                                        </div>
+                                        <label class="switch"><input type="checkbox" id="mpesa-enabled"><span class="slider"></span></label>
+                                    </div>
+                                    <div class="payment-method-config">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input type="tel" id="mpesa-phone" placeholder="+254 7XX XXX XXX" pattern="\+254[0-9]{9}">
+                                            <span class="form-hint">Format: +2547XXXXXXXX (Safaricom line)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Airtel Money -->
+                                <div class="payment-method-item" data-method="airtel">
+                                    <div class="payment-method-header">
+                                        <div class="payment-method-icon">
+                                            <svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="10" fill="#ed1c24"/><path fill="#fff" d="M10 8h4v8h-4z"/></svg>
+                                        </div>
+                                        <div class="payment-method-info">
+                                            <h4>Airtel Money</h4>
+                                            <p>Mobile money payments (Kenya)</p>
+                                        </div>
+                                        <label class="switch"><input type="checkbox" id="airtel-enabled"><span class="slider"></span></label>
+                                    </div>
+                                    <div class="payment-method-config">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input type="tel" id="airtel-phone" placeholder="+254 7XX XXX XXX" pattern="\+254[0-9]{9}">
+                                            <span class="form-hint">Format: +2547XXXXXXXX (Airtel line)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PayPal -->
+                                <div class="payment-method-item" data-method="paypal">
+                                    <div class="payment-method-header">
+                                        <div class="payment-method-icon">
+                                            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#003087" d="M7.5 4.5h9c2.5 0 4.5 2 4.5 4.5v5c0 2.5-2 4.5-4.5 4.5h-2l-2.5 2.5-.5-.5-1-1h-1c-2.5 0-4.5-2-4.5-4.5v-10c0-2.5 2-4.5 4.5-4.5z"/><path fill="#009cde" d="M9 7h1.5c.8 0 1.5.7 1.5 1.5v2c0 .8-.7 1.5-1.5 1.5H9V7z"/></svg>
+                                        </div>
+                                        <div class="payment-method-info">
+                                            <h4>PayPal</h4>
+                                            <p>International payments via PayPal</p>
+                                        </div>
+                                        <label class="switch"><input type="checkbox" id="paypal-enabled"><span class="slider"></span></label>
+                                    </div>
+                                    <div class="payment-method-config">
+                                        <div class="form-group">
+                                            <label>PayPal Email</label>
+                                            <input type="email" id="paypal-email" placeholder="you@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" id="paypal-express">
+                                                <span>Enable PayPal Express Checkout</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Credit/Debit Card -->
+                                <div class="payment-method-item" data-method="card">
+                                    <div class="payment-method-header">
+                                        <div class="payment-method-icon">
+                                            <svg viewBox="0 0 24 24" width="32" height="32"><rect fill="#1a1f71" width="24" height="16" rx="2"/><rect fill="#f7b600" x="5" y="8" width="2" height="2"/><rect fill="#f7b600" x="9" y="8" width="2" height="2"/><rect fill="#f7b600" x="13" y="8" width="2" height="2"/><rect fill="#f7b600" x="17" y="8" width="2" height="2"/></svg>
+                                        </div>
+                                        <div class="payment-method-info">
+                                            <h4>Credit/Debit Card</h4>
+                                            <p>Visa, Mastercard, American Express</p>
+                                        </div>
+                                        <label class="switch"><input type="checkbox" id="card-enabled"><span class="slider"></span></label>
+                                    </div>
+                                    <div class="payment-method-config">
+                                        <div id="saved-cards-list">
+                                            <div class="payment-card-item">
+                                                <div class="payment-card-icon">
+                                                    <svg viewBox="0 0 24 24" width="24" height="24"><rect fill="#1a1f71" width="24" height="16" rx="2"/><rect fill="#f7b600" x="5" y="8" width="2" height="2"/><rect fill="#f7b600" x="9" y="8" width="2" height="2"/><rect fill="#f7b600" x="13" y="8" width="2" height="2"/><rect fill="#f7b600" x="17" y="8" width="2" height="2"/></svg>
+                                                </div>
+                                                <div class="payment-card-details">
+                                                    <span class="payment-card-number">•••• •••• •••• 4242</span>
+                                                    <span class="payment-card-expiry">Expires 12/26</span>
+                                                </div>
+                                                <span class="payment-card-badge">Default</span>
+                                                <button class="btn-icon" aria-label="Remove card" data-card-id="card_1">
+                                                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline btn-sm" id="add-card-btn">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle; margin-right: 0.5rem;"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                            Add Card
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card" id="add-card-form" style="display: none;">
+                            <h2>Add New Card</h2>
+                            <form id="card-form">
+                                <div class="form-group">
+                                    <label>Card Number</label>
+                                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" pattern="[0-9\s]*" autocomplete="cc-number">
+                                    <span class="form-hint">Your card is processed securely via Stripe. We never store your full card details.</span>
+                                </div>
+                                <div class="settings-grid">
+                                    <div class="form-group">
+                                        <label>Expiry Date</label>
+                                        <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" pattern="[0-9/]*" autocomplete="cc-exp">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CVC</label>
+                                        <input type="text" id="card-cvc" placeholder="123" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="cc-csc">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cardholder Name</label>
+                                    <input type="text" id="card-name" placeholder="John Doe" autocomplete="cc-name">
+                                </div>
+                                <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                                    <button type="submit" class="btn btn-primary">Add Card</button>
+                                    <button type="button" class="btn btn-outline" id="cancel-add-card">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="settings-card">
+                            <h2>Default Payment Method</h2>
+                            <div class="form-group">
+                                <label>Select default for bookings</label>
+                                <div class="payment-select-wrapper">
+                                    <div class="payment-select-trigger" id="payment-select-trigger">
+                                        <span id="payment-select-text">Credit/Debit Card</span>
+                                        <span class="payment-select-arrow">▼</span>
+                                    </div>
+                                    <div class="payment-select-dropdown" id="payment-select-dropdown">
+                                        <div class="payment-select-option" data-value="mpesa">MPesa</div>
+                                        <div class="payment-select-option" data-value="airtel">Airtel Money</div>
+                                        <div class="payment-select-option" data-value="paypal">PayPal</div>
+                                        <div class="payment-select-option" data-value="card">Credit/Debit Card</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="default-payment-method" value="card">
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <h2>Billing Address</h2>
+                            <form id="billing-address-form">
+                                <div class="form-group"><label>Street Address</label><input type="text" id="billing-address"></div>
+                                <div class="settings-grid">
+                                    <div class="form-group"><label>City</label><input type="text" id="billing-city"></div>
+                                    <div class="form-group"><label>Postal Code</label><input type="text" id="billing-postal"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select id="billing-country">
+                                        <option value="">Select Country</option>
+                                        <option value="KE">Kenya</option>
+                                        <option value="US">United States</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="ZA">South Africa</option>
+                                        <option value="TZ">Tanzania</option>
+                                        <option value="UG">Uganda</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">Save Address</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="../../js/auth.js" defer></script>
+<script src="../../js/dashboard-theme.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Section Switching Logic
+        var navItems = document.querySelectorAll('.settings-nav-item');
+        var sections = document.querySelectorAll('.settings-section');
+
+        navItems.forEach(function(item) {
+            item.onclick = function() {
+                var target = this.dataset.section;
+
+                navItems.forEach(i => i.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+
+                this.classList.add('active');
+                document.getElementById('section-' + target).classList.add('active');
+            };
+        });
+
+        // Load current user data
+        if (window.MutsAuth) {
+            var user = window.MutsAuth.getCurrentUser();
+            if (user) {
+                document.getElementById('profile-name').value = user.name || '';
+                document.getElementById('profile-email').value = user.email || '';
+                document.getElementById('profile-phone').value = user.phone || '';
+                document.getElementById('profile-country').value = user.country || '';
+                document.getElementById('profile-display-name').textContent = user.name || 'Traveler';
+                document.getElementById('profile-avatar').textContent = (user.name || 'T').charAt(0).toUpperCase();
+            }
+        }
+
+        // Handle profile sync
+        document.getElementById('profile-form').onsubmit = function(e) {
+            e.preventDefault();
+            if (!window.MutsAuth) return;
+
+            var updatedData = {
+                name: document.getElementById('profile-name').value,
+                email: document.getElementById('profile-email').value,
+                phone: document.getElementById('profile-phone').value,
+                country: document.getElementById('profile-country').value
+            };
+
+            window.MutsAuth.updateProfile(updatedData);
+            alert('Profile synced with central database.');
+        };
+
+        // Payment methods functionality
+        
+        // Load saved payment methods from localStorage
+        var savedPaymentMethods = JSON.parse(localStorage.getItem('muts_payment_methods') || '{}');
+        
+        // Apply saved enabled states
+        ['mpesa', 'airtel', 'paypal', 'card'].forEach(function(method) {
+            var checkbox = document.getElementById(method + '-enabled');
+            if (checkbox && savedPaymentMethods[method] && savedPaymentMethods[method].enabled) {
+                checkbox.checked = true;
+            }
+        });
+
+        // MPesa phone formatting
+        var mpesaPhone = document.getElementById('mpesa-phone');
+        if (mpesaPhone) {
+            mpesaPhone.value = savedPaymentMethods.mpesa ? savedPaymentMethods.mpesa.phone : '';
+            mpesaPhone.oninput = function(e) {
+                var val = e.target.value.replace(/\D/g, '');
+                if (val.startsWith('254')) {
+                    val = '+' + val;
+                } else if (val.startsWith('0')) {
+                    val = '+254' + val.substring(1);
+                } else if (val.length > 0 && !val.startsWith('+')) {
+                    val = '+254' + val;
+                }
+                if (val.length > 13) val = val.substring(0, 13);
+                e.target.value = val;
+            };
+        }
+
+        // Airtel phone formatting
+        var airtelPhone = document.getElementById('airtel-phone');
+        if (airtelPhone) {
+            airtelPhone.value = savedPaymentMethods.airtel ? savedPaymentMethods.airtel.phone : '';
+            airtelPhone.oninput = function(e) {
+                var val = e.target.value.replace(/\D/g, '');
+                if (val.startsWith('254')) {
+                    val = '+' + val;
+                } else if (val.startsWith('0')) {
+                    val = '+254' + val.substring(1);
+                } else if (val.length > 0 && !val.startsWith('+')) {
+                    val = '+254' + val;
+                }
+                if (val.length > 13) val = val.substring(0, 13);
+                e.target.value = val;
+            };
+        }
+
+        // PayPal email
+        var paypalEmail = document.getElementById('paypal-email');
+        if (paypalEmail) {
+            paypalEmail.value = savedPaymentMethods.paypal ? savedPaymentMethods.paypal.email : '';
+        }
+
+        // Toggle payment method configs
+        var paymentMethodItems = document.querySelectorAll('.payment-method-item');
+        paymentMethodItems.forEach(function(item) {
+            var header = item.querySelector('.payment-method-header');
+            var toggle = item.querySelector('.switch input');
+            
+            header.onclick = function(e) {
+                if (e.target.closest('.switch')) return;
+                item.classList.toggle('active');
+            };
+
+            // Auto-expand when enabled
+            if (toggle) {
+                toggle.onchange = function() {
+                    if (toggle.checked) {
+                        item.classList.add('active');
+                    }
+                };
+            }
+        });
+
+        // Save payment methods
+        function savePaymentMethods() {
+            var methods = {
+                mpesa: {
+                    enabled: document.getElementById('mpesa-enabled').checked,
+                    phone: document.getElementById('mpesa-phone').value
+                },
+                airtel: {
+                    enabled: document.getElementById('airtel-enabled').checked,
+                    phone: document.getElementById('airtel-phone').value
+                },
+                paypal: {
+                    enabled: document.getElementById('paypal-enabled').checked,
+                    email: document.getElementById('paypal-email').value,
+                    express: document.getElementById('paypal-express') ? document.getElementById('paypal-express').checked : false
+                },
+                card: {
+                    enabled: document.getElementById('card-enabled').checked
+                }
+            };
+            
+            localStorage.setItem('muts_payment_methods', JSON.stringify(methods));
+        }
+
+        // Save on enable/disable
+        ['mpesa-enabled', 'airtel-enabled', 'paypal-enabled', 'card-enabled'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+                el.onchange = savePaymentMethods;
+            }
+        });
+
+        // Card functionality
+        var addCardBtn = document.getElementById('add-card-btn');
+        var addCardForm = document.getElementById('add-card-form');
+        var cancelAddCard = document.getElementById('cancel-add-card');
+        var cardForm = document.getElementById('card-form');
+
+        if (addCardBtn && addCardForm) {
+            addCardBtn.onclick = function() {
+                addCardForm.style.display = 'block';
+                addCardBtn.style.display = 'none';
+            };
+
+            cancelAddCard.onclick = function() {
+                addCardForm.style.display = 'none';
+                addCardBtn.style.display = 'block';
+                cardForm.reset();
+            };
+
+            // Card number formatting
+            var cardNumberInput = document.getElementById('card-number');
+            if (cardNumberInput) {
+                cardNumberInput.oninput = function(e) {
+                    var value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+                    var formatted = '';
+                    for (var i = 0; i < value.length && i < 16; i++) {
+                        if (i > 0 && i % 4 === 0) formatted += ' ';
+                        formatted += value[i];
+                    }
+                    e.target.value = formatted;
+                };
+            }
+
+            // Expiry formatting
+            var cardExpiryInput = document.getElementById('card-expiry');
+            if (cardExpiryInput) {
+                cardExpiryInput.oninput = function(e) {
+                    var value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    } else {
+                        e.target.value = value;
+                    }
+                };
+            }
+
+            // Handle card form submission
+            cardForm.onsubmit = function(e) {
+                e.preventDefault();
+                
+                var cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+                var cardExpiry = document.getElementById('card-expiry').value;
+                var cardCvc = document.getElementById('card-cvc').value;
+                var cardName = document.getElementById('card-name').value;
+
+                // Basic validation
+                if (cardNumber.length < 13 || cardNumber.length > 19) {
+                    alert('Please enter a valid card number.');
+                    return;
+                }
+
+                if (!cardExpiry.match(/^\d{2}\/\d{2}$/)) {
+                    alert('Please enter a valid expiry date (MM/YY).');
+                    return;
+                }
+
+                if (cardCvc.length < 3 || cardCvc.length > 4) {
+                    alert('Please enter a valid CVC.');
+                    return;
+                }
+
+                if (!cardName.trim()) {
+                    alert('Please enter the cardholder name.');
+                    return;
+                }
+
+                // In production, this would call Stripe API to tokenize card
+                // We only store last 4 digits and expiry for display
+                var last4 = cardNumber.slice(-4);
+                var expiry = cardExpiry;
+
+                // Save to localStorage
+                var savedCards = JSON.parse(localStorage.getItem('muts_saved_cards') || '[]');
+                var newCard = {
+                    id: 'card_' + Date.now(),
+                    last4: last4,
+                    expiry: expiry,
+                    name: cardName,
+                    isDefault: savedCards.length === 0
+                };
+
+                savedCards.push(newCard);
+                localStorage.setItem('muts_saved_cards', JSON.stringify(savedCards));
+
+                alert('Card added successfully. In production, your card would be securely tokenized via Stripe.');
+                
+                addCardForm.style.display = 'none';
+                addCardBtn.style.display = 'block';
+                cardForm.reset();
+                
+                // Reload to show new card
+                location.reload();
+            };
+        }
+
+        // Default payment method
+        var defaultPaymentSelect = document.getElementById('default-payment-method');
+        if (defaultPaymentSelect) {
+            var savedDefault = localStorage.getItem('muts_default_payment');
+            if (savedDefault) {
+                defaultPaymentSelect.value = savedDefault;
+            }
+            defaultPaymentSelect.onchange = function() {
+                localStorage.setItem('muts_default_payment', this.value);
+            };
+        }
+
+        // Handle billing address form
+        var billingAddressForm = document.getElementById('billing-address-form');
+        if (billingAddressForm) {
+            // Load saved billing address
+            var savedAddress = JSON.parse(localStorage.getItem('muts_billing_address') || '{}');
+            if (savedAddress.street) document.getElementById('billing-address').value = savedAddress.street;
+            if (savedAddress.city) document.getElementById('billing-city').value = savedAddress.city;
+            if (savedAddress.postal) document.getElementById('billing-postal').value = savedAddress.postal;
+            if (savedAddress.country) document.getElementById('billing-country').value = savedAddress.country;
+
+            billingAddressForm.onsubmit = function(e) {
+                e.preventDefault();
+                
+                var billingAddress = {
+                    street: document.getElementById('billing-address').value,
+                    city: document.getElementById('billing-city').value,
+                    postal: document.getElementById('billing-postal').value,
+                    country: document.getElementById('billing-country').value
+                };
+
+                localStorage.setItem('muts_billing_address', JSON.stringify(billingAddress));
+                alert('Billing address saved.');
+            };
+        }
+
+        // Remove card handler
+        var removeBtns = document.querySelectorAll('.btn-icon[data-card-id]');
+        removeBtns.forEach(function(btn) {
+            btn.onclick = function() {
+                if (confirm('Are you sure you want to remove this card?')) {
+                    var cardId = this.dataset.cardId;
+                    var savedCards = JSON.parse(localStorage.getItem('muts_saved_cards') || '[]');
+                    savedCards = savedCards.filter(function(c) { return c.id !== cardId; });
+                    localStorage.setItem('muts_saved_cards', JSON.stringify(savedCards));
+                    
+                    location.reload();
+                }
+            };
+        });
+
+        // Custom dropdown for payment method
+        var paymentWrapper = document.querySelector('.payment-select-wrapper');
+        var paymentTrigger = document.getElementById('payment-select-trigger');
+        var paymentText = document.getElementById('payment-select-text');
+        var paymentDropdown = document.getElementById('payment-select-dropdown');
+        var paymentHiddenInput = document.getElementById('default-payment-method');
+        
+        var paymentLabels = {
+            mpesa: 'MPesa',
+            airtel: 'Airtel Money',
+            paypal: 'PayPal',
+            card: 'Credit/Debit Card'
+        };
+        
+        function updatePaymentSelection(value) {
+            paymentHiddenInput.value = value;
+            paymentText.textContent = paymentLabels[value];
+            localStorage.setItem('muts_default_payment', value);
+            
+            // Update selected class
+            var options = paymentDropdown.querySelectorAll('.payment-select-option');
+            options.forEach(function(opt) {
+                opt.classList.remove('selected');
+                if (opt.dataset.value === value) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            // Close dropdown
+            paymentWrapper.classList.remove('open');
+            paymentDropdown.style.display = 'none';
+        }
+        
+        if (paymentWrapper && paymentTrigger) {
+            // Set initial value
+            var savedDefault = localStorage.getItem('muts_default_payment') || 'card';
+            updatePaymentSelection(savedDefault);
+            
+            // Toggle dropdown - manually control display for fixed positioning
+            paymentTrigger.onclick = function(e) {
+                e.stopPropagation();
+                var isOpen = paymentWrapper.classList.contains('open');
+                
+                if (isOpen) {
+                    paymentWrapper.classList.remove('open');
+                    paymentDropdown.style.display = 'none';
+                } else {
+                    // Position dropdown below trigger
+                    var rect = paymentTrigger.getBoundingClientRect();
+                    paymentDropdown.style.top = (rect.bottom + 4) + 'px';
+                    paymentDropdown.style.left = rect.left + 'px';
+                    paymentDropdown.style.width = rect.width + 'px';
+                    
+                    paymentWrapper.classList.add('open');
+                    paymentDropdown.style.display = 'block';
+                }
+            };
+
+            // Select option
+            var options = paymentDropdown.querySelectorAll('.payment-select-option');
+            options.forEach(function(opt) {
+                opt.onclick = function(e) {
+                    e.stopPropagation();
+                    updatePaymentSelection(this.dataset.value);
+                };
+            });
+
+            // Close on outside click
+            document.addEventListener('click', function(e) {
+                if (!paymentWrapper.contains(e.target)) {
+                    paymentWrapper.classList.remove('open');
+                    paymentDropdown.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

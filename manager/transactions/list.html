@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Transactions - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="list.html" class="nav-item active">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">Account</div>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Transactions Management</h1>
+                <button class="btn btn-primary" onclick="exportTransactions()">Export CSV</button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Revenue</h3>
+                    <div class="value" id="total-revenue">$45,200</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <div class="value" id="completed-amount">$38,450</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <div class="value" id="pending-amount">$6,750</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Transactions</h3>
+                    <div class="value" id="total-count">42</div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters-bar">
+                <input type="text" class="search-input" id="search-input" placeholder="Search transactions...">
+                <select class="filter-select" id="status-filter">
+                    <option value="">All Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                </select>
+                <select class="filter-select" id="category-filter">
+                    <option value="">All Categories</option>
+                    <option value="Safari">Safari</option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="Marketplace">Marketplace</option>
+                    <option value="Package">Package</option>
+                </select>
+                <input type="date" class="filter-select" id="date-from" placeholder="From">
+                <input type="date" class="filter-select" id="date-to" placeholder="To">
+            </div>
+            
+            <!-- Transactions Table -->
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Method</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-table">
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 40px;">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- View Transaction Modal -->
+    <div class="modal-overlay" id="view-modal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Transaction Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="transaction-details">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" onclick="printReceipt()">Print Receipt</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/manager-service.js"></script>
+    <script>
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        loadTransactions();
+        
+        document.getElementById('search-input').addEventListener('input', debounce(loadTransactions, 300));
+        document.getElementById('status-filter').addEventListener('change', loadTransactions);
+        document.getElementById('category-filter').addEventListener('change', loadTransactions);
+        
+        function loadTransactions() {
+            var tbody = document.getElementById('transactions-table');
+            
+            // Mock data
+            var mockTransactions = [
+                { id: 'TXN-77421', date: '2026-04-03', description: 'Maasai Mara 5-Day Expedition', category: 'Safari', type: 'Debit', amount: 2100.00, status: 'completed', method: 'Visa •••• 4242' },
+                { id: 'TXN-77422', date: '2026-04-02', description: 'Africasa: Hand-carved Mask', category: 'Marketplace', type: 'Debit', amount: 85.50, status: 'completed', method: 'Neural Wallet' },
+                { id: 'TXN-77423', date: '2026-04-01', description: 'Diani Beach Resort Upgrade', category: 'Hotel', type: 'Debit', amount: 450.00, status: 'pending', method: 'MasterCard •••• 8888' },
+                { id: 'TXN-77424', date: '2026-03-31', description: 'Photography Tour Deposit', category: 'Package', type: 'Debit', amount: 1200.00, status: 'completed', method: 'Visa •••• 4242' },
+                { id: 'TXN-77425', date: '2026-03-30', description: 'Amboseli Lodge Booking', category: 'Hotel', type: 'Debit', amount: 780.00, status: 'completed', method: 'M-Pesa' },
+                { id: 'TXN-77426', date: '2026-03-29', description: 'Maasai Beaded Necklace', category: 'Marketplace', type: 'Debit', amount: 89.99, status: 'completed', method: 'Visa •••• 1234' },
+                { id: 'TXN-77427', date: '2026-03-28', description: 'Samburu Expedition', category: 'Safari', type: 'Debit', amount: 1600.00, status: 'pending', method: 'MasterCard •••• 8888' },
+                { id: 'TXN-77428', date: '2026-03-27', description: 'Refund: Lake Nakuru Trip', category: 'Safari', type: 'Credit', amount: -250.00, status: 'completed', method: 'Visa •••• 4242' }
+            ];
+            
+            var search = document.getElementById('search-input').value.toLowerCase();
+            var status = document.getElementById('status-filter').value;
+            var category = document.getElementById('category-filter').value;
+            
+            var filtered = mockTransactions.filter(function(t) {
+                if (search && t.description.toLowerCase().indexOf(search) === -1 && t.id.toLowerCase().indexOf(search) === -1) return false;
+                if (status && t.status !== status) return false;
+                if (category && t.category !== category) return false;
+                return true;
+            });
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">No transactions found</td></tr>';
+                return;
+            }
+            
+            var html = '';
+            filtered.forEach(function(t) {
+                var statusBadge = t.status === 'completed' ? 'badge-success' : 
+                                 t.status === 'pending' ? 'badge-warning' : 'badge-danger';
+                var amountClass = t.type === 'Credit' ? 'color: var(--success);' : '';
+                
+                html += '<tr>' +
+                    '<td><strong>' + t.id + '</strong></td>' +
+                    '<td>' + t.date + '</td>' +
+                    '<td>' + t.description + '</td>' +
+                    '<td>' + t.category + '</td>' +
+                    '<td><span style="color: var(--text-muted); font-size: 0.85rem;">' + t.method + '</span></td>' +
+                    '<td style="' + amountClass + '">$' + Math.abs(t.amount).toFixed(2) + '</td>' +
+                    '<td><span class="badge ' + statusBadge + '">' + t.status + '</span></td>' +
+                    '<td class="actions">' +
+                        '<button class="btn btn-sm btn-secondary" onclick="viewTransaction(\'' + t.id + '\')">View</button>' +
+                    '</td>' +
+                '</tr>';
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        window.viewTransaction = function(id) {
+            var mockTransactions = {
+                'TXN-77421': { id: 'TXN-77421', date: '2026-04-03 14:30', description: 'Maasai Mara 5-Day Expedition', category: 'Safari', type: 'Debit', amount: 2100.00, status: 'completed', method: 'Visa •••• 4242', customer: 'John Smith', email: 'john@example.com' },
+                'TXN-77422': { id: 'TXN-77422', date: '2026-04-02 09:15', description: 'Africasa: Hand-carved Mask', category: 'Marketplace', type: 'Debit', amount: 85.50, status: 'completed', method: 'Neural Wallet', customer: 'Sarah Johnson', email: 'sarah@example.com' }
+            };
+            
+            var t = mockTransactions[id] || mockTransactions['TXN-77421'];
+            
+            var detailsHtml = '<div style="display: grid; gap: 15px;">' +
+                '<div><strong>Transaction ID:</strong> ' + t.id + '</div>' +
+                '<div><strong>Date:</strong> ' + t.date + '</div>' +
+                '<div><strong>Customer:</strong> ' + t.customer + ' (' + t.email + ')</div>' +
+                '<div><strong>Description:</strong> ' + t.description + '</div>' +
+                '<div><strong>Category:</strong> ' + t.category + '</div>' +
+                '<div><strong>Payment Method:</strong> ' + t.method + '</div>' +
+                '<div><strong>Amount:</strong> $' + t.amount.toFixed(2) + '</div>' +
+                '<div><strong>Status:</strong> <span class="badge ' + (t.status === 'completed' ? 'badge-success' : 'badge-warning') + '">' + t.status + '</span></div>' +
+            '</div>';
+            
+            document.getElementById('transaction-details').innerHTML = detailsHtml;
+            document.getElementById('view-modal').classList.add('show');
+        };
+        
+        window.closeModal = function() {
+            document.getElementById('view-modal').classList.remove('show');
+        };
+        
+        window.printReceipt = function() {
+            showToast('Receipt sent to printer');
+        };
+        
+        window.exportTransactions = function() {
+            showToast('Exporting transactions to CSV...');
+        };
+        
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, wait);
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

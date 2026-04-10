@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="description" content="Discover authentic African artistry at the Africasa Marketplace. Shop handcrafted jewelry, textiles, art, and home decor from Kenyan artisans.">
+    <title>Africasa Marketplace - Muts Safaris</title>
+    <link rel="stylesheet" href="../../css/dashboard-theme.css">
+    <link rel="icon" href="../../assets/favicon/favicon.ico">
+</head>
+<body>
+<div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <div class="sidebar-brand">
+            <a href="../../index.html">
+                <span class="sidebar-brand-text">
+                    <span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span>
+                    <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
+                </span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+                <li><a href="travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+                <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+                <li><a href="gallery.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+                <li><a href="beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98z"/></svg><span class="nav-label">Beaches</span></a></li>
+                <li><a href="packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+                <li><a href="africasa.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+                <li><a href="blog.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+                <li><a href="faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+                <li><a href="about.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span class="nav-label">About</span></a></li>
+                <li><a href="contact.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Contact</span></a></li>
+                <li><a href="favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+                <li><a href="messages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Messages</span><span class="badge" id="unread-badge"></span></a></li>
+                <li><a href="transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
+                <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a>
+        </div>
+    </aside>
+    <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <main class="dashboard-main">
+        <!-- Sticky Header Section -->
+        <div class="africasa-sticky-header">
+            <header class="dashboard-topbar compact-topbar">
+                <div class="search-bar compact-search">
+                    <input type="text" placeholder="Search marketplace..." id="africasa-search">
+                    <div class="search-results-dropdown" id="search-results"></div>
+                </div>
+                <div class="topbar-actions">
+                    <a href="cart.html" class="cart-link-btn" id="cart-link" aria-label="Shopping cart">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+                    </a>
+                </div>
+                <div class="user-profile compact-user">
+                    <div class="user-info"><span class="user-name" id="user-name">Traveler</span></div>
+                    <div class="user-avatar" id="user-avatar">T</div>
+                </div>
+            </header>
+            
+            <div class="listing-hero compact-hero">
+                <h1>Africasa Marketplace</h1>
+            </div>
+
+            <div class="africasa-toolbar sticky-toolbar">
+                <div class="filter-chips" id="filter-chips">
+                    <button class="filter-chip active" data-category="all">All</button>
+                    <button class="filter-chip" data-category="jewelry">Jewelry</button>
+                    <button class="filter-chip" data-category="textiles">Textiles</button>
+                    <button class="filter-chip" data-category="art">Art</button>
+                    <button class="filter-chip" data-category="crafts">Crafts</button>
+                    <button class="filter-chip" data-category="home-decor">Home Decor</button>
+                    <button class="filter-chip" data-category="accessories">Accessories</button>
+                </div>
+                <div class="toolbar-right">
+                    <div class="price-filter">
+                        <span>Price:</span>
+                        <input type="number" id="price-min" placeholder="Min" min="0">
+                        <span>-</span>
+                        <input type="number" id="price-max" placeholder="Max" min="0">
+                    </div>
+                    <select id="sort-select" class="sort-select">
+                        <option value="popular">Sort: Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="newest">Newest</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div id="africasa-grid" class="africasa-grid"></div>
+        <div class="loading-skeleton" id="loading-skeleton">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+        <div class="no-results" id="no-results">
+            <p>No products found matching your criteria.</p>
+            <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination-container" id="pagination-container">
+            <button class="pagination-btn prev" id="pagination-prev" disabled>&larr; Prev</button>
+            <div class="pagination-pages" id="pagination-pages"></div>
+            <button class="pagination-btn next" id="pagination-next">Next &rarr;</button>
+            <span class="pagination-info" id="pagination-info"></span>
+        </div>
+    </main>
+</div>
+
+    <!-- Quick View Modal -->
+<div class="quick-view-modal" id="quick-view-modal">
+    <div class="quick-view-content">
+        <button class="quick-view-close" id="quick-view-close">&times;</button>
+        <div class="quick-view-body" id="quick-view-body"></div>
+    </div>
+</div>
+
+<!-- Product 3D Viewer -->
+<div class="product-viewer" id="product-viewer">
+    <div class="viewer-content">
+        <button class="viewer-close" id="viewer-close">&times;</button>
+        <div class="viewer-main">
+            <img id="viewer-image" src="" alt="Product">
+        </div>
+        <div class="viewer-controls">
+            <button class="viewer-nav" id="viewer-prev">&#8249;</button>
+            <div class="viewer-thumbnails" id="viewer-thumbs"></div>
+            <button class="viewer-nav" id="viewer-next">&#8250;</button>
+        </div>
+    </div>
+</div>
+
+<!-- Back to Top Button -->
+<button class="back-to-top-btn" id="back-to-top-btn" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+</button>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../../js/api-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/services/africasa-service.js"></script>
+<script src="../../js/dashboard-theme.js" defer></script>
+<script>
+(function() {
+    var grid = document.getElementById('africasa-grid');
+    var skeleton = document.getElementById('loading-skeleton');
+    var noResults = document.getElementById('no-results');
+    var allProducts = [];
+    var filteredProducts = [];
+    var currentPage = 1;
+    var itemsPerPage = 12;
+    var currentCategory = 'all';
+    var priceMin = 0;
+    var priceMax = 9999;
+    var sortBy = 'popular';
+    var cart = [];
+    var wishlist = [];
+    var currentViewerProduct = null;
+    var currentViewerIndex = 0;
+
+    // Initialize
+    loadCart();
+    loadWishlist();
+    loadProducts();
+
+    function loadProducts() {
+        skeleton.style.display = 'grid';
+        grid.style.display = 'none';
+        noResults.style.display = 'none';
+        
+        window.MutsAfricasaService.getAll().then(function(products) {
+            allProducts = products;
+            applyFilters();
+            skeleton.style.display = 'none';
+        });
+    }
+
+    function applyFilters() {
+        currentPage = 1; // Reset to first page when filters change
+        
+        filteredProducts = allProducts.filter(function(p) {
+            if (currentCategory !== 'all' && p.category !== currentCategory) return false;
+            if (p.price < priceMin || p.price > priceMax) return false;
+            return true;
+        });
+
+        // Sort
+        filteredProducts.sort(function(a, b) {
+            switch(sortBy) {
+                case 'price-low': return a.price - b.price;
+                case 'price-high': return b.price - a.price;
+                case 'rating': return b.rating - a.rating;
+                case 'newest': return 0; // No date field
+                default: return b.reviews - a.reviews;
+            }
+        });
+
+        renderProducts();
+    }
+
+    function renderProducts() {
+        if (filteredProducts.length === 0) {
+            grid.style.display = 'none';
+            noResults.style.display = 'block';
+            document.getElementById('pagination-container').style.display = 'none';
+            return;
+        }
+        
+        grid.style.display = 'grid';
+        noResults.style.display = 'none';
+        
+        // Calculate pagination
+        var totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+        
+        var startIndex = (currentPage - 1) * itemsPerPage;
+        var endIndex = startIndex + itemsPerPage;
+        var pageProducts = filteredProducts.slice(startIndex, endIndex);
+        
+        var html = pageProducts.map(function(p, index) {
+            var isWishlisted = wishlist.indexOf(p.id) !== -1;
+            var discount = p.originalPrice ? Math.round((1 - p.price / p.originalPrice) * 100) : 0;
+            var imgSrc = p.images[0] ? '../../' + p.images[0] : '../../images/africasa/placeholder.jpg';
+            
+            var starsHtml = '';
+            for (var i = 0; i < 5; i++) {
+                starsHtml += i < Math.floor(p.rating) ? '&#9733;' : '&#9734;';
+            }
+
+            return '<div class="product-card" data-id="' + p.id + '" style="animation-delay: ' + (index * 0.05) + 's">' +
+                '<div class="product-image-container">' +
+                    '<img src="' + imgSrc + '" alt="' + p.name + '" ' + (index === 0 ? 'fetchpriority="high"' : 'loading="lazy"') + ' class="product-image" onerror="this.src=\'../../images/africasa/placeholder.jpg\'">' +
+                    '<button class="wishlist-btn ' + (isWishlisted ? 'active' : '') + '" data-id="' + p.id + '" aria-label="' + (isWishlisted ? 'Remove from wishlist' : 'Add to wishlist') + '">' +
+                        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' +
+                    '</button>' +
+                    '<button class="quick-view-btn" data-id="' + p.id + '" aria-label="Quick view ' + p.name + '">Quick View</button>' +
+                    (discount > 0 ? '<span class="sale-badge">-' + discount + '%</span>' : '') +
+                    '<span class="category-badge">' + p.category + '</span>' +
+                '</div>' +
+                '<div class="product-info">' +
+                    '<h3 class="product-name">' + p.name + '</h3>' +
+                    '<p class="product-desc">' + p.description.substring(0, 80) + '...</p>' +
+                    '<div class="product-rating">' +
+                        '<span class="stars">' + starsHtml + '</span>' +
+                        '<span class="rating-value">' + p.rating + '</span>' +
+                        '<span class="reviews">(' + p.reviews + ')</span>' +
+                    '</div>' +
+                    '<div class="product-price">' +
+                        '<span class="current-price">$' + p.price.toFixed(2) + '</span>' +
+                        (p.originalPrice ? '<span class="original-price">$' + p.originalPrice.toFixed(2) + '</span>' : '') +
+                    '</div>' +
+                    '<div class="product-actions">' +
+                        '<button class="add-to-cart-btn" data-id="' + p.id + '" aria-label="Add ' + p.name + ' to cart">' +
+                            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+                            'Add to Cart' +
+                        '</button>' +
+                        '<button class="view-3d-btn" data-id="' + p.id + '" aria-label="View ' + p.name + ' in 3D">' +
+                            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>' +
+                        '</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+        
+        grid.innerHTML = html;
+        attachCardEvents();
+        renderPagination();
+    }
+    
+    function renderPagination() {
+        var totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        var container = document.getElementById('pagination-container');
+        var pagesContainer = document.getElementById('pagination-pages');
+        var prevBtn = document.getElementById('pagination-prev');
+        var nextBtn = document.getElementById('pagination-next');
+        var infoEl = document.getElementById('pagination-info');
+        
+        if (totalPages <= 1) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        container.style.display = 'flex';
+        
+        // Update buttons
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+        
+        // Render page numbers
+        var pagesHtml = '';
+        var maxVisible = 5;
+        var startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        var endPage = Math.min(totalPages, startPage + maxVisible - 1);
+        
+        if (endPage - startPage < maxVisible - 1) {
+            startPage = Math.max(1, endPage - maxVisible + 1);
+        }
+        
+        if (startPage > 1) {
+            pagesHtml += '<button class="pagination-btn" data-page="1">1</button>';
+            if (startPage > 2) {
+                pagesHtml += '<span class="pagination-ellipsis">...</span>';
+            }
+        }
+        
+        for (var i = startPage; i <= endPage; i++) {
+            pagesHtml += '<button class="pagination-btn' + (i === currentPage ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
+        }
+        
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                pagesHtml += '<span class="pagination-ellipsis">...</span>';
+            }
+            pagesHtml += '<button class="pagination-btn" data-page="' + totalPages + '">' + totalPages + '</button>';
+        }
+        
+        pagesContainer.innerHTML = pagesHtml;
+        
+        // Update info
+        var startItem = (currentPage - 1) * itemsPerPage + 1;
+        var endItem = Math.min(currentPage * itemsPerPage, filteredProducts.length);
+        infoEl.textContent = 'Showing ' + startItem + '-' + endItem + ' of ' + filteredProducts.length;
+        
+        // Add click handlers
+        pagesContainer.querySelectorAll('.pagination-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                goToPage(parseInt(this.dataset.page));
+            });
+        });
+    }
+    
+    function goToPage(page) {
+        currentPage = page;
+        renderProducts();
+        // Scroll to top of grid
+        document.getElementById('africasa-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function attachCardEvents() {
+        // Wishlist buttons
+        document.querySelectorAll('.wishlist-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var id = this.dataset.id;
+                toggleWishlist(id);
+            });
+        });
+
+        // Quick view buttons
+        document.querySelectorAll('.quick-view-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openQuickView(this.dataset.id);
+            });
+        });
+
+        // Add to cart buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var id = this.dataset.id;
+                addToCart(id, this);
+            });
+        });
+
+        // 3D view buttons
+        document.querySelectorAll('.view-3d-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                open3DViewer(this.dataset.id);
+            });
+        });
+    }
+
+    // Cart Functions
+    function loadCart() {
+        var saved = localStorage.getItem('mutssafaris_cart');
+        cart = saved ? JSON.parse(saved) : [];
+        updateCartUI();
+    }
+
+    function saveCart() {
+        localStorage.setItem('mutssafaris_cart', JSON.stringify(cart));
+        updateCartUI();
+    }
+
+    function addToCart(productId, btnElement) {
+        var existing = cart.find(function(item) { return item.id === productId; });
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({ id: productId, quantity: 1 });
+        }
+        saveCart();
+        
+        // Fly to cart animation
+        if (btnElement) {
+            var rect = btnElement.getBoundingClientRect();
+            var cartIcon = document.getElementById('cart-link');
+            var cartRect = cartIcon.getBoundingClientRect();
+            
+            var flying = document.createElement('div');
+            flying.className = 'flying-item';
+            flying.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2z"/></svg>';
+            flying.style.cssText = 'position:fixed;z-index:9999;left:' + rect.left + 'px;top:' + rect.top + 'px;pointer-events:none;';
+            document.body.appendChild(flying);
+            
+            setTimeout(function() {
+                flying.style.left = cartRect.left + 'px';
+                flying.style.top = cartRect.top + 'px';
+                flying.style.opacity = '0';
+                flying.style.transform = 'scale(0.5)';
+            }, 10);
+            
+            setTimeout(function() {
+                flying.remove();
+            }, 500);
+        }
+        
+        showToast('Added to cart!', 'success');
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(function(item) { return item.id !== productId; });
+        saveCart();
+        showToast('Removed from cart', 'info');
+    }
+
+    function updateQuantity(productId, delta) {
+        var item = cart.find(function(i) { return i.id === productId; });
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                saveCart();
+            }
+        }
+    }
+
+    function updateCartUI() {
+        var count = cart.reduce(function(sum, item) { return sum + item.quantity; }, 0);
+        var cartCountEl = document.getElementById('cart-count');
+        if (cartCountEl) {
+            cartCountEl.textContent = count;
+            cartCountEl.style.display = count > 0 ? 'flex' : 'none';
+        }
+    }
+
+    // Wishlist Functions
+    function loadWishlist() {
+        var saved = localStorage.getItem('mutssafaris_wishlist');
+        wishlist = saved ? JSON.parse(saved) : [];
+    }
+
+    function saveWishlist() {
+        localStorage.setItem('mutssafaris_wishlist', JSON.stringify(wishlist));
+    }
+
+    function toggleWishlist(productId) {
+        var index = wishlist.indexOf(productId);
+        if (index !== -1) {
+            wishlist.splice(index, 1);
+            showToast('Removed from wishlist', 'info');
+        } else {
+            wishlist.push(productId);
+            showToast('Added to wishlist!', 'success');
+        }
+        saveWishlist();
+        
+        // Update UI
+        var btn = document.querySelector('.wishlist-btn[data-id="' + productId + '"]');
+        if (btn) btn.classList.toggle('active');
+    }
+
+    // Quick View Modal
+    function openQuickView(productId) {
+        window.MutsAfricasaService.getById(productId).then(function(p) {
+            if (!p) return;
+            
+            var modal = document.getElementById('quick-view-modal');
+            var body = document.getElementById('quick-view-body');
+            
+            var discount = p.originalPrice ? Math.round((1 - p.price / p.originalPrice) * 100) : 0;
+            var imgSrc = p.images[0] ? '../../' + p.images[0] : '../../images/africasa/item1.jpg';
+            
+            var thumbsHtml = p.images.map(function(img, i) {
+                return '<img src="../../' + img + '" alt="Thumbnail" class="qv-thumb' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" onerror="this.src=\'../../images/africasa/item1.jpg\'">';
+            }).join('');
+            
+            body.innerHTML = '<div class="qv-gallery">' +
+                '<img src="' + imgSrc + '" alt="' + p.name + '" class="qv-main-image" id="qv-main-image" onerror="this.src=\'../../images/africasa/item1.jpg\'">' +
+                '<div class="qv-thumbnails">' + thumbsHtml + '</div>' +
+            '</div>' +
+            '<div class="qv-details">' +
+                '<span class="qv-category">' + p.category + '</span>' +
+                '<h2>' + p.name + '</h2>' +
+                '<div class="qv-rating">' +
+                    '<span class="stars"></span>' +
+                    '<span>' + p.rating + ' (' + p.reviews + ' reviews)</span>' +
+                '</div>' +
+                '<div class="qv-price">' +
+                    '<span class="qv-current">$' + p.price.toFixed(2) + '</span>' +
+                    (p.originalPrice ? '<span class="qv-original">$' + p.originalPrice.toFixed(2) + '</span>' : '') +
+                    (discount > 0 ? '<span class="qv-discount">Save ' + discount + '%</span>' : '') +
+                '</div>' +
+                '<p class="qv-description">' + p.description + '</p>' +
+                '<div class="qv-specs">' +
+                    '<h4>Product Details</h4>' +
+                    '<ul></ul>' +
+                '</div>' +
+                '<div class="qv-stock">' + 
+                    (p.stock > 0 ? '<span class="in-stock">In Stock (' + p.stock + ' available)</span>' : '<span class="out-of-stock">Out of Stock</span>') +
+                '</div>' +
+                '<div class="qv-actions">' +
+                    '<button class="btn btn-primary" onclick="window.AfricasaCart.add(\'' + p.id + '\')">Add to Cart</button>' +
+                    '<button class="btn btn-outline" onclick="closeQuickView()">Close</button>' +
+                '</div>' +
+            '</div>';
+
+            var starsContainer = body.querySelector('.stars');
+            for (var i = 0; i < 5; i++) {
+                starsContainer.innerHTML += i < Math.floor(p.rating) ? '&#9733;' : '&#9734;';
+            }
+
+            var specsList = body.querySelector('.qv-specs ul');
+            for (var key in p.details) {
+                specsList.innerHTML += '<li><strong>' + key + ':</strong> ' + p.details[key] + '</li>';
+            }
+
+            // Thumbnail click handler
+            body.querySelectorAll('.qv-thumb').forEach(function(thumb) {
+                thumb.addEventListener('click', function() {
+                    var src = this.src.replace('/../..', '');
+                    body.querySelector('.qv-main-image').src = src;
+                    body.querySelectorAll('.qv-thumb').forEach(function(t) { t.classList.remove('active'); });
+                    this.classList.add('active');
+                });
+            });
+            
+            modal.classList.add('active');
+        });
+    }
+
+    function closeQuickView() {
+        document.getElementById('quick-view-modal').classList.remove('active');
+    }
+
+    // 3D Product Viewer
+    function open3DViewer(productId) {
+        window.MutsAfricasaService.getById(productId).then(function(p) {
+            if (!p || !p.images || p.images.length === 0) return;
+            
+            currentViewerProduct = p;
+            currentViewerIndex = 0;
+            
+            var viewer = document.getElementById('product-viewer');
+            var thumbsContainer = document.getElementById('viewer-thumbs');
+            
+            thumbsContainer.innerHTML = p.images.map(function(img, i) {
+                return '<img src="../../' + img + '" alt="View ' + (i+1) + '" class="viewer-thumb' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" onerror="this.src=\'../../images/africasa/item1.jpg\'">';
+            }).join('');
+            
+            updateViewerImage();
+            viewer.classList.add('active');
+            
+            thumbsContainer.querySelectorAll('.viewer-thumb').forEach(function(thumb) {
+                thumb.addEventListener('click', function() {
+                    currentViewerIndex = parseInt(this.dataset.index);
+                    updateViewerImage();
+                });
+            });
+        });
+    }
+
+    function updateViewerImage() {
+        if (!currentViewerProduct) return;
+        var img = document.getElementById('viewer-image');
+        img.src = '../../' + currentViewerProduct.images[currentViewerIndex];
+        
+        document.querySelectorAll('.viewer-thumb').forEach(function(t, i) {
+            t.classList.toggle('active', i === currentViewerIndex);
+        });
+    }
+
+    function closeViewer() {
+        document.getElementById('product-viewer').classList.remove('active');
+    }
+
+    // Toast Notifications
+    function showToast(message, type) {
+        var container = document.getElementById('toast-container');
+        var toast = document.createElement('div');
+        toast.className = 'toast toast-' + type;
+        toast.innerHTML = message;
+        container.appendChild(toast);
+        
+        setTimeout(function() {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(function() {
+            toast.classList.remove('show');
+            setTimeout(function() { toast.remove(); }, 300);
+        }, 3000);
+    }
+
+    // Filter/Sort Event Handlers
+    document.getElementById('filter-chips').addEventListener('click', function(e) {
+        if (e.target.classList.contains('filter-chip')) {
+            document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
+            e.target.classList.add('active');
+            currentCategory = e.target.dataset.category;
+            applyFilters();
+        }
+    });
+
+    document.getElementById('price-min').addEventListener('change', function() {
+        priceMin = parseFloat(this.value) || 0;
+        applyFilters();
+    });
+
+    document.getElementById('price-max').addEventListener('change', function() {
+        priceMax = parseFloat(this.value) || 9999;
+        applyFilters();
+    });
+
+    document.getElementById('sort-select').addEventListener('change', function() {
+        sortBy = this.value;
+        applyFilters();
+    });
+    
+    // Pagination buttons
+    document.getElementById('pagination-prev').addEventListener('click', function() {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    });
+    
+    document.getElementById('pagination-next').addEventListener('click', function() {
+        var totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        }
+    });
+
+    // Search
+    var searchTimeout;
+    document.getElementById('africasa-search').addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        var query = this.value.trim();
+        
+        if (query.length < 2) {
+            document.getElementById('search-results').style.display = 'none';
+            return;
+        }
+        
+        searchTimeout = setTimeout(function() {
+            window.MutsAfricasaService.search(query).then(function(results) {
+                var container = document.getElementById('search-results');
+                if (results.length === 0) {
+                    container.innerHTML = '<div class="no-results">No products found</div>';
+                } else {
+                    container.innerHTML = results.slice(0, 5).map(function(p) {
+                        return '<a href="#" class="search-result-item" data-id="' + p.id + '">' +
+                            '<img src="../../' + (p.images[0] || 'images/africasa/item1.jpg') + '" onerror="this.src=\'../../images/africasa/item1.jpg\'">' +
+                            '<div><span class="name">' + p.name + '</span><span class="price">$' + p.price.toFixed(2) + '</span></div>' +
+                        '</a>';
+                    }).join('');
+                }
+                container.style.display = 'block';
+            });
+        }, 300);
+    });
+
+    document.getElementById('search-results').addEventListener('click', function(e) {
+        var item = e.target.closest('.search-result-item');
+        if (item) {
+            openQuickView(item.dataset.id);
+            document.getElementById('search-results').style.display = 'none';
+            document.getElementById('africasa-search').value = '';
+        }
+    });
+
+    // Cart drawer - now links to cart page
+    document.getElementById('cart-link').addEventListener('click', function(e) {
+        // Let the default link behavior work (navigates to cart.html)
+    });
+
+    // Quick view close
+    document.getElementById('quick-view-close').addEventListener('click', closeQuickView);
+    document.getElementById('quick-view-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeQuickView();
+    });
+
+    // Viewer close
+    document.getElementById('viewer-close').addEventListener('click', closeViewer);
+    document.getElementById('product-viewer').addEventListener('click', function(e) {
+        if (e.target === this) closeViewer();
+    });
+
+    document.getElementById('viewer-prev').addEventListener('click', function() {
+        if (!currentViewerProduct) return;
+        currentViewerIndex = (currentViewerIndex - 1 + currentViewerProduct.images.length) % currentViewerProduct.images.length;
+        updateViewerImage();
+    });
+
+    document.getElementById('viewer-next').addEventListener('click', function() {
+        if (!currentViewerProduct) return;
+        currentViewerIndex = (currentViewerIndex + 1) % currentViewerProduct.images.length;
+        updateViewerImage();
+    });
+
+    // Global cart functions
+    window.AfricasaCart = {
+        add: function(id) {
+            addToCart(id);
+        },
+        remove: function(id) {
+            removeFromCart(id);
+        },
+        updateQty: function(id, delta) {
+            updateQuantity(id, delta);
+        }
+    };
+
+    window.clearFilters = function() {
+        currentCategory = 'all';
+        priceMin = 0;
+        priceMax = 9999;
+        sortBy = 'popular';
+        document.getElementById('price-min').value = '';
+        document.getElementById('price-max').value = '';
+        document.getElementById('sort-select').value = 'popular';
+        document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
+        document.querySelector('.filter-chip[data-category="all"]').classList.add('active');
+        applyFilters();
+    };
+
+    // Back to top button functionality
+    var backToTopBtn = document.getElementById('back-to-top-btn');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+})();
+</script>
+</body>
+</html>

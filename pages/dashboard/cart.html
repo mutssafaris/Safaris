@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>Shopping Cart - Muts Safaris</title>
+    <link rel="stylesheet" href="../../css/dashboard-theme.css">
+    <link rel="icon" href="../../assets/favicon/favicon.ico">
+    <style>
+        .cart-page {
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cart-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        .continue-shopping-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .continue-shopping-link:hover {
+            text-shadow: 0 0 10px var(--shadow-glow);
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .cart-items-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            padding: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cart-item-name {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+        }
+
+        .cart-item-category {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cart-item-price {
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .qty-value {
+            color: #fff;
+            font-size: 0.9rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .cart-item-remove:hover {
+            color: #ff4444;
+        }
+
+        .cart-empty-state {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .cart-empty-icon {
+            width: 80px;
+            height: 80px;
+            fill: var(--text-muted);
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+
+        .cart-empty-text {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-summary-section {
+            position: sticky;
+            top: 100px;
+        }
+
+        .cart-summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            padding: 1.5rem;
+        }
+
+        .cart-summary-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .summary-row.total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .summary-row.total .value {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .free-shipping-notice {
+            background: rgba(255, 184, 0, 0.1);
+            border: 1px solid var(--accent);
+            padding: 0.75rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .free-shipping-notice.achieved {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .coupon-section {
+            margin-top: 1rem;
+        }
+
+        .coupon-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .coupon-input-group input {
+            flex: 1;
+            padding: 0.6rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-family: inherit;
+        }
+
+        .coupon-input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .continue-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary-section {
+                position: static;
+            }
+
+            .cart-item-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .cart-item-name {
+                font-size: 0.9rem;
+            }
+
+            .cart-item-price {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <div class="sidebar-brand">
+            <a href="../../index.html">
+                <span class="sidebar-brand-text">
+                    <span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span>
+                    <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
+                </span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+                <li><a href="travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+                <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+                <li><a href="gallery.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+                <li><a href="beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z"/></svg><span class="nav-label">Beaches</span></a></li>
+                <li><a href="packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+                <li><a href="africasa.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+                <li><a href="blog.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+                <li><a href="faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+                <li><a href="about.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span class="nav-label">About</span></a></li>
+                <li><a href="contact.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Contact</span></a></li>
+                <li><a href="favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+                <li><a href="messages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Messages</span><span class="badge" id="unread-badge"></span></a></li>
+                <li><a href="transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
+                <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a>
+        </div>
+    </aside>
+    <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    
+    <main class="dashboard-main">
+        <div class="cart-page">
+            <div class="cart-page-header">
+                <h1 class="cart-page-title">Shopping Cart</h1>
+                <a href="africasa.html" class="continue-shopping-link">
+                    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                    Continue Shopping
+                </a>
+            </div>
+            
+            <div class="cart-layout">
+                <div class="cart-items-section">
+                    <div id="cart-items-container"></div>
+                </div>
+                
+                <div class="cart-summary-section">
+                    <div class="cart-summary-card">
+                        <h2 class="cart-summary-title">Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="summary-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="summary-shipping">Calculated at checkout</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax</span>
+                            <span id="summary-tax">Calculated at checkout</span>
+                        </div>
+                        <div class="free-shipping-notice" id="shipping-notice">
+                            Add $150 more for FREE shipping!
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span class="value" id="summary-total">$0.00</span>
+                        </div>
+                        
+                        <div class="coupon-section">
+                            <div class="coupon-input-group">
+                                <input type="text" id="coupon-input" placeholder="Coupon code">
+                                <button class="btn btn-outline" id="apply-coupon-btn">Apply</button>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary checkout-btn" id="checkout-btn">
+                            Proceed to Checkout
+                        </button>
+                        <button class="btn continue-btn" onclick="window.location.href='africasa.html'">
+                            Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../../js/api-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/services/africasa-service.js"></script>
+<script src="../../js/dashboard-theme.js"></script>
+<script>
+(function() {
+    var cart = [];
+    var FREE_SHIPPING_THRESHOLD = 150;
+
+    function loadCart() {
+        var saved = localStorage.getItem('mutssafaris_cart');
+        cart = saved ? JSON.parse(saved) : [];
+        renderCart();
+    }
+
+    function saveCart() {
+        localStorage.setItem('mutssafaris_cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function updateQuantity(productId, delta) {
+        var item = cart.find(function(i) { return i.id === productId; });
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                saveCart();
+            }
+        }
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(function(item) { return item.id !== productId; });
+        saveCart();
+        showToast('Item removed from cart', 'info');
+    }
+
+    function renderCart() {
+        var container = document.getElementById('cart-items-container');
+        
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="cart-empty-state">' +
+                '<svg class="cart-empty-icon" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+                '<p class="cart-empty-text">Your cart is empty</p>' +
+                '<a href="africasa.html" class="btn btn-primary">Start Shopping</a>' +
+            '</div>';
+            updateSummary(0);
+            return;
+        }
+
+        var productIds = cart.map(function(c) { return c.id; });
+        window.MutsAfricasaService.getByIds(productIds).then(function(products) {
+            var subtotal = 0;
+            var html = '';
+            
+            cart.forEach(function(cartItem) {
+                var product = products.find(function(p) { return p.id === cartItem.id; });
+                if (product) {
+                    var itemTotal = product.price * cartItem.quantity;
+                    subtotal += itemTotal;
+                    var imgSrc = product.images[0] ? '../../' + product.images[0] : '../../images/africasa/placeholder.jpg';
+                    html += '<div class="cart-item" data-id="' + product.id + '">' +
+                        '<img src="' + imgSrc + '" alt="' + product.name + '" class="cart-item-image" onerror="this.src=\'../../images/africasa/placeholder.jpg\'">' +
+                        '<div class="cart-item-details">' +
+                            '<h3 class="cart-item-name">' + product.name + '</h3>' +
+                            '<span class="cart-item-category">' + product.category + '</span>' +
+                            '<div class="cart-item-price">$' + product.price.toFixed(2) + '</div>' +
+                            '<div class="cart-item-quantity">' +
+                                '<button class="qty-btn" onclick="window.CartPage.updateQty(\'' + product.id + '\', -1)">-</button>' +
+                                '<span class="qty-value">' + cartItem.quantity + '</span>' +
+                                '<button class="qty-btn" onclick="window.CartPage.updateQty(\'' + product.id + '\', 1)">+</button>' +
+                            '</div>' +
+                        '</div>' +
+                        '<button class="cart-item-remove" onclick="window.CartPage.remove(\'' + product.id + '\')">&times;</button>' +
+                    '</div>';
+                }
+            });
+            
+            container.innerHTML = html;
+            updateSummary(subtotal);
+        });
+    }
+
+    function updateSummary(subtotal) {
+        document.getElementById('summary-subtotal').textContent = '$' + subtotal.toFixed(2);
+        
+        var shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 'FREE' : '$15.00';
+        document.getElementById('summary-shipping').textContent = shipping;
+        
+        var tax = subtotal * 0.08;
+        document.getElementById('summary-tax').textContent = '$' + tax.toFixed(2);
+        
+        var total = subtotal + (subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 15) + tax;
+        document.getElementById('summary-total').textContent = '$' + total.toFixed(2);
+        
+        var notice = document.getElementById('shipping-notice');
+        if (subtotal >= FREE_SHIPPING_THRESHOLD) {
+            notice.textContent = 'You qualify for FREE shipping!';
+            notice.classList.add('achieved');
+        } else {
+            var remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+            notice.textContent = 'Add $' + remaining.toFixed(2) + ' more for FREE shipping!';
+            notice.classList.remove('achieved');
+        }
+    }
+
+    function showToast(message, type) {
+        var container = document.getElementById('toast-container');
+        var toast = document.createElement('div');
+        toast.className = 'toast toast-' + type;
+        toast.innerHTML = message;
+        container.appendChild(toast);
+        
+        setTimeout(function() {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(function() {
+            toast.classList.remove('show');
+            setTimeout(function() { toast.remove(); }, 300);
+        }, 3000);
+    }
+
+    // Global functions
+    window.CartPage = {
+        updateQty: function(id, delta) {
+            updateQuantity(id, delta);
+        },
+        remove: function(id) {
+            removeFromCart(id);
+        }
+    };
+
+    // Initialize
+    loadCart();
+})();
+</script>
+</body>
+</html>

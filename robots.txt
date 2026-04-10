@@ -1,0 +1,17 @@
+# Robots.txt - Muts Safaris
+# https://mutssafaris.com/
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://mutssafaris.com/sitemap.xml
+
+# Block admin/private areas
+Disallow: /dashboard/
+Disallow: /js/
+Disallow: /css/
+Disallow: /assets/
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1

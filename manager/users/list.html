@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Users - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="list.html" class="nav-item active">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">Account</div>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>User Management</h1>
+            </div>
+            
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="value" id="total-users">156</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active</h3>
+                    <div class="value" id="active-users">89</div>
+                </div>
+                <div class="stat-card">
+                    <h3>New This Month</h3>
+                    <div class="value" id="new-users">12</div>
+                </div>
+                <div class="stat-card">
+                    <h3>VIP Members</h3>
+                    <div class="value" id="vip-users">8</div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters-bar">
+                <input type="text" class="search-input" id="search-input" placeholder="Search users...">
+                <select class="filter-select" id="tier-filter">
+                    <option value="">All Tiers</option>
+                    <option value="guest">Guest</option>
+                    <option value="traveler">Traveler</option>
+                    <option value="explorer">Explorer</option>
+                    <option value="adventurer">Adventurer</option>
+                    <option value="vip">VIP</option>
+                </select>
+                <select class="filter-select" id="status-filter">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            
+            <!-- Users Table -->
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Tier</th>
+                            <th>Bookings</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table">
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 40px;">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- View User Modal -->
+    <div class="modal-overlay" id="view-modal">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>User Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="user-details">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-secondary" onclick="sendMessageToUser()">Send Message</button>
+                <button class="btn btn-primary" onclick="editUser()">Edit User</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Send Message Modal -->
+    <div class="modal-overlay" id="message-modal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Send Message to User</h2>
+                <button class="modal-close" onclick="closeMessageModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>To</label>
+                    <input type="text" id="msg-to" readonly style="background: var(--bg-secondary);">
+                </div>
+                <div class="form-group">
+                    <label for="msg-type">Message Category *</label>
+                    <select id="msg-type" required>
+                        <option value="">Select Category</option>
+                        <option value="support">Support - General support</option>
+                        <option value="inquiry">Inquiry - Questions</option>
+                        <option value="feedback">Feedback - Follow-ups</option>
+                        <option value="notification">Notification - Updates</option>
+                        <option value="direct">Direct - Direct communication</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="msg-subject">Subject *</label>
+                    <input type="text" id="msg-subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="msg-text">Message *</label>
+                    <textarea id="msg-text" rows="5" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeMessageModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="sendUserMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit User Modal -->
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Edit User</h2>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>User Tier</label>
+                    <select id="edit-tier" class="filter-select" style="width: 100%;">
+                        <option value="guest">Guest</option>
+                        <option value="traveler">Traveler</option>
+                        <option value="explorer">Explorer</option>
+                        <option value="adventurer">Adventurer</option>
+                        <option value="vip">VIP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="edit-status" class="filter-select" style="width: 100%;">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                <button class="btn btn-primary" id="save-user-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/manager-service.js"></script>
+    <script>
+    var currentUserId = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        loadUsers();
+        
+        document.getElementById('search-input').addEventListener('input', debounce(loadUsers, 300));
+        document.getElementById('tier-filter').addEventListener('change', loadUsers);
+        document.getElementById('status-filter').addEventListener('change', loadUsers);
+        
+        document.getElementById('save-user-btn').addEventListener('click', saveUserChanges);
+        
+        function loadUsers() {
+            var tbody = document.getElementById('users-table');
+            
+            var mockUsers = [
+                { id: 'u1', name: 'John Smith', email: 'john@example.com', phone: '+254700000001', tier: 'explorer', bookings: 5, joined: '2025-06-15', status: 'active' },
+                { id: 'u2', name: 'Sarah Johnson', email: 'sarah@example.com', phone: '+254700000002', tier: 'vip', bookings: 12, joined: '2024-03-20', status: 'active' },
+                { id: 'u3', name: 'Mike Williams', email: 'mike@example.com', phone: '+254700000003', tier: 'traveler', bookings: 2, joined: '2026-01-10', status: 'active' },
+                { id: 'u4', name: 'Emily Davis', email: 'emily@example.com', phone: '+254700000004', tier: 'adventurer', bookings: 8, joined: '2025-08-05', status: 'active' },
+                { id: 'u5', name: 'Robert Brown', email: 'robert@example.com', phone: '+254700000005', tier: 'guest', bookings: 0, joined: '2026-03-28', status: 'active' },
+                { id: 'u6', name: 'Lisa Anderson', email: 'lisa@example.com', phone: '+254700000006', tier: 'traveler', bookings: 1, joined: '2026-02-15', status: 'inactive' },
+                { id: 'u7', name: 'David Wilson', email: 'david@example.com', phone: '+254700000007', tier: 'vip', bookings: 15, joined: '2023-11-30', status: 'active' },
+                { id: 'u8', name: 'Jennifer Taylor', email: 'jennifer@example.com', phone: '+254700000008', tier: 'explorer', bookings: 4, joined: '2025-09-12', status: 'active' }
+            ];
+            
+            var search = document.getElementById('search-input').value.toLowerCase();
+            var tier = document.getElementById('tier-filter').value;
+            var status = document.getElementById('status-filter').value;
+            
+            var filtered = mockUsers.filter(function(u) {
+                if (search && u.name.toLowerCase().indexOf(search) === -1 && u.email.toLowerCase().indexOf(search) === -1) return false;
+                if (tier && u.tier !== tier) return false;
+                if (status && u.status !== status) return false;
+                return true;
+            });
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">No users found</td></tr>';
+                return;
+            }
+            
+            var html = '';
+            filtered.forEach(function(u) {
+                var tierBadge = u.tier === 'vip' ? 'badge-warning' : 
+                               u.tier === 'adventurer' ? 'badge-info' :
+                               u.tier === 'explorer' ? 'badge-success' : 'badge-danger';
+                var statusBadge = u.status === 'active' ? 'badge-success' : 'badge-danger';
+                
+                html += '<tr>' +
+                    '<td><strong>' + u.name + '</strong></td>' +
+                    '<td>' + u.email + '</td>' +
+                    '<td>' + u.phone + '</td>' +
+                    '<td><span class="badge ' + tierBadge + '">' + u.tier + '</span></td>' +
+                    '<td>' + u.bookings + '</td>' +
+                    '<td>' + u.joined + '</td>' +
+                    '<td><span class="badge ' + statusBadge + '">' + u.status + '</span></td>' +
+                    '<td class="actions">' +
+                        '<button class="btn btn-sm btn-secondary" onclick="viewUser(\'' + u.id + '\')">View</button> ' +
+                        '<button class="btn btn-sm btn-primary" onclick="quickMessage(\'' + u.id + '\', \'' + u.email + '\', \'' + encodeURIComponent(u.name) + '\')">Message</button>' +
+                    '</td>' +
+                '</tr>';
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        window.viewUser = function(id) {
+            var mockUsers = {
+                'u1': { id: 'u1', name: 'John Smith', email: 'john@example.com', phone: '+254700000001', tier: 'explorer', bookings: 5, spent: '$4,250', joined: '2026-06-15', status: 'active', lastTrip: '2026-03-20' },
+                'u2': { id: 'u2', name: 'Sarah Johnson', email: 'sarah@example.com', phone: '+254700000002', tier: 'vip', bookings: 12, spent: '$12,800', joined: '2024-03-20', status: 'active', lastTrip: '2026-04-01' }
+            };
+            
+            var u = mockUsers[id] || mockUsers['u1'];
+            currentUserId = id;
+            
+            var detailsHtml = '<div style="display: grid; gap: 15px;">' +
+                '<div><strong>Name:</strong> ' + u.name + '</div>' +
+                '<div><strong>Email:</strong> ' + u.email + '</div>' +
+                '<div><strong>Phone:</strong> ' + u.phone + '</div>' +
+                '<div><strong>Member Since:</strong> ' + u.joined + '</div>' +
+                '<div><strong>Tier:</strong> <span class="badge badge-warning">' + u.tier + '</span></div>' +
+                '<div><strong>Total Bookings:</strong> ' + u.bookings + '</div>' +
+                '<div><strong>Total Spent:</strong> ' + u.spent + '</div>' +
+                '<div><strong>Last Trip:</strong> ' + u.lastTrip + '</div>' +
+                '<div><strong>Status:</strong> <span class="badge ' + (u.status === 'active' ? 'badge-success' : 'badge-danger') + '">' + u.status + '</span></div>' +
+            '</div>';
+            
+            document.getElementById('user-details').innerHTML = detailsHtml;
+            document.getElementById('view-modal').classList.add('show');
+        };
+        
+        window.closeModal = function() {
+            document.getElementById('view-modal').classList.remove('show');
+        };
+        
+        window.editUser = function() {
+            document.getElementById('view-modal').classList.remove('show');
+            document.getElementById('edit-modal').classList.add('show');
+        };
+        
+        window.closeEditModal = function() {
+            document.getElementById('edit-modal').classList.remove('show');
+        };
+        
+        // ========== SEND MESSAGE FUNCTIONS ==========
+        var currentUserEmail = '';
+        var currentUserName = '';
+        
+        window.quickMessage = function(id, email, name) {
+            currentUserId = id;
+            currentUserEmail = email;
+            currentUserName = decodeURIComponent(name);
+            
+            document.getElementById('msg-to').value = currentUserName + ' (' + currentUserEmail + ')';
+            document.getElementById('msg-type').value = '';
+            document.getElementById('msg-subject').value = '';
+            document.getElementById('msg-text').value = '';
+            
+            document.getElementById('message-modal').classList.add('show');
+        };
+        
+        window.sendMessageToUser = function() {
+            var mockUsers = {
+                'u1': { id: 'u1', name: 'John Smith', email: 'john@example.com' },
+                'u2': { id: 'u2', name: 'Sarah Johnson', email: 'sarah@example.com' }
+            };
+            var u = mockUsers[currentUserId] || { name: currentUserId, email: currentUserId + '@example.com' };
+            
+            currentUserEmail = u.email;
+            currentUserName = u.name;
+            
+            document.getElementById('msg-to').value = u.name + ' (' + u.email + ')';
+            document.getElementById('msg-type').value = '';
+            document.getElementById('msg-subject').value = '';
+            document.getElementById('msg-text').value = '';
+            
+            document.getElementById('view-modal').classList.remove('show');
+            document.getElementById('message-modal').classList.add('show');
+        };
+        
+        window.closeMessageModal = function() {
+            document.getElementById('message-modal').classList.remove('show');
+        };
+        
+        window.sendUserMessage = function() {
+            var type = document.getElementById('msg-type').value;
+            var subject = document.getElementById('msg-subject').value.trim();
+            var text = document.getElementById('msg-text').value.trim();
+            
+            if (!type || !subject || !text) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            var messageData = {
+                to: currentUserEmail,
+                name: currentUserName,
+                type: type,
+                subject: subject,
+                message: text,
+                sentAt: new Date().toISOString()
+            };
+            
+            // Store in localStorage for demo
+            var sentMessages = JSON.parse(localStorage.getItem('muts_sent_messages') || '[]');
+            sentMessages.push(messageData);
+            localStorage.setItem('muts_sent_messages', JSON.stringify(sentMessages));
+            
+            // In production: ManagerService.sendMessageToUser(messageData);
+            
+            showToast('Message sent to ' + currentUserEmail);
+            closeMessageModal();
+        };
+        
+        function saveUserChanges() {
+            // In production, call API
+            showToast('User updated successfully');
+            closeEditModal();
+            loadUsers();
+        }
+        
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, wait);
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

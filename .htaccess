@@ -1,0 +1,23 @@
+# Muts Safaris - HTTPS Enforcement
+# Add to .htaccess in web root
+
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# HSTS - Strict Transport Security (1 year)
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+# Prevent MIME type sniffing
+Header always set X-Content-Type-Options "nosniff"
+
+# X-Frame-Options - Prevent clickjacking
+Header always set X-Frame-Options "SAMEORIGIN"
+
+# X-XSS Protection
+Header always set X-XSS-Protection "1; mode=block"
+
+# Referrer Policy
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
