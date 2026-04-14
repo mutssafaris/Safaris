@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a1a">
+    <meta name="theme-color" content="#f8fbff">
     <title>Gallery - Muts Safaris</title>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="icon" href="../../assets/favicon/favicon.ico">
@@ -20,7 +20,7 @@
 
         .gallery-title {
             font-family: 'Orbitron', sans-serif;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1.4rem;
             margin: 0;
         }
@@ -37,7 +37,7 @@
             gap: 0.5rem;
             padding: 0.6rem 1rem;
             background: var(--accent);
-            color: #000;
+            color: var(--text-on-accent);
             border: none;
             border-radius: 0;
             font-family: 'Share Tech Mono', monospace;
@@ -80,7 +80,7 @@
         .gallery-filter-btn:hover,
         .gallery-filter-btn.active {
             background: var(--accent);
-            color: #000;
+            color: var(--text-on-accent);
             border-color: var(--accent);
         }
 
@@ -103,7 +103,7 @@
 
         .gallery-item:hover {
             border-color: var(--accent);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--shadow-glow);
+            box-shadow: 0 8px 30px var(--shadow), 0 0 20px var(--shadow-glow);
             transform: translateY(-4px);
         }
 
@@ -141,7 +141,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: var(--modal-backdrop);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -164,7 +164,7 @@
             max-height: 85vh;
             object-fit: contain;
             border: 2px solid var(--border-glow);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 50px var(--shadow);
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -178,13 +178,13 @@
             left: 0;
             right: 0;
             padding: 1rem;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            background: linear-gradient(transparent, var(--overlay-color));
             text-align: center;
         }
 
         .lightbox-title {
             font-family: 'Orbitron', sans-serif;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
@@ -199,9 +199,9 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--overlay-color);
             border: 1px solid var(--border);
-            color: #fff;
+            color: var(--text-primary);
             width: 40px;
             height: 40px;
             font-size: 1.5rem;
@@ -215,16 +215,16 @@
 
         .lightbox-close:hover {
             background: var(--accent);
-            color: #000;
+            color: var(--text-on-accent);
         }
 
         .lightbox-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--overlay-color);
             border: 1px solid var(--border);
-            color: #fff;
+            color: var(--text-primary);
             width: 50px;
             height: 50px;
             font-size: 1.5rem;
@@ -238,7 +238,7 @@
 
         .lightbox-nav:hover {
             background: var(--accent);
-            color: #000;
+            color: var(--text-on-accent);
         }
 
         .lightbox-nav.prev {
@@ -253,7 +253,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--overlay-color);
             border: 1px solid var(--border);
             color: var(--accent);
             padding: 0.5rem 1rem;
@@ -276,7 +276,7 @@
             left: 0;
             right: 0;
             padding: 1rem;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            background: linear-gradient(transparent, var(--overlay-color));
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -286,7 +286,7 @@
         }
 
         .gallery-item-title {
-            color: #fff;
+            color: var(--text-primary);
             font-family: 'Orbitron', sans-serif;
             font-size: 0.85rem;
             margin: 0 0 0.25rem;
@@ -310,7 +310,7 @@
             height: 20px;
             border-radius: 50%;
             background: var(--accent);
-            color: #000;
+            color: var(--text-on-accent);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -329,7 +329,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: var(--modal-backdrop);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -365,7 +365,7 @@
 
         .upload-modal-title {
             font-family: 'Orbitron', sans-serif;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1.1rem;
             margin: 0 0 1.5rem;
             padding-bottom: 0.75rem;
@@ -390,17 +390,14 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFB800' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
             padding-right: 2.5rem;
             cursor: pointer;
-            color: #fff;
+            color: var(--text-primary);
         }
 
         .upload-form-select option {
-            background: #1a1a2e;
-            color: #fff;
+            background: var(--surface-secondary);
+            color: var(--text-primary);
             padding: 0.5rem;
         }
 
@@ -421,7 +418,7 @@
             padding: 0.75rem;
             background: var(--bg-input);
             border: 1px solid var(--border);
-            color: #fff;
+            color: var(--text-primary);
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.85rem;
             cursor: pointer;
@@ -475,17 +472,17 @@
 
         .custom-select-option {
             padding: 0.75rem;
-            color: #fff;
+            color: var(--text-primary);
             cursor: pointer;
             transition: background 0.2s;
         }
 
         .custom-select-option:hover {
-            background: rgba(255, 184, 0, 0.2);
+            background: var(--surface-hover);
         }
 
         .custom-select-option.selected {
-            background: rgba(255, 184, 0, 0.3);
+            background: var(--surface-hover);
             color: var(--accent);
         }
 
@@ -496,7 +493,7 @@
             padding: 0.75rem;
             background: var(--bg-input);
             border: 1px solid var(--border);
-            color: #fff;
+            color: var(--text-primary);
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.85rem;
         }
@@ -519,7 +516,7 @@
         .upload-dropzone:hover,
         .upload-dropzone.dragover {
             border-color: var(--accent);
-            background: rgba(255, 184, 0, 0.05);
+            background: var(--surface-hover);
         }
 
         .upload-dropzone-icon {
@@ -544,7 +541,7 @@
             width: 100%;
             padding: 0.75rem;
             background: var(--accent);
-            color: #000;
+            color: var(--text-on-accent);
             border: none;
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.85rem;

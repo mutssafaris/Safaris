@@ -3,7 +3,31 @@
     if (window.mutsDashboardInitialized) return;
     window.mutsDashboardInitialized = true;
 
+    var THEME_STORAGE_KEY = 'muts-safaris-theme';
+    var THEME_DARK = 'dark';
+    var THEME_LIGHT = 'light';
     var isDashboardPage = window.location.pathname.indexOf('/pages/dashboard/') !== -1;
+
+    function applyStoredTheme() {
+        var theme = THEME_LIGHT;
+
+        try {
+            var storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+            if (storedTheme === THEME_DARK || storedTheme === THEME_LIGHT) {
+                theme = storedTheme;
+            }
+        } catch (e) {
+            theme = THEME_LIGHT;
+        }
+
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme === THEME_DARK ? 'dark' : 'light';
+
+        var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', theme === THEME_DARK ? '#050510' : '#f8fbff');
+        }
+    }
 
     function getImagePath(relativePath) {
         if (isDashboardPage) {
@@ -742,6 +766,8 @@
             noResults.classList.toggle('visible', visibleCount === 0 && hasFilters);
         }
     }
+
+    applyStoredTheme();
 
     // Init
     document.addEventListener('DOMContentLoaded', function () {

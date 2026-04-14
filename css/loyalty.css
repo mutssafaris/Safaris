@@ -1,23 +1,25 @@
 /* Loyalty Component Styles */
 
 .loyalty-card {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px var(--shadow);
     max-width: 400px;
+    border: 1px solid var(--border);
 }
 
 .loyalty-header {
     padding: 24px;
-    color: #fff;
+    color: var(--text-primary);
     position: relative;
 }
 
 .tier-badge {
     display: inline-block;
     padding: 4px 12px;
-    background: rgba(255,255,255,0.2);
+    background: var(--bg-hover);
+    color: var(--accent-dark);
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
@@ -60,12 +62,12 @@
     display: block;
     font-size: 24px;
     font-weight: 600;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .stat-label {
     font-size: 12px;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .next-tier-progress {
@@ -76,26 +78,26 @@
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 8px;
 }
 
 .progress-bar {
     height: 8px;
-    background: #eee;
+    background: var(--bg-secondary);
     border-radius: 4px;
     overflow: hidden;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #f39c12, #e67e22);
+    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
     border-radius: 4px;
     transition: width 0.3s ease;
 }
 
 .referral-section {
-    background: #f8f9fa;
+    background: var(--bg-secondary);
     padding: 16px;
     border-radius: 12px;
     margin-bottom: 20px;
@@ -104,7 +106,7 @@
 .referral-section h4 {
     margin: 0 0 12px 0;
     font-size: 14px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .referral-code {
@@ -116,19 +118,19 @@
 .referral-code code {
     flex: 1;
     padding: 10px 16px;
-    background: #fff;
-    border: 2px dashed #ddd;
+    background: var(--bg-card);
+    border: 2px dashed var(--border);
     border-radius: 8px;
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 2px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .copy-btn {
     padding: 10px 16px;
-    background: #3498db;
-    color: #fff;
+    background: var(--accent);
+    color: var(--text-on-accent);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -137,12 +139,12 @@
 }
 
 .copy-btn:hover {
-    background: #2980b9;
+    background: var(--accent-dark);
 }
 
 .referral-info {
     font-size: 12px;
-    color: #666;
+    color: var(--text-secondary);
     margin-top: 12px;
 }
 
@@ -162,7 +164,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: var(--modal-backdrop);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -178,7 +180,7 @@
 }
 
 .loyalty-modal .modal-content {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: 16px;
     max-width: 400px;
     width: 90%;
@@ -191,7 +193,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border);
 }
 
 .loyalty-modal .modal-header h2 {
@@ -204,7 +206,7 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .loyalty-modal .modal-body {
@@ -223,7 +225,7 @@
 
 .balance-info strong {
     font-size: 20px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .redeem-options {
@@ -236,16 +238,16 @@
     display: flex;
     justify-content: space-between;
     padding: 16px;
-    background: #f8f9fa;
-    border: 2px solid #eee;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .redeem-option:hover {
-    border-color: #3498db;
-    background: #f0f7ff;
+    border-color: var(--accent);
+    background: var(--bg-hover);
 }
 
 .redeem-option .points {
@@ -254,7 +256,7 @@
 }
 
 .redeem-option .value {
-    color: #27ae60;
+    color: var(--success);
     font-weight: 500;
 }
 
@@ -269,7 +271,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border);
 }
 
 .history-item:last-child {
@@ -283,12 +285,12 @@
 .history-desc {
     display: block;
     font-size: 14px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .history-date {
     font-size: 12px;
-    color: #999;
+    color: var(--text-muted);
 }
 
 .history-points {
@@ -297,11 +299,11 @@
 }
 
 .history-points.positive {
-    color: #27ae60;
+    color: var(--success);
 }
 
 .history-points.negative {
-    color: #e74c3c;
+    color: var(--danger);
 }
 
 /* Toast */
@@ -310,8 +312,8 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #333;
-    color: #fff;
+    background: var(--surface-elevated);
+    color: var(--text-primary);
     padding: 12px 24px;
     border-radius: 8px;
     font-size: 14px;
@@ -326,52 +328,52 @@
 /* Loading & Empty */
 .loading, .empty, .login-prompt {
     text-align: center;
-    color: #999;
+    color: var(--text-muted);
     padding: 20px;
     font-size: 14px;
 }
 
 /* Dark Theme */
 .theme-dark .loyalty-card {
-    background: #1a1a2e;
+    background: var(--surface-card);
 }
 
 .theme-dark .stat-value {
-    color: #eee;
+    color: var(--text-primary);
 }
 
 .theme-dark .stat-label {
-    color: #aaa;
+    color: var(--text-secondary);
 }
 
 .theme-dark .referral-section {
-    background: #252540;
+    background: var(--surface-secondary);
 }
 
 .theme-dark .referral-code code {
-    background: #1a1a2e;
-    border-color: #444;
-    color: #eee;
+    background: var(--surface-card);
+    border-color: var(--border);
+    color: var(--text-primary);
 }
 
 .theme-dark .redeem-option {
-    background: #252540;
-    border-color: #444;
+    background: var(--surface-secondary);
+    border-color: var(--border);
 }
 
 .theme-dark .redeem-option:hover {
-    border-color: #3498db;
-    background: #1e3a5f;
+    border-color: var(--accent);
+    background: var(--surface-hover);
 }
 
 .theme-dark .modal-content {
-    background: #1a1a2e;
+    background: var(--surface-card);
 }
 
 .theme-dark .modal-header {
-    border-color: #333;
+    border-color: var(--border);
 }
 
 .theme-dark .history-item {
-    border-color: #333;
+    border-color: var(--border);
 }

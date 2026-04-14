@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a1a">
+    <meta name="theme-color" content="#f8fbff">
     <title>Shopping Cart - Muts Safaris</title>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="icon" href="../../assets/favicon/favicon.ico">
@@ -26,7 +26,7 @@
         .cart-page-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
-            color: #fff;
+            color: var(--text-primary);
             margin: 0;
         }
 
@@ -83,7 +83,7 @@
         }
 
         .cart-item-name {
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1rem;
             font-weight: 600;
             margin: 0 0 0.5rem;
@@ -130,7 +130,7 @@
         }
 
         .qty-value {
-            color: #fff;
+            color: var(--text-primary);
             font-size: 0.9rem;
             min-width: 30px;
             text-align: center;
@@ -148,7 +148,7 @@
         }
 
         .cart-item-remove:hover {
-            color: #ff4444;
+            color: var(--danger);
         }
 
         .cart-empty-state {
@@ -183,7 +183,7 @@
 
         .cart-summary-title {
             font-family: 'Orbitron', sans-serif;
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1.1rem;
             margin: 0 0 1.5rem;
             padding-bottom: 0.75rem;
@@ -202,7 +202,7 @@
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid var(--border);
-            color: #fff;
+            color: var(--text-primary);
             font-size: 1.1rem;
             font-weight: bold;
         }
@@ -213,7 +213,7 @@
         }
 
         .free-shipping-notice {
-            background: rgba(255, 184, 0, 0.1);
+            background: var(--surface-hover);
             border: 1px solid var(--accent);
             padding: 0.75rem;
             margin: 1rem 0;
@@ -223,9 +223,9 @@
         }
 
         .free-shipping-notice.achieved {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: #00ff88;
-            color: #00ff88;
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: var(--success);
         }
 
         .coupon-section {
@@ -242,7 +242,7 @@
             padding: 0.6rem;
             background: var(--bg-input);
             border: 1px solid var(--border);
-            color: #fff;
+            color: var(--text-primary);
             font-family: inherit;
         }
 

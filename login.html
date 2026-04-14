@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a1a">
+    <meta name="theme-color" content="#f8fbff">
     <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
     <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
     <meta name="author" content="Muts Safaris">
@@ -21,8 +21,24 @@
     <link rel="canonical" href="https://mutssafaris.com/login">
     <title>Muts Safaris - The Future of African Exploration</title>
     <link rel="stylesheet" href="css/login-landing.css">
+    <link rel="stylesheet" href="css/themes.css">
     <link rel="icon" href="assets/favicon/favicon.ico">
     <link rel="manifest" href="manifest.json">
+    <script>
+        (function () {
+            var theme = 'light';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'dark' || stored === 'light') {
+                    theme = stored;
+                }
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', theme === 'dark' ? '#050510' : '#f8fbff');
+        })();
+    </script>
 </head>
 <body>
     
@@ -32,7 +48,10 @@
 
     <nav class="auth-navbar">
         <a href="#" class="auth-logo">MUTS_SAFARIS</a>
-        <button class="nav-login-btn" id="open-auth">LOGIN</button>
+        <div class="nav-controls">
+            <div id="theme-switcher-container"></div>
+            <button class="nav-login-btn" id="open-auth">LOGIN</button>
+        </div>
     </nav>
 
     <!-- HERO -->
@@ -271,7 +290,7 @@
         <div class="auth-container">
             <div class="auth-branding-panel">
                 <div class="split-badge">SECURE_TRANSMISSION</div>
-                <h3 style="font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #fff; margin: 1rem 0;">AUTHENTICATE</h3>
+                <h3 style="font-family: var(--font-family-heading); font-size: 1.6rem; color: var(--text-primary); margin: 1rem 0;">AUTHENTICATE</h3>
                 <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; border-left: 1px solid var(--auth-accent); padding-left: 1rem;">
                     Lets connect to explore<br>
                     Muts will take you to places beyond Imagination
@@ -436,6 +455,7 @@
         </div>
     </div>
 
+    <script src="js/theme-switcher.js"></script>
     <script src="js/auth.js"></script>
     <script>
     (function() {

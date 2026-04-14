@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a1a">
+    <meta name="theme-color" content="#f8fbff">
     <title>Ledger - Muts Safaris</title>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="icon" href="../../assets/favicon/favicon.ico">
@@ -16,7 +16,7 @@
 
         /* Sci-Fi Table Styling */
         .transactions-table-container {
-            background: rgba(255, 184, 0, 0.02);
+            background: var(--surface-card);
             border: 1px solid var(--border-glow);
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
             padding: 1px;
@@ -27,7 +27,7 @@
             width: 100%;
             border-collapse: collapse;
             font-family: 'Share Tech Mono', monospace;
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--surface-secondary);
         }
 
         .transactions-table th {
@@ -39,25 +39,25 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             border-bottom: 1px solid var(--border-glow);
-            background: rgba(255, 184, 0, 0.05);
+            background: var(--surface-hover);
         }
 
         .transactions-table td {
             padding: 1.2rem 1.5rem;
             font-size: 0.9rem;
             color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255, 184, 0, 0.05);
+            border-bottom: 1px solid var(--border-color);
             transition: all 0.2s;
         }
 
         .transactions-table tr:hover td {
-            background: rgba(255, 184, 0, 0.03);
-            color: #fff;
+            background: var(--surface-hover);
+            color: var(--text-primary);
         }
 
         .txn-id { color: var(--text-muted); font-size: 0.7rem; }
         .txn-amount { font-weight: 700; color: var(--accent); }
-        .txn-amount.negative { color: #ff4466; }
+        .txn-amount.negative { color: var(--danger); }
 
         .status-pill {
             padding: 0.3rem 0.8rem;
@@ -68,8 +68,8 @@
             clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
         }
 
-        .status-completed { background: rgba(0, 255, 136, 0.1); color: var(--success); border: 1px solid rgba(0, 255, 136, 0.2); }
-        .status-pending { background: rgba(255, 184, 0, 0.1); color: var(--warning); border: 1px solid rgba(255, 184, 0, 0.2); }
+        .status-completed { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+        .status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning); }
 
         .method-tag {
             font-size: 0.7rem;

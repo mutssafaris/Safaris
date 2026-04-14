@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050510">
+    <meta name="theme-color" content="#f8fbff">
     <meta name="description" content="Read this article on Muts Safaris travel blog. Expert safari guides, wildlife tips, and travel stories from Kenya.">
     <title>Blog Post - Muts Safaris</title>
     <link rel="stylesheet" href="../../../css/dashboard-theme.css">
@@ -57,13 +57,13 @@
     var postId = urlParams.get('id');
 
     if (!postId) {
-        document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:#fff;">Post Not Found</h2><p style="color:var(--text-muted);">This article may have been removed or the link is incorrect.</p><a href="../blog.html" class="btn btn-primary">Back to Blog</a></div>';
+        document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:var(--text-primary);">Post Not Found</h2><p style="color:var(--text-muted);">This article may have been removed or the link is incorrect.</p><a href="../blog.html" class="btn btn-primary">Back to Blog</a></div>';
         return;
     }
 
     window.MutsBlog.loadData(function(data) {
         if (!data) {
-            document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:#fff;">Error Loading Article</h2><a href="../blog.html" class="btn btn-primary">Back to Blog</a></div>';
+            document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:var(--text-primary);">Error Loading Article</h2><a href="../blog.html" class="btn btn-primary">Back to Blog</a></div>';
             return;
         }
 
@@ -74,12 +74,12 @@
         }
 
         if (!post) {
-            document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:#fff;">Post Not Found</h2><p style="color:var(--text-muted);">This article may have been removed.</p><a href="../blog.html" class="btn btn-primary">Back to Blog</a></div>';
+            document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:var(--text-primary);">Post Not Found</h2><p style="color:var(--text-muted);">This article may have been removed.</p><a href="../blog.html" class="btn btn-primary">Back to Blog</a></div>';
             return;
         }
 
         if (post.status !== 'published' && post.isUserPost) {
-            document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:#fff;">Post Pending Review</h2><p style="color:var(--text-muted);">This post is currently under review and not yet published.</p><a href="../my-blogs.html" class="btn btn-primary">Back to My Blogs</a></div>';
+            document.getElementById('article-content').innerHTML = '<div style="text-align:center;padding:3rem;"><h2 style="color:var(--text-primary);">Post Pending Review</h2><p style="color:var(--text-muted);">This post is currently under review and not yet published.</p><a href="../my-blogs.html" class="btn btn-primary">Back to My Blogs</a></div>';
             return;
         }
 

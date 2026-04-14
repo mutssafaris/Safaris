@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a1a">
+    <meta name="theme-color" content="#f8fbff">
     <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
     <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
     <meta name="author" content="Muts Safaris">
@@ -47,23 +47,39 @@
     }
     </script>
     <title>Muts Safaris - Initializing Terminal</title>
+    <link rel="stylesheet" href="css/themes.css">
     <link rel="icon" href="assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'light';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'dark' || stored === 'light') {
+                    theme = stored;
+                }
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', theme === 'dark' ? '#050510' : '#f8fbff');
+        })();
+    </script>
     <style>
         body {
             margin: 0;
-            background: #02020a;
+            background: var(--bg-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Share Tech Mono', monospace;
-            color: #FFB800;
+            font-family: var(--font-family);
+            color: var(--accent);
         }
         .loader {
             text-align: center;
         }
         .loader h1 {
-            color: #fff;
+            color: var(--text-white);
             font-size: 1.5rem;
             font-weight: 300;
             margin-bottom: 1rem;
@@ -71,7 +87,7 @@
             text-transform: uppercase;
         }
         .status-text {
-            color: #FFB800;
+            color: var(--accent);
             font-size: 0.8rem;
             opacity: 0.7;
         }
@@ -87,7 +103,7 @@
             position: absolute;
             width: 50px;
             height: 100%;
-            background: #FFB800;
+            background: var(--accent);
             box-shadow: 0 0 10px #FFB800;
             animation: move 1.5s infinite ease-in-out;
         }
