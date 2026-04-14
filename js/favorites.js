@@ -5,6 +5,13 @@
 
     var FAVORITES_KEY = 'muts_favorites';
     var DESTINATIONS_KEY = 'muts_destinations_cache';
+<<<<<<< HEAD
+=======
+    var API_BASE = window.API_BASE || '/api';
+    
+    // Store favorites from API
+    var apiFavorites = [];
+>>>>>>> ab0edb5 (added few features)
 
     var destinationsData = null;
 
@@ -14,6 +21,80 @@
         return './';
     }
 
+<<<<<<< HEAD
+=======
+    // Try to sync with backend API
+    function syncWithAPI() {
+        // First get favorites from API
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', API_BASE + '/favorites', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        
+        // Include auth token if available
+        var session = localStorage.getItem('muts_user_session');
+        if (session) {
+            try {
+                var sessionObj = JSON.parse(session);
+                if (sessionObj.token) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + sessionObj.token);
+                }
+            } catch (e) {}
+        }
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success && response.favorites) {
+                        apiFavorites = response.favorites.map(function(f) { return f.itemId; });
+                    }
+                } catch (e) {}
+            }
+        };
+        xhr.send();
+    }
+
+    // Try to add favorite via API
+    function addFavoriteAPI(itemType, itemId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', API_BASE + '/favorites', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        
+        var session = localStorage.getItem('muts_user_session');
+        if (session) {
+            try {
+                var sessionObj = JSON.parse(session);
+                if (sessionObj.token) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + sessionObj.token);
+                }
+            } catch (e) {}
+        }
+        
+        xhr.send(JSON.stringify({ itemType: itemType, itemId: itemId }));
+    }
+
+    // Try to remove favorite via API
+    function removeFavoriteAPI(itemType, itemId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE', API_BASE + '/favorites/' + itemType + '/' + itemId, true);
+        
+        var session = localStorage.getItem('muts_user_session');
+        if (session) {
+            try {
+                var sessionObj = JSON.parse(session);
+                if (sessionObj.token) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + sessionObj.token);
+                }
+            } catch (e) {}
+        }
+        
+        xhr.send();
+    }
+
+    // Initialize - try to sync with API
+    syncWithAPI();
+
+>>>>>>> ab0edb5 (added few features)
     function loadDestinations(callback) {
         if (destinationsData) {
             callback(destinationsData);
@@ -63,8 +144,15 @@
         var index = favs.indexOf(destinationId);
         if (index === -1) {
             favs.push(destinationId);
+<<<<<<< HEAD
         } else {
             favs.splice(index, 1);
+=======
+            addFavoriteAPI('destination', destinationId);
+        } else {
+            favs.splice(index, 1);
+            removeFavoriteAPI('destination', destinationId);
+>>>>>>> ab0edb5 (added few features)
         }
         localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
         return index === -1;

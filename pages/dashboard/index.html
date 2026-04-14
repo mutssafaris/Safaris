@@ -15,6 +15,13 @@
     <link rel="canonical" href="https://mutssafaris.com/dashboard">
     <title>Dashboard - Muts Safaris</title>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
+<<<<<<< HEAD
+=======
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="../../css/i18n.css">
+    <link rel="stylesheet" href="../../css/notifications.css">
+    <link rel="stylesheet" href="../../css/loyalty.css">
+>>>>>>> ab0edb5 (added few features)
     <link rel="icon" href="../../assets/favicon/favicon.ico">
 </head>
 <body>
@@ -56,6 +63,11 @@
                 <div class="search-bar">
                     <input type="text" placeholder="Search destinations..." id="dashboard-search">
                 </div>
+<<<<<<< HEAD
+=======
+                <div id="language-switcher-container" style="display:inline-block;margin-right:15px;vertical-align:middle;"></div>
+                <div id="notification-ui-container" style="display:inline-block;margin-right:15px;vertical-align:middle;cursor:pointer;"></div>
+>>>>>>> ab0edb5 (added few features)
                 <div class="user-profile">
                     <div class="user-info">
                         <span class="user-name" id="user-name">Traveler</span>
@@ -65,11 +77,16 @@
                 </div>
             </header>
 
+<<<<<<< HEAD
             <section class="dashboard-welcome">
+=======
+            <section class="dashboard-welcome page-enter-up">
+>>>>>>> ab0edb5 (added few features)
                 <h1>Hello <span id="greeting-name">Traveler</span>!</h1>
                 <p class="welcome-subtitle">Welcome back and explore the world.</p>
             </section>
 
+<<<<<<< HEAD
             <section class="dashboard-section">
                 <div class="section-header">
                     <h2>Popular Safari Destinations</h2>
@@ -86,20 +103,46 @@
                             <button id="cal-prev">&#8249;</button>
                             <span id="cal-month-year"></span>
                             <button id="cal-next">&#8250;</button>
+=======
+            <section class="dashboard-section scroll-reveal">
+                <div class="section-header">
+                    <h2>Popular Safari Destinations</h2>
+                    <a href="tours.html" class="view-all hover-lift">View All</a>
+                </div>
+                <div class="destination-cards stagger" id="destination-cards"></div>
+            </section>
+
+            <div class="dashboard-grid-2col">
+                <section class="dashboard-section scroll-reveal">
+                    <div class="section-header">
+                        <h2>Calendar</h2>
+                        <div class="calendar-nav">
+                            <button id="cal-prev" class="hover-scale">&#8249;</button>
+                            <span id="cal-month-year"></span>
+                            <button id="cal-next" class="hover-scale">&#8250;</button>
+>>>>>>> ab0edb5 (added few features)
                         </div>
                     </div>
                     <div class="dashboard-calendar" id="calendar-widget"></div>
                 </section>
 
+<<<<<<< HEAD
                 <section class="dashboard-section">
                     <div class="section-header">
                         <h2>Bookings</h2>
                         <a href="my-trips.html" class="view-all">View All</a>
+=======
+                <section class="dashboard-section scroll-reveal">
+                    <div class="section-header">
+                        <h2>Bookings</h2>
+                        <a href="my-trips.html" class="view-all hover-lift">View All</a>
+>>>>>>> ab0edb5 (added few features)
                     </div>
                     <div class="bookings-list" id="bookings-list"></div>
                 </section>
             </div>
 
+<<<<<<< HEAD
             <section class="dashboard-section">
                 <div class="dashboard-tabs">
                     <button class="tab-btn active" data-tab="tours">Tours</button>
@@ -107,6 +150,15 @@
                     <button class="tab-btn" data-tab="beaches">Beaches</button>
                     <button class="tab-btn" data-tab="hotels">Hotels</button>
                     <button class="tab-btn" data-tab="experiences">Experiences</button>
+=======
+            <section class="dashboard-section scroll-reveal">
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active hover-scale" data-tab="tours">Tours</button>
+                    <button class="tab-btn hover-scale" data-tab="packages">Packages</button>
+                    <button class="tab-btn hover-scale" data-tab="beaches">Beaches</button>
+                    <button class="tab-btn hover-scale" data-tab="hotels">Hotels</button>
+                    <button class="tab-btn hover-scale" data-tab="experiences">Experiences</button>
+>>>>>>> ab0edb5 (added few features)
                 </div>
 
                 <div class="tab-content active" id="tab-tours"></div>
@@ -116,7 +168,11 @@
                 <div class="tab-content" id="tab-experiences"></div>
             </section>
 
+<<<<<<< HEAD
             <section class="discount-banner" id="discount-banner">
+=======
+            <section class="discount-banner page-enter-up" id="discount-banner">
+>>>>>>> ab0edb5 (added few features)
                 <div class="banner-content">
                     <h3>50% Discount!</h3>
                     <p>Get a discount on hotel stays and don't miss it.</p>
@@ -262,5 +318,51 @@
         }
     })();
     </script>
+<<<<<<< HEAD
+=======
+    
+    <!-- Enhanced Dashboard Components -->
+    <link rel="stylesheet" href="../../css/i18n.css">
+    <link rel="stylesheet" href="../../css/notifications.css">
+    <link rel="stylesheet" href="../../css/loyalty.css">
+    <script src="../../js/i18n.js"></script>
+    <script src="../../js/language-switcher.js"></script>
+    <script src="../../js/notifications.js"></script>
+    <script src="../../js/notification-ui.js"></script>
+    <script src="../../js/loyalty.js"></script>
+    <script src="../../js/loyalty-ui.js"></script>
+    <script src="../../js/recommendations.js"></script>
+    <script src="../../js/recommendations-ui.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Language Switcher
+        var langContainer = document.getElementById('language-switcher-container');
+        if (langContainer) MutsLanguageSwitcher.init('language-switcher-container');
+        
+        // Notification Bell
+        var notifContainer = document.getElementById('notification-ui-container');
+        if (notifContainer) MutsNotificationUI.init('notification-ui-container');
+        
+        // Loyalty in Profile Menu
+        var profileLink = document.querySelector('a[href="profile.html"]');
+        if (profileLink) {
+            var navList = profileLink.closest('ul');
+            if (navList) {
+                var loyaltyItem = document.createElement('li');
+                loyaltyItem.innerHTML = '<a href="loyalty.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-label">My Points</span></a>';
+                navList.appendChild(loyaltyItem);
+            }
+        }
+        
+        // Initialize animations
+        if (window.AnimationController) {
+            AnimationController.init();
+        }
+    });
+    </script>
+    
+    <!-- Animation Controller -->
+    <script src="../../js/animations.js"></script>
+>>>>>>> ab0edb5 (added few features)
 </body>
 </html>

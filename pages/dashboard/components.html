@@ -1,0 +1,120 @@
+<!-- Muts Safaris - Enhanced Dashboard Components -->
+<!-- Add this before </body> on dashboard pages -->
+
+<!-- Load our new CSS -->
+<link rel="stylesheet" href="../../css/i18n.css">
+<link rel="stylesheet" href="../../css/notifications.css">
+<link rel="stylesheet" href="../../css/loyalty.css">
+
+<!-- Load our new JS -->
+<script src="../../js/i18n.js"></script>
+<script src="../../js/language-switcher.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/notification-ui.js"></script>
+<script src="../../js/loyalty.js"></script>
+<script src="../../js/loyalty-ui.js"></script>
+<script src="../../js/recommendations.js"></script>
+<script src="../../js/recommendations-ui.js"></script>
+
+<script>
+// Initialize components on page load
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Initialize Language Switcher (top right of topbar)
+    var langContainer = document.createElement('div');
+    langContainer.id = 'language-switcher-container';
+    langContainer.style.cssText = 'display: inline-block; margin-right: 20px;';
+    
+    var topbar = document.querySelector('.dashboard-topbar');
+    if (topbar) {
+        topbar.insertBefore(langContainer, topbar.querySelector('.user-profile'));
+        MutsLanguageSwitcher.init('language-switcher-container');
+    }
+    
+    // 2. Initialize Notification Bell (next to user profile)
+    var notifContainer = document.createElement('div');
+    notifContainer.id = 'notification-ui-container';
+    notifContainer.style.cssText = 'display: inline-block; margin-right: 15px; cursor: pointer;';
+    
+    if (topbar) {
+        topbar.insertBefore(notifContainer, topbar.querySelector('.user-profile'));
+        MutsNotificationUI.init('notification-ui-container');
+    }
+    
+    // 3. Initialize Loyalty Points in profile dropdown
+    initLoyaltyInProfile();
+    
+    // 4. Load personalized recommendations if user is logged in
+    loadRecommendations();
+    
+    // 5. Record view for recommendations (if on a hotel/destination page)
+    recordPageView();
+});
+
+function initLoyaltyInProfile() {
+    // Add loyalty link to the profile/settings menu
+    var profileLink = document.querySelector('a[href="profile.html"]');
+    if (profileLink) {
+        var loyaltyItem = document.createElement('li');
+        loyaltyItem.innerHTML = '<a href="loyalty.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-label">My Points</span></a>';
+        
+        var navList = profileLink.closest('ul');
+        if (navList) {
+            navList.appendChild(loyaltyItem);
+        }
+    }
+}
+
+function loadRecommendations() {
+    // Check if user is logged in
+    var session = localStorage.getItem('muts_user_session');
+    if (!session) return;
+    
+    try {
+        var user = JSON.parse(session);
+        if (user && user.userId) {
+            // Get personalized recommendations and show in dashboard
+            if (document.getElementById('recommendations-section')) {
+                MutsRecommendationsUI.renderPersonal('recommendations-section');
+            }
+        }
+    } catch(e) {}
+}
+
+function recordPageView() {
+    // Get current page info
+    var path = window.location.pathname;
+    var itemType = null;
+    var itemId = null;
+    
+    // Determine item type from URL
+    if (path.includes('/hotels/')) {
+        itemType = 'hotel';
+        var match = path.match(/hotels\/[^/]+\/([^/]+)\.html/);
+        if (match) itemId = match[1];
+    } else if (path.includes('/tours/')) {
+        itemType = 'tour';
+        var match = path.match(/tours\/([^/]+)\.html/);
+        if (match) itemId = match[1];
+    } else if (path.includes('/packages/')) {
+        itemType = 'package';
+        var match = path.match(/packages\/([^/]+)\.html/);
+        if (match) itemId = match[1];
+    } else if (path.includes('/destinations/') || path.includes('tours.html')) {
+        itemType = 'destination';
+    }
+    
+    // Record view if we have valid info
+    if (itemType && itemId) {
+        var session = localStorage.getItem('muts_user_session');
+        if (session) {
+            try {
+                var user = JSON.parse(session);
+                if (user && user.userId) {
+                    MutsRecommendationService.recordView(itemType, itemId);
+                }
+            } catch(e) {}
+        }
+    }
+}
+</script>

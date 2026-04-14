@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Points - Muts Safaris</title>
+    <link rel="stylesheet" href="../../css/dashboard-theme.css">
+    <link rel="stylesheet" href="../../css/loyalty.css">
+    <link rel="icon" href="../../assets/favicon/favicon.ico">
+    <style>
+        .loyalty-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .loyalty-page h1 {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <div class="sidebar-brand">
+                <a href="../../index.html">
+                    <span class="sidebar-brand-text">
+                        <span class="sidebar-brand-name">MUTS SAFARIS</span>
+                        <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
+                    </span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
+                    <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg><span class="nav-label">My Trips</span></a></li>
+                    <li><a href="favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+                    <li><a href="transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
+                    <li><a href="loyalty.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-label">My Points</span></a></li>
+                    <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="dashboard-main">
+            <header class="dashboard-topbar">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..." id="dashboard-search">
+                </div>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name" id="user-name">Traveler</span>
+                        <span class="user-tier" id="user-tier">Bronze Member</span>
+                    </div>
+                    <div class="user-avatar" id="user-avatar">T</div>
+                </div>
+            </header>
+            
+            <div class="loyalty-page">
+                <h1>My Points & Rewards</h1>
+                
+                <div id="loyalty-card-container"></div>
+                
+                <div class="dashboard-section" style="margin-top: 30px;">
+                    <div class="section-header">
+                        <h2>Ways to Earn Points</h2>
+                    </div>
+                    <div class="earn-methods" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px 0;">
+                        <div class="earn-method" style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center;">
+                            <svg viewBox="0 0 24 24" width="40" height="40" style="fill: #f39c12;"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+                            <h3>Book a Safari</h3>
+                            <p>1 point per $1 spent</p>
+                        </div>
+                        <div class="earn-method" style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center;">
+                            <svg viewBox="0 0 24 24" width="40" height="40" style="fill: #3498db;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <h3>Refer a Friend</h3>
+                            <p>500 bonus points</p>
+                        </div>
+                        <div class="earn-method" style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center;">
+                            <svg viewBox="0 0 24 24" width="40" height="40" style="fill: #27ae60;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            <h3>Write a Review</h3>
+                            <p>100 points per review</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-section" style="margin-top: 30px;">
+                    <div class="section-header">
+                        <h2>Tier Benefits</h2>
+                    </div>
+                    <div class="tier-table" style="background: #f8f9fa; padding: 20px; border-radius: 12px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #ddd;">
+                                    <th style="text-align: left; padding: 10px;">Tier</th>
+                                    <th style="text-align: left; padding: 10px;">Lifetime Points</th>
+                                    <th style="text-align: left; padding: 10px;">Points Multiplier</th>
+                                    <th style="text-align: left; padding: 10px;">Benefits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px;"><span style="color: #cd7f32;">●</span> Bronze</td>
+                                    <td style="padding: 10px;">0 - 999</td>
+                                    <td style="padding: 10px;">1x</td>
+                                    <td style="padding: 10px;">Base points earning</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px;"><span style="color: #c0c0c0;">●</span> Silver</td>
+                                    <td style="padding: 10px;">1,000 - 4,999</td>
+                                    <td style="padding: 10px;">1.25x</td>
+                                    <td style="padding: 10px;">+25% points, early access</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px;"><span style="color: #ffd700;">●</span> Gold</td>
+                                    <td style="padding: 10px;">5,000 - 14,999</td>
+                                    <td style="padding: 10px;">1.5x</td>
+                                    <td style="padding: 10px;">+50% points, free upgrades</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px;"><span style="color: #e5e4e2;">●</span> Platinum</td>
+                                    <td style="padding: 10px;">15,000+</td>
+                                    <td style="padding: 10px;">2x</td>
+                                    <td style="padding: 10px;">2x points, VIP support</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Load JS -->
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/dashboard-theme.js"></script>
+    <script src="../../js/loyalty.js"></script>
+    <script src="../../js/loyalty-ui.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize loyalty UI
+        if (document.getElementById('loyalty-card-container')) {
+            MutsLoyaltyUI.init('loyalty-card-container');
+        }
+    });
+    </script>
+</body>
+</html>

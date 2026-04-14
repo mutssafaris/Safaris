@@ -279,6 +279,228 @@
             
             return Promise.resolve({ success: true, discount: promo.discount, description: promo.description });
         },
+<<<<<<< HEAD
+=======
+        
+        // ===== RESERVATION HOLD (Phase 4.5) =====
+        
+        /**
+         * Check if booking has an active reservation hold
+         * @param {Object} booking - The booking object
+         * @returns {Object} - { isReserved: boolean, expiresAt: string|null, remainingMinutes: number }
+         */
+        checkReservationHold: function(booking) {
+            if (!booking || !booking.expiresAt) {
+                return { isReserved: false, expiresAt: null, remainingMinutes: 0 };
+            }
+            
+            var now = new Date();
+            var expires = new Date(booking.expiresAt);
+            var remaining = Math.floor((expires - now) / 1000 / 60);
+            
+            if (remaining <= 0) {
+                return { isReserved: false, expiresAt: booking.expiresAt, remainingMinutes: 0 };
+            }
+            
+            return {
+                isReserved: true,
+                expiresAt: booking.expiresAt,
+                remainingMinutes: remaining
+            };
+        },
+        
+        /**
+         * Initiate a 15-minute reservation hold for a booking
+         * @param {string} bookingId - The booking ID
+         * @returns {Promise} - The updated booking
+         */
+        initiateReservation: function(bookingId) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/' + bookingId + '/reserve', {
+                    method: 'POST'
+                });
+            }
+            
+            // Fallback: Create local reservation
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var idx = all.findIndex(function(b) { return b.id === bookingId; });
+            
+            if (idx >= 0) {
+                var now = new Date();
+                var expires = new Date(now.getTime() + 15 * 60 * 1000); // 15 minutes
+                
+                all[idx].reservedAt = now.toISOString();
+                all[idx].expiresAt = expires.toISOString();
+                all[idx].isReserved = true;
+                
+                localStorage.setItem(BOOKINGS_KEY, JSON.stringify(all));
+                return Promise.resolve(all[idx]);
+            }
+            
+            return Promise.reject(new Error('Booking not found'));
+        },
+        
+        /**
+         * Release a reservation hold
+         * @param {string} bookingId - The booking ID
+         * @returns {Promise} - The updated booking
+         */
+        releaseReservation: function(bookingId) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/' + bookingId + '/reserve', {
+                    method: 'DELETE'
+                });
+            }
+            
+            // Fallback: Release local reservation
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var idx = all.findIndex(function(b) { return b.id === bookingId; });
+            
+            if (idx >= 0) {
+                all[idx].reservedAt = null;
+                all[idx].expiresAt = null;
+                all[idx].isReserved = false;
+                
+                localStorage.setItem(BOOKINGS_KEY, JSON.stringify(all));
+                return Promise.resolve(all[idx]);
+            }
+            
+            return Promise.reject(new Error('Booking not found'));
+        },
+        
+        /**
+         * Check room availability for a hotel
+         * @param {string} hotelId - The hotel ID
+         * @param {string} checkin - Check-in date (YYYY-MM-DD)
+         * @param {string} checkout - Check-out date (YYYY-MM-DD)
+         * @returns {Promise} - { available: boolean, availableRooms: number }
+         */
+        checkAvailability: function(hotelId, checkin, checkout) {
+            if (_apiReady) {
+                var params = '?checkin=' + checkin + '&checkout=' + checkout;
+                return this.fetchFromAPI('/hotels/' + hotelId + '/availability' + params);
+            }
+            
+            // Fallback: Always available in mock mode
+            return Promise.resolve({ available: true, availableRooms: 5 });
+        },
+        
+        // ===== PHASE 12: SELF-SERVICE BOOKING MANAGEMENT =====
+        
+        /**
+         * Cancel a booking
+         * @param {string} bookingId - The booking ID
+         * @param {string} reason - Optional cancellation reason
+         * @returns {Promise} - Cancellation result with refund info
+         */
+        cancelBooking: function(bookingId, reason) {
+            if (_apiReady) {
+                var url = '/bookings/' + bookingId + '/cancel';
+                if (reason) url += '?reason=' + encodeURIComponent(reason);
+                return this.fetchFromAPI(url, { method: 'PUT' });
+            }
+            
+            // Fallback: Local cancellation
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var idx = all.findIndex(function(b) { return b.id === bookingId; });
+            
+            if (idx >= 0) {
+                all[idx].status = 'cancelled';
+                all[idx].cancelledAt = new Date().toISOString();
+                all[idx].cancellationReason = reason || '';
+                localStorage.setItem(BOOKINGS_KEY, JSON.stringify(all));
+                
+                return Promise.resolve({
+                    bookingId: bookingId,
+                    status: 'cancelled',
+                    refundAmount: 0,
+                    refundPercentage: 0,
+                    cancellationPolicy: 'No refund - local fallback'
+                });
+            }
+            
+            return Promise.reject(new Error('Booking not found'));
+        },
+        
+        /**
+         * Modify booking dates
+         * @param {string} bookingId - The booking ID
+         * @param {string} checkin - New check-in date (YYYY-MM-DD)
+         * @param {string} checkout - New check-out date (YYYY-MM-DD)
+         * @returns {Promise} - Updated booking
+         */
+        modifyBooking: function(bookingId, checkin, checkout) {
+            if (_apiReady) {
+                var url = '/bookings/' + bookingId + '/modify?checkin=' + checkin + '&checkout=' + checkout;
+                return this.fetchFromAPI(url, { method: 'PUT' });
+            }
+            
+            // Fallback: Local modification
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var idx = all.findIndex(function(b) { return b.id === bookingId; });
+            
+            if (idx >= 0) {
+                all[idx].checkin = checkin;
+                all[idx].checkout = checkout;
+                all[idx].modifiedAt = new Date().toISOString();
+                localStorage.setItem(BOOKINGS_KEY, JSON.stringify(all));
+                return Promise.resolve(all[idx]);
+            }
+            
+            return Promise.reject(new Error('Booking not found'));
+        },
+        
+        /**
+         * Check if booking can be cancelled
+         * @param {string} bookingId - The booking ID
+         * @returns {Promise} - { canCancel: boolean }
+         */
+        canCancel: function(bookingId) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/' + bookingId + '/can-cancel');
+            }
+            
+            // Fallback: Check locally
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var booking = all.find(function(b) { return b.id === bookingId; });
+            return Promise.resolve({ canCancel: booking && (booking.status === 'upcoming' || booking.status === 'confirmed') });
+        },
+        
+        /**
+         * Check if booking can be modified
+         * @param {string} bookingId - The booking ID
+         * @returns {Promise} - { canModify: boolean }
+         */
+        canModify: function(bookingId) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/' + bookingId + '/can-modify');
+            }
+            
+            // Fallback
+            return Promise.resolve({ canModify: false });
+        },
+        
+        /**
+         * Get cancellation policy
+         * @param {number} daysUntilCheckin - Days until check-in
+         * @returns {Promise} - { policy: string }
+         */
+        getCancellationPolicy: function(daysUntilCheckin) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/cancellation-policy?daysUntilCheckin=' + daysUntilCheckin);
+            }
+            
+            // Fallback: Local policy
+            var policy;
+            if (daysUntilCheckin >= 14) policy = 'Free cancellation - Full refund';
+            else if (daysUntilCheckin >= 7) policy = '75% refund';
+            else if (daysUntilCheckin >= 3) policy = '50% refund';
+            else if (daysUntilCheckin >= 1) policy = '25% refund';
+            else policy = 'No refund';
+            
+            return Promise.resolve({ policy: policy });
+        },
+>>>>>>> ab0edb5 (added few features)
 
         setBaseURL: function (url) {
             API_BASE_URL = url;

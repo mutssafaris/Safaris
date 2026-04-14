@@ -330,6 +330,101 @@
                     return [];
                 });
         },
+<<<<<<< HEAD
+=======
+        
+        // ============ SMART SEARCH (Phase 9) ============
+        
+        /**
+         * Smart search with NLP - interprets natural language queries
+         * @param {string} query - Natural language query like "luxury camp near mara under 500"
+         * @param {number} page - Page number
+         * @param {number} limit - Results per page
+         * @returns {Promise} - Smart search response with interpreted query
+         */
+        smartSearch: function(query, page, limit) {
+            page = page || 1;
+            limit = limit || 20;
+            
+            var params = '?q=' + encodeURIComponent(query) + '&page=' + page + '&limit=' + limit;
+            var baseURL = (window.MutsAPIConfig && window.MutsAPIConfig.getBaseURL) 
+                ? window.MutsAPIConfig.getBaseURL() 
+                : '/api';
+            
+            return fetch(baseURL + '/search' + params, {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(function(response) {
+                if (!response.ok) throw new Error('API error: ' + response.status);
+                return response.json();
+            })
+            .then(function(data) {
+                // Store interpretation for UI display
+                SearchService._lastInterpreted = data.interpreted;
+                SearchService._lastQuery = query;
+                SearchService._addToHistory(query, data.total);
+                
+                return data;
+            })
+            .catch(function(err) {
+                console.warn('[SearchService] Smart search unavailable:', err.message);
+                // Fallback to local search
+                return SearchService._searchLocal(query, {});
+            });
+        },
+        
+        /**
+         * Get search suggestions for autocomplete
+         * @param {string} query - Partial query
+         * @returns {Promise} - List of suggestions
+         */
+        getSuggestions: function(query) {
+            var baseURL = (window.MutsAPIConfig && window.MutsAPIConfig.getBaseURL) 
+                ? window.MutsAPIConfig.getBaseURL() 
+                : '/api';
+            
+            return fetch(baseURL + '/search/suggestions?q=' + encodeURIComponent(query), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(function(response) {
+                if (!response.ok) throw new Error('API error: ' + response.status);
+                return response.json();
+            })
+            .then(function(data) {
+                return data.suggestions || [];
+            })
+            .catch(function() {
+                return [];
+            });
+        },
+        
+        /**
+         * Get the last interpreted query (for displaying search interpretation)
+         * @returns {Object|null} - Interpreted query object
+         */
+        getLastInterpreted: function() {
+            return SearchService._lastInterpreted || null;
+        },
+        
+        /**
+         * Parse a query without executing search (for debugging)
+         * @param {string} query - Query to interpret
+         * @returns {Promise} - Interpreted query object
+         */
+        interpretQuery: function(query) {
+            var baseURL = (window.MutsAPIConfig && window.MutsAPIConfig.getBaseURL) 
+                ? window.MutsAPIConfig.getBaseURL() 
+                : '/api';
+            
+            return fetch(baseURL + '/search/interpret?q=' + encodeURIComponent(query), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(function(response) {
+                if (!response.ok) throw new Error('API error: ' + response.status);
+                return response.json();
+            });
+        },
+>>>>>>> ab0edb5 (added few features)
 
         // ============ API CONTROL ============
         enableAPI: function() {
