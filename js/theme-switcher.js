@@ -12,11 +12,19 @@
 
     class MutsThemeSwitcher {
         constructor() {
-            this.currentTheme = this.getStoredTheme() || THEME_LIGHT; // Default to light theme
+            const existingTheme = document.documentElement.getAttribute('data-theme');
+            this.currentTheme = this.getStoredTheme() || existingTheme || THEME_DARK;
             this.init();
         }
 
         init() {
+            // Skip if dark theme is already set in HTML (login page pattern)
+            const existingTheme = document.documentElement.getAttribute('data-theme');
+            if (existingTheme === 'dark') {
+                this.currentTheme = THEME_DARK;
+                this.setStoredTheme(THEME_DARK);
+                return;
+            }
             this.applyTheme(this.currentTheme);
             this.setupEventListeners();
             this.createThemeSwitcherUI();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f8fbff">
+    <meta name="theme-color" content="#0a0418">
     <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
     <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
     <meta name="author" content="Muts Safaris">
@@ -26,17 +26,10 @@
     <link rel="manifest" href="manifest.json">
     <script>
         (function () {
-            var theme = 'light';
-            try {
-                var stored = localStorage.getItem('muts-safaris-theme');
-                if (stored === 'dark' || stored === 'light') {
-                    theme = stored;
-                }
-            } catch (e) {}
-            document.documentElement.setAttribute('data-theme', theme);
-            document.documentElement.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.colorScheme = 'dark';
             var meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', theme === 'dark' ? '#050510' : '#f8fbff');
+            if (meta) meta.setAttribute('content', '#0a0418');
         })();
     </script>
 </head>
@@ -46,243 +39,59 @@
     <div class="ambient-particles"></div>
     <div class="scanlines"></div>
 
-    <nav class="auth-navbar">
-        <a href="#" class="auth-logo">MUTS_SAFARIS</a>
-        <div class="nav-controls">
-            <div id="theme-switcher-container"></div>
-            <button class="nav-login-btn" id="open-auth">LOGIN</button>
-        </div>
-    </nav>
-
     <!-- HERO -->
     <section class="landing-hero">
-        <div class="hero-content">
-            <div class="hero-badge">INITIALIZING SECTOR_KENYA_01</div>
-            <h1 class="hero-glitch">EXPEDITION</h1>
-            <p class="hero-tagline">The Future of African Wildlife Exploration</p>
-            
-            <div class="hero-status-bar">
-                <span>[ WILDLIFE: ACTIVE ]</span>
-                <span>[ TERRAIN: DIVERSE ]</span>
-                <span>[ CONNECTION: SECURE ]</span>
+        <nav class="auth-navbar" style="position: absolute; top: 0; left: 0; width: 100%; padding: 1.5rem 6%; display: flex; justify-content: space-between; align-items: center; z-index: 1000;">
+            <a href="#" class="auth-logo">MUTS_SAFARIS</a>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Explore</a>
+                <a href="#" class="nav-link">Create</a>
+                <a href="#" class="nav-link">Contact</a>
+                <a href="#" class="nav-link">Blog</a>
+            </div>
+            <div class="nav-controls">
+                <button class="nav-login-btn" id="open-auth">CONNECT</button>
+            </div>
+        </nav>
+        <div class="split-hero-container">
+            <div class="hero-text-panel">
+                <div class="hero-badge">Don't be a tourist, be a Traveller</div>
+                <h1 class="hero-glitch">EXPEDITION</h1>
+                <p class="hero-tagline">The Future of African Wildlife Exploration</p>
+                
+                <div class="hero-actions">
+                    <button class="btn btn-primary check-session">INITIALIZE_EXPEDITION</button>
+                    <button class="btn btn-outline">LEARN_MORE →</button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">5000+</div>
+                        <div class="stat-label">DESTINATIONS</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">AUTHENTIC</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">SUPPORT</div>
+                    </div>
+                </div>
             </div>
             
-            <div class="hero-cta">SCROLL TO DECRYPT</div>
-            <p class="scroll-text">Others have travelled, it's your turn.</p>
-            <div class="kenya-flags">
-                <span class="flag-square black"></span>
-                <span class="flag-square white"></span>
-                <span class="flag-square red"></span>
-                <span class="flag-square white"></span>
-                <span class="flag-square green"></span>
+            <div class="hero-character-panel">
+                <img src="images/hero/safari-guide.jpg" alt="Safari Guide" class="hero-character">
+                <div class="floating-stat top-right">
+                    <span>MAASAI MARA</span>
+                </div>
+                <div class="floating-stat bottom-left">
+                    <span>EXPLORE NOW</span>
+                </div>
             </div>
         </div>
     </section>
-
-    <div class="content-wrap">
-        
-        <!-- INTRO -->
-        <div class="section-intro">
-            <h2>DEPLOY YOUR MISSION</h2>
-            <p>Access premium safari experiences across Kenya. From the vast plains of Maasai Mara to pristine Indian Ocean shores.</p>
-        </div>
-
-        <!-- SPLIT SECTION 1: SAFARI -->
-        <section class="split-section">
-            <div class="split-image">
-                <img src="images/hero/kenya-safari.jpg" alt="Maasai Mara Safari">
-                <span class="image-label">ZONE: MARA_SECTOR_01</span>
-            </div>
-            <div class="split-content">
-                <div class="split-badge">PROTOCOL_MARA // TACTICAL_INTEL</div>
-                <h3>MAASAI MARA</h3>
-                <p>Experience the apex of terrestrial exploration. Witness the Great Migration through our neural-linked safari modules with real-time Big Five tracking.</p>
-                
-                <div class="split-specs">
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">1,510 KM²</span>
-                    </div>
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">BIG FIVE</span>
-                    </div>
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">24/7 GUIDE</span>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary check-session">INITIALIZE_MARA_SYNC</button>
-            </div>
-        </section>
-
-        <!-- SPLIT SECTION 2: BEACHES (REVERSED) -->
-        <section class="split-section reverse">
-            <div class="split-image">
-                <img src="images/hero/beaches.jpg" alt="Kenya Coast">
-                <span class="image-label">ZONE: COASTAL_NODE</span>
-            </div>
-            <div class="split-content">
-                <div class="split-badge">PROTOCOL_COAST // NEURAL_RECOVERY</div>
-                <h3>INDIAN OCEAN</h3>
-                <p>Connect with Kenya's turquoise frequency. From the white sands of Diani to marine preserves of Watamu. Premium coastal luxury awaits.</p>
-                
-                <div class="split-specs">
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">28°C</span>
-                    </div>
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">30M VISIBILITY</span>
-                    </div>
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">5-STAR</span>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary check-session">BOOT_COASTAL_LINK</button>
-            </div>
-        </section>
-
-        <!-- SPLIT SECTION 3: TOURS -->
-        <section class="split-section">
-            <div class="split-image">
-                <img src="images/hero/tours.jpg" alt="Kenya Tours">
-                <span class="image-label">ZONE: SAFARI_CIRCUIT</span>
-            </div>
-            <div class="split-content">
-                <div class="split-badge">PROTOCOL_TOURS // EXPEDITION</div>
-                <h3>SAFARI CIRCUITS</h3>
-                <p>Navigate Kenya's most iconic destinations. From Amboseli's elephant herds to the pink flamingos of Lake Nakuru.</p>
-                
-                <div class="split-specs">
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">8 PARKS</span>
-                    </div>
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">500+ SPECIES</span>
-                    </div>
-                    <div class="spec-chip">
-                        <span class="spec-icon">◈</span>
-                        <span class="spec-text">EXPERT GUIDES</span>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary check-session">ACCESS_CIRCUITS</button>
-            </div>
-        </section>
-
-        <!-- FEATURES GRID -->
-        <section class="features-section">
-            <div class="section-intro">
-                <h2>TOP MODULES</h2>
-                <p>Select your mission parameters. Each module offers unique experiences.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-card-image">
-                        <img src="images/hero/packages.jpg" alt="Packages">
-                        <span class="feature-card-badge">MODULE_01</span>
-                    </div>
-                    <div class="feature-card-content">
-                        <h4>SAFARI PACKAGES</h4>
-                        <p>Curated multi-day adventures for families, couples, and solo explorers.</p>
-                        <div class="feature-card-specs">
-                            <div><span class="spec-label">TYPE</span><span class="spec-value">BESPOKE</span></div>
-                            <div><span class="spec-label">DURATION</span><span class="spec-value">3-14 DAYS</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-image">
-                        <img src="images/hero/hotels.jpg" alt="Hotels">
-                        <span class="feature-card-badge">MODULE_02</span>
-                    </div>
-                    <div class="feature-card-content">
-                        <h4>LUXURY LODGES</h4>
-                        <p>Premium accommodations from eco-camps to 5-star resorts.</p>
-                        <div class="feature-card-specs">
-                            <div><span class="spec-label">TIER</span><span class="spec-value">LUXURY</span></div>
-                            <div><span class="spec-label">VIEW</span><span class="spec-value">WILDLIFE</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-image">
-                        <img src="images/hero/experiences.jpg" alt="Experiences">
-                        <span class="feature-card-badge">MODULE_03</span>
-                    </div>
-                    <div class="feature-card-content">
-                        <h4>EXPERIENCES</h4>
-                        <p>Hot air balloons, village visits, and cultural immersions.</p>
-                        <div class="feature-card-specs">
-                            <div><span class="spec-label">ACTIVITY</span><span class="spec-value">ADVENTURE</span></div>
-                            <div><span class="spec-label">CULTURE</span><span class="spec-value">AUTHENTIC</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-image">
-                        <img src="images/hero/africasa.jpg" alt="Africasa">
-                        <span class="feature-card-badge">MODULE_04</span>
-                    </div>
-                    <div class="feature-card-content">
-                        <h4>AFRICASA MARKET</h4>
-                        <p>Authenticated artifacts and handcrafted cultural pieces.</p>
-                        <div class="feature-card-specs">
-                            <div><span class="spec-label">VERIFY</span><span class="spec-value">BLOCKCHAIN</span></div>
-                            <div><span class="spec-label">ORIGIN</span><span class="spec-value">VERIFIED</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-image">
-                        <img src="images/hero/gallery.jpg" alt="Gallery">
-                        <span class="feature-card-badge">MODULE_05</span>
-                    </div>
-                    <div class="feature-card-content">
-                        <h4>GALLERY</h4>
-                        <p>Visual archives of Kenya's wildlife and landscapes.</p>
-                        <div class="feature-card-specs">
-                            <div><span class="spec-label">CONTENT</span><span class="spec-value">4K PHOTOS</span></div>
-                            <div><span class="spec-label">FOOTAGE</span><span class="spec-value">HD VIDEO</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-image">
-                        <img src="images/hero/blog.jpg" alt="Blog">
-                        <span class="feature-card-badge">MODULE_06</span>
-                    </div>
-                    <div class="feature-card-content">
-                        <h4>FIELD BLOGS</h4>
-                        <p>Expert insights and travel guides from our safari team.</p>
-                        <div class="feature-card-specs">
-                            <div><span class="spec-label">UPDATES</span><span class="spec-value">WEEKLY</span></div>
-                            <div><span class="spec-label">AUTHOR</span><span class="spec-value">GUIDES</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer class="footer-terminal">
-            <div class="footer-status">CONNECTION: ENCRYPTED // REGION: EAST_AFRICA_HUB // SERVER: NAIROBI_NODE_01</div>
-            <div class="footer-brand"><span>MUTS_SAFARIS</span> // GLOBAL_OPERATIONS // v2.1.0</div>
-        </footer>
-    </div>
 
     <!-- AUTH MODAL -->
     <div class="auth-overlay" id="auth-overlay">
@@ -569,6 +378,7 @@
             else alert('REGISTRATION_FAILED: ' + result.message);
         };
     })();
+    </script>
     
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
@@ -580,52 +390,6 @@
         });
     }
     
-    (function() {
-        var lazyImages = document.querySelectorAll('img[data-src]');
-        
-        if ('IntersectionObserver' in window) {
-            var imageObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        var img = entry.target;
-                        img.src = img.dataset.src;
-                        img.onload = function() {
-                            img.classList.add('loaded');
-                        };
-                        imageObserver.unobserve(img);
-                    }
-                });
-            }, {
-                rootMargin: '50px 0px',
-                threshold: 0.01
-            });
-            
-            lazyImages.forEach(function(img) {
-                imageObserver.observe(img);
-            });
-        } else {
-            lazyImages.forEach(function(img) {
-                img.src = img.dataset.src;
-                img.onload = function() {
-                    img.classList.add('loaded');
-                };
-            });
-        }
-        
-        document.querySelectorAll('.split-image, .feature-card-image, .onboarding-slide').forEach(function(container) {
-            var img = container.querySelector('img');
-            if (img) {
-                img.addEventListener('load', function() {
-                    img.classList.add('loaded');
-                });
-                if (img.complete && img.naturalWidth > 0) {
-                    img.classList.add('loaded');
-                } else {
-                    img.classList.add('loaded');
-                }
-            }
-        });
-    })();
     </script>
 </body>
 </html>
