@@ -1,5 +1,5 @@
 /* Auth Module — Muts Safaris */
-/* Security Enhanced - API Integration Ready */
+/* Security Enhanced - Token-Based Auth Ready */
 (function () {
     if (window.mutsAuthInitialized) return;
     window.mutsAuthInitialized = true;
@@ -11,9 +11,11 @@
     var MESSAGES_KEY = 'muts_messages';
     var TRANSACTIONS_KEY = 'muts_transactions';
     var SESSION_EXPIRY_HOURS = 24;
+    var TOKEN_REFRESH_BUFFER_MS = 5 * 60 * 1000; // Refresh 5 minutes before expiry
 
     var API_READY = false;
     var API_BASE_URL = '/api';
+    var refreshTimer = null;
 
     function simpleHash(str) {
         var hash = 0;
@@ -52,7 +54,7 @@
             
             var expiresAt = new Date(session.expiresAt);
             if (expiresAt < new Date()) {
-                localStorage.removeItem(SESSION_KEY);
+                handleTokenExpired();
                 return null;
             }
             
@@ -62,21 +64,85 @@
         }
     }
 
-    function setSession(user, rememberMe) {
+    function setSession(user, rememberMe, tokenData) {
         var expiryHours = rememberMe ? SESSION_EXPIRY_HOURS * 7 : SESSION_EXPIRY_HOURS;
         var expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + expiryHours);
         
-        var token = generateSalt() + generateId();
+        var token = tokenData ? tokenData.token : (generateSalt() + generateId());
+        var refreshToken = tokenData ? tokenData.refreshToken : null;
         
         localStorage.setItem(SESSION_KEY, JSON.stringify({
             userId: user.id,
             name: user.name,
             email: user.email,
             token: token,
+            refreshToken: refreshToken,
             loginTime: new Date().toISOString(),
             expiresAt: expiresAt.toISOString()
         }));
+        
+        scheduleTokenRefresh();
+    }
+
+    function handleTokenExpired() {
+        clearTimeout(refreshTimer);
+        localStorage.removeItem(SESSION_KEY);
+        window.dispatchEvent(new CustomEvent('auth:expired'));
+    }
+
+    function scheduleTokenRefresh() {
+        clearTimeout(refreshTimer);
+        
+        var session = getSession();
+        if (!session) return;
+        
+        var expiresAt = new Date(session.expiresAt).getTime();
+        var now = Date.now();
+        var timeUntilExpiry = expiresAt - now - TOKEN_REFRESH_BUFFER_MS;
+        
+        if (timeUntilExpiry > 0) {
+            refreshTimer = setTimeout(function() {
+                refreshToken();
+            }, timeUntilExpiry);
+        } else {
+            handleTokenExpired();
+        }
+    }
+
+    function refreshToken() {
+        var session = getSession();
+        if (!session) return;
+        
+        if (API_READY && session.refreshToken) {
+            fetchFromAPI('/auth/refresh', {
+                method: 'POST',
+                body: { refreshToken: session.refreshToken }
+            }).then(function(response) {
+                if (response.success && response.token) {
+                    session.token = response.token;
+                    if (response.refreshToken) {
+                        session.refreshToken = response.refreshToken;
+                    }
+                    var expiresAt = new Date();
+                    expiresAt.setHours(expiresAt.getHours() + SESSION_EXPIRY_HOURS);
+                    session.expiresAt = expiresAt.toISOString();
+                    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+                    scheduleTokenRefresh();
+                    window.dispatchEvent(new CustomEvent('auth:refreshed'));
+                } else {
+                    handleTokenExpired();
+                }
+            }).catch(function() {
+                handleTokenExpired();
+            });
+        } else {
+            var expiresAt = new Date();
+            expiresAt.setHours(expiresAt.getHours() + SESSION_EXPIRY_HOURS);
+            session.expiresAt = expiresAt.toISOString();
+            localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+            scheduleTokenRefresh();
+        }
     }
 
     function generateId() {
@@ -123,22 +189,47 @@
         options = options || {};
         var session = getSession();
         
-        var fetchOptions = {
+        if (!session) {
+            return Promise.reject(new Error('No session'));
+        }
+        
+        var expiresAt = new Date(session.expiresAt);
+        var now = new Date();
+        var timeUntilExpiry = expiresAt - now;
+        
+        if (timeUntilExpiry < TOKEN_REFRESH_BUFFER_MS && session.refreshToken) {
+            return refreshToken().then(function() {
+                var updatedSession = getSession();
+                return doFetch(API_BASE_URL + endpoint, {
+                    method: options.method || 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + updatedSession.token
+                    },
+                    body: options.body
+                });
+            });
+        }
+        
+        return doFetch(API_BASE_URL + endpoint, {
             method: options.method || 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': session ? 'Bearer ' + session.token : ''
-            }
-        };
-        
-        if (options.body) {
-            fetchOptions.body = JSON.stringify(options.body);
+                'Authorization': 'Bearer ' + session.token
+            },
+            body: options.body
+        });
+    }
+    
+    function doFetch(url, fetchOptions) {
+        if (fetchOptions.body) {
+            fetchOptions.body = JSON.stringify(fetchOptions.body);
         }
         
-        return fetch(API_BASE_URL + endpoint, fetchOptions)
+        return fetch(url, fetchOptions)
             .then(function(response) {
                 if (response.status === 401) {
-                    logout();
+                    handleTokenExpired();
                     throw new Error('Session expired');
                 }
                 return response.json();
@@ -161,7 +252,10 @@
                 body: { email: email, password: password, rememberMe: rememberMe }
             }).then(function(response) {
                 if (response.success) {
-                    setSession(response.user, rememberMe);
+                    setSession(response.user, rememberMe, {
+                        token: response.token,
+                        refreshToken: response.refreshToken
+                    });
                 }
                 return response;
             });
@@ -200,7 +294,10 @@
                 }
             }).then(function(response) {
                 if (response.success) {
-                    setSession(response.user, false);
+                    setSession(response.user, false, {
+                        token: response.token,
+                        refreshToken: response.refreshToken
+                    });
                 }
                 return response;
             });
@@ -338,29 +435,6 @@
         localStorage.setItem(SESSION_KEY, JSON.stringify(session));
     }
 
-    function updateProfile(data) {
-        var session = getSession();
-        if (!session) return false;
-        
-        var users = getUsers();
-        var idx = users.findIndex(function(u) { return u.id === session.userId; });
-        
-        if (idx === -1) return false;
-        
-        if (data.name) users[idx].name = data.name;
-        if (data.email) users[idx].email = data.email;
-        if (data.phone) users[idx].phone = data.phone;
-        if (data.country) users[idx].country = data.country;
-        
-        saveUsers(users);
-        
-        session.name = users[idx].name;
-        session.email = users[idx].email;
-        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-        
-        return true;
-    }
-
     function updateHeaderAuthLinks() {
         var session = getSession();
         var loginLinks = document.querySelectorAll('.nav-login-link');
@@ -403,12 +477,21 @@
         enableAPI: enableAPI,
         disableAPI: disableAPI,
         isAPILive: isAPILive,
-        refreshSession: refreshSession
+        refreshToken: refreshToken,
+        scheduleTokenRefresh: scheduleTokenRefresh,
+        isTokenExpired: handleTokenExpired
     };
 
     document.addEventListener('DOMContentLoaded', function () {
         updateHeaderAuthLinks();
         
-        setInterval(refreshSession, 60000);
+        var session = getSession();
+        if (session) {
+            scheduleTokenRefresh();
+        }
+    });
+    
+    window.addEventListener('beforeunload', function() {
+        clearTimeout(refreshTimer);
     });
 })();

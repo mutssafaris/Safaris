@@ -14,9 +14,12 @@ The dashboard uses service layer pattern with automatic fallback to mock JSON da
 |---------|---------|-------------------|--------|
 | Destinations | MutsDestinationsService | GET /api/destinations | ✅ Mock ready |
 | Hotels | MutsHotelsService | GET /api/hotels, /api/hotels/{id}, /api/hotels?tier=...&location=... | ✅ Mock ready |
+| Tours | MutsToursService | GET /api/tours, GET /api/tours/{id} | ✅ Mock ready (data/tours.json) |
+| Experiences | MutsExperiencesService | GET /api/experiences | ✅ Mock ready (data/tours.json) |
+| Loyalty/Points | MutsLoyaltyService | GET /api/loyalty/profile, /api/loyalty/transactions, POST /api/loyalty/redeem | ✅ Mock ready (data/loyalty.json) |
 | Bookings | MutsBookingsService | GET /api/bookings | ✅ Mock ready |
 | Messages | MutsMessagesService | GET /api/messages | ✅ Mock ready |
-| Transactions | MutsTransactionsService | GET /api/transactions, /api/transactions/{id}, /api/transactions/summary | ✅ Mock ready (data/transactions.json) |
+| Transactions | MutsTransactionsService | GET /api/transactions, /api/transactions/{id}, /api/transactions/summary | ✅ Mock ready |
 | Notifications | MutsNotificationsService | GET /api/notifications | ✅ Mock ready |
 | Localization | MutsI18n | GET /api/localization/strings | ✅ Fallback ready |
 
@@ -258,10 +261,131 @@ GET /api/transactions/summary
 - `limit` - Limit number of results
 - `offset` - Pagination offset
 
-### 8. Localization
+### 8. Tours/Experiences
+```
+GET /api/tours
+GET /api/tours/{id}
+GET /api/tours?type=safari|adventure|cultural|wildlife
+GET /api/tours?duration=short|medium|long
+GET /api/experiences
+GET /api/experiences?type=adventure|cultural|wildlife
+GET /api/experiences?duration=half-day|full-day|multi-day
+```
+
+**Response Schemas:**
+
+```javascript
+// GET /api/tours
+{
+  "success": true,
+  "data": {
+    "destinations": [
+      {
+        "id": 1,
+        "name": "Maasai Mara National Reserve",
+        "slug": "maasai-mara",
+        "region": "Southwest Kenya",
+        "description": "Famous for the Great Migration...",
+        "highlights": ["Great Migration", "Big Five"],
+        "duration": "long",
+        "rating": 4.9,
+        "priceRange": "$$$"
+      }
+    ]
+  }
+}
+
+// GET /api/tours/{id}
+{
+  "success": true,
+  "data": {
+    "id": "t1",
+    "name": "Maasai Mara Safari",
+    "type": "safari",
+    "duration": "5 days",
+    "price": 2500,
+    "rating": 4.9,
+    "location": "Maasai Mara",
+    "highlights": ["Big Five", "Great Migration"],
+    "includes": ["Accommodation", "Meals", "Game Drives"],
+    "itinerary": [
+      { "day": 1, "title": "Arrival", "description": "..." },
+      { "day": 2, "title": "Game Drive", "description": "..." }
+    ]
+  }
+}
+```
+
+### 9. Localization
 ```
 GET /api/localization/strings?lang=en
 ```
+
+### 10. Loyalty/Points
+```
+GET /api/loyalty/profile
+GET /api/loyalty/transactions
+GET /api/loyalty/referral-code
+POST /api/loyalty/redeem?points={amount}
+POST /api/loyalty/refer?code={referralCode}
+GET /api/loyalty/calculate?points={amount}
+```
+
+**Response Schemas:**
+
+```javascript
+// GET /api/loyalty/profile
+{
+  "success": true,
+  "data": {
+    "userId": "user_12345",
+    "points": 2450,
+    "lifetimePoints": 4780,
+    "tier": "gold",
+    "totalSpent": 12450,
+    "nextTier": "platinum",
+    "pointsToNextTier": 5220,
+    "tierProgress": 32,
+    "referralCode": "MUTS-GOLD-7X4K9",
+    "referralCount": 3,
+    "memberSince": "2024-08-15"
+  }
+}
+
+// GET /api/loyalty/transactions
+{
+  "success": true,
+  "data": {
+    "transactions": [
+      {
+        "id": "pt_001",
+        "type": "earned",
+        "description": "Safari Booking - Maasai Mara",
+        "points": 1200,
+        "date": "2026-04-10T14:30:00Z",
+        "bookingId": "BK-77421"
+      },
+      {
+        "id": "pt_007",
+        "type": "redeemed",
+        "description": "Discount Redemption",
+        "points": -500,
+        "date": "2026-01-10T14:00:00Z"
+      }
+    ],
+    "total": 15,
+    "page": 1
+  }
+}
+```
+
+**Tier System:**
+| Tier | Points Range | Multiplier | Benefits |
+|------|-------------|------------|-----------|
+| Bronze | 0-999 | 1x | Base points |
+| Silver | 1,000-4,999 | 1.25x | +25% points, early access |
+| Gold | 5,000-14,999 | 1.5x | +50%, free upgrades |
+| Platinum | 15,000+ | 2x | VIP, exclusive experiences |
 
 ---
 
@@ -662,6 +786,20 @@ return Promise.resolve(mockData);
 5. **Offline** - Use cached data with "showing cached" indicator
 
 ---
+
+
+// Login/Register response
+{
+  "success": true,
+  "user": {...},
+  "token": "jwt_access_token",
+  "refreshToken": "jwt_refresh_token"
+}
+
+// Refresh endpoint
+POST /auth/refresh
+{ "refreshToken": "..." }
+Response: { "success": true, "token": "new_token", "refreshToken": "new_refresh" }
 
 ## Notes
 

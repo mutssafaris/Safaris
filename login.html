@@ -42,13 +42,13 @@
     <!-- HERO -->
     <section class="landing-hero">
         <nav class="auth-navbar" style="position: absolute; top: 0; left: 0; width: 100%; padding: 1.5rem 6%; display: flex; justify-content: space-between; align-items: center; z-index: 1000;">
-            <a href="#" class="auth-logo">MUTS_SAFARIS</a>
+            <a href="index.html" class="auth-logo" data-auth="redirect">MUTS_SAFARIS</a>
             <div class="nav-links">
-                <a href="#" class="nav-link">Home</a>
-                <a href="#" class="nav-link">Explore</a>
-                <a href="#" class="nav-link">Create</a>
-                <a href="#" class="nav-link">Contact</a>
-                <a href="#" class="nav-link">Blog</a>
+                <a href="pages/dashboard/index.html" class="nav-link" data-auth="optional">Home</a>
+                <a href="pages/dashboard/hotels.html" class="nav-link" data-auth="optional">Explore</a>
+                <a href="pages/dashboard/my-trips.html" class="nav-link" data-auth="required">My Trips</a>
+                <a href="pages/dashboard/contact.html" class="nav-link" data-auth="optional">Contact</a>
+                <a href="pages/dashboard/blog.html" class="nav-link" data-auth="optional">Blog</a>
             </div>
             <div class="nav-controls">
                 <button class="nav-login-btn" id="open-auth">CONNECT</button>
@@ -83,11 +83,17 @@
             
             <div class="hero-image-container">
                 <img src="images/hero/safari-guide.jpg" alt="Safari Guide">
+                <div class="floating-stat top-left">
+                    <span>Adventure</span>
+                </div>
                 <div class="floating-stat top-right">
-                    <span>MAASAI MARA</span>
+                    <span>Unique</span>
+                </div>
+                <div class="floating-stat mid-right">
+                    <span>Culture</span>
                 </div>
                 <div class="floating-stat bottom-left">
-                    <span>EXPLORE NOW</span>
+                    <span>Relaxation</span>
                 </div>
             </div>
         </div>
@@ -377,6 +383,33 @@
             }
             else alert('REGISTRATION_FAILED: ' + result.message);
         };
+    })();
+    </script>
+    <script>
+    (function() {
+        document.querySelectorAll('.nav-link, .auth-logo').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                var href = this.getAttribute('href');
+                if (!href || href === '#') {
+                    e.preventDefault();
+                    return;
+                }
+                var authRequired = this.dataset.auth === 'required';
+                var redirectOnly = this.dataset.auth === 'redirect';
+                if (redirectOnly) {
+                    e.preventDefault();
+                    if (window.MutsAuth.getSession()) {
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                } else if (authRequired && !window.MutsAuth.getSession()) {
+                    e.preventDefault();
+                    document.getElementById('auth-overlay').classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
     })();
     </script>
     <script>

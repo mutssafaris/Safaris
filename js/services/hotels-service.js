@@ -568,14 +568,18 @@
         },
 
         getById: function(id) {
+            var self = this;
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/' + id);
             }
-            var hotel = mockHotels.find(function(h) { return h.id === id; });
-            return Promise.resolve(hotel || null);
+            return this._loadFromJSON().then(function(hotels) {
+                var hotel = hotels.find(function(h) { return h.id === id; });
+                return hotel || null;
+            });
         },
 
         getByFilter: function(filter) {
+            var self = this;
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 var queryParams = [];
                 if (filter.tier) queryParams.push('tier=' + filter.tier);
@@ -586,7 +590,8 @@
                 var endpoint = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
                 return this.fetchFromAPI(endpoint);
             }
-            var results = mockHotels.filter(function(hotel) {
+            return this._loadFromJSON().then(function(hotels) {
+                var results = hotels.filter(function(hotel) {
                 if (filter.tier && hotel.tier !== filter.tier) return false;
                 if (filter.location && hotel.location !== filter.location) return false;
                 if (filter.minPrice && hotel.price < filter.minPrice) return false;

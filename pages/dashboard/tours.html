@@ -84,8 +84,25 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingEl = document.getElementById('tours-loading');
     var gridEl = document.getElementById('tours-grid');
     
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
+    
+    function loadTours() {
+        renderDestinations(embeddedDestinations);
+    }
+    
     // Use embedded data directly (works without HTTP server)
-    renderDestinations(embeddedDestinations);
+    loadTours();
+    
+    // Auto-refresh every 30 seconds
+    refreshInterval = setInterval(loadTours, REFRESH_INTERVAL_MS);
+    
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+    });
 });
 
 function renderDestinations(destData) {

@@ -4,11 +4,34 @@
     'use strict';
     
     var LoyaltyService = {
+        _dataPromise: null,
+        
+        _loadFromJSON: function() {
+            var self = this;
+            if (this._dataPromise) return this._dataPromise;
+            
+            this._dataPromise = fetch('../../data/loyalty.json')
+                .then(function(response) {
+                    if (!response.ok) throw new Error('Failed to load loyalty.json');
+                    return response.json();
+                })
+                .then(function(data) {
+                    self._loyaltyData = data;
+                    return data;
+                })
+                .catch(function() {
+                    console.warn('[LoyaltyService] Failed to load loyalty.json, using fallback data');
+                    return null;
+                });
+            
+            return this._dataPromise;
+        },
         
         /**
          * Get user's loyalty profile
          */
         getProfile: function() {
+            var self = this;
             var baseURL = this._getBaseURL();
             
             return fetch(baseURL + '/loyalty/profile', this._getAuthHeaders())
@@ -16,10 +39,53 @@
                     if (!response.ok) throw new Error('Failed to fetch profile');
                     return response.json();
                 })
+                .then(function(data) { return data.profile || data; })
                 .catch(function(err) {
                     console.warn('[LoyaltyService] API unavailable:', err.message);
-                    return this._getLocalProfile();
-                }.bind(this));
+                    return self._loadFromJSON().then(function(data) {
+                        return data ? data.profile : self._getLocalProfile();
+                    });
+                });
+        },
+        
+        /**
+         * Get transaction history
+         */
+        getTransactions: function() {
+            var self = this;
+            var baseURL = this._getBaseURL();
+            
+            return fetch(baseURL + '/loyalty/transactions', this._getAuthHeaders())
+                .then(function(response) {
+                    if (!response.ok) throw new Error('Failed to fetch transactions');
+                    return response.json();
+                })
+                .then(function(data) { return data.transactions || data; })
+                .catch(function() {
+                    return self._loadFromJSON().then(function(data) {
+                        return data ? data.transactions : [];
+                    });
+                });
+        },
+        
+        /**
+         * Get redeem options
+         */
+        getRedeemOptions: function() {
+            var self = this;
+            return this._loadFromJSON().then(function(data) {
+                return data ? data.redeemOptions : self._getLocalRedeemOptions();
+            });
+        },
+        
+        /**
+         * Get tier information
+         */
+        getTiers: function() {
+            var self = this;
+            return this._loadFromJSON().then(function(data) {
+                return data ? data.tiers : self._getLocalTiers();
+            });
         },
         
         /**
@@ -41,23 +107,10 @@
         },
         
         /**
-         * Get transaction history
-         */
-        getTransactions: function() {
-            var baseURL = this._getBaseURL();
-            
-            return fetch(baseURL + '/loyalty/transactions', this._getAuthHeaders())
-                .then(function(response) {
-                    if (!response.ok) throw new Error('Failed to fetch transactions');
-                    return response.json();
-                })
-                .catch(function() { return []; });
-        },
-        
-        /**
          * Get user's referral code
          */
         getReferralCode: function() {
+            var self = this;
             var baseURL = this._getBaseURL();
             
             return fetch(baseURL + '/loyalty/referral-code', this._getAuthHeaders())
@@ -66,7 +119,11 @@
                     return response.json();
                 })
                 .then(function(data) { return data.code; })
-                .catch(function() { return this._getLocalCode(); }.bind(this));
+                .catch(function() { 
+                    return self._loadFromJSON().then(function(data) {
+                        return data ? data.profile.referralCode : self._getLocalCode();
+                    });
+                });
         },
         
         /**
@@ -137,6 +194,7 @@
                 totalSpent: 0,
                 nextTier: 'silver',
                 pointsToNextTier: 1000,
+                tierProgress: 0,
                 recentTransactions: [],
                 referralCode: 'MUTS' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                 referralCount: 0
@@ -145,6 +203,23 @@
         
         _getLocalCode: function() {
             return 'MUTS' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        },
+        
+        _getLocalRedeemOptions: function() {
+            return [
+                { points: 100, value: 10, label: "$10 off booking" },
+                { points: 250, value: 30, label: "$30 off booking" },
+                { points: 500, value: 75, label: "$75 off booking" }
+            ];
+        },
+        
+        _getLocalTiers: function() {
+            return [
+                { name: 'Bronze', minPoints: 0, maxPoints: 999, multiplier: 1, benefits: ['Base points earning'] },
+                { name: 'Silver', minPoints: 1000, maxPoints: 4999, multiplier: 1.25, benefits: ['+25% points', 'Early access'] },
+                { name: 'Gold', minPoints: 5000, maxPoints: 14999, multiplier: 1.5, benefits: ['+50% points', 'Free upgrades'] },
+                { name: 'Platinum', minPoints: 15000, maxPoints: null, multiplier: 2, benefits: ['2x points', 'VIP support'] }
+            ];
         }
     };
     

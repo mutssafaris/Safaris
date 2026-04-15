@@ -1,0 +1,136 @@
+{
+  "profile": {
+    "userId": "user_12345",
+    "points": 2450,
+    "lifetimePoints": 4780,
+    "tier": "gold",
+    "totalSpent": 12450,
+    "nextTier": "platinum",
+    "pointsToNextTier": 5220,
+    "tierProgress": 32,
+    "referralCode": "MUTS-GOLD-7X4K9",
+    "referralCount": 3,
+    "memberSince": "2024-08-15"
+  },
+  "transactions": [
+    {
+      "id": "pt_001",
+      "type": "earned",
+      "description": "Safari Booking - Maasai Mara",
+      "points": 1200,
+      "date": "2026-04-10T14:30:00Z",
+      "bookingId": "BK-77421"
+    },
+    {
+      "id": "pt_002",
+      "type": "earned",
+      "description": "Hotel Stay - Diani Beach Resort",
+      "points": 380,
+      "date": "2026-03-22T09:15:00Z",
+      "bookingId": "BK-77389"
+    },
+    {
+      "id": "pt_003",
+      "type": "earned",
+      "description": "Referral Bonus - Friend Signup",
+      "points": 500,
+      "date": "2026-03-15T11:00:00Z"
+    },
+    {
+      "id": "pt_004",
+      "type": "earned",
+      "description": "Hotel Booking - Amboseli Lodge",
+      "points": 420,
+      "date": "2026-02-28T16:45:00Z",
+      "bookingId": "BK-77245"
+    },
+    {
+      "id": "pt_005",
+      "type": "earned",
+      "description": "Review Bonus - Maasai Mara Safari",
+      "points": 100,
+      "date": "2026-02-15T10:30:00Z"
+    },
+    {
+      "id": "pt_006",
+      "type": "earned",
+      "description": "Safari Booking - Tsavo Adventure",
+      "points": 650,
+      "date": "2026-01-20T08:00:00Z",
+      "bookingId": "BK-77012"
+    },
+    {
+      "id": "pt_007",
+      "type": "redeemed",
+      "description": "Discount Redemption",
+      "points": -500,
+      "date": "2026-01-10T14:00:00Z",
+      "bookingId": "BK-76987"
+    },
+    {
+      "id": "pt_008",
+      "type": "earned",
+      "description": "Hotel Booking - Lake Nakuru",
+      "points": 200,
+      "date": "2025-12-18T12:30:00Z",
+      "bookingId": "BK-76834"
+    },
+    {
+      "id": "pt_009",
+      "type": "earned",
+      "description": "Referral Bonus - Friend Signup",
+      "points": 500,
+      "date": "2025-11-25T15:00:00Z"
+    },
+    {
+      "id": "pt_010",
+      "type": "expired",
+      "description": "Points Expired",
+      "points": -350,
+      "date": "2025-11-01T00:00:00Z"
+    }
+  ],
+  "tiers": [
+    {
+      "name": "Bronze",
+      "minPoints": 0,
+      "maxPoints": 999,
+      "multiplier": 1,
+      "benefits": ["Base points earning", "Member welcome bonus"]
+    },
+    {
+      "name": "Silver",
+      "minPoints": 1000,
+      "maxPoints": 4999,
+      "multiplier": 1.25,
+      "benefits": ["+25% points", "Early access to deals"]
+    },
+    {
+      "name": "Gold",
+      "minPoints": 5000,
+      "maxPoints": 14999,
+      "multiplier": 1.5,
+      "benefits": ["+50% points", "Free room upgrades", "Priority support"]
+    },
+    {
+      "name": "Platinum",
+      "minPoints": 15000,
+      "maxPoints": null,
+      "multiplier": 2,
+      "benefits": ["2x points", "VIP support", "Exclusive experiences", "Annual bonus"]
+    }
+  ],
+  "redeemOptions": [
+    { "points": 100, "value": 10, "label": "$10 off booking" },
+    { "points": 250, "value": 30, "label": "$30 off booking" },
+    { "points": 500, "value": 75, "label": "$75 off booking" },
+    { "points": 1000, "value": 175, "label": "$175 off booking" },
+    { "points": 2000, "value": 400, "label": "$400 off booking" }
+  ],
+  "earnMethods": [
+    { "action": "Book Safari", "rate": "1 point per $1 spent", "icon": "safari" },
+    { "action": "Refer Friend", "rate": "500 bonus points", "icon": "referral" },
+    { "action": "Write Review", "rate": "100 points per review", "icon": "review" },
+    { "action": "Share Experience", "rate": "50 points per share", "icon": "share" }
+  ]
+}

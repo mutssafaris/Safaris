@@ -290,15 +290,18 @@ img:not([data-src]) {
 .hero-image-container {
     position: absolute;
     right: 0;
-    top: 12.5%;
-    bottom: 12.5%;
-    width: 50%;
-    background-image: url('/images/hero/safari-guide.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
+    top: 10%;
+    bottom: 10%;
+    width: 60%;
     z-index: 2;
+    overflow: hidden;
+}
+
+.hero-image-container > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
 }
 
 @keyframes imageGlow {
@@ -497,6 +500,7 @@ img:not([data-src]) {
 .split-hero-container {
     display: grid;
     grid-template-columns: 1.4fr 0.6fr;
+    grid-template-rows: 1fr;
     height: 100%;
     width: 100%;
     max-width: 1600px;
@@ -590,6 +594,16 @@ img:not([data-src]) {
     right: 15%;
 }
 
+.floating-stat.top-left {
+    top: 10%;
+    left: 15%;
+}
+
+.floating-stat.mid-right {
+    top: 50%;
+    right: 10%;
+}
+
 .floating-stat.bottom-left {
     bottom: 15%;
     right: 20%;
@@ -624,26 +638,26 @@ img:not([data-src]) {
     .hero-image-container {
         position: relative;
         width: 100%;
-        height: 40vh;
+        height: 44vh;
         min-height: 200px;
         order: -1;
         z-index: 2;
+        background: none !important;
+        overflow: hidden;
     }
     
     .hero-image-container > img {
-        position: absolute;
-        inset: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        opacity: 1;
-        z-index: 1;
+        object-fit: contain;
+        object-position: center center;
     }
     
-    .hero-image-container::before {
-        display: none;
+    .hero-image-container::before,
+    .hero-image-container::after {
+        display: none !important;
     }
-
+    
     .hero-text-panel {
         text-align: center;
         order: 1;
@@ -703,7 +717,30 @@ img:not([data-src]) {
     }
 
     .floating-stat {
-        display: none;
+        display: block;
+        position: absolute;
+        font-size: 0.4rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .floating-stat.top-right {
+        top: 5%;
+        right: 5%;
+    }
+    
+    .floating-stat.top-left {
+        top: 5%;
+        left: 5%;
+    }
+    
+    .floating-stat.mid-right {
+        top: 50%;
+        right: 5%;
+    }
+    
+    .floating-stat.bottom-left {
+        bottom: 5%;
+        right: 10%;
     }
 
     .auth-navbar {

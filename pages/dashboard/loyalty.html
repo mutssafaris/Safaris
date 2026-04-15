@@ -7,7 +7,10 @@
     <title>My Points - Muts Safaris</title>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="stylesheet" href="../../css/mobile-responsive.css">
+    <link rel="stylesheet" href="../../css/animations.css">
     <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/i18n.css">
+    <link rel="stylesheet" href="../../css/notifications.css">
     <link rel="stylesheet" href="../../css/loyalty.css">
     <link rel="icon" href="../../assets/favicon/favicon.ico">
     <style>
@@ -27,7 +30,7 @@
             <div class="sidebar-brand">
                 <a href="../../index.html">
                     <span class="sidebar-brand-text">
-                        <span class="sidebar-brand-name">MUTS SAFARIS</span>
+                        <span class="sidebar-brand-name" data-text="MUTS SAFARIS">MUTS SAFARIS</span>
                         <span class="sidebar-brand-tagline">Don't be a Tourist, be a Traveller</span>
                     </span>
                 </a>
@@ -35,21 +38,42 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Dashboard</span></a></li>
-                    <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg><span class="nav-label">My Trips</span></a></li>
+                    <li><a href="travel-info/index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span class="nav-label">Travel Info</span></a></li>
+                    <li><a href="my-trips.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg><span class="nav-label">My Trips</span></a></li>
+                    <li><a href="gallery.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="nav-label">Gallery</span></a></li>
+                    <li><a href="map.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg><span class="nav-label">Map</span></a></li>
+                    <li><a href="beaches.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z"/></svg><span class="nav-label">Beaches</span></a></li>
+                    <li><a href="packages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span class="nav-label">Packages</span></a></li>
+                    <li><a href="africasa.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span class="nav-label">Africasa</span></a></li>
+                    <li><a href="blog.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="nav-label">Blog</span></a></li>
+                    <li><a href="faq.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span class="nav-label">FAQ</span></a></li>
+                    <li><a href="about.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span class="nav-label">About</span></a></li>
+                    <li><a href="contact.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Contact</span></a></li>
                     <li><a href="favorites.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="nav-label">Favorites</span></a></li>
+                    <li><a href="messages.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label">Messages</span><span class="badge" id="unread-badge"></span></a></li>
                     <li><a href="transactions.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span class="nav-label">Transactions</span></a></li>
                     <li><a href="loyalty.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-label">My Points</span></a></li>
                     <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
                 </ul>
             </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a>
+            </div>
         </aside>
         
+        <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
         <main class="dashboard-main">
             <header class="dashboard-topbar">
                 <div class="search-bar">
                     <input type="text" placeholder="Search..." id="dashboard-search">
                 </div>
-                <div id="theme-switcher-container" style="display:inline-block;margin-right:15px;vertical-align:middle;"></div>
+                <div class="topbar-controls">
+                    <div id="language-switcher-container"></div>
+                    <div id="notification-ui-container"></div>
+                    <div id="theme-switcher-container"></div>
+                </div>
                 <div class="user-profile">
                     <div class="user-info">
                         <span class="user-name" id="user-name">Traveler</span>
@@ -62,72 +86,160 @@
             <div class="loyalty-page">
                 <h1>My Points & Rewards</h1>
                 
-                <div id="loyalty-card-container"></div>
-                
-                <div class="dashboard-section" style="margin-top: 30px;">
-                    <div class="section-header">
-                        <h2>Ways to Earn Points</h2>
-                    </div>
-                    <div class="earn-methods" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px 0;">
-                        <div class="earn-method" style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center;">
-                            <svg viewBox="0 0 24 24" width="40" height="40" style="fill: var(--warning);"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
-                            <h3>Book a Safari</h3>
-                            <p>1 point per $1 spent</p>
+                <div class="loyalty-dashboard">
+                    <!-- Stats Grid - First row with main points highlighted -->
+                    <div class="loyalty-stats-grid">
+                        <div class="stat-card main-points">
+                            <div class="stat-icon large">
+                                <svg viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-points">2,450</span>
+                                <span class="stat-label">Available Points</span>
+                            </div>
                         </div>
-                        <div class="earn-method" style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center;">
-                            <svg viewBox="0 0 24 24" width="40" height="40" style="fill: var(--accent-secondary);"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                            <h3>Refer a Friend</h3>
-                            <p>500 bonus points</p>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-lifetime">4,780</span>
+                                <span class="stat-label">Lifetime Points</span>
+                            </div>
                         </div>
-                        <div class="earn-method" style="background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center;">
-                            <svg viewBox="0 0 24 24" width="40" height="40" style="fill: var(--success);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                            <h3>Write a Review</h3>
-                            <p>100 points per review</p>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-spent">$12,450</span>
+                                <span class="stat-label">Total Spent</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-referrals">3</span>
+                                <span class="stat-label">Referrals</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="dashboard-section" style="margin-top: 30px;">
-                    <div class="section-header">
-                        <h2>Tier Benefits</h2>
+                    
+                    <!-- Tier Progress & Ways to Earn -->
+                    <div class="loyalty-info-grid">
+                        <div class="info-card tier-progress-card">
+                            <h3><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg> Tier Progress</h3>
+                            <div class="tier-current">
+                                <span class="tier-badge gold">GOLD</span>
+                                <span class="tier-info">5,000 pts to Platinum</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 32%"></div>
+                                </div>
+                                <div class="progress-labels">
+                                    <span>4,780</span>
+                                    <span>15,000</span>
+                                </div>
+                            </div>
+                            <div class="tier-benefits">
+                                <h4>Your Gold Benefits</h4>
+                                <ul>
+                                    <li><svg viewBox="0 0 24 24" width="14"><path fill="var(--hud-green)" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 1.5x Points Multiplier</li>
+                                    <li><svg viewBox="0 0 24 24" width="14"><path fill="var(--hud-green)" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Free Room Upgrades</li>
+                                    <li><svg viewBox="0 0 24 24" width="14"><path fill="var(--hud-green)" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Priority Support</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card earn-card">
+                            <h3><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.58-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg> Ways to Earn</h3>
+                            <div class="earn-methods-grid">
+                                <div class="earn-item">
+                                    <span class="earn-icon">📅</span>
+                                    <div class="earn-details">
+                                        <strong>Book Safari</strong>
+                                        <small>1 point per $1</small>
+                                    </div>
+                                </div>
+                                <div class="earn-item">
+                                    <span class="earn-icon">👥</span>
+                                    <div class="earn-details">
+                                        <strong>Refer Friend</strong>
+                                        <small>500 bonus pts</small>
+                                    </div>
+                                </div>
+                                <div class="earn-item">
+                                    <span class="earn-icon">⭐</span>
+                                    <div class="earn-details">
+                                        <strong>Write Review</strong>
+                                        <small>100 points</small>
+                                    </div>
+                                </div>
+                                <div class="earn-item">
+                                    <span class="earn-icon">📤</span>
+                                    <div class="earn-details">
+                                        <strong>Share Trip</strong>
+                                        <small>50 points</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tier-table" style="background: var(--bg-secondary); padding: 20px; border-radius: 12px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="border-bottom: 2px solid var(--border-color);">
-                                    <th style="text-align: left; padding: 10px;">Tier</th>
-                                    <th style="text-align: left; padding: 10px;">Lifetime Points</th>
-                                    <th style="text-align: left; padding: 10px;">Points Multiplier</th>
-                                    <th style="text-align: left; padding: 10px;">Benefits</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 10px;"><span style="color: var(--bronze);">●</span> Bronze</td>
-                                    <td style="padding: 10px;">0 - 999</td>
-                                    <td style="padding: 10px;">1x</td>
-                                    <td style="padding: 10px;">Base points earning</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px;"><span style="color: var(--silver);">●</span> Silver</td>
-                                    <td style="padding: 10px;">1,000 - 4,999</td>
-                                    <td style="padding: 10px;">1.25x</td>
-                                    <td style="padding: 10px;">+25% points, early access</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px;"><span style="color: var(--gold);">●</span> Gold</td>
-                                    <td style="padding: 10px;">5,000 - 14,999</td>
-                                    <td style="padding: 10px;">1.5x</td>
-                                    <td style="padding: 10px;">+50% points, free upgrades</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px;"><span style="color: var(--platinum);">●</span> Platinum</td>
-                                    <td style="padding: 10px;">15,000+</td>
-                                    <td style="padding: 10px;">2x</td>
-                                    <td style="padding: 10px;">2x points, VIP support</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    
+                    <!-- Referral Code -->
+                    <div class="referral-card">
+                        <div class="referral-header">
+                            <h3><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Share Your Referral Code</h3>
+                            <span class="referral-subtitle">Earn 500 points per friend who joins</span>
+                        </div>
+                        <div class="referral-code-display">
+                            <code id="referral-code-display">MUTS-GOLD-7X4K9</code>
+                            <button class="copy-btn" onclick="copyReferralCode()">
+                                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Transactions -->
+                    <div class="transactions-card">
+                        <div class="transactions-header">
+                            <h3><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg> Recent Points Activity</h3>
+                            <button class="view-all-btn">View All</button>
+                        </div>
+                        <div class="transactions-list" id="transactions-list">
+                            <div class="transaction-item">
+                                <div class="txn-info">
+                                    <span class="txn-desc">Safari Booking - Maasai Mara</span>
+                                    <span class="txn-date">Apr 10, 2026</span>
+                                </div>
+                                <span class="txn-points positive">+1,200</span>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="txn-info">
+                                    <span class="txn-desc">Hotel Stay - Diani Beach</span>
+                                    <span class="txn-date">Mar 22, 2026</span>
+                                </div>
+                                <span class="txn-points positive">+380</span>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="txn-info">
+                                    <span class="txn-desc">Referral Bonus</span>
+                                    <span class="txn-date">Mar 15, 2026</span>
+                                </div>
+                                <span class="txn-points positive">+500</span>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="txn-info">
+                                    <span class="txn-desc">Discount Redemption</span>
+                                    <span class="txn-date">Jan 10, 2026</span>
+                                </div>
+                                <span class="txn-points negative">-500</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,13 +252,95 @@
     <script src="../../js/theme-switcher.js"></script>
     <script src="../../js/loyalty.js"></script>
     <script src="../../js/loyalty-ui.js"></script>
-    
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize loyalty UI
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
+
+    function loadLoyaltyData() {
         if (document.getElementById('loyalty-card-container')) {
             MutsLoyaltyUI.init('loyalty-card-container');
         }
+        loadStatsFromService();
+    }
+    
+    function loadStatsFromService() {
+        if (window.MutsLoyaltyService) {
+            MutsLoyaltyService.getProfile().then(function(profile) {
+                if (profile) {
+                    document.getElementById('stat-points').textContent = profile.points ? profile.points.toLocaleString() : '0';
+                    document.getElementById('stat-lifetime').textContent = profile.lifetimePoints ? profile.lifetimePoints.toLocaleString() : '0';
+                    document.getElementById('stat-spent').textContent = '$' + (profile.totalSpent || 0).toLocaleString();
+                    document.getElementById('stat-referrals').textContent = profile.referralCount || '0';
+                    document.getElementById('user-tier').textContent = (profile.tier || 'bronze').charAt(0).toUpperCase() + (profile.tier || 'bronze').slice(1) + ' Member';
+                    
+                    var tierBadge = document.querySelector('.tier-badge');
+                    if (tierBadge) {
+                        tierBadge.className = 'tier-badge ' + (profile.tier || 'bronze');
+                        tierBadge.textContent = (profile.tier || 'bronze').toUpperCase();
+                    }
+                    
+                    var codeDisplay = document.getElementById('referral-code-display');
+                    if (codeDisplay && profile.referralCode) {
+                        codeDisplay.textContent = profile.referralCode;
+                    }
+                    
+                    var tierInfo = document.querySelector('.tier-info');
+                    if (tierInfo && profile.nextTier) {
+                        var pts = profile.pointsToNextTier || 0;
+                        tierInfo.textContent = pts.toLocaleString() + ' pts to ' + profile.nextTier.charAt(0).toUpperCase() + profile.nextTier.slice(1);
+                    }
+                    
+                    var progressFill = document.querySelector('.progress-fill');
+                    if (progressFill && profile.tierProgress) {
+                        progressFill.style.width = profile.tierProgress + '%';
+                    }
+                }
+            });
+            
+            MutsLoyaltyService.getTransactions().then(function(txns) {
+                if (txns && txns.length > 0) {
+                    var list = document.getElementById('transactions-list');
+                    if (list) {
+                        list.innerHTML = txns.slice(0, 5).map(function(t) {
+                            var date = new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                            var points = t.points;
+                            var isPositive = points > 0;
+                            return '<div class="transaction-item">' +
+                                '<div class="txn-info">' +
+                                '<span class="txn-desc">' + t.description + '</span>' +
+                                '<span class="txn-date">' + date + '</span>' +
+                                '</div>' +
+                                '<span class="txn-points ' + (isPositive ? 'positive' : 'negative') + '">' + 
+                                (isPositive ? '+' : '') + points.toLocaleString() + 
+                                '</span></div>';
+                        }).join('');
+                    }
+                }
+            });
+        }
+    }
+    
+    window.copyReferralCode = function() {
+        var code = document.getElementById('referral-code-display').textContent;
+        navigator.clipboard.writeText(code).then(function() {
+            alert('Referral code copied to clipboard!');
+        }).catch(function() {
+            var textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Referral code copied!');
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadLoyaltyData();
+        refreshInterval = setInterval(loadLoyaltyData, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
     });
     </script>
 </body>
