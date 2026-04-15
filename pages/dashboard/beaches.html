@@ -65,7 +65,9 @@
 (function() {
     var grid = document.getElementById('beaches-grid');
     var noResults = document.getElementById('beaches-no-results');
-    
+    var refreshInterval = null;
+    var REFRESH_INTERVAL_MS = 30000; // 30 seconds
+
     function renderBeaches(beaches) {
         if (!beaches || beaches.length === 0) {
             grid.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text-muted);">No beaches available.</div>';
@@ -94,10 +96,25 @@
         }).join('');
         grid.innerHTML = html;
     }
-    
-    if (window.MutsListingsService) {
-        window.MutsListingsService.getByCategory('beaches').then(renderBeaches);
+
+    function loadBeaches() {
+        if (window.MutsListingsService) {
+            window.MutsListingsService.getByCategory('beaches').then(renderBeaches);
+        }
     }
+
+    // Initial load
+    loadBeaches();
+
+    // Auto-refresh every 30 seconds
+    refreshInterval = setInterval(loadBeaches, REFRESH_INTERVAL_MS);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+    });
 })();
 </script>
 </body>

@@ -168,6 +168,15 @@
         document.getElementById('tier-filter').addEventListener('change', loadHotels);
         document.getElementById('status-filter').addEventListener('change', loadHotels);
         
+        var REFRESH_INTERVAL_MS = 30000;
+        var refreshInterval = null;
+        
+        loadHotels();
+        refreshInterval = setInterval(loadHotels, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
+        
         function loadHotels() {
             var tbody = document.getElementById('hotels-table');
             tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></div></td></tr>';

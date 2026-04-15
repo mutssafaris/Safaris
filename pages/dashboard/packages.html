@@ -40,7 +40,9 @@
 <script>
 (function() {
     var grid = document.getElementById('packages-grid');
-    
+    var refreshInterval = null;
+    var REFRESH_INTERVAL_MS = 30000; // 30 seconds
+
     function renderPackages(packages) {
         if (!packages || packages.length === 0) {
             grid.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text-muted);">No packages available.</div>';
@@ -65,10 +67,25 @@
         }).join('');
         grid.innerHTML = html;
     }
-    
-    if (window.MutsListingsService) {
-        window.MutsListingsService.getByCategory('packages').then(renderPackages);
+
+    function loadPackages() {
+        if (window.MutsListingsService) {
+            window.MutsListingsService.getByCategory('packages').then(renderPackages);
+        }
     }
+
+    // Initial load
+    loadPackages();
+
+    // Auto-refresh every 30 seconds
+    refreshInterval = setInterval(loadPackages, REFRESH_INTERVAL_MS);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+    });
 })();
 </script>
 </body>

@@ -310,6 +310,9 @@
 
     <script src="../js/manager-service.js"></script>
     <script>
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
+
     (function() {
         if (!ManagerService.checkAuth()) {
             return;
@@ -321,6 +324,10 @@
         }
         
         loadCacheStats();
+        refreshInterval = setInterval(loadCacheStats, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
         
         function loadCacheStats() {
             var stats = ManagerService.getCacheStats();

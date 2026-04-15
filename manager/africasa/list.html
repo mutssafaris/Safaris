@@ -55,16 +55,17 @@
     <script src="../../js/api-config.js"></script>
     <script src="../js/manager-service.js"></script>
     <script>
-    (function() {
+(function() {
         if (!ManagerService.checkAuth()) return;
         
         document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); ManagerService.logout(); });
         
-        loadProducts();
-        
+        var REFRESH_INTERVAL_MS = 30000; // 30 seconds
+        var refreshInterval = null;
+
         function loadProducts() {
             var tbody = document.getElementById('products-table');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></td></tr>';
             
             ManagerService.getProducts().then(function(products) {
                 renderProducts(products);
@@ -96,6 +97,19 @@
             });
             tbody.innerHTML = html;
         }
+
+        // Initialize
+        loadProducts();
+
+        // Auto-refresh every 30 seconds
+        refreshInterval = setInterval(loadProducts, REFRESH_INTERVAL_MS);
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
     })();
     </script>
 </body>

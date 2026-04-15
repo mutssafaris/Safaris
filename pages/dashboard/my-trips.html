@@ -43,5 +43,98 @@
 <script src="../../js/auth.js"></script>
 <script src="../../js/services/bookings-service.js"></script>
 <script src="../../js/dashboard-theme.js"></script>
+<script>
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
+
+    var tripsList = document.getElementById('trips-list');
+    var tripsEmpty = document.getElementById('trips-empty');
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var currentFilter = 'all';
+    
+    function renderTrips(bookings) {
+        if (!bookings || bookings.length === 0) {
+            tripsList.innerHTML = '';
+            tripsEmpty.style.display = 'block';
+            return;
+        }
+        
+        tripsEmpty.style.display = 'none';
+        
+        var filtered = bookings.filter(function(b) {
+            if (currentFilter === 'all') return true;
+            if (currentFilter === 'upcoming') return ['upcoming', 'pending', 'cancellation_pending'].includes(b.status);
+            if (currentFilter === 'completed') return b.status === 'completed';
+            if (currentFilter === 'cancelled') return b.status === 'cancelled';
+            return true;
+        });
+        
+        if (filtered.length === 0) {
+            tripsList.innerHTML = '<div class="empty-state"><p>No ' + currentFilter + ' trips found.</p></div>';
+            return;
+        }
+        
+        tripsList.innerHTML = filtered.map(function(trip) {
+            var status = trip.status || 'upcoming';
+            var statusClass = status === 'cancellation_pending' ? 'pending' : status;
+            var statusLabel = status === 'cancellation_pending' ? 'Cancellation Pending' : 
+                             status.charAt(0).toUpperCase() + status.slice(1);
+            
+            var guests = (trip.adults || 1) + ' Adult' + (trip.adults !== 1 ? 's' : '');
+            if (trip.children > 0) guests += ', ' + trip.children + ' Child' + (trip.children !== 1 ? 'ren' : '');
+            
+            return '<div class="trip-card">' +
+                '<div class="trip-card-header">' +
+                    '<span class="trip-status ' + statusClass + '">' + statusLabel + '</span>' +
+                    '<span class="trip-date">' + (trip.checkin || '') + ' — ' + (trip.checkout || '') + '</span>' +
+                '</div>' +
+                '<div class="trip-card-body">' +
+                    '<h3>' + (trip.destination || trip.hotelName || 'Trip') + '</h3>' +
+                    '<div class="trip-meta">' +
+                        '<span class="trip-guests">' + guests + '</span>' +
+                        '<span class="trip-price">$' + (trip.totalPrice || 0).toLocaleString() + '</span>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="trip-card-actions">' +
+                    '<a href="booking-detail.html?id=' + trip.id + '" class="btn btn-sm">View Details</a>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+    }
+    
+    function loadTrips() {
+        tripsList.innerHTML = '<div class="loading-state"><div class="loading-spinner"></div><p>Loading trips...</p></div>';
+        
+        var user = window.MutsAuth ? window.MutsAuth.getCurrentUser() : null;
+        
+        if (window.MutsBookingsService) {
+            window.MutsBookingsService.getAll(user ? { userId: user.id } : {})
+                .then(renderTrips)
+                .catch(function(err) {
+                    console.warn('Error loading trips:', err);
+                    tripsList.innerHTML = '<div class="error-state"><p>Unable to load trips. Please try again later.</p><button class="btn btn-primary" onclick="loadTrips()">Retry</button></div>';
+                });
+        } else {
+            renderTrips([]);
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        filterBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                loadTrips();
+            });
+        });
+        
+        loadTrips();
+        refreshInterval = setInterval(loadTrips, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
+    });
+</script>
 </body>
 </html>

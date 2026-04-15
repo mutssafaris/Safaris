@@ -371,6 +371,26 @@
 <script src="../../js/auth.js" defer></script>
 <script src="../../js/dashboard-theme.js" defer></script>
 <script>
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
+
+    function loadUserData() {
+        if (window.MutsAuth) {
+            var user = window.MutsAuth.getCurrentUser();
+            if (user) {
+                document.getElementById('profile-name').value = user.name || '';
+                document.getElementById('profile-email').value = user.email || '';
+                document.getElementById('profile-phone').value = user.phone || '';
+                document.getElementById('profile-country').value = user.country || '';
+                document.getElementById('profile-display-name').textContent = user.name || 'Traveler';
+                document.getElementById('profile-avatar').textContent = (user.name || 'T').charAt(0).toUpperCase();
+                
+                document.getElementById('user-name').textContent = user.name || 'Traveler';
+                document.getElementById('user-avatar').textContent = (user.name || 'T').charAt(0).toUpperCase();
+            }
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         // Section Switching Logic
         var navItems = document.querySelectorAll('.settings-nav-item');
@@ -388,19 +408,6 @@
             };
         });
 
-        // Load current user data
-        if (window.MutsAuth) {
-            var user = window.MutsAuth.getCurrentUser();
-            if (user) {
-                document.getElementById('profile-name').value = user.name || '';
-                document.getElementById('profile-email').value = user.email || '';
-                document.getElementById('profile-phone').value = user.phone || '';
-                document.getElementById('profile-country').value = user.country || '';
-                document.getElementById('profile-display-name').textContent = user.name || 'Traveler';
-                document.getElementById('profile-avatar').textContent = (user.name || 'T').charAt(0).toUpperCase();
-            }
-        }
-
         // Handle profile sync
         document.getElementById('profile-form').onsubmit = function(e) {
             e.preventDefault();
@@ -415,6 +422,9 @@
 
             window.MutsAuth.updateProfile(updatedData);
             alert('Profile synced with central database.');
+            
+            // Refresh displayed data after update
+            loadUserData();
         };
 
         // Payment methods functionality
@@ -756,6 +766,13 @@
                 }
             });
         }
+
+        // Initialize user data and auto-refresh
+        loadUserData();
+        refreshInterval = setInterval(loadUserData, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
     });
 </script>
 </body>

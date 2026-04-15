@@ -179,6 +179,9 @@
     loadWishlist();
     loadProducts();
 
+    var REFRESH_INTERVAL_MS = 30000; // 30 seconds
+    var refreshInterval = null;
+
     function loadProducts() {
         skeleton.style.display = 'grid';
         grid.style.display = 'none';
@@ -190,6 +193,16 @@
             skeleton.style.display = 'none';
         });
     }
+
+    // Auto-refresh every 30 seconds
+    refreshInterval = setInterval(loadProducts, REFRESH_INTERVAL_MS);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+    });
 
     function applyFilters() {
         currentPage = 1; // Reset to first page when filters change

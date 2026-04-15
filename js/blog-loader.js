@@ -416,6 +416,36 @@
                 }
             };
         }
+
+        // Auto-refresh every 30 seconds
+        var refreshInterval = setInterval(function() {
+            loadBlogData(function(data) {
+                if (!data || !blogContainer) return;
+                renderPosts(filterPosts(data.posts, currentCategory, currentSearch), blogContainer, false);
+                if (categoryTabs) {
+                    var cats = [{ name: 'All', slug: 'all' }].concat(data.categories);
+                    categoryTabs.innerHTML = '';
+                    cats.forEach(function (cat) {
+                        var tab = document.createElement('button');
+                        tab.className = 'category-tab' + (cat.slug === currentCategory ? ' active' : '');
+                        tab.textContent = cat.name;
+                        tab.dataset.category = cat.slug;
+                        tab.onclick = function() {
+                            document.querySelectorAll('.category-tab').forEach(function(t) { t.classList.remove('active'); });
+                            tab.classList.add('active');
+                            currentCategory = cat.slug;
+                            renderPosts(filterPosts(data.posts, currentCategory, currentSearch), blogContainer, false);
+                        };
+                        categoryTabs.appendChild(tab);
+                    });
+                }
+            }, true);
+        }, 30000);
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
     });
 
     window.MutsBlog = {

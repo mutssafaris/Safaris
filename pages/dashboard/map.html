@@ -1,8 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#f8fbff">
-<title>Interactive Map - Muts Safaris</title><link rel="stylesheet" href="../../css/dashboard-theme.css"><link rel="icon" href="../../assets/favicon/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#09001a">
+<title>Interactive Map - Muts Safaris</title>
+<link rel="stylesheet" href="../../css/dashboard-theme.css">
+<link rel="icon" href="../../assets/favicon/favicon.ico">
+<style>
+    .map-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #09001a;
+    }
+    #safari-map {
+        width: 100%;
+        height: 100%;
+    }
+    .map-controls {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 320px;
+    }
+    .map-search-box {
+        padding: 12px 16px;
+        background: rgba(9, 0, 26, 0.9);
+        border: 1px solid var(--border-glow, rgba(255, 220, 100, 0.3));
+        border-radius: 4px;
+        color: #fff;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.85rem;
+        backdrop-filter: blur(10px);
+    }
+    .map-search-box:focus {
+        outline: none;
+        border-color: var(--accent, #ffb800);
+        box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+    }
+    .map-search-box::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .map-filter-group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .map-filter-btn {
+        padding: 8px 14px;
+        background: rgba(9, 0, 26, 0.9);
+        border: 1px solid var(--border-glow, rgba(255, 220, 100, 0.3));
+        border-radius: 0;
+        color: rgba(255, 255, 255, 0.7);
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    .map-filter-btn:hover,
+    .map-filter-btn.active {
+        background: var(--accent, #ffb800);
+        color: #09001a;
+        border-color: var(--accent, #ffb800);
+    }
+    .map-back-btn {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 10;
+    }
+    .map-back-btn .btn-outline {
+        padding: 10px 20px;
+        background: rgba(9, 0, 26, 0.9);
+        border: 1px solid var(--border-glow, rgba(255, 220, 100, 0.3));
+        border-radius: 0;
+        color: #fff;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        text-decoration: none;
+        display: inline-block;
+    }
+    .map-back-btn .btn-outline:hover {
+        background: var(--accent, #ffb800);
+        color: #09001a;
+        border-color: var(--accent, #ffb800);
+    }
+
+    @media (max-width: 768px) {
+        .map-controls {
+            left: 10px;
+            right: 10px;
+            max-width: none;
+        }
+        .map-search-box {
+            width: 100%;
+        }
+        .map-filter-group {
+            width: 100%;
+        }
+        .map-filter-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 8px;
+            font-size: 0.65rem;
+        }
+        .map-back-btn {
+            left: 10px;
+            bottom: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .map-filter-btn {
+            min-width: calc(50% - 4px);
+        }
+    }
+</style>
 </head>
 <body>
 <div class="dashboard-layout">
@@ -25,7 +151,7 @@
 <li><a href="profile.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span class="nav-label">Settings</span></a></li>
 </ul></nav><div class="sidebar-footer"><a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a></div></aside>
     <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div><div class="sidebar-overlay" id="sidebar-overlay"></div>
-    <main class="dashboard-main" style="padding:0;height:100vh;">
+    <main class="dashboard-main" style="padding:0;height:100vh;background:linear-gradient(90deg, #09001a 0%, #1a0033 30%, #3a0050 60%, #ff2e88 100%) !important;">
         <div class="map-container">
             <div id="safari-map"></div>
             <div class="map-controls">

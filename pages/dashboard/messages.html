@@ -373,6 +373,54 @@
                 display: none;
             }
         }
+
+        @media (max-width: 480px) {
+            .messenger-sidebar-header {
+                padding: 0.75rem;
+            }
+            .new-message-btn {
+                font-size: 0.6rem;
+                padding: 0.5rem;
+            }
+            .messenger-search input {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+            .conv-tabs {
+                padding: 0.25rem;
+            }
+            .conv-tab {
+                font-size: 0.6rem;
+                padding: 0.3rem;
+            }
+            .conv-item {
+                padding: 0.5rem;
+            }
+            .conv-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+            .conv-name {
+                font-size: 0.8rem;
+            }
+            .conv-last {
+                font-size: 0.7rem;
+            }
+            .chat-header {
+                padding: 0.75rem;
+            }
+            .chat-input {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.75rem;
+            }
+            .no-chat-selected h3 {
+                font-size: 0.9rem;
+            }
+            .no-chat-selected p {
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -635,6 +683,14 @@
             document.getElementById('messenger-sidebar').classList.remove('hidden');
             document.getElementById('messenger-main').classList.add('hidden');
         };
+
+        // Auto-refresh every 30 seconds
+        var refreshInterval = setInterval(loadConversations, 30000);
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
 
         loadConversations();
     });

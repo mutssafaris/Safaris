@@ -46,6 +46,19 @@ window.MutsFavorites.loadDestinations(function(data) {
     document.getElementById('favorites-loading').style.display = 'none';
     window.MutsFavorites.renderFavorites();
 });
+
+// Auto-refresh every 30 seconds to sync with API
+var refreshInterval = setInterval(function() {
+    if (window.MutsFavorites) {
+        window.MutsFavorites.syncWithAPI && window.MutsFavorites.syncWithAPI();
+        window.MutsFavorites.renderFavorites && window.MutsFavorites.renderFavorites();
+    }
+}, 30000);
+
+// Clean up on page unload
+window.addEventListener('beforeunload', function() {
+    clearInterval(refreshInterval);
+});
 </script>
 </body>
 </html>

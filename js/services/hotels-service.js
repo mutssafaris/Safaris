@@ -522,16 +522,40 @@
     };
 
     var HotelsService = {
+        _dataPromise: null,
+
+        _loadFromJSON: function() {
+            var self = this;
+            if (this._dataPromise) return this._dataPromise;
+            
+            this._dataPromise = fetch('../../data/hotels.json')
+                .then(function(response) {
+                    if (!response.ok) throw new Error('Failed to load hotels.json');
+                    return response.json();
+                })
+                .then(function(data) {
+                    self._hotelsData = data.hotels;
+                    return data.hotels;
+                })
+                .catch(function() {
+                    console.warn('[HotelsService] Failed to load hotels.json, using fallback mock data');
+                    return mockHotels;
+                });
+            
+            return this._dataPromise;
+        },
+
         getAll: function() {
+            var self = this;
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI();
             }
+            
             // Try to load from localStorage first
             try {
                 var stored = localStorage.getItem(STORAGE_KEY);
                 if (stored) {
                     var parsed = JSON.parse(stored);
-                    // Merge with default data to ensure all fields exist
                     return Promise.resolve(parsed.map(function(h) {
                         var defaultHotel = mockHotels.find(function(d) { return d.id === h.id; });
                         return defaultHotel ? Object.assign({}, defaultHotel, h) : h;
@@ -539,7 +563,8 @@
                 }
             } catch (e) {}
             
-            return Promise.resolve(mockHotels);
+            // Load from JSON file
+            return this._loadFromJSON();
         },
 
         getById: function(id) {

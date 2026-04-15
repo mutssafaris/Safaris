@@ -205,6 +205,8 @@
 
     <script src="../js/manager-service.js"></script>
     <script>
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
     var currentUserId = null;
     
     (function() {
@@ -216,6 +218,10 @@
         });
         
         loadUsers();
+        refreshInterval = setInterval(loadUsers, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
         
         document.getElementById('search-input').addEventListener('input', debounce(loadUsers, 300));
         document.getElementById('tier-filter').addEventListener('change', loadUsers);

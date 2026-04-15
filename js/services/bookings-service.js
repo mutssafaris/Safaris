@@ -98,31 +98,60 @@
                 return data;
             })
             .catch(function(error) {
-                console.error('[BookingsService API Error]', error.message);
+                console.warn('[BookingsService] API unavailable, using local data:', error.message);
                 throw error;
             });
+    }
+    
+    function getLocalBookings(userId) {
+        if (userId) {
+            var userBookings = getUserBookings(userId);
+            return userBookings.concat(mockBookings);
+        }
+        return getAllBookings(userId);
     }
 
     var BookingsService = {
         getRecent: function (userId, limit) {
+            var self = this;
             if (_apiReady) {
                 var params = { limit: limit || 5 };
                 if (userId) params.userId = userId;
-                return this.fetchFromAPI('/bookings' + buildQueryString(params));
+                return this.fetchFromAPI('/bookings' + buildQueryString(params))
+                    .catch(function() {
+                        var bookings = getLocalBookings(userId).slice(0, limit || 5);
+                        return Promise.resolve(bookings);
+                    });
             }
             var n = limit || 5;
-            var bookings = getAllBookings(userId);
-            return Promise.resolve(bookings.slice(0, n));
+            var bookings = getLocalBookings(userId).slice(0, n);
+            return Promise.resolve(bookings);
         },
 
         getAll: function (filters) {
+            var self = this;
             filters = filters || {};
             
             if (_apiReady) {
-                return this.fetchFromAPI('/bookings' + buildQueryString(filters));
+                return this.fetchFromAPI('/bookings' + buildQueryString(filters))
+                    .catch(function() {
+                        var bookings = getLocalBookings(filters.userId);
+                        
+                        if (filters.status) {
+                            bookings = bookings.filter(function(b) { return b.status === filters.status; });
+                        }
+                        if (filters.fromDate) {
+                            bookings = bookings.filter(function(b) { return b.checkin >= filters.fromDate; });
+                        }
+                        if (filters.toDate) {
+                            bookings = bookings.filter(function(b) { return b.checkout <= filters.toDate; });
+                        }
+                        
+                        return Promise.resolve(bookings);
+                    });
             }
             
-            var bookings = getAllBookings(filters.userId);
+            var bookings = getLocalBookings(filters.userId);
             
             if (filters.status) {
                 bookings = bookings.filter(function(b) { return b.status === filters.status; });

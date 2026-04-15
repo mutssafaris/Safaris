@@ -258,7 +258,8 @@ var index = favs.indexOf(destinationId);
         isFavorite: isFavorite,
         toggleFavorite: toggleFavorite,
         loadDestinations: loadDestinations,
-        renderFavorites: renderFavorites
+        renderFavorites: renderFavorites,
+        syncWithAPI: syncWithAPI
     };
 
     document.addEventListener('DOMContentLoaded', function() {

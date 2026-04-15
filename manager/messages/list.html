@@ -209,8 +209,11 @@
             e.preventDefault();
             ManagerService.logout();
         });
-        
-        loadMessages();
+
+        var REFRESH_INTERVAL_MS = 30000;
+        var refreshInterval = null;
+
+        function loadMessages() {
         
         document.getElementById('type-filter').addEventListener('change', loadMessages);
         document.getElementById('status-filter').addEventListener('change', loadMessages);
@@ -388,6 +391,17 @@
                 setTimeout(function() { toast.remove(); }, 300);
             }, 3000);
         };
+
+        // Initialize
+        loadMessages();
+
+        // Auto-refresh every 30 seconds
+        refreshInterval = setInterval(loadMessages, REFRESH_INTERVAL_MS);
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
     })();
     </script>
 </body>

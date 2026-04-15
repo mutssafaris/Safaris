@@ -574,6 +574,73 @@
             } catch (e) {
                 return null;
             }
+        },
+
+        // ============ FAQS ============
+        getFAQs: function(filters) {
+            var query = '';
+            if (filters) {
+                var params = [];
+                if (filters.category) params.push('category=' + filters.category);
+                if (filters.search) params.push('search=' + encodeURIComponent(filters.search));
+                if (params.length) query = '?' + params.join('&');
+            }
+            return this.fetch('/content/faq' + query);
+        },
+
+        getFAQ: function(id) {
+            return this.fetch('/content/faq/' + id);
+        },
+
+        createFAQ: function(data) {
+            return this.fetch('/content/faq', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+        },
+
+        updateFAQ: function(id, data) {
+            return this.fetch('/content/faq/' + id, {
+                method: 'PUT',
+                body: JSON.stringify(data)
+            });
+        },
+
+        deleteFAQ: function(id) {
+            return this.fetch('/content/faq/' + id, {
+                method: 'DELETE'
+            });
+        },
+
+        // ============ TRANSACTIONS ============
+        getTransactions: function(filters) {
+            var query = '';
+            if (filters) {
+                var params = [];
+                if (filters.status) params.push('status=' + filters.status);
+                if (filters.category) params.push('category=' + filters.category);
+                if (filters.search) params.push('search=' + encodeURIComponent(filters.search));
+                if (filters.dateFrom) params.push('dateFrom=' + filters.dateFrom);
+                if (filters.dateTo) params.push('dateTo=' + filters.dateTo);
+                if (filters.limit) params.push('limit=' + filters.limit);
+                if (filters.offset) params.push('offset=' + filters.offset);
+                if (params.length) query = '?' + params.join('&');
+            }
+            return this.fetch('/transactions' + query);
+        },
+
+        getTransaction: function(id) {
+            return this.fetch('/transactions/' + id);
+        },
+
+        getTransactionSummary: function() {
+            return this.fetch('/transactions/summary');
+        },
+
+        exportTransactions: function(format) {
+            return this.fetch('/transactions/export?format=' + (format || 'csv'), {
+                method: 'GET'
+            });
         }
     };
 

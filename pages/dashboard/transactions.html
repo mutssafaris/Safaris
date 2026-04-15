@@ -175,48 +175,55 @@
 <script src="../../js/services/transactions-service.js"></script>
 <script src="../../js/dashboard-theme.js"></script>
 <script>
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
+
+    function loadTransactions() {
+        if (!window.MutsTransactionsService) return;
+
+        window.MutsTransactionsService.getAll().then(function(txns) {
+            var body = document.getElementById('transactions-body');
+            var empty = document.getElementById('transactions-empty');
+
+            if (txns.length === 0) {
+                body.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            body.innerHTML = txns.map(function(t) {
+                var date = new Date(t.date).toLocaleDateString() + ' ' + new Date(t.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                var statusClass = 'status-' + t.status;
+
+                return '<tr>' +
+                    '<td>' + date + '</td>' +
+                    '<td>' +
+                        '<div>' + t.description + '</div>' +
+                        '<div class="txn-id">' + t.id + '</div>' +
+                    '</td>' +
+                    '<td>' +
+                        '<div class="method-tag">' + t.method + '</div>' +
+                    '</td>' +
+                    '<td class="txn-amount">$' + t.amount.toFixed(2) + '</td>' +
+                    '<td><span class="status-pill ' + statusClass + '">' + t.status + '</span></td>' +
+                '</tr>';
+            }).join('');
+        });
+
+        window.MutsTransactionsService.getSummary().then(function(summary) {
+            document.getElementById('total-spent').textContent = '$' + summary.total.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('pending-amount').textContent = '$' + summary.pending.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('completed-amount').textContent = '$' + summary.completed.toLocaleString(undefined, {minimumFractionDigits: 2});
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-        function loadTransactions() {
-            if (!window.MutsTransactionsService) return;
-
-            window.MutsTransactionsService.getAll().then(function(txns) {
-                var body = document.getElementById('transactions-body');
-                var empty = document.getElementById('transactions-empty');
-
-                if (txns.length === 0) {
-                    body.innerHTML = '';
-                    empty.style.display = 'block';
-                    return;
-                }
-
-                empty.style.display = 'none';
-                body.innerHTML = txns.map(function(t) {
-                    var date = new Date(t.date).toLocaleDateString() + ' ' + new Date(t.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                    var statusClass = 'status-' + t.status;
-
-                    return '<tr>' +
-                        '<td>' + date + '</td>' +
-                        '<td>' +
-                            '<div>' + t.description + '</div>' +
-                            '<div class="txn-id">' + t.id + '</div>' +
-                        '</td>' +
-                        '<td>' +
-                            '<div class="method-tag">' + t.method + '</div>' +
-                        '</td>' +
-                        '<td class="txn-amount">$' + t.amount.toFixed(2) + '</td>' +
-                        '<td><span class="status-pill ' + statusClass + '">' + t.status + '</span></td>' +
-                    '</tr>';
-                }).join('');
-            });
-
-            window.MutsTransactionsService.getSummary().then(function(summary) {
-                document.getElementById('total-spent').textContent = '$' + summary.total.toLocaleString(undefined, {minimumFractionDigits: 2});
-                document.getElementById('pending-amount').textContent = '$' + summary.pending.toLocaleString(undefined, {minimumFractionDigits: 2});
-                document.getElementById('completed-amount').textContent = '$' + summary.completed.toLocaleString(undefined, {minimumFractionDigits: 2});
-            });
-        }
-
         loadTransactions();
+        refreshInterval = setInterval(loadTransactions, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
     });
 </script>
 </body>

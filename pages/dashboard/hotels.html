@@ -229,23 +229,41 @@
         }, 300);
     });
 
-    window.MutsHotelsService.getAll().then(function(hotels) {
-        renderHotels(hotels);
-        
-        // Update service with any persisted review counts
-        try {
-            var stored = localStorage.getItem('muts_hotels_cache');
-            if (stored) {
-                var storedHotels = JSON.parse(stored);
-                storedHotels.forEach(function(storedHotel) {
-                    var localHotel = hotels.find(function(h) { return h.id === storedHotel.id; });
-                    if (localHotel && storedHotel.reviews !== localHotel.reviews) {
-                        localHotel.reviews = storedHotel.reviews;
-                    }
-                });
-                renderHotels(hotels);
-            }
-        } catch (e) {}
+    var REFRESH_INTERVAL_MS = 30000; // 30 seconds
+    var refreshInterval = null;
+
+    function loadHotels() {
+        window.MutsHotelsService.getAll().then(function(hotels) {
+            renderHotels(hotels);
+            
+            // Update service with any persisted review counts
+            try {
+                var stored = localStorage.getItem('muts_hotels_cache');
+                if (stored) {
+                    var storedHotels = JSON.parse(stored);
+                    storedHotels.forEach(function(storedHotel) {
+                        var localHotel = hotels.find(function(h) { return h.id === storedHotel.id; });
+                        if (localHotel && storedHotel.reviews !== localHotel.reviews) {
+                            localHotel.reviews = storedHotel.reviews;
+                        }
+                    });
+                    renderHotels(hotels);
+                }
+            } catch (e) {}
+        });
+    }
+
+    // Initial load
+    loadHotels();
+
+    // Auto-refresh every 30 seconds
+    refreshInterval = setInterval(loadHotels, REFRESH_INTERVAL_MS);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
     });
 })();
 </script>

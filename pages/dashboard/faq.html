@@ -51,13 +51,36 @@
 <script src="../../js/auth.js"></script><script src="../../js/dashboard-theme.js"></script>
 <script>
 (function() {
+    var API_BASE_URL = '/api';
+    var apiReady = false;
+
+    try {
+        apiReady = window.MutsAPIConfig && window.MutsAPIConfig.isConnected && window.MutsAPIConfig.isConnected();
+    } catch (e) {
+        apiReady = false;
+    }
+
     function getBasePath() {
         var path = window.location.pathname;
         if (path.indexOf('/pages/dashboard/') !== -1) return '../../';
         return './';
     }
 
-    function loadFAQs() {
+    function loadFAQs(callback) {
+        if (apiReady) {
+            fetch(API_BASE_URL + '/faq').then(function(res) { return res.json(); }).then(function(data) {
+                if (data.success && data.data) {
+                    callback(formatAPIResponse(data.data));
+                } else {
+                    loadLocalFAQs(callback);
+                }
+            }).catch(function() { loadLocalFAQs(callback); });
+        } else {
+            loadLocalFAQs(callback);
+        }
+    }
+
+    function loadLocalFAQs(callback) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', getBasePath() + 'data/faqs.json', true);
         xhr.onreadystatechange = function() {
@@ -65,7 +88,7 @@
                 if (xhr.status === 200) {
                     try {
                         var data = JSON.parse(xhr.responseText);
-                        renderFAQs(data);
+                        callback(data);
                     } catch (e) {
                         document.getElementById('faq-container').innerHTML = '<div class="faq-error">Error loading FAQs. Please refresh the page.</div>';
                     }
@@ -75,6 +98,18 @@
             }
         };
         xhr.send();
+    }
+
+    function formatAPIResponse(data) {
+        var categories = {};
+        data.forEach(function(faq) {
+            var cat = faq.category || 'general';
+            if (!categories[cat]) {
+                categories[cat] = { name: cat.charAt(0).toUpperCase() + cat.slice(1), faqs: [] };
+            }
+            categories[cat].faqs.push({ question: faq.question, answer: faq.answer });
+        });
+        return { categories: Object.values(categories) };
     }
 
     function renderFAQs(data) {
@@ -99,7 +134,19 @@
         container.innerHTML = html;
     }
 
-    document.addEventListener('DOMContentLoaded', loadFAQs);
+    // Auto-refresh every 30 seconds
+    var refreshInterval = setInterval(function() {
+        loadFAQs(renderFAQs);
+    }, 30000);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+        clearInterval(refreshInterval);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadFAQs(renderFAQs);
+    });
 })();
 </script>
 </body>

@@ -136,6 +136,8 @@
 
     <script src="../js/manager-service.js"></script>
     <script>
+    var REFRESH_INTERVAL_MS = 30000;
+    var refreshInterval = null;
     var currentReviewId = null;
     
     (function() {
@@ -147,6 +149,10 @@
         });
         
         loadReviews();
+        refreshInterval = setInterval(loadReviews, REFRESH_INTERVAL_MS);
+        window.addEventListener('beforeunload', function() {
+            clearInterval(refreshInterval);
+        });
         
         document.getElementById('search-input').addEventListener('input', debounce(loadReviews, 300));
         document.getElementById('status-filter').addEventListener('change', loadReviews);

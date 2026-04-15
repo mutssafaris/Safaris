@@ -338,6 +338,29 @@
         localStorage.setItem(SESSION_KEY, JSON.stringify(session));
     }
 
+    function updateProfile(data) {
+        var session = getSession();
+        if (!session) return false;
+        
+        var users = getUsers();
+        var idx = users.findIndex(function(u) { return u.id === session.userId; });
+        
+        if (idx === -1) return false;
+        
+        if (data.name) users[idx].name = data.name;
+        if (data.email) users[idx].email = data.email;
+        if (data.phone) users[idx].phone = data.phone;
+        if (data.country) users[idx].country = data.country;
+        
+        saveUsers(users);
+        
+        session.name = users[idx].name;
+        session.email = users[idx].email;
+        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+        
+        return true;
+    }
+
     function updateHeaderAuthLinks() {
         var session = getSession();
         var loginLinks = document.querySelectorAll('.nav-login-link');
