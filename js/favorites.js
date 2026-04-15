@@ -3,15 +3,12 @@
     if (window.favoritesInitialized) return;
     window.favoritesInitialized = true;
 
-    var FAVORITES_KEY = 'muts_favorites';
+var FAVORITES_KEY = 'muts_favorites';
     var DESTINATIONS_KEY = 'muts_destinations_cache';
-<<<<<<< HEAD
-=======
     var API_BASE = window.API_BASE || '/api';
     
     // Store favorites from API
     var apiFavorites = [];
->>>>>>> ab0edb5 (added few features)
 
     var destinationsData = null;
 
@@ -21,8 +18,6 @@
         return './';
     }
 
-<<<<<<< HEAD
-=======
     // Try to sync with backend API
     function syncWithAPI() {
         // First get favorites from API
@@ -91,10 +86,9 @@
         xhr.send();
     }
 
-    // Initialize - try to sync with API
+// Initialize - try to sync with API
     syncWithAPI();
 
->>>>>>> ab0edb5 (added few features)
     function loadDestinations(callback) {
         if (destinationsData) {
             callback(destinationsData);
@@ -141,18 +135,13 @@
 
     function toggleFavorite(destinationId) {
         var favs = getFavorites();
-        var index = favs.indexOf(destinationId);
+var index = favs.indexOf(destinationId);
         if (index === -1) {
             favs.push(destinationId);
-<<<<<<< HEAD
-        } else {
-            favs.splice(index, 1);
-=======
             addFavoriteAPI('destination', destinationId);
         } else {
             favs.splice(index, 1);
             removeFavoriteAPI('destination', destinationId);
->>>>>>> ab0edb5 (added few features)
         }
         localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
         return index === -1;

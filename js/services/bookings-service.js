@@ -277,10 +277,8 @@
                 return Promise.resolve({ success: false, message: 'Invalid promo code' });
             }
             
-            return Promise.resolve({ success: true, discount: promo.discount, description: promo.description });
+return Promise.resolve({ success: true, discount: promo.discount, description: promo.description });
         },
-<<<<<<< HEAD
-=======
         
         // ===== RESERVATION HOLD (Phase 4.5) =====
         
@@ -498,9 +496,8 @@
             else if (daysUntilCheckin >= 1) policy = '25% refund';
             else policy = 'No refund';
             
-            return Promise.resolve({ policy: policy });
+return Promise.resolve({ policy: policy });
         },
->>>>>>> ab0edb5 (added few features)
 
         setBaseURL: function (url) {
             API_BASE_URL = url;

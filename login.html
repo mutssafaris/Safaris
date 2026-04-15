@@ -81,8 +81,8 @@
                 </div>
             </div>
             
-            <div class="hero-character-panel">
-                <img src="images/hero/safari-guide.jpg" alt="Safari Guide" class="hero-character">
+            <div class="hero-image-container">
+                <img src="images/hero/safari-guide.jpg" alt="Safari Guide">
                 <div class="floating-stat top-right">
                     <span>MAASAI MARA</span>
                 </div>
@@ -379,7 +379,7 @@
         };
     })();
     </script>
-    
+    <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('/sw.js').then(function(reg) {
@@ -389,7 +389,6 @@
             });
         });
     }
-    
     </script>
 </body>
 </html>

@@ -327,11 +327,9 @@
                 })
                 .catch(function(err) {
                     console.warn('[SearchService] API unavailable:', err.message);
-                    return [];
+return [];
                 });
         },
-<<<<<<< HEAD
-=======
         
         // ============ SMART SEARCH (Phase 9) ============
         
@@ -422,9 +420,8 @@
             .then(function(response) {
                 if (!response.ok) throw new Error('API error: ' + response.status);
                 return response.json();
-            });
+});
         },
->>>>>>> ab0edb5 (added few features)
 
         // ============ API CONTROL ============
         enableAPI: function() {

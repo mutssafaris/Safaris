@@ -13,7 +13,7 @@
             this.options = options || {};
             
             // Auto-load on hotel/destination pages
-            if (this.options.showOn Hotels) {
+            if (this.options.showOnHotels) {
                 this._loadSimilarItems();
             }
             
