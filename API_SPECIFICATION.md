@@ -611,6 +611,29 @@ Manager uses a separate session stored in `localStorage` with key `muts_manager_
 | DELETE | `/api/manager/images/:id` | Delete image |
 | GET | `/api/manager/images/categories` | Get image categories |
 
+**Image Upload Details:**
+```
+POST /api/manager/images/upload
+Content-Type: multipart/form-data
+Authorization: Bearer <token>
+
+Request Body:
+- file: File (required) - Image file (JPEG, PNG, WebP, GIF)
+- category: string (optional) - Category for organization (hotels, tours, blogs, etc.)
+- entityType: string (optional) - Entity type (hotel, tour, blog, etc.)
+- entityId: string (optional) - ID of associated entity
+
+Response:
+{
+  "success": true,
+  "url": "https://cdn.example.com/images/abc123.jpg",
+  "id": "img_abc123",
+  "filename": "hotel-image.jpg",
+  "size": 245000,
+  "type": "image/jpeg"
+}
+```
+
 >>>>>>> ab0edb5 (added few features)
 ---
 

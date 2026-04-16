@@ -24,7 +24,7 @@ The dashboard uses service layer pattern with automatic fallback to mock JSON da
 | Localization | MutsI18n | GET /api/localization/strings | ✅ Fallback ready |
 
 ---
-
+/
 ## API Endpoints Required by Dashboard
 
 ### 1. Destinations
@@ -535,6 +535,68 @@ GET /api/faq/{category}
 
 ---
 
+## Manager Dashboard API
+
+**Base Endpoint:** `/api/manager/dashboard`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/manager/dashboard/stats` | Get dashboard statistics |
+| GET | `/api/manager/dashboard/recent-bookings` | Get recent bookings |
+| GET | `/api/manager/dashboard/pending-messages` | Get pending messages |
+| GET | `/api/manager/dashboard/content-summary` | Get content summary |
+
+**Response Schemas:**
+
+```javascript
+// GET /api/manager/dashboard/stats
+{
+  "success": true,
+  "data": {
+    "totalBookings": 24,
+    "pendingMessages": 5,
+    "publishedHotels": 18,
+    "totalRevenue": 45200,
+    "bookingsChange": 12,
+    "hotelsChange": -2,
+    "revenueChange": 8
+  }
+}
+
+// GET /api/manager/dashboard/recent-bookings
+{
+  "success": true,
+  "data": {
+    "bookings": [
+      {
+        "id": "BKG-001",
+        "destination": "Maasai Mara Safari",
+        "adults": 2,
+        "children": 1,
+        "checkin": "2026-04-18",
+        "status": "upcoming",
+        "totalPrice": 2100
+      }
+    ],
+    "total": 5
+  }
+}
+
+// GET /api/manager/dashboard/content-summary
+{
+  "success": true,
+  "data": {
+    "hotels": { "total": 24, "published": 18, "draft": 6 },
+    "tours": { "total": 15, "published": 12, "draft": 3 },
+    "packages": { "total": 8, "published": 6, "draft": 2 },
+    "blogs": { "total": 45, "published": 38, "draft": 7 },
+    "destinations": { "total": 12, "published": 10, "draft": 2 }
+  }
+}
+```
+
+---
+
 ## Manager Hotels API
 
 **Base Endpoint:** `/api/manager/content/hotels`
@@ -577,15 +639,44 @@ GET /api/faq/{category}
 }
 
 // GET /api/manager/content/hotels
+// Response can be either:
+// Option 1: { success: true, data: { hotels: [...], total: N, page: 1, limit: 20 } }
+// Option 2: { success: true, data: [...] } (direct array)
+// Option 3: [...](direct array from mock fallback)
+
+// Mock Data Fallback: /data/hotels.json
 {
-  "success": true,
-  "data": {
-    "hotels": [...],
-    "total": 15,
-    "page": 1,
-    "limit": 20
-  }
+  "hotels": [
+    {
+      "id": "h1",
+      "name": "Governors' Camp",
+      "badge": "Luxury",
+      "tier": "luxury",
+      "location": "mara",
+      "locationName": "Maasai Mara",
+      "description": "Luxury tented camp with exceptional...",
+      "price": 450,
+      "rating": 4.9,
+      "reviews": 234,
+      "image": "../../images/hotels/governors-camp.jpg",
+      "amenities": [
+        { "icon": "📶", "name": "WiFi" },
+        { "icon": "🏊", "name": "Pool" }
+      ],
+      "rooms": 25,
+      "link": "hotels/luxury/maasai-mara-lodge.html"
+    }
+  ]
 }
+
+// Hotel Object Field Mappings (for robust handling):
+// - id: hotel.id
+// - name: hotel.name
+// - tier: hotel.tier ("luxury" | "mid-range" | "eco-budget")
+// - price/basePrice: hotel.price
+// - locationName/location: hotel.locationName || hotel.location
+// - status: hotel.status (default "published" if missing)
+// - rating: hotel.rating
 ```
 
 ---
@@ -813,3 +904,174 @@ Response: { "success": true, "token": "new_token", "refreshToken": "new_refresh"
 ---
 
 *Last Updated: 2026-04-15*
+---
+
+## Manager Destinations API
+
+**Base Endpoint:** `/api/manager/content/destinations`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/manager/content/destinations` | List all destinations |
+| GET | `?type=safari` | Filter by type |
+| GET | `?status=published` | Filter by status |
+| GET | `?search=maasai` | Search destinations |
+| GET | `/api/manager/content/destinations/:id` | Get destination details |
+| POST | `/api/manager/content/destinations` | Create destination |
+| PUT | `/api/manager/content/destinations/:id` | Update destination |
+| DELETE | `/api/manager/content/destinations/:id` | Delete destination |
+| POST | `/api/manager/content/destinations/:id/publish` | Publish destination |
+| POST | `/api/manager/content/destinations/:id/unpublish` | Unpublish destination |
+
+**Request/Response Schemas:**
+
+```javascript
+// POST /api/manager/content/destinations
+{
+  "name": "Maasai Mara National Reserve",
+  "slug": "maasai-mara",               // URL-friendly slug, auto-generated if empty
+  "region": "Southwest Kenya",
+  "type": "safari",                    // "safari" | "beach" | "mountain" | "lake" | "city"
+  "description": "Famous for the Great Migration...",
+  "priceFrom": 450,                    // Starting price in USD
+  "rating": 4.9,                       // 0-5 scale
+  "status": "published",               // "published" | "draft"
+  "bestTime": "Jun-Oct",               // Best visiting months
+  "duration": "long",                  // "short" | "medium" | "long"
+  "highlights": ["Great Migration", "Big Five", "Hot Air Balloon"],
+  "image": "https://cdn.example.com/images/dest-1.jpg",
+  "gallery": ["url1", "url2"],
+  "tags": ["Most Popular", "Big Five"] // optional
+}
+
+// GET /api/manager/content/destinations
+// Response can be either:
+// Option 1: { success: true, data: { destinations: [...], total: N, page: 1, limit: 20 } }
+// Option 2: { success: true, data: [...] } (direct array)
+
+// Mock Data Fallback: /data/destinations.json
+{
+  "destinations": [
+    {
+      "id": 1,
+      "name": "Maasai Mara National Reserve",
+      "slug": "maasai-mara",
+      "region": "Southwest Kenya",
+      "description": "Famous for Great Migration...",
+      "highlights": ["Great Migration", "Big Five", "Hot Air Balloon"],
+      "bestTime": "Jun-Oct",
+      "duration": "long",
+      "season": "jun-oct",
+      "image": "maasai-mara.jpg",
+      "rating": 4.9,
+      "priceRange": "$$$"
+    }
+  ]
+}
+
+// Field Mappings for Robust Handling:
+// - id: destination.id (numeric or string)
+// - name: destination.name
+// - slug: destination.slug (auto-generated if empty)
+// - region: destination.region
+// - type: destination.type (default "safari" if missing)
+// - description: destination.description
+// - priceFrom: destination.priceFrom || destination.startingPrice || convertPriceRange(destination.priceRange)
+// - rating: destination.rating
+// - status: destination.status || "published"
+// - bestTime: destination.bestTime
+// - duration: destination.duration
+// - highlights: destination.highlights (array of strings)
+// - image: destination.image (URL)
+// - gallery: destination.gallery (array of URLs)
+// - tags: destination.tags (optional)
+```
+
+---
+
+
+---
+
+## Manager Destinations API
+
+**Base Endpoint:** `/api/manager/content/destinations`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/manager/content/destinations` | List all destinations |
+| GET | `?type=safari` | Filter by type |
+| GET | `?status=published` | Filter by status |
+| GET | `?search=maasai` | Search destinations |
+| GET | `/api/manager/content/destinations/:id` | Get destination details |
+| POST | `/api/manager/content/destinations` | Create destination |
+| PUT | `/api/manager/content/destinations/:id` | Update destination |
+| DELETE | `/api/manager/content/destinations/:id` | Delete destination |
+| POST | `/api/manager/content/destinations/:id/publish` | Publish destination |
+| POST | `/api/manager/content/destinations/:id/unpublish` | Unpublish destination |
+
+**Request/Response Schemas:**
+
+```javascript
+// POST /api/manager/content/destinations
+{
+  "name": "Maasai Mara National Reserve",
+  "slug": "maasai-mara",               // URL-friendly slug, auto-generated if empty
+  "region": "Southwest Kenya",
+  "type": "safari",                    // "safari" | "beach" | "mountain" | "lake" | "city"
+  "description": "Famous for the Great Migration...",
+  "priceFrom": 450,                    // Starting price in USD
+  "rating": 4.9,                       // 0-5 scale
+  "status": "published",               // "published" | "draft"
+  "bestTime": "Jun-Oct",               // Best visiting months
+  "duration": "long",                  // "short" | "medium" | "long"
+  "highlights": ["Great Migration", "Big Five", "Hot Air Balloon"],
+  "image": "https://cdn.example.com/images/dest-1.jpg",
+  "gallery": ["url1", "url2"],
+  "tags": ["Most Popular", "Big Five"] // optional
+}
+
+// GET /api/manager/content/destinations
+// Response can be either:
+// Option 1: { success: true, data: { destinations: [...], total: N, page: 1, limit: 20 } }
+// Option 2: { success: true, data: [...] } (direct array)
+
+// Mock Data Fallback: /data/destinations.json
+{
+  "destinations": [
+    {
+      "id": 1,
+      "name": "Maasai Mara National Reserve",
+      "slug": "maasai-mara",
+      "region": "Southwest Kenya",
+      "description": "Famous for Great Migration...",
+      "highlights": ["Great Migration", "Big Five", "Hot Air Balloon"],
+      "bestTime": "Jun-Oct",
+      "duration": "long",
+      "season": "jun-oct",
+      "image": "maasai-mara.jpg",
+      "rating": 4.9,
+      "priceRange": "$$$"
+    }
+  ]
+}
+
+// Field Mappings for Robust Handling:
+// - id: destination.id (numeric or string)
+// - name: destination.name
+// - slug: destination.slug (auto-generated if empty)
+// - region: destination.region
+// - type: destination.type (default "safari" if missing)
+// - description: destination.description
+// - priceFrom: destination.priceFrom || destination.startingPrice || convertPriceRange(destination.priceRange)
+// - rating: destination.rating
+// - status: destination.status || "published"
+// - bestTime: destination.bestTime
+// - duration: destination.duration
+// - highlights: destination.highlights (array of strings)
+// - image: destination.image (URL)
+// - gallery: destination.gallery (array of URLs)
+// - tags: destination.tags (optional)
+```
+
+---
+

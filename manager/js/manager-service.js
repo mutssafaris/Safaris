@@ -1,10 +1,13 @@
 /* Manager Service - Muts Safaris */
 /* API service for manager dashboard operations */
+/* Token-based auth with auto-refresh */
 (function(window) {
     'use strict';
 
     var API_READY = false;
     var BASE_URL = '/api/manager';
+    var TOKEN_REFRESH_BUFFER_MS = 5 * 60 * 1000;
+    var refreshTimer = null;
 
     var ManagerService = {
         init: function(options) {
@@ -34,9 +37,100 @@
             return window.MutsAPIConfig && window.MutsAPIConfig.isConnected();
         },
 
+        // ============ SESSION MANAGEMENT ============
+        getSession: function() {
+            var sessionStr = localStorage.getItem('muts_manager_session');
+            if (!sessionStr) return null;
+            
+            try {
+                return JSON.parse(sessionStr);
+            } catch (e) {
+                return null;
+            }
+        },
+
+        setSession: function(data) {
+            var expiryHours = data.rememberMe ? 24 * 7 : 24;
+            var expiresAt = new Date();
+            expiresAt.setHours(expiresAt.getHours() + expiryHours);
+            
+            localStorage.setItem('muts_manager_session', JSON.stringify({
+                userId: data.user.id,
+                name: data.user.name,
+                email: data.user.email,
+                role: data.user.role,
+                token: data.token,
+                refreshToken: data.refreshToken || null,
+                expiresAt: expiresAt.toISOString()
+            }));
+            
+            this.scheduleTokenRefresh();
+        },
+
+        scheduleTokenRefresh: function() {
+            clearTimeout(refreshTimer);
+            
+            var session = this.getSession();
+            if (!session) return;
+            
+            var expiresAt = new Date(session.expiresAt).getTime();
+            var now = Date.now();
+            var timeUntilExpiry = expiresAt - now - TOKEN_REFRESH_BUFFER_MS;
+            
+            if (timeUntilExpiry > 0) {
+                refreshTimer = setTimeout(function() {
+                    ManagerService.refreshToken();
+                }, timeUntilExpiry);
+            } else {
+                this.handleTokenExpired();
+            }
+        },
+
+        refreshToken: function() {
+            var session = this.getSession();
+            if (!session || !session.refreshToken) {
+                this.handleTokenExpired();
+                return Promise.reject(new Error('No refresh token'));
+            }
+            
+            return this.fetch('/auth/refresh', {
+                method: 'POST',
+                body: JSON.stringify({ refreshToken: session.refreshToken })
+            }).then(function(response) {
+                if (response.success && response.token) {
+                    session.token = response.token;
+                    if (response.refreshToken) {
+                        session.refreshToken = response.refreshToken;
+                    }
+                    var expiresAt = new Date();
+                    expiresAt.setHours(expiresAt.getHours() + 24);
+                    session.expiresAt = expiresAt.toISOString();
+                    localStorage.setItem('muts_manager_session', JSON.stringify(session));
+                    ManagerService.scheduleTokenRefresh();
+                    return response;
+                } else {
+                    ManagerService.handleTokenExpired();
+                    throw new Error('Token refresh failed');
+                }
+            }).catch(function(err) {
+                ManagerService.handleTokenExpired();
+                throw err;
+            });
+        },
+
+        handleTokenExpired: function() {
+            clearTimeout(refreshTimer);
+            localStorage.removeItem('muts_manager_session');
+            window.dispatchEvent(new CustomEvent('manager:expired'));
+            window.location.href = 'index.html';
+        },
+
         // Generic fetch method
         fetch: function(endpoint, options) {
+            var self = this;
             var url = BASE_URL + endpoint;
+            var session = this.getSession();
+            
             var defaultOptions = {
                 headers: {
                     'Content-Type': 'application/json'
@@ -44,39 +138,71 @@
             };
             
             // Add auth token if available
-            var session = JSON.parse(localStorage.getItem('muts_manager_session') || '{}');
-            if (session.token) {
+            if (session && session.token) {
                 defaultOptions.headers['Authorization'] = 'Bearer ' + session.token;
             }
 
             var fetchOptions = Object.assign({}, defaultOptions, options);
             
-            return fetch(url, fetchOptions)
-                .then(function(response) {
-                    if (!response.ok) {
-                        if (response.status === 401) {
-                            window.location.href = 'index.html';
-                            throw new Error('Unauthorized');
+            // Check token expiry before request
+            if (session && session.expiresAt) {
+                var expiresAt = new Date(session.expiresAt).getTime();
+                var now = Date.now();
+                var timeUntilExpiry = expiresAt - now;
+                
+                // If token about to expire and we have refresh token, refresh first
+                if (timeUntilExpiry < TOKEN_REFRESH_BUFFER_MS && session.refreshToken) {
+                    return this.refreshToken().then(function() {
+                        var updatedSession = self.getSession();
+                        fetchOptions.headers['Authorization'] = 'Bearer ' + updatedSession.token;
+                        return doFetch(url, fetchOptions);
+                    }).catch(function() {
+                        return doFetch(url, fetchOptions);
+                    });
+                }
+            }
+            
+            return doFetch(url, fetchOptions);
+            
+            function doFetch(url, fetchOptions) {
+                return fetch(url, fetchOptions)
+                    .then(function(response) {
+                        if (!response.ok) {
+                            if (response.status === 401) {
+                                ManagerService.handleTokenExpired();
+                                throw new Error('Unauthorized');
+                            }
+                            throw new Error('API error: ' + response.status);
                         }
-                        throw new Error('API error: ' + response.status);
-                    }
-                    return response.json();
-                })
-                .catch(function(err) {
-                    console.error('[ManagerService] Error:', err);
-                    throw err;
-                });
+                        return response.json();
+                    })
+                    .catch(function(err) {
+                        console.error('[ManagerService] Error:', err);
+                        throw err;
+                    });
+            }
         },
 
         // ============ AUTH ============
         login: function(email, password) {
+            var self = this;
             return this.fetch('/auth/login', {
                 method: 'POST',
                 body: JSON.stringify({ email: email, password: password })
+            }).then(function(response) {
+                if (response.success && response.token) {
+                    self.setSession({
+                        user: response.user,
+                        token: response.token,
+                        refreshToken: response.refreshToken
+                    });
+                }
+                return response;
             });
         },
 
         logout: function() {
+            clearTimeout(refreshTimer);
             localStorage.removeItem('muts_manager_session');
             window.location.href = 'index.html';
         },

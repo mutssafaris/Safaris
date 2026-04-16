@@ -226,7 +226,7 @@
             return null;
         }
         
-        function setSession(user, rememberMe) {
+        function setSession(user, rememberMe, tokenData) {
             var expiryHours = rememberMe ? SESSION_EXPIRY_HOURS * 7 : SESSION_EXPIRY_HOURS;
             var expiresAt = new Date();
             expiresAt.setHours(expiresAt.getHours() + expiryHours);
@@ -236,7 +236,8 @@
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                token: generateToken(),
+                token: tokenData ? tokenData.token : generateToken(),
+                refreshToken: tokenData ? tokenData.refreshToken : null,
                 loginTime: new Date().toISOString(),
                 expiresAt: expiresAt.toISOString()
             };

@@ -77,6 +77,10 @@
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                     <span>Settings</span>
                 </a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
             </nav>
         </aside>
         
@@ -164,8 +168,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="image">Image URL</label>
-                            <input type="url" id="image" name="image">
+                            <label for="image">Hotel Image</label>
+                            <div id="hotel-image-upload"></div>
+                            <small style="color: var(--text-muted);">Upload image or enter CDN URL. Recommended: 1200x800px</small>
                             <div class="image-preview" id="image-preview">
                                 <span>Image preview will appear here</span>
                             </div>
@@ -185,13 +190,32 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="../js/manager-service.js"></script>
+    <script src="../js/manager-image-service.js"></script>
+    <script src="../js/image-upload-component.js"></script>
+    <script src="../js/mobile-menu.js"></script>
     <script>
+    var hotelImages = { main: '', gallery: [] };
+    
     (function() {
         if (!ManagerService.checkAuth()) return;
         
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             ManagerService.logout();
+        });
+        
+        // Initialize image upload component
+        ImageUploadComponent.create(document.getElementById('hotel-image-upload'), {
+            fieldId: 'hotel-main-image',
+            multiple: false,
+            value: [],
+            onImageAdd: function(src, data) {
+                hotelImages.main = data.url || data.data || src;
+                updatePreview('image-preview', hotelImages.main);
+            },
+            onImageRemove: function(data) {
+                hotelImages.main = '';
+            }
         });
         
         // Get hotel ID from URL
@@ -203,39 +227,59 @@
         loadHotel(hotelId);
         
         function loadHotel(id) {
-            // Mock data - in production, call API
-            var mockHotels = {
-                'h1': { id: 'h1', name: "Governors' Camp", tier: 'luxury', location: 'mara', price: 450, description: 'Luxury tented camp with exceptional Big Five viewing.', rating: 4.9, rooms: 25, badge: 'Luxury', amenities: ['WiFi', 'Pool', 'Spa'], image: '' },
-                'h2': { id: 'h2', name: 'Tortilis Camp', tier: 'luxury', location: 'amboseli', price: 520, description: 'Designer luxury camp with stunning Kilimanjaro views.', rating: 4.8, rooms: 20, badge: 'Luxury', amenities: ['WiFi', 'Pool'], image: '' }
-            };
-            
-            var hotel = mockHotels[id] || mockHotels['h1'];
-            
-            document.getElementById('name').value = hotel.name;
-            document.getElementById('tier').value = hotel.tier;
-            document.getElementById('location').value = hotel.location;
-            document.getElementById('price').value = hotel.price;
-            document.getElementById('description').value = hotel.description;
-            document.getElementById('rating').value = hotel.rating;
-            document.getElementById('rooms').value = hotel.rooms;
-            document.getElementById('badge').value = hotel.badge || '';
-            document.getElementById('amenities').value = hotel.amenities.join(', ');
-            
-            if (hotel.image) {
-                document.getElementById('image').value = hotel.image;
-                document.getElementById('image-preview').innerHTML = '<img src="' + hotel.image + '" alt="Preview">';
+            if (!id) {
+                showToast('No hotel ID provided', 'error');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                return;
             }
+            
+            // Try API first, fallback to mock
+            ManagerService.getHotel(id).then(function(response) {
+                var hotel = response.data || response;
+                populateForm(hotel);
+            }).catch(function(err) {
+                console.warn('Using mock data:', err);
+                var mockHotels = {
+                    'h1': { id: 'h1', name: "Governors' Camp", tier: 'luxury', location: 'mara', price: 450, description: 'Luxury tented camp with exceptional Big Five viewing.', rating: 4.9, rooms: 25, badge: 'Luxury', amenities: ['WiFi', 'Pool', 'Spa'], image: '' },
+                    'h2': { id: 'h2', name: 'Tortilis Camp', tier: 'luxury', location: 'amboseli', price: 520, description: 'Designer luxury camp with stunning Kilimanjaro views.', rating: 4.8, rooms: 20, badge: 'Luxury', amenities: ['WiFi', 'Pool'], image: '' }
+                };
+                var hotel = mockHotels[id] || mockHotels['h1'];
+                if (hotel) populateForm(hotel);
+            });
         }
         
-        // Image preview
-        document.getElementById('image').addEventListener('input', function(e) {
-            var preview = document.getElementById('image-preview');
-            if (e.target.value) {
-                preview.innerHTML = '<img src="' + e.target.value + '" alt="Preview" onerror="this.parentNode.innerHTML=\'<span>Invalid image URL</span>\'">';
-            } else {
-                preview.innerHTML = '<span>Image preview will appear here</span>';
+        function populateForm(hotel) {
+            document.getElementById('name').value = hotel.name || '';
+            document.getElementById('tier').value = hotel.tier || '';
+            document.getElementById('location').value = hotel.location || '';
+            document.getElementById('price').value = hotel.price || '';
+            document.getElementById('description').value = hotel.description || '';
+            document.getElementById('rating').value = hotel.rating || 4.0;
+            document.getElementById('rooms').value = hotel.rooms || 10;
+            document.getElementById('badge').value = hotel.badge || '';
+            
+            var amenityNames = hotel.amenities ? hotel.amenities.map(function(a) { return a.name || a; }).join(', ') : '';
+            document.getElementById('amenities').value = amenityNames;
+            
+            // Set image for upload component
+            if (hotel.image) {
+                hotelImages.main = hotel.image;
+                if (hotel.image.startsWith('http')) {
+                    updatePreview('image-preview', hotel.image);
+                }
             }
-        });
+            
+            window.editHotelData = { image: hotel.image || '', gallery: hotel.gallery || [] };
+        }
+        
+        function updatePreview(containerId, src) {
+            var container = document.getElementById(containerId);
+            if (src) {
+                container.innerHTML = '<img src="' + src + '" alt="Preview" onerror="this.parentNode.innerHTML=\'<span>Invalid image URL</span>\'">';
+            } else {
+                container.innerHTML = '<span>Image preview will appear here</span>';
+            }
+        }
         
         // Form submission
         document.getElementById('hotel-form').addEventListener('submit', function(e) {
@@ -245,18 +289,57 @@
         
         function saveChanges() {
             var formData = getFormData();
-            // In production, call API
-            showToast('Changes saved successfully');
+            var hotelId = document.getElementById('hotel-id').value;
+            
+            showToast('Saving changes...');
+            uploadAndSave(hotelId, formData);
         }
         
         function publishChanges() {
             var formData = getFormData();
             formData.status = 'published';
-            // In production, call API
-            showToast('Hotel updated and published');
-            setTimeout(function() {
-                window.location.href = 'list.html';
-            }, 1000);
+            var hotelId = document.getElementById('hotel-id').value;
+            
+            showToast('Publishing...');
+            uploadAndSave(hotelId, formData);
+        }
+        
+        function uploadAndSave(hotelId, formData) {
+            var uploadPromises = [];
+            
+            // Upload main image if not a URL
+            if (hotelImages.main && !hotelImages.main.startsWith('http')) {
+                uploadPromises.push(
+                    new Promise(function(resolve) {
+                        if (hotelImages.main.startsWith('data:')) {
+                            formData.image = hotelImages.main;
+                            resolve();
+                        } else {
+                            ImageService.uploadImage(hotelImages.main, { category: 'hotels' })
+                                .then(function(result) {
+                                    formData.image = result.url;
+                                    resolve();
+                                })
+                                .catch(function() {
+                                    formData.image = hotelImages.main;
+                                    resolve();
+                                });
+                        }
+                    })
+                );
+            } else {
+                formData.image = hotelImages.main || '';
+            }
+            
+            Promise.all(uploadPromises).then(function() {
+                return ManagerService.updateHotel(hotelId, formData);
+            }).then(function() {
+                showToast('Changes saved successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }).catch(function(err) {
+                console.error('Update error:', err);
+                showToast('Failed to save changes', 'error');
+            });
         }
         
         function getFormData() {
@@ -276,7 +359,7 @@
                 rooms: parseInt(document.getElementById('rooms').value) || 10,
                 badge: document.getElementById('badge').value,
                 amenities: amenityList,
-                image: document.getElementById('image').value
+                image: hotelImages.main
             };
         }
         

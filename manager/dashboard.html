@@ -10,6 +10,14 @@
 </head>
 <body>
     <div class="dashboard-layout">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <span></span><span></span><span></span>
+        </button>
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-brand">
@@ -123,7 +131,7 @@
             </div>
             
             <!-- Quick Actions -->
-            <div class="data-table-container" style="margin-bottom: 30px;">
+            <div class="data-table-container quick-actions-container" style="margin-bottom: 30px;">
                 <div style="padding: 20px; border-bottom: 1px solid var(--border);">
                     <h2 style="font-size: 1.2rem;">Quick Actions</h2>
                 </div>
@@ -169,6 +177,7 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="js/manager-service.js"></script>
+    <script src="js/mobile-menu.js"></script>
     <script>
     (function() {
         // Check authentication
