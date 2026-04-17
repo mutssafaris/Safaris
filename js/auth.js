@@ -75,7 +75,7 @@ try {
         // Add demo user if no users exist
         if (users.length === 0) {
             console.log('[Auth] Creating demo user...');
-            var demoSalt = generateSalt();
+            var demoSalt = 'demo-salt-123'; // Simple static salt for demo
             users = [{
                 id: 'demo-user',
                 name: 'Demo User',
@@ -83,9 +83,18 @@ try {
                 salt: demoSalt,
                 passwordHash: hashPassword('demo123', demoSalt),
                 createdAt: new Date().toISOString()
+            }, {
+                id: 'admin-user',
+                name: 'Admin User',
+                email: 'admin@mutssafaris.com',
+                salt: demoSalt,
+                passwordHash: hashPassword('admin123', demoSalt),
+                role: 'admin',
+                createdAt: new Date().toISOString()
             }];
             localStorage.setItem(USERS_KEY, JSON.stringify(users));
-            console.log('[Auth] Demo user created with email: demo@mutssafaris.com');
+            console.log('[Auth] Demo users created');
+            console.log('[Auth] Demo password hash:', users[0].passwordHash);
         }
         
         console.log('[Auth] Returning users:', users.map(function(u) { return u.email; }));
