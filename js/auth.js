@@ -59,7 +59,22 @@
     }
 
     function getUsers() {
-        return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+        var users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+        
+        // Add demo user if no users exist
+        if (users.length === 0) {
+            users = [{
+                id: 'demo-user',
+                name: 'Demo User',
+                email: 'demo@mutssafaris.com',
+                salt: 'demo123',
+                passwordHash: hashPassword('demo123', 'demo123'),
+                createdAt: new Date().toISOString()
+            }];
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+        
+        return users;
     }
 
     function saveUsers(users) {
@@ -279,7 +294,8 @@
             return fetchFromAPI('/auth/login', {
                 method: 'POST',
                 body: { email: email, password: password, rememberMe: rememberMe }
-            }).then(function(response) {
+            })
+            .then(function(response) {
                 if (response.success) {
                     setSession(response.user, rememberMe, {
                         token: response.token,
@@ -287,9 +303,16 @@
                     });
                 }
                 return response;
+            })
+            .catch(function(err) {
+                // API failed - fallback to local storage
+                console.warn('[Auth] API unavailable, using local fallback');
+                API_READY = false;
+                return login(email, password, rememberMe);
             });
         }
         
+        // Local storage fallback
         var users = getUsers();
         var user = users.find(function (u) { return u.email === email; });
         
@@ -321,7 +344,8 @@
                     interest: extraData.interest,
                     newsletter: extraData.newsletter
                 }
-            }).then(function(response) {
+            })
+            .then(function(response) {
                 if (response.success) {
                     setSession(response.user, false, {
                         token: response.token,
@@ -329,6 +353,12 @@
                     });
                 }
                 return response;
+            })
+            .catch(function(err) {
+                // API failed - fallback to local
+                console.warn('[Auth] API unavailable, using local fallback');
+                API_READY = false;
+                return signup(name, email, password, extraData);
             });
         }
         

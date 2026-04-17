@@ -121,6 +121,8 @@
     </div>
 
     <script src="js/auth.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/validation.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (window.MutsAuth && window.MutsAuth.getSession()) {
@@ -134,12 +136,13 @@
             }
         });
         
+        // Service Worker for offline support
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                navigator.serviceWorker.register('/js/sw.js').then(function(reg) {
                     console.log('[App] Service Worker registered:', reg.scope);
                 }).catch(function(err) {
-                    console.log('[App] Service Worker registration failed:', err);
+                    console.log('[App] SW registration failed:', err);
                 });
             });
         }
