@@ -124,5 +124,3 @@
 
     window.MutsToursService = ToursService;
 })(window);
-// ES6 module export (for bundlers)
-export default window.toursService || window.toursService;

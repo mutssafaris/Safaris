@@ -95,20 +95,6 @@ try {
         ];
         localStorage.setItem(USERS_KEY, JSON.stringify(users));
         console.log('[Auth] TEST users stored:', users.map(function(u) { return u.email; }));
-        
-        // For demo purposes - ALWAYS allow these credentials
-        if (email === 'demo@mutssafaris.com' && password === 'demo123') {
-            console.log('[Auth] DEMO LOGIN - direct match!');
-            setSession(users[0], rememberMe);
-            return Promise.resolve({ success: true });
-        }
-        if (email === 'admin@mutssafaris.com' && password === 'admin123') {
-            console.log('[Auth] ADMIN LOGIN - direct match!');
-            setSession(users[1], rememberMe);
-            return Promise.resolve({ success: true });
-        }
-        
-        console.log('[Auth] Returning users:', users.map(function(u) { return u.email; }));
         return users;
     }
 

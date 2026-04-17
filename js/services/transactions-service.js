@@ -145,5 +145,3 @@
     window.MutsTransactionsService = TransactionsService;
 })(window);
 
-// ES6 module export (for bundlers)
-export default window.transactionsService || window.transactionsService;

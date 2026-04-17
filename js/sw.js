@@ -19,8 +19,18 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
       console.log('[SW] Caching static assets');
-      return cache.addAll(STATIC_ASSETS);
+      // Filter to only cache existing files
+      return Promise.all(STATIC_ASSETS.map(function(url) {
+        return fetch(url, { mode: 'no-cors' }).then(function() {
+          return cache.add(url);
+        })['catch'](function() {
+          console.log('[SW] Skipping:', url);
+        });
+      }));
     }).then(function() {
+      return self.skipWaiting();
+    })['catch'](function(err) {
+      console.log('[SW] Cache error:', err);
       return self.skipWaiting();
     })
   );

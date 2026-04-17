@@ -1,21 +1,9 @@
 /* Destinations Service — Muts Safaris */
 /* Provides mock data for safari destinations. Replace with API calls when backend is ready. */
-/**
- * @module DestinationsService
- * @example
- * // ES6 import (when bundler used)
- * import { DestinationsService } from './services/index.js';
- * 
- * // Or legacy global
- * MutsDestinationsService.getAll().then(...)
- */
 (function (window) {
     'use strict';
 
     var API_READY = false;
-
-    // ES6 export (for module bundlers)
-    var DestinationsService = {
 
     var mockDestinations = [
         {
@@ -151,15 +139,9 @@
     ];
 
     var DestinationsService = {
-        CACHE_TTL: 30 * 60 * 1000, // 30 min
-
         getAll: function () {
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/destinations');
-            }
-            // Check cache first
-            if (window.MutsCache && window.MutsCache.has('destinations_all')) {
-                return Promise.resolve(window.MutsCache.get('destinations_all'));
             }
             return Promise.resolve(mockDestinations.slice());
         },
@@ -168,13 +150,7 @@
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/destinations?popular=true');
             }
-            // Check cache first
-            if (window.MutsCache && window.MutsCache.has('destinations_popular')) {
-                return Promise.resolve(window.MutsCache.get('destinations_popular'));
-            }
-            var result = mockDestinations.slice();
-            window.MutsCache && window.MutsCache.set('destinations_popular', result, this.CACHE_TTL);
-            return Promise.resolve(result);
+            return Promise.resolve(mockDestinations.slice());
         },
 
         getById: function (id) {
@@ -249,6 +225,3 @@
 
     window.MutsDestinationsService = DestinationsService;
 })(window);
-
-// ES6 module export (for bundlers)
-export default window.destinationsService || window.destinationsService;

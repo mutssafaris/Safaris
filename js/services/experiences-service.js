@@ -96,5 +96,3 @@
 
     window.MutsExperiencesService = ExperiencesService;
 })(window);
-// ES6 module export (for bundlers)
-export default window.experiencesService || window.experiencesService;

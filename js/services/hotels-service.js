@@ -1,16 +1,10 @@
 /* Hotels Service — Muts Safaris */
 /* Dynamic hotel data service. Replace API calls with real backend when ready. */
-/**
- * @module HotelsService
- * @example
- * import { HotelsService } from './services/index.js';
- * HotelsService.getAll()
- */
 (function(window) {
     'use strict';
 
+    var STORAGE_KEY = 'muts_hotels_cache';
     var API_READY = false;
-    var CACHE_TTL = 30 * 60 * 1000; // 30 minutes cache
 
     var mockHotels = [
         {
@@ -528,55 +522,16 @@
     };
 
     var HotelsService = {
-        _dataPromise: null,
-
-        _loadFromJSON: function() {
-            var self = this;
-            if (this._dataPromise) return this._dataPromise;
-            
-            this._dataPromise = fetch('../../data/hotels.json')
-                .then(function(response) {
-                    if (!response.ok) throw new Error('Failed to load hotels.json');
-                    return response.json();
-                })
-                .then(function(data) {
-                    self._hotelsData = data.hotels;
-                    return data.hotels;
-                })
-                .catch(function() {
-                    console.warn('[HotelsService] Failed to load hotels.json, using fallback mock data');
-                    return mockHotels;
-                });
-            
-            return this._dataPromise;
-        },
-
         getAll: function() {
-            var self = this;
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI();
             }
-            
-            // Try to load from MutsCache first (with TTL support)
-            if (window.MutsCache) {
-                var cached = window.MutsCache.get('hotels_all');
-                if (cached) {
-                    return Promise.resolve(cached.map(function(h) {
-                        var defaultHotel = mockHotels.find(function(d) { return d.id === h.id; });
-                        return defaultHotel ? Object.assign({}, defaultHotel, h) : h;
-                    }));
-                }
-            }
-            
-            // Legacy localStorage fallback
+            // Try to load from localStorage first
             try {
-                var stored = localStorage.getItem('muts_hotels_cache');
+                var stored = localStorage.getItem(STORAGE_KEY);
                 if (stored) {
                     var parsed = JSON.parse(stored);
-                    // Store in new cache for next time
-                    if (window.MutsCache) {
-                        window.MutsCache.set('hotels_all', parsed, CACHE_TTL);
-                    }
+                    // Merge with default data to ensure all fields exist
                     return Promise.resolve(parsed.map(function(h) {
                         var defaultHotel = mockHotels.find(function(d) { return d.id === h.id; });
                         return defaultHotel ? Object.assign({}, defaultHotel, h) : h;
@@ -584,23 +539,18 @@
                 }
             } catch (e) {}
             
-            // Load from JSON file
-            return this._loadFromJSON();
+            return Promise.resolve(mockHotels);
         },
 
         getById: function(id) {
-            var self = this;
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/' + id);
             }
-            return this._loadFromJSON().then(function(hotels) {
-                var hotel = hotels.find(function(h) { return h.id === id; });
-                return hotel || null;
-            });
+            var hotel = mockHotels.find(function(h) { return h.id === id; });
+            return Promise.resolve(hotel || null);
         },
 
         getByFilter: function(filter) {
-            var self = this;
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 var queryParams = [];
                 if (filter.tier) queryParams.push('tier=' + filter.tier);
@@ -611,8 +561,7 @@
                 var endpoint = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
                 return this.fetchFromAPI(endpoint);
             }
-            return this._loadFromJSON().then(function(hotels) {
-                var results = hotels.filter(function(hotel) {
+            var results = mockHotels.filter(function(hotel) {
                 if (filter.tier && hotel.tier !== filter.tier) return false;
                 if (filter.location && hotel.location !== filter.location) return false;
                 if (filter.minPrice && hotel.price < filter.minPrice) return false;
@@ -685,12 +634,9 @@
             if (hotel) {
                 hotel.reviews = count;
             }
-            // Persist to cache (both legacy and new)
+            // Persist to localStorage
             try {
-                localStorage.setItem('muts_hotels_cache', JSON.stringify(mockHotels));
-                if (window.MutsCache) {
-                    window.MutsCache.set('hotels_all', mockHotels, CACHE_TTL);
-                }
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(mockHotels));
             } catch (e) {}
         },
 
@@ -844,6 +790,3 @@
 
     window.MutsHotelsService = HotelsService;
 })(window);
-
-// ES6 module export (for bundlers)
-export default window.hotelsService || window.hotelsService;

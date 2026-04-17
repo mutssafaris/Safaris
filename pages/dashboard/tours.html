@@ -87,12 +87,37 @@ document.addEventListener('DOMContentLoaded', function() {
     
     var REFRESH_INTERVAL_MS = 30000;
     var refreshInterval = null;
+    var dataLoaded = false;
     
-    function loadTours() {
-        renderDestinations(embeddedDestinations);
+    // Show loading state
+    function showLoading() {
+        if (loadingEl) loadingEl.style.display = 'flex';
+        if (gridEl) gridEl.innerHTML = '';
     }
     
-    // Use embedded data directly (works without HTTP server)
+    function hideLoading() {
+        if (loadingEl) loadingEl.style.display = 'none';
+    }
+    
+    function loadTours() {
+        if (dataLoaded) return; // Prevent duplicate loading
+        showLoading();
+        dataLoaded = true;
+        
+        // Wait for dashboard ready, then load
+        var checkAndLoad = function() {
+            renderDestinations(embeddedDestinations);
+            hideLoading();
+        };
+        
+        if (window._dashboardReady) {
+            checkAndLoad();
+        } else {
+            setTimeout(checkAndLoad, 300);
+        }
+    }
+    
+    // Load on init
     loadTours();
     
     // Auto-refresh every 30 seconds

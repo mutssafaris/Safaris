@@ -157,5 +157,3 @@
     window.MutsMessagesService = MessagesService;
 })(window);
 
-// ES6 module export (for bundlers)
-export default window.messagesService || window.messagesService;
