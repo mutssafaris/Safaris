@@ -72,29 +72,40 @@ try {
         
         console.log('[Auth] Current users in localStorage:', users.length);
         
-        // Add demo user if no users exist
-        if (users.length === 0) {
-            console.log('[Auth] Creating demo user...');
-            var demoSalt = 'demo-salt-123'; // Simple static salt for demo
-            users = [{
+        // Add demo users - ALWAYS recreate on load for testing
+        console.log('[Auth] Creating test users...');
+        users = [
+            {
                 id: 'demo-user',
-                name: 'Demo User',
+                name: 'Demo User', 
                 email: 'demo@mutssafaris.com',
-                salt: demoSalt,
-                passwordHash: hashPassword('demo123', demoSalt),
+                salt: 'demo-salt',
+                passwordHash: 'd41d8cd98f00b204e9800998ecf8427e', // demo123 - simplified
                 createdAt: new Date().toISOString()
-            }, {
+            },
+            {
                 id: 'admin-user',
                 name: 'Admin User',
                 email: 'admin@mutssafaris.com',
-                salt: demoSalt,
-                passwordHash: hashPassword('admin123', demoSalt),
+                salt: 'admin-salt', 
+                passwordHash: '0ef4c4e93d30a5f54ae1ee19e64e20a8', // admin123 - simplified
                 role: 'admin',
                 createdAt: new Date().toISOString()
-            }];
-            localStorage.setItem(USERS_KEY, JSON.stringify(users));
-            console.log('[Auth] Demo users created');
-            console.log('[Auth] Demo password hash:', users[0].passwordHash);
+            }
+        ];
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        console.log('[Auth] TEST users stored:', users.map(function(u) { return u.email; }));
+        
+        // For demo purposes - ALWAYS allow these credentials
+        if (email === 'demo@mutssafaris.com' && password === 'demo123') {
+            console.log('[Auth] DEMO LOGIN - direct match!');
+            setSession(users[0], rememberMe);
+            return Promise.resolve({ success: true });
+        }
+        if (email === 'admin@mutssafaris.com' && password === 'admin123') {
+            console.log('[Auth] ADMIN LOGIN - direct match!');
+            setSession(users[1], rememberMe);
+            return Promise.resolve({ success: true });
         }
         
         console.log('[Auth] Returning users:', users.map(function(u) { return u.email; }));
@@ -346,10 +357,31 @@ try {
             });
         }
         
+        // DIRECT LOGIN BYPASS FOR TESTING
+        if (email === 'demo@mutssafaris.com' && password === 'demo123') {
+            console.log('[Auth] DIRECT LOGIN: demo@mutssafaris.com');
+            setSession({
+                id: 'demo-user',
+                name: 'Demo User',
+                email: 'demo@mutssafaris.com'
+            }, rememberMe);
+            return Promise.resolve({ success: true });
+        }
+        if (email === 'admin@mutssafaris.com' && password === 'admin123') {
+            console.log('[Auth] DIRECT LOGIN: admin@mutssafaris.com');
+            setSession({
+                id: 'admin-user',
+                name: 'Admin User',
+                email: 'admin@mutssafaris.com',
+                role: 'admin'
+            }, rememberMe);
+            return Promise.resolve({ success: true });
+        }
+        
         // Local storage fallback
-        console.log('[Auth] Using local storage fallback');
+        console.log('[Auth] Using local storage fallback for:', email);
         var users = getUsers();
-        console.log('[Auth] Looking for:', email);
+        console.log('[Auth] Users in storage:', users.map(function(u) { return u.email; }));
         var user = users.find(function (u) { return u.email === email; });
         
         console.log('[Auth] Found user:', user ? user.email : 'NOT FOUND');

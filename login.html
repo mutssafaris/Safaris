@@ -275,6 +275,17 @@
     <script src="js/cache.js"></script>
     <script src="js/validation.js"></script>
     <script>
+    // DEBUG: Alert if auth isn't loading!
+    setTimeout(function() {
+        if (!window.MutsAuth) {
+            alert('[FATAL] MutsAuth not loaded! Check console for errors.');
+        } else {
+            console.log('[Login] MutsAuth is available:', typeof window.MutsAuth);
+            console.log('[Login] MutsAuth.login:', typeof window.MutsAuth.login);
+        }
+    }, 1000);
+    </script>
+    <script>
     (function() {
         var ONBOARDING_KEY = 'muts_onboarding_done';
         var currentSlide = 1;
@@ -365,13 +376,36 @@
             btn.disabled = true;
             btn.textContent = 'Logging in...';
             
+            // DEBUG: Log directly to page
+            var debug = document.getElementById('login-debug') || (function() {
+                var d = document.createElement('div');
+                d.id = 'login-debug';
+                d.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#000;color:#0f0;padding:10px;z-index:99999;font-family:monospace;font-size:12px;';
+                document.body.appendChild(d);
+                return d;
+            })();
+            debug.innerHTML = '[DEBUG] Starting login for: ' + email + '<br>';
+            
+            if (!window.MutsAuth) {
+                debug.innerHTML += '[ERROR] MutsAuth not loaded!<br>';
+                btn.disabled = false;
+                btn.textContent = 'Login';
+                alert('MutsAuth not loaded! Check console.');
+                return;
+            }
+            
+            debug.innerHTML += '[DEBUG] Calling MutsAuth.login...<br>';
+            
             // Handle both sync and async responses
             var result = window.MutsAuth.login(email, password);
             if (result && typeof result.then === 'function') {
+                debug.innerHTML += '[DEBUG] Got Promise, waiting...<br>';
                 result.then(function(data) {
                     btn.disabled = false;
                     btn.textContent = 'Login';
+                    debug.innerHTML += '[DEBUG] Promise resolved: ' + JSON.stringify(data) + '<br>';
                     if (data.success) {
+                        debug.innerHTML += '[DEBUG] SUCCESS! Redirecting...<br>';
                         window.MutsTour.show();
                         window.location.href = 'pages/dashboard/index.html';
                     } else {
@@ -380,12 +414,15 @@
                 })['catch'](function(err) {
                     btn.disabled = false;
                     btn.textContent = 'Login';
+                    debug.innerHTML += '[DEBUG] ERROR: ' + err.message + '<br>';
                     alert('AUTH_FAILED: ' + err.message);
                 });
             } else if (result.success) {
+                debug.innerHTML += '[DEBUG] Sync success!<br>';
                 window.MutsTour.show();
                 window.location.href = 'pages/dashboard/index.html';
             } else {
+                debug.innerHTML += '[DEBUG] Sync failed: ' + result.message + '<br>';
                 btn.disabled = false;
                 btn.textContent = 'Login';
                 alert('AUTH_FAILED: ' + result.message);
