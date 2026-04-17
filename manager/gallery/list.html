@@ -8,36 +8,67 @@
     <title>Gallery - Muts Safaris Manager</title>
     <link rel="stylesheet" href="../css/manager.css">
     <style>
+        /* Fix modal center on desktop */
+        #view-modal {
+            z-index: 1002;
+        }
+        #view-modal .modal {
+            max-width: 500px;
+            width: calc(100% - 40px);
+            margin: 0 auto;
+        }
+        /* Upload zone cursor */
+        #upload-zone {
+            cursor: pointer;
+        }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
             padding: 20px;
         }
         .gallery-item {
             position: relative;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-glow);
-            border-radius: 4px;
+            border-radius: 8px;
             overflow: hidden;
             aspect-ratio: 4/3;
+            cursor: pointer;
             transition: all 0.3s ease;
+        }
+        .gallery-item .img-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%);
+        }
+        .gallery-item .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .gallery-item:hover {
             border-color: var(--accent);
-            box-shadow: 0 8px 30px rgba(255, 46, 136, 0.2);
-            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(255, 184, 0, 0.2);
+            transform: translateY(-2px);
         }
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.9) contrast(1.05);
-            transition: all 0.4s ease;
         }
-        .gallery-item:hover img {
-            filter: brightness(1.1) contrast(1);
-            transform: scale(1.05);
+        .gallery-item .placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
         .gallery-item .overlay {
             position: absolute;
@@ -45,17 +76,19 @@
             left: 0;
             right: 0;
             background: linear-gradient(transparent, rgba(9, 0, 26, 0.95));
-            padding: 15px;
+            padding: 8px 10px;
             color: var(--text-primary);
-            font-size: 0.8rem;
-            font-family: var(--font-family);
+            font-size: 0.7rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .gallery-item .actions {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             display: flex;
-            gap: 8px;
+            gap: 4px;
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -63,16 +96,13 @@
             opacity: 1;
         }
         .gallery-item .actions button {
-            padding: 6px 10px;
-            font-size: 0.7rem;
-            font-family: var(--font-family);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 0;
+            padding: 4px 8px;
+            font-size: 0.65rem;
+            border-radius: 4px;
         }
         .upload-zone {
             border: 2px dashed var(--border-glow);
-            border-radius: 4px;
+            border-radius: 8px;
             padding: 40px;
             text-align: center;
             cursor: pointer;
@@ -80,34 +110,51 @@
             margin: 20px;
             background: rgba(255, 255, 255, 0.02);
         }
-        .upload-zone:hover {
+        .upload-zone:hover, .upload-zone.dragover {
             border-color: var(--accent);
             background: rgba(255, 184, 0, 0.08);
             box-shadow: 0 0 30px rgba(255, 184, 0, 0.1);
         }
-
+        .upload-zone .hint {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+        .loading-preview {
+            position: relative;
+            background: var(--bg-input);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .loading-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,184,0,0.1), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .image-modal-preview {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: var(--bg-card);
+        }
         @media (max-width: 768px) {
             .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-                padding: 15px;
-            }
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .filters-bar {
-                flex-direction: column;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                padding: 10px;
             }
         }
-
         @media (max-width: 480px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
+                gap: 8px;
             }
         }
     </style>
@@ -137,6 +184,7 @@
                 <a href="../reviews/list.html" class="nav-item">Reviews</a>
                 <a href="list.html" class="nav-item active">Gallery</a>
                 <div class="nav-section">Account</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
                 <a href="../settings/index.html" class="nav-item">Settings</a>
                 <a href="#" id="logout-btn">Logout</a>
             </nav>
@@ -144,30 +192,30 @@
         
         <main class="main-content">
             <div class="page-header">
-                <h1>Gallery Management</h1>
-                <button class="btn btn-primary" onclick="document.getElementById('upload-input').click()">+ Upload Images</button>
-                <input type="file" id="upload-input" multiple accept="image/*" style="display: none;" onchange="handleUpload(this.files)">
+                <h1>Gallery</h1>
+                <button class="btn btn-primary" onclick="document.getElementById('upload-input').click()">+ Upload</button>
+                <input type="file" id="upload-input" multiple accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;" onchange="handleUpload(this.files)">
             </div>
             
             <!-- Stats -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <h3>Total Images</h3>
-                    <div class="value" id="total-images">124</div>
+                    <h3>Total</h3>
+                    <div class="value" id="total-count">0</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Categories</h3>
-                    <div class="value">8</div>
+                    <h3>This Month</h3>
+                    <div class="value" id="month-count">0</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Storage Used</h3>
-                    <div class="value">2.4 GB</div>
+                    <h3>Storage</h3>
+                    <div class="value" id="storage-used">0 MB</div>
                 </div>
             </div>
             
             <!-- Filters -->
             <div class="filters-bar">
-                <input type="text" class="search-input" id="search-input" placeholder="Search images...">
+                <input type="text" class="search-input" id="search-input" placeholder="Search by name...">
                 <select class="filter-select" id="category-filter">
                     <option value="">All Categories</option>
                     <option value="wildlife">Wildlife</option>
@@ -180,32 +228,29 @@
             </div>
             
             <!-- Upload Zone -->
-            <div class="upload-zone" onclick="document.getElementById('upload-input').click()">
+            <div class="upload-zone" id="upload-zone" onclick="document.getElementById('upload-input').click()">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="color: var(--text-muted);">
                     <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
                 </svg>
-                <p style="color: var(--text-muted); margin-top: 10px;">Click to upload or drag and drop images here</p>
+                <p style="color: var(--text-muted);">Drop images here or click to upload</p>
+                <p class="hint">JPEG, PNG, WebP, GIF • Max 5MB</p>
             </div>
             
-            <!-- Gallery Grid -->
+            <!-- Gallery -->
             <div class="data-table-container">
-                <div class="gallery-grid" id="gallery-grid">
-                    <!-- Dynamic content -->
-                </div>
+                <div class="gallery-grid" id="gallery-grid"></div>
             </div>
         </main>
     </div>
     
-    <!-- Image Details Modal -->
+    <!-- Image Modal -->
     <div class="modal-overlay" id="view-modal">
-        <div class="modal" style="max-width: 600px;">
+        <div class="modal">
             <div class="modal-header">
-                <h2>Image Details</h2>
+                <h2 id="modal-title">Image Details</h2>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-            <div class="modal-body" id="image-details">
-                <!-- Dynamic content -->
-            </div>
+            <div class="modal-body" id="image-details"></div>
             <div class="modal-footer">
                 <button class="btn btn-danger" onclick="deleteImage()">Delete</button>
                 <button class="btn btn-secondary" onclick="closeModal()">Close</button>
@@ -216,178 +261,304 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/manager-image-service.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
     <script>
+    // Gallery State
+    var GALLERY_STORAGE_KEY = 'muts_gallery_images';
+    var images = [];
     var currentImageId = null;
-    var uploadedImages = [];
     
+    // Load images from storage/API
+    function loadImages() {
+        // Try to load from localStorage first
+        try {
+            var stored = localStorage.getItem(GALLERY_STORAGE_KEY);
+            if (stored) {
+                images = JSON.parse(stored);
+            }
+        } catch (e) {
+            images = [];
+        }
+        
+        // If empty, initialize with demo images
+        if (images.length === 0) {
+            images = getDemoImages();
+        }
+        
+        renderGallery();
+        updateStats();
+    }
+    
+    function getDemoImages() {
+        return [
+            { id: 'demo1', name: 'lion-sunset.jpg', url: '', category: 'wildlife', size: 2450000, isLocal: false },
+            { id: 'demo2', name: 'elephants.jpg', url: '', category: 'wildlife', size: 3100000, isLocal: false },
+            { id: 'demo3', name: 'maasai-mara.jpg', url: '', category: 'landscapes', size: 4200000, isLocal: false },
+            { id: 'demo4', name: 'governors-camp.jpg', url: '', category: 'accommodations', size: 1800000, isLocal: false },
+            { id: 'demo5', name: 'hot-air-balloon.jpg', url: '', category: 'activities', size: 2900000, isLocal: false },
+            { id: 'demo6', name: 'maasai-dance.jpg', url: '', category: 'culture', size: 2100000, isLocal: false }
+        ];
+    }
+    
+    function saveImages() {
+        try {
+            localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(images));
+        } catch (e) {
+            console.warn('Could not save images to storage');
+        }
+    }
+    
+    function renderGallery() {
+        var grid = document.getElementById('gallery-grid');
+        var searchInput = document.getElementById('search-input');
+        var categoryFilter = document.getElementById('category-filter');
+        
+        var search = searchInput ? searchInput.value.toLowerCase() : '';
+        var category = categoryFilter ? categoryFilter.value : '';
+        
+        // Filter images
+        var filtered = images.filter(function(img) {
+            if (search && img.name.toLowerCase().indexOf(search) === -1) return false;
+            if (category && img.category !== category) return false;
+            return true;
+        });
+        
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No images found</div>';
+            return;
+        }
+        
+        // Build HTML
+        var html = '';
+        filtered.forEach(function(img) {
+            var imgSrc = img.url || '';
+            var imgName = img.name.replace(/\.[^/.]+/, '');
+            
+            html += '<div class="gallery-item" data-id="' + img.id + '" onclick="viewImage(\'' + img.id + '\')">' +
+                '<div class="img-container">' +
+                    (imgSrc ? '<img src="' + imgSrc + '" alt="' + img.name + '" loading="lazy" onerror="handleImageError(this)">' : '') +
+                    '<div class="placeholder" ' + (imgSrc ? 'style="display:none"' : '' + '>' + imgName + '</div>' +
+                '</div>' +
+                '<div class="overlay">' + img.name + '</div>' +
+                '<div class="actions">' +
+                    '<button class="btn btn-sm btn-secondary" onclick="event.stopPropagation(); viewImage(\'' + img.id + '\')">View</button>' +
+                '</div>' +
+            '</div>';
+        });
+        
+        grid.innerHTML = html;
+    }
+    
+    function updateStats() {
+        var total = images.length;
+        var thisMonth = images.filter(function(img) {
+            var d = new Date();
+            return img.uploaded && img.uploaded.startsWith(d.toISOString().slice(0, 7));
+        }).length;
+        
+        var totalSize = images.reduce(function(sum, img) {
+            return sum + (img.size || 0);
+        }, 0);
+        
+        var storageMB = (totalSize / (1024 * 1024)).toFixed(1);
+        
+        document.getElementById('total-count').textContent = total;
+        document.getElementById('month-count').textContent = thisMonth;
+        document.getElementById('storage-used').textContent = storageMB + ' MB';
+    }
+    
+    function viewImage(id) {
+        var img = images.find(function(i) { return i.id === id; });
+        if (!img) return;
+        
+        currentImageId = id;
+        
+        var sizeKB = Math.round(img.size / 1024);
+        var sizeStr = sizeKB > 1024 ? (sizeKB / 1024).toFixed(1) + ' MB' : sizeKB + ' KB';
+        
+        // Build preview - use actual image or CDN
+        var previewSrc = img.url || '';
+        
+        var detailsHtml = (previewSrc ? '<img class="image-modal-preview" src="' + previewSrc + '" alt="' + img.name + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' : '') +
+            '<div class="image-modal-preview" style="display:' + (previewSrc ? 'none' : 'flex') + ';align-items:center;justify-content:center;background:var(--bg-input);border-radius:8px;min-height:200px;color:var(--text-muted);font-size:0.9rem;">' + img.name.replace(/\.[^/.]+/, '') + '</div>' +
+            '<div style="margin-top: 15px; display: grid; gap: 10px;">' +
+                '<div><strong>Filename:</strong> ' + img.name + '</div>' +
+                '<div><strong>Category:</strong> ' + (img.category || 'Uncategorized') + '</div>' +
+                '<div><strong>Size:</strong> ' + sizeStr + '</div>' +
+                '<div><strong>Uploaded:</strong> ' + (img.uploaded || 'Recently') + '</div>' +
+            '</div>';
+        
+        document.getElementById('modal-title').textContent = img.name;
+        document.getElementById('image-details').innerHTML = detailsHtml;
+        document.getElementById('view-modal').classList.add('show');
+    }
+    
+    function closeModal() {
+        document.getElementById('view-modal').classList.remove('show');
+        currentImageId = null;
+    }
+    
+    function deleteImage() {
+        if (!currentImageId) return;
+        
+        if (!confirm('Delete this image?')) return;
+        
+        var idx = images.findIndex(function(i) { return i.id === currentImageId; });
+        if (idx > -1) {
+            var img = images[idx];
+            // Revoke object URL to free memory
+            if (img.url && img.url.startWith('blob:')) {
+                URL.revokeObjectURL(img.url);
+            }
+            images.splice(idx, 1);
+            saveImages();
+            renderGallery();
+            updateStats();
+            showToast('Image deleted');
+        }
+        closeModal();
+    }
+    
+    function handleUpload(files) {
+        if (!files || files.length === 0) return;
+        
+        var fileInput = document.getElementById('upload-input');
+        var count = 0;
+        var total = files.length;
+        
+        showToast('Processing ' + total + ' file(s)...');
+        
+        Array.from(files).forEach(function(file) {
+            var validation = ImageService.validateFile(file);
+            if (!validation.valid) {
+                showToast(validation.error, 'error');
+                count++;
+                return;
+            }
+            
+            // Create object URL for preview
+            var objectUrl = URL.createObjectURL(file);
+            
+            var newImage = {
+                id: 'img_' + Date.now() + '_' + count,
+                name: file.name,
+                url: objectUrl,
+                category: (document.getElementById('category-filter') ? document.getElementById('category-filter').value : '') || 'general',
+                size: file.size,
+                uploaded: new Date().toISOString().split('T')[0],
+                isLocal: true
+            };
+            
+            images.unshift(newImage); // Add to beginning
+            count++;
+        });
+        
+        if (count > 0) {
+            saveImages();
+            renderGallery();
+            updateStats();
+            showToast('Added ' + count + ' image(s)');
+            
+            // Reset input
+            if (fileInput) fileInput.value = '';
+        }
+    }
+    
+    function handleImageError(img) {
+        var container = img.closest('.img-container');
+        if (container) {
+            var placeholder = container.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.style.display = 'flex';
+            }
+            img.style.display = 'none';
+        }
+    }
+    
+    function showToast(message, type) {
+        type = type || 'success';
+        var container = document.getElementById('toast-container');
+        var toast = document.createElement('div');
+        toast.className = 'toast ' + type;
+        toast.innerHTML = '<span>' + message + '</span>';
+        container.appendChild(toast);
+        setTimeout(function() {
+            toast.style.opacity = '0';
+            setTimeout(function() { toast.remove(); }, 300);
+        }, 3000);
+    }
+    
+    function debounce(func, wait) {
+        var timeout;
+        return function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(func, wait);
+        };
+    }
+    
+    // Initialize
     (function() {
         if (!ManagerService.checkAuth()) return;
         
-        // Initialize CDN configuration
+        // Initialize CDN
         var savedCDN = ImageService.getCDNBase();
         if (!savedCDN) {
             ImageService.setCDNBase('https://images.mutssafaris.com');
         }
         
-        document.getElementById('logout-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            ManagerService.logout();
-        });
-        
-        loadGallery();
-        
-        document.getElementById('search-input').addEventListener('input', debounce(loadGallery, 300));
-        document.getElementById('category-filter').addEventListener('change', loadGallery);
-        
-        function loadGallery() {
-            var grid = document.getElementById('gallery-grid');
-            
-            var mockImages = [
-                { id: 'img1', name: 'lion-sunset.jpg', category: 'wildlife', size: '2.4 MB', uploaded: '2026-04-01' },
-                { id: 'img2', name: 'elephants.jpg', category: 'wildlife', size: '3.1 MB', uploaded: '2026-03-28' },
-                { id: 'img3', name: 'maasai-mara.jpg', category: 'landscapes', size: '4.2 MB', uploaded: '2026-03-25' },
-                { id: 'img4', name: 'governors-camp.jpg', category: 'accommodations', size: '1.8 MB', uploaded: '2026-03-20' },
-                { id: 'img5', name: 'hot-air-balloon.jpg', category: 'activities', size: '2.9 MB', uploaded: '2026-03-15' },
-                { id: 'img6', name: 'maasai-dance.jpg', category: 'culture', size: '2.1 MB', uploaded: '2026-03-10' },
-                { id: 'img7', name: 'zebra-herd.jpg', category: 'wildlife', size: '3.5 MB', uploaded: '2026-03-05' },
-                { id: 'img8', name: 'beach-sunset.jpg', category: 'landscapes', size: '2.8 MB', uploaded: '2026-02-28' }
-            ];
-            
-            var search = document.getElementById('search-input').value.toLowerCase();
-            var category = document.getElementById('category-filter').value;
-            
-            var filtered = mockImages.filter(function(img) {
-                if (search && img.name.toLowerCase().indexOf(search) === -1) return false;
-                if (category && img.category !== category) return false;
-                return true;
+        // Logout handler
+        var logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                ManagerService.logout();
             });
-            
-            if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No images found</div>';
-                return;
-            }
-            
-            var html = '';
-            filtered.forEach(function(img) {
-                html += '<div class="gallery-item" onclick="viewImage(\'' + img.id + '\')">' +
-                    '<div style="background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">' +
-                        '<span>Image Preview</span>' +
-                    '</div>' +
-                    '<div class="overlay">' + img.name + '</div>' +
-                    '<div class="actions">' +
-                        '<button class="btn btn-sm btn-secondary" onclick="event.stopPropagation(); viewImage(\'' + img.id + '\')">View</button>' +
-                    '</div>' +
-                '</div>';
-            });
-            
-            grid.innerHTML = html;
         }
         
-        window.viewImage = function(id) {
-            var mockImages = {
-                'img1': { id: 'img1', name: 'lion-sunset.jpg', category: 'wildlife', size: '2.4 MB', uploaded: '2026-04-01', dimensions: '1920x1080', alt: 'Lion at sunset in Maasai Mara' }
-            };
-            
-            var img = mockImages[id] || mockImages['img1'];
-            currentImageId = id;
-            
-            var detailsHtml = '<div style="display: grid; gap: 15px;">' +
-                '<div style="background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%); height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">' +
-                    '<span style="color: var(--text-muted);">Image Preview</span>' +
-                '</div>' +
-                '<div><strong>Filename:</strong> ' + img.name + '</div>' +
-                '<div><strong>Category:</strong> ' + img.category + '</div>' +
-                '<div><strong>Size:</strong> ' + img.size + '</div>' +
-                '<div><strong>Dimensions:</strong> ' + img.dimensions + '</div>' +
-                '<div><strong>Uploaded:</strong> ' + img.uploaded + '</div>' +
-                '<div class="form-group" style="margin-top: 10px;">' +
-                    '<label>Alt Text</label>' +
-                    '<input type="text" value="' + (img.alt || '') + '" style="width: 100%; padding: 10px; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-primary);">' +
-                '</div>' +
-            '</div>';
-            
-            document.getElementById('image-details').innerHTML = detailsHtml;
-            document.getElementById('view-modal').classList.add('show');
-        };
+        // Load images
+        loadImages();
         
-        window.closeModal = function() {
-            document.getElementById('view-modal').classList.remove('show');
-            currentImageId = null;
-        };
+        // Search/filter handlers
+        var searchInput = document.getElementById('search-input');
+        var categoryFilter = document.getElementById('category-filter');
+        if (searchInput) searchInput.addEventListener('input', debounce(renderGallery, 300));
+        if (categoryFilter) categoryFilter.addEventListener('change', renderGallery);
         
-        window.deleteImage = function() {
-            if (confirm('Are you sure you want to delete this image?')) {
-                showToast('Image deleted');
-                closeModal();
-                loadGallery();
-            }
-        };
-        
-        window.handleUpload = function(files) {
-            if (files && files.length > 0) {
-                var uploaded = [];
-                var count = 0;
-                var total = files.length;
-                
-                Array.from(files).forEach(function(file) {
-                    var validation = ImageService.validateFile(file);
-                    if (!validation.valid) {
-                        showToast(validation.error, 'error');
-                        return;
-                    }
-                    
-                    ImageService.storeLocally(file, { category: 'gallery' }).then(function(result) {
-                        uploaded.push({
-                            id: result.id,
-                            url: result.url,
-                            name: file.name,
-                            category: document.getElementById('category-filter').value || 'general',
-                            size: (file.size / 1024).toFixed(1) + ' KB',
-                            uploaded: new Date().toISOString().split('T')[0]
-                        });
-                        count++;
-                        
-                        if (count === total) {
-                            showToast('Uploaded ' + count + ' image(s)');
-                            uploadedImages = uploadedImages.concat(uploaded);
-                            loadGallery();
-                        }
-                    }).catch(function(err) {
-                        showToast('Upload failed: ' + err.message, 'error');
-                    });
+        // Drag and drop
+        var uploadZone = document.getElementById('upload-zone');
+        if (uploadZone) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(evt) {
+                uploadZone.addEventListener(evt, function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                 });
-                
-                showToast('Processing ' + total + ' image(s)...');
-            }
-        };
-        
-        // Get CDN URL for display
-        window.getImageURL = function(path) {
-            return ImageService.buildImageURL(path);
-        };
-        
-        function debounce(func, wait) {
-            var timeout;
-            return function() {
-                clearTimeout(timeout);
-                timeout = setTimeout(func, wait);
-            };
+            });
+            
+            uploadZone.addEventListener('dragenter', function() {
+                uploadZone.classList.add('dragover');
+            });
+            uploadZone.addEventListener('dragover', function() {
+                uploadZone.classList.add('dragover');
+            });
+            uploadZone.addEventListener('dragleave', function() {
+                uploadZone.classList.remove('dragover');
+            });
+            uploadZone.addEventListener('drop', function(e) {
+                uploadZone.classList.remove('dragover');
+                var files = e.dataTransfer.files;
+                if (files.length > 0) handleUpload(files);
+            });
         }
         
-        window.showToast = function(message, type) {
-            type = type || 'success';
-            var container = document.getElementById('toast-container');
-            var toast = document.createElement('div');
-            toast.className = 'toast ' + type;
-            toast.innerHTML = '<span>' + message + '</span>';
-            container.appendChild(toast);
-            setTimeout(function() {
-                toast.style.opacity = '0';
-                setTimeout(function() { toast.remove(); }, 300);
-            }, 3000);
-        };
+        // Close modal on overlay click
+        document.getElementById('view-modal').addEventListener('click', function(e) {
+            if (e.target.id === 'view-modal') closeModal();
+        });
     })();
     </script>
 </body>

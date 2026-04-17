@@ -820,3 +820,6 @@
 
     window.MutsHotelsService = HotelsService;
 })(window);
+
+// ES6 module export (for bundlers)
+export default window.hotelsService || window.hotelsService;

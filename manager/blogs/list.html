@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Blogs - Muts Safaris Manager</title>
     <link rel="stylesheet" href="../css/manager.css">
@@ -28,15 +29,36 @@
                 <a href="../reviews/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span>Reviews</span></a>
                 <a href="../gallery/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg><span>Gallery</span></a>
                 <div class="nav-section">System</div>
-                <a href="../settings/index.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span>Settings</span></a>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c.04.31.06.63.06.94s-.02.63-.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span>Settings</span></a>
             </nav>
         </aside>
         <main class="main-content">
             <div class="page-header"><h1>Blog Management</h1><a href="create.html" class="btn btn-primary">+ Write New Post</a></div>
             <div class="filters-bar">
                 <input type="text" class="search-input" id="search-input" placeholder="Search posts...">
-                <select class="filter-select" id="category-filter"><option value="">All Categories</option><option value="guide">Guide</option><option value="news">News</option></select>
-                <select class="filter-select" id="status-filter"><option value="">All Status</option><option value="published">Published</option><option value="draft">Draft</option></select>
+
+                <!-- Category Filter -->
+                <div class="custom-select" id="category-select">
+                    <input type="hidden" id="category-filter" value="">
+                    <div class="select-trigger"><span>All Categories</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Categories</li>
+                        <li class="dropdown-item" data-value="guide">Guide</li>
+                        <li class="dropdown-item" data-value="news">News</li>
+                    </ul>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="custom-select" id="status-select">
+                    <input type="hidden" id="status-filter" value="">
+                    <div class="select-trigger"><span>All Status</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Status</li>
+                        <li class="dropdown-item" data-value="published">Published</li>
+                        <li class="dropdown-item" data-value="draft">Draft</li>
+                    </ul>
+                </div>
             </div>
             <div class="data-table-container">
                 <table class="data-table">
@@ -50,11 +72,86 @@
     </div>
     <script src="../../js/api-config.js"></script>
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
     <script>
     (function() {
         if (!ManagerService.checkAuth()) return;
         
+        // Custom dropdown functionality
+        function initCustomDropdowns() {
+            var selects = document.querySelectorAll('.custom-select');
+
+            function repositionDropdowns() {
+                if (window.innerWidth > 480) return;
+                selects.forEach(function(select) {
+                    var list = select.querySelector('.dropdown-list');
+                    var trigger = select.querySelector('.select-trigger');
+                    if (!list || !trigger) return;
+
+                    var rect = trigger.getBoundingClientRect();
+                    var topPos = rect.bottom + 4;
+                    var leftPos = rect.left;
+                    var maxHeight = window.innerHeight - rect.bottom - 20;
+
+                    list.style.position = 'fixed';
+                    list.style.top = topPos + 'px';
+                    list.style.left = leftPos + 'px';
+                    list.style.right = 'auto';
+                    list.style.maxHeight = Math.min(maxHeight, 200) + 'px';
+                });
+            }
+
+            selects.forEach(function(select) {
+                var trigger = select.querySelector('.select-trigger');
+                var list = select.querySelector('.dropdown-list');
+                var items = select.querySelectorAll('.dropdown-item');
+                var span = trigger.querySelector('span');
+
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selects.forEach(function(other) {
+                        if (other !== select) other.classList.remove('open');
+                    });
+                    select.classList.toggle('open');
+                    // Delay to allow CSS transition to start
+                    setTimeout(repositionDropdowns, 50);
+                });
+
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var value = item.getAttribute('data-value');
+                        var text = item.textContent;
+                        span.textContent = text;
+                        items.forEach(function(i) { i.classList.remove('selected'); });
+                        item.classList.add('selected');
+                        select.classList.remove('open');
+
+                        var filterId = select.id.replace('-select', '-filter');
+                        var hiddenFilter = document.getElementById(filterId);
+                        if (hiddenFilter) hiddenFilter.value = value;
+                        loadBlogs();
+                    });
+                });
+            });
+
+            document.addEventListener('click', function() {
+                selects.forEach(function(s) { s.classList.remove('open'); });
+            });
+
+            window.addEventListener('resize', function() {
+                selects.forEach(function(s) {
+                    s.classList.remove('open');
+                });
+            });
+        }
+
+        initCustomDropdowns();
+
         document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); ManagerService.logout(); });
         
         var REFRESH_INTERVAL_MS = 30000;
@@ -64,21 +161,65 @@
             var tbody = document.getElementById('blogs-table');
             tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></div></td></tr>';
             
-            var search = document.getElementById('search-input').value;
-            var category = document.getElementById('category-filter').value;
-            var status = document.getElementById('status-filter').value;
+            var searchInput = document.getElementById('search-input');
+            var categoryFilter = document.getElementById('category-filter');
+            var statusFilter = document.getElementById('status-filter');
+            
+            var search = searchInput ? searchInput.value : '';
+            var category = categoryFilter ? categoryFilter.value : '';
+            var status = statusFilter ? statusFilter.value : '';
             
             var filters = {};
             if (search) filters.search = search;
             if (category) filters.category = category;
             if (status) filters.status = status;
             
-            ManagerService.getBlogs(filters).then(function(blogs) {
+            ManagerService.getBlogs(filters).then(function(response) {
+                // Handle both API response { data: { blogs: [] } } and direct array []
+                var blogs = response.data ? response.data.blogs || response.data : response;
                 renderBlogs(blogs);
             }).catch(function(err) {
-                console.error('Error loading blogs:', err);
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: var(--error);">Failed to load blogs</td></tr>';
+                console.warn('API failed, using fallback:', err.message);
+                loadBlogsMock(filters);
             });
+        }
+
+        function loadBlogsMock(filters) {
+            console.log('[Blogs] Loading mock data...');
+            // Load from mock data - using absolute path from root
+            fetch('/data/blog-posts.json')
+                .then(function(res) {
+                    console.log('[Blogs] Mock response status:', res.status);
+                    if (!res.ok) throw new Error('Mock not found');
+                    return res.json();
+                })
+                .then(function(data) {
+                    console.log('[Blogs] Mock data loaded:', data.posts ? data.posts.length + ' posts' : 'empty');
+                    var blogs = data.posts || [];
+
+                    // Apply filters
+                    if (filters.search) {
+                        var search = filters.search.toLowerCase();
+                        blogs = blogs.filter(function(b) {
+                            return (b.title || b.name || '').toLowerCase().includes(search) ||
+                                   (b.excerpt || '').toLowerCase().includes(search) ||
+                                   (b.category || '').toLowerCase().includes(search);
+                        });
+                    }
+                    if (filters.category) {
+                        blogs = blogs.filter(function(b) { return b.category === filters.category; });
+                    }
+                    if (filters.status) {
+                        blogs = blogs.filter(function(b) { return b.status === filters.status; });
+                    }
+
+                    renderBlogs(blogs);
+                })
+                .catch(function(err) {
+                    console.error('Fallback error:', err);
+                    document.getElementById('blogs-table').innerHTML =
+                        '<tr><td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">Unable to load blog posts</td></tr>';
+                });
         }
 
         function renderBlogs(blogs) {
@@ -116,9 +257,7 @@
         loadBlogs();
 
         document.getElementById('search-input').addEventListener('input', debounce(loadBlogs, 300));
-        document.getElementById('category-filter').addEventListener('change', loadBlogs);
-        document.getElementById('status-filter').addEventListener('change', loadBlogs);
-        
+
         // Auto-refresh every 30 seconds
         refreshInterval = setInterval(loadBlogs, REFRESH_INTERVAL_MS);
 

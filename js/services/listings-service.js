@@ -286,3 +286,6 @@
 
     window.MutsListingsService = ListingsService;
 })(window);
+
+// ES6 module export (for bundlers)
+export default window.listingsService || window.listingsService;

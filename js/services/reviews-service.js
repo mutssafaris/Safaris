@@ -242,3 +242,5 @@
     ReviewsService._loadPersisted();
     window.MutsReviewsService = ReviewsService;
 })(window);
+// ES6 module export (for bundlers)
+export default window.reviewsService || window.reviewsService;

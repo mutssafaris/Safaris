@@ -576,3 +576,6 @@
 
     window.MutsAfricasaService = AfricasaService;
 })(window);
+
+// ES6 module export (for bundlers)
+export default window.africasaService || window.africasaService;

@@ -128,7 +128,9 @@ function renderDestinations(destData) {
         card.dataset.duration = dest.duration || 'long';
         card.dataset.season = dest.season || 'year-round';
         
-        var imagePath = '../../images/tours/' + dest.image;
+        // Use destination type to determine image folder, default to 'tours'
+        var imageFolder = (dest.type === 'beach') ? 'beaches' : 'tours';
+        var imagePath = '../../images/' + imageFolder + '/' + dest.image;
         var isFav = window.MutsFavorites ? window.MutsFavorites.isFavorite(dest.id) : false;
         
         card.innerHTML = 

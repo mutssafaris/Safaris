@@ -903,7 +903,47 @@ Response: { "success": true, "token": "new_token", "refreshToken": "new_refresh"
 
 ---
 
-*Last Updated: 2026-04-15*
+*Last Updated: 2026-04-17*
+---
+
+## Destinations API - Security & Implementation Notes
+
+### Known Issues & Fixes Applied (2026-04-17)
+
+1. **Image Path Bug** - Fixed in `tours.html`: Now derives image folder from destination type:
+   ```javascript
+   var imageFolder = (dest.type === 'beach') ? 'beaches' : 'tours';
+   var imagePath = '../../images/' + imageFolder + '/' + dest.image;
+   ```
+
+2. **Type Filter Fallback** - Fixed in `list.html`: Derives type when missing in mock data:
+   ```javascript
+   if (filters.type === 'beach') return d.region.toLowerCase().includes('coast');
+   if (filters.type === 'safari') return !d.region.includes('coast');
+   ```
+
+3. **Price Range Conversion** - Fixed incorrect mapping:
+   ```javascript
+   var rangeMap = { '$': 150, '$$': 350, '$$$': 600, '$$$$': 1000 };
+   ```
+
+4. **XSS Prevention** - All toast messages now use HTML encoding:
+   ```javascript
+   function encodeHTML(str) {
+       var div = document.createElement('div');
+       div.textContent = str;
+       return div.innerHTML;
+   }
+   ```
+
+### Security Best Practices
+
+- **Never use eval()** - Use function lookup instead: `window[functionName]`
+- **Always encode user input** - Use `encodeHTML()` before inserting into innerHTML
+- **Use crypto.getRandomValues()** - For tokens and salt generation
+- **Check localStorage quota** - Before storing large data
+- **Token in Authorization header**: `Authorization: Bearer <token>`
+
 ---
 
 ## Manager Destinations API
@@ -1075,3 +1115,163 @@ Response: { "success": true, "token": "new_token", "refreshToken": "new_refresh"
 
 ---
 
+
+## Manager Packages API
+
+**Base Endpoint:** `/api/manager/content/packages`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/manager/content/packages | List all packages |
+| GET | ?category=safari&status=published | Filter packages |
+| GET | /api/manager/content/packages/:id | Get package details |
+| POST | /api/manager/content/packages | Create package |
+| PUT | /api/manager/content/packages/:id | Update package |
+| DELETE | /api/manager/content/packages/:id | Delete package |
+
+**Mock Data:** /data/packages.json
+
+## Manager Blogs API
+
+**Base Endpoint:** `/api/manager/content/blog`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/manager/content/blog | List all blogs |
+| GET | ?category=guide&status=published | Filter blogs |
+| GET | /api/manager/content/blog/:id | Get blog details |
+| POST | /api/manager/content/blog | Create blog |
+| PUT | /api/manager/content/blog/:id | Update blog |
+| DELETE | /api/manager/content/blog/:id | Delete blog |
+
+**Mock Data:** /data/blogs.json
+
+## Manager Bookings API
+
+**Base Endpoint:** `/api/manager/bookings`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/manager/bookings | List all bookings |
+| GET | ?status=upcoming&dateFrom=2026-01-01 | Filter bookings |
+| GET | /api/manager/bookings/:id | Get booking details |
+| PUT | /api/manager/bookings/:id | Update booking |
+| PATCH | /api/manager/bookings/:id/status | Update status |
+
+**Query Parameters:**
+- status: upcoming, confirmed, pending, completed, cancelled
+- dateFrom, dateTo: Date range filter
+- search: Search by guest name
+
+**Mock Data:** Uses fallback getMockBookings() in list.html
+
+## Manager Messages API
+
+**Base Endpoint:** `/api/manager/messages`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/manager/messages | List all messages |
+| GET | ?status=unread&type=inquiry | Filter messages |
+| GET | /api/manager/messages/:id | Get message details |
+| POST | /api/manager/messages/:id/reply | Reply to message |
+
+**Query Parameters:**
+- status: unread, read, archived
+- type: inquiry, booking, general, support
+
+## Manager Reviews API
+
+**Base Endpoint:** `/api/manager/content/reviews`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/manager/content/reviews | List all reviews |
+| GET | ?status=pending&rating=5 | Filter reviews |
+| GET | /api/manager/content/reviews/:id | Get review details |
+| PUT | /api/manager/content/reviews/:id | Update review |
+| PUT | /api/manager/content/reviews/:id/approve | Approve review |
+| PUT | /api/manager/content/reviews/:id/reject | Reject review |
+| DELETE | /api/manager/content/reviews/:id | Delete review |
+
+**Query Parameters:**
+- status: pending, approved, rejected, flagged
+- rating: 1-5 star filter
+
+**Fallback:** Uses mockReviews() in list.html
+
+---
+
+## API Testing - curl Examples
+
+### Destinations (Public)
+
+```bash
+# Get all destinations
+curl -X GET http://localhost:3000/api/destinations
+
+# Get popular destinations
+curl -X GET "http://localhost:3000/api/destinations?popular=true"
+
+# Filter by type
+curl -X GET "http://localhost:3000/api/destinations?type=safari"
+
+# Search destinations
+curl -X GET "http://localhost:3000/api/destinations?search=maasai"
+```
+
+### Manager Destinations (Authenticated)
+
+```bash
+# Manager login
+curl -X POST http://localhost:3000/api/manager/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@mutssafaris.com","password":"securepassword"}'
+
+# Get all destinations (with token)
+curl -X GET http://localhost:3000/api/manager/content/destinations \
+  -H "Authorization: Bearer <token>"
+
+# Create destination
+curl -X POST http://localhost:3000/api/manager/content/destinations \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name":"Serengeti",
+    "slug":"serengeti",
+    "region":"Northern Tanzania",
+    "type":"safari",
+    "description":"Vast plains...",
+    "priceFrom":450,
+    "rating":4.9,
+    "status":"published"
+  }'
+
+# Update destination
+curl -X PUT http://localhost:3000/api/manager/content/destinations/1 \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"priceFrom":500}'
+
+# Delete destination
+curl -X DELETE http://localhost:3000/api/manager/content/destinations/1 \
+  -H "Authorization: Bearer <token>"
+
+# Publish destination
+curl -X POST http://localhost:3000/api/manager/content/destinations/1/publish \
+  -H "Authorization: Bearer <token>"
+```
+
+### Error Response Format
+
+```json
+{
+  "success": false,
+  "error": "Destination not found",
+  "code": "NOT_FOUND"
+}
+```
+
+---
+
+*Documentation Updated: 2026-04-17*

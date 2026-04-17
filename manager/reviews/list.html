@@ -33,6 +33,7 @@
                 <a href="list.html" class="nav-item active">Reviews</a>
                 <a href="../gallery/list.html" class="nav-item">Gallery</a>
                 <div class="nav-section">Account</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
                 <a href="../settings/index.html" class="nav-item">Settings</a>
                 <a href="#" id="logout-btn">Logout</a>
             </nav>
@@ -135,7 +136,11 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
     <script>
     var REFRESH_INTERVAL_MS = 30000;
     var refreshInterval = null;
@@ -171,9 +176,13 @@
                 { id: 'r6', hotel: 'Serena Amboseli', user: 'Lisa Anderson', rating: 2, text: 'Disappointed with the service. Not worth the price.', date: '2026-03-20', status: 'pending' }
             ];
             
-            var search = document.getElementById('search-input').value.toLowerCase();
-            var status = document.getElementById('status-filter').value;
-            var rating = document.getElementById('rating-filter').value;
+            var searchInput = document.getElementById('search-input');
+            var statusFilter = document.getElementById('status-filter');
+            var ratingFilter = document.getElementById('rating-filter');
+            
+            var search = searchInput ? searchInput.value.toLowerCase() : '';
+            var status = statusFilter ? statusFilter.value : '';
+            var rating = ratingFilter ? ratingFilter.value : '';
             
             var filtered = mockReviews.filter(function(r) {
                 if (search && r.hotel.toLowerCase().indexOf(search) === -1 && r.user.toLowerCase().indexOf(search) === -1) return false;
@@ -279,7 +288,7 @@
                 setTimeout(function() { toast.remove(); }, 300);
             }, 3000);
         };
-    })();
-    </script>
-</body>
-</html>
+     })();
+     </script>
+ </body>
+ </html>

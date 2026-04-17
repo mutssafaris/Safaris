@@ -286,10 +286,18 @@
             var options = {};
             
             if (bookingDetail.dataset.onCancel) {
-                try { options.onCancel = eval(bookingDetail.dataset.onCancel); } catch(e) {}
+                // SECURE: Use function reference lookup instead of eval()
+                var cancelFn = window[bookingDetail.dataset.onCancel];
+                if (typeof cancelFn === 'function') {
+                    options.onCancel = cancelFn;
+                }
             }
             if (bookingDetail.dataset.onModify) {
-                try { options.onModify = eval(bookingDetail.dataset.onModify); } catch(e) {}
+                // SECURE: Use function reference lookup instead of eval()
+                var modifyFn = window[bookingDetail.dataset.onModify];
+                if (typeof modifyFn === 'function') {
+                    options.onModify = modifyFn;
+                }
             }
             
             BookingManagement.init(bookingId, options);

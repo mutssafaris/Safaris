@@ -117,3 +117,20 @@
     window.addEventListener('resize', repositionDropdowns);
     window.addEventListener('scroll', repositionDropdowns, true);
 })();
+
+// ==== Custom Dropdown Accessibility Enhancements ====
+    // Add ARIA attributes to all custom selects and manage state on toggle
+    var customSelects = document.querySelectorAll('.custom-select');
+    customSelects.forEach(function(select) {
+        var trigger = select.querySelector('.select-trigger');
+        if (trigger) {
+            trigger.setAttribute('role', 'button');
+            trigger.setAttribute('aria-haspopup', 'listbox');
+            trigger.setAttribute('aria-expanded', 'false');
+            // Toggle aria-expanded on click
+            trigger.addEventListener('click', function() {
+                var expanded = trigger.getAttribute('aria-expanded') === 'true';
+                trigger.setAttribute('aria-expanded', String(!expanded));
+            });
+        }
+    });

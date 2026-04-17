@@ -551,3 +551,6 @@ return Promise.resolve({ policy: policy });
 
     window.MutsBookingsService = BookingsService;
 })(window);
+
+// ES6 module export (for bundlers)
+export default window.bookingsService || window.bookingsService;

@@ -73,9 +73,14 @@
                 </a>
                 
                 <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
                 <a href="../settings/index.html" class="nav-item">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                     <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
                 </a>
             </nav>
         </aside>
@@ -88,19 +93,31 @@
             
             <!-- Filters -->
             <div class="filters-bar">
-                <select class="filter-select" id="type-filter">
-                    <option value="">All Types</option>
-                    <option value="support">Support</option>
-                    <option value="inquiry">Inquiry</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="complaint">Complaint</option>
-                </select>
-                <select class="filter-select" id="status-filter">
-                    <option value="">All Status</option>
-                    <option value="open">Open</option>
-                    <option value="pending">Pending</option>
-                    <option value="resolved">Resolved</option>
-                </select>
+
+                <!-- Type Filter -->
+                <div class="custom-select" id="type-select">
+                    <input type="hidden" id="type-filter" value="">
+                    <div class="select-trigger"><span>All Types</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Types</li>
+                        <li class="dropdown-item" data-value="support">Support</li>
+                        <li class="dropdown-item" data-value="inquiry">Inquiry</li>
+                        <li class="dropdown-item" data-value="feedback">Feedback</li>
+                        <li class="dropdown-item" data-value="complaint">Complaint</li>
+                    </ul>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="custom-select" id="status-select">
+                    <input type="hidden" id="status-filter" value="">
+                    <div class="select-trigger"><span>All Status</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Status</li>
+                        <li class="dropdown-item" data-value="open">Open</li>
+                        <li class="dropdown-item" data-value="pending">Pending</li>
+                        <li class="dropdown-item" data-value="resolved">Resolved</li>
+                    </ul>
+                </div>
             </div>
             
             <!-- Messages Table -->
@@ -199,13 +216,88 @@
 
     <script src="../../js/api-config.js"></script>
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
     <script>
     var currentMessageId = null;
     
     (function() {
         if (!ManagerService.checkAuth()) return;
         
+        // Custom dropdown functionality
+        function initCustomDropdowns() {
+            var selects = document.querySelectorAll('.custom-select');
+
+            function repositionDropdowns() {
+                if (window.innerWidth > 480) return;
+                selects.forEach(function(select) {
+                    var list = select.querySelector('.dropdown-list');
+                    var trigger = select.querySelector('.select-trigger');
+                    if (!list || !trigger) return;
+
+                    var rect = trigger.getBoundingClientRect();
+                    var topPos = rect.bottom + 4;
+                    var leftPos = rect.left;
+                    var maxHeight = window.innerHeight - rect.bottom - 20;
+
+                    list.style.position = 'fixed';
+                    list.style.top = topPos + 'px';
+                    list.style.left = leftPos + 'px';
+                    list.style.right = 'auto';
+                    list.style.maxHeight = Math.min(maxHeight, 200) + 'px';
+                });
+            }
+
+            selects.forEach(function(select) {
+                var trigger = select.querySelector('.select-trigger');
+                var list = select.querySelector('.dropdown-list');
+                var items = select.querySelectorAll('.dropdown-item');
+                var span = trigger.querySelector('span');
+
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selects.forEach(function(other) {
+                        if (other !== select) other.classList.remove('open');
+                    });
+                    select.classList.toggle('open');
+                    // Delay to allow CSS transition to start
+                    setTimeout(repositionDropdowns, 50);
+                });
+
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var value = item.getAttribute('data-value');
+                        var text = item.textContent;
+                        span.textContent = text;
+                        items.forEach(function(i) { i.classList.remove('selected'); });
+                        item.classList.add('selected');
+                        select.classList.remove('open');
+
+                        var filterId = select.id.replace('-select', '-filter');
+                        var hiddenFilter = document.getElementById(filterId);
+                        if (hiddenFilter) hiddenFilter.value = value;
+                        loadMessages();
+                    });
+                });
+            });
+
+            document.addEventListener('click', function() {
+                selects.forEach(function(s) { s.classList.remove('open'); });
+            });
+
+            window.addEventListener('resize', function() {
+                selects.forEach(function(s) {
+                    s.classList.remove('open');
+                });
+            });
+        }
+
+        initCustomDropdowns();
+
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             ManagerService.logout();
@@ -215,16 +307,14 @@
         var refreshInterval = null;
 
         function loadMessages() {
-        
-        document.getElementById('type-filter').addEventListener('change', loadMessages);
-        document.getElementById('status-filter').addEventListener('change', loadMessages);
-        
-        function loadMessages() {
             var tbody = document.getElementById('messages-table');
             tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></div></td></tr>';
             
-            var type = document.getElementById('type-filter').value;
-            var status = document.getElementById('status-filter').value;
+            var typeFilter = document.getElementById('type-filter');
+            var statusFilter = document.getElementById('status-filter');
+            
+            var type = typeFilter ? typeFilter.value : '';
+            var status = statusFilter ? statusFilter.value : '';
             
             var filters = {};
             if (type) filters.type = type;

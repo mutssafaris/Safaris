@@ -30,6 +30,7 @@
                 <a href="../gallery/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg><span>Gallery</span></a>
                 
                 <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
                 <a href="../settings/index.html" class="nav-item">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                     <span>Settings</span>
@@ -112,7 +113,11 @@
     
     <script src="../../js/api-config.js"></script>
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
     <script>
     var deleteDestinationId = null;
     
@@ -141,9 +146,13 @@
             var tbody = document.getElementById('destinations-table');
             tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></div></td></tr>';
             
-            var search = document.getElementById('search-input').value;
-            var type = document.getElementById('type-filter').value;
-            var status = document.getElementById('status-filter').value;
+            var searchInput = document.getElementById('search-input');
+            var typeFilter = document.getElementById('type-filter');
+            var statusFilter = document.getElementById('status-filter');
+            
+            var search = searchInput ? searchInput.value : '';
+            var type = typeFilter ? typeFilter.value : '';
+            var status = statusFilter ? statusFilter.value : '';
             
             var filters = {};
             if (search) filters.search = search;
@@ -177,7 +186,18 @@
                         });
                     }
                     if (filters.type) {
-                        destinations = destinations.filter(function(d) { return d.type === filters.type; });
+                        // Handle missing type field - derive type from season/duration or other heuristics
+                        destinations = destinations.filter(function(d) {
+                            if (d.type) return d.type === filters.type;
+                            // Derive type for mock data that lacks type field
+                            if (filters.type === 'beach') {
+                                return d.region && d.region.toLowerCase().includes('coast');
+                            }
+                            if (filters.type === 'safari') {
+                                return !d.region || !d.region.toLowerCase().includes('coast');
+                            }
+                            return false;
+                        });
                     }
                     
                     // Add missing fields for rendering
@@ -187,7 +207,14 @@
                             name: d.name,
                             region: d.region || '-',
                             type: d.type || 'safari',
-                            priceFrom: d.priceRange ? (typeof d.priceRange === 'string' ? d.priceRange.length * 100 : d.priceRange) : (d.priceFrom || 0),
+                            // FIX: Properly convert price range symbols ($, $$, $$$) to actual prices
+                            priceFrom: d.priceFrom || (function() {
+                                if (typeof d.priceRange === 'string') {
+                                    var rangeMap = { '$': 150, '$$': 350, '$$$': 600, '$$$$': 1000 };
+                                    return rangeMap[d.priceRange] || d.priceRange.length * 150;
+                                }
+                                return d.priceRange || 0;
+                            })(),
                             rating: d.rating || '-',
                             status: d.status || 'published'
                         };
@@ -225,7 +252,7 @@
                     '<td><span class="badge ' + statusBadge + '">' + (d.status || 'published') + '</span></td>' +
                     '<td class="actions">' +
                         '<a href="edit.html?id=' + d.id + '" class="btn btn-sm btn-secondary">Edit</a>' +
-                        '<button class="btn btn-sm btn-danger" onclick="confirmDelete(' + d.id + ')">Delete</button>' +
+                        '<button class="btn btn-sm btn-danger" onclick="confirmDelete(\'' + d.id + '\')">Delete</button>' +
                     '</td>' +
                 '</tr>';
             });
@@ -264,12 +291,21 @@
             }
         });
         
+        // SECURE: HTML encoding to prevent XSS
+        function encodeHTML(str) {
+            if (typeof str !== 'string') return '';
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         window.showToast = function(message, type) {
             type = type || 'success';
             var container = document.getElementById('toast-container');
             var toast = document.createElement('div');
             toast.className = 'toast ' + type;
-            toast.innerHTML = '<span>' + message + '</span>';
+            // SECURE: Encode message to prevent XSS
+            toast.innerHTML = '<span>' + encodeHTML(message) + '</span>';
             container.appendChild(toast);
             setTimeout(function() {
                 toast.style.opacity = '0';

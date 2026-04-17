@@ -246,7 +246,23 @@
                         existing = existing.slice(-50);
                     }
                     
-                    localStorage.setItem(key, JSON.stringify(existing));
+                    // SECURE: Check localStorage size before storing (max ~4.5MB leave buffer)
+                    try {
+                        var testKey = key + '_test';
+                        localStorage.setItem(testKey, JSON.stringify(existing));
+                        localStorage.removeItem(testKey);
+                        localStorage.setItem(key, JSON.stringify(existing));
+                    } catch (e) {
+                        // If quota exceeded, remove oldest and retry
+                        existing.shift();
+                        localStorage.setItem(key, JSON.stringify(existing));
+                        resolve({
+                            success: false,
+                            error: 'Storage limit reached. Older images removed.',
+                            warning: true
+                        });
+                        return;
+                    }
                     
                     resolve({
                         success: true,

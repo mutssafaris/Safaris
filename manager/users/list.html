@@ -36,6 +36,7 @@
                 <a href="../reviews/list.html" class="nav-item">Reviews</a>
                 <a href="../gallery/list.html" class="nav-item">Gallery</a>
                 <div class="nav-section">Account</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
                 <a href="../settings/index.html" class="nav-item">Settings</a>
                 <a href="#" id="logout-btn">Logout</a>
             </nav>
@@ -69,19 +70,31 @@
             <!-- Filters -->
             <div class="filters-bar">
                 <input type="text" class="search-input" id="search-input" placeholder="Search users...">
-                <select class="filter-select" id="tier-filter">
-                    <option value="">All Tiers</option>
-                    <option value="guest">Guest</option>
-                    <option value="traveler">Traveler</option>
-                    <option value="explorer">Explorer</option>
-                    <option value="adventurer">Adventurer</option>
-                    <option value="vip">VIP</option>
-                </select>
-                <select class="filter-select" id="status-filter">
-                    <option value="">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
+
+                <!-- Tier Filter -->
+                <div class="custom-select" id="tier-select">
+                    <input type="hidden" id="tier-filter" value="">
+                    <div class="select-trigger"><span>All Tiers</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Tiers</li>
+                        <li class="dropdown-item" data-value="guest">Guest</li>
+                        <li class="dropdown-item" data-value="traveler">Traveler</li>
+                        <li class="dropdown-item" data-value="explorer">Explorer</li>
+                        <li class="dropdown-item" data-value="adventurer">Adventurer</li>
+                        <li class="dropdown-item" data-value="vip">VIP</li>
+                    </ul>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="custom-select" id="status-select">
+                    <input type="hidden" id="status-filter" value="">
+                    <div class="select-trigger"><span>All Status</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Status</li>
+                        <li class="dropdown-item" data-value="active">Active</li>
+                        <li class="dropdown-item" data-value="inactive">Inactive</li>
+                    </ul>
+                </div>
             </div>
             
             <!-- Users Table -->
@@ -204,7 +217,11 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
     <script>
     var REFRESH_INTERVAL_MS = 30000;
     var refreshInterval = null;
@@ -213,6 +230,77 @@
     (function() {
         if (!ManagerService.checkAuth()) return;
         
+        // Custom dropdown functionality
+        function initCustomDropdowns() {
+            var selects = document.querySelectorAll('.custom-select');
+
+            function repositionDropdowns() {
+                if (window.innerWidth > 480) return;
+                selects.forEach(function(select) {
+                    var list = select.querySelector('.dropdown-list');
+                    var trigger = select.querySelector('.select-trigger');
+                    if (!list || !trigger) return;
+
+                    var rect = trigger.getBoundingClientRect();
+                    var topPos = rect.bottom + 4;
+                    var leftPos = rect.left;
+                    var maxHeight = window.innerHeight - rect.bottom - 20;
+
+                    list.style.position = 'fixed';
+                    list.style.top = topPos + 'px';
+                    list.style.left = leftPos + 'px';
+                    list.style.right = 'auto';
+                    list.style.maxHeight = Math.min(maxHeight, 200) + 'px';
+                });
+            }
+
+            selects.forEach(function(select) {
+                var trigger = select.querySelector('.select-trigger');
+                var list = select.querySelector('.dropdown-list');
+                var items = select.querySelectorAll('.dropdown-item');
+                var span = trigger.querySelector('span');
+
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selects.forEach(function(other) {
+                        if (other !== select) other.classList.remove('open');
+                    });
+                    select.classList.toggle('open');
+                    // Delay to allow CSS transition to start
+                    setTimeout(repositionDropdowns, 50);
+                });
+
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var value = item.getAttribute('data-value');
+                        var text = item.textContent;
+                        span.textContent = text;
+                        items.forEach(function(i) { i.classList.remove('selected'); });
+                        item.classList.add('selected');
+                        select.classList.remove('open');
+
+                        var filterId = select.id.replace('-select', '-filter');
+                        var hiddenFilter = document.getElementById(filterId);
+                        if (hiddenFilter) hiddenFilter.value = value;
+                        loadUsers();
+                    });
+                });
+            });
+
+            document.addEventListener('click', function() {
+                selects.forEach(function(s) { s.classList.remove('open'); });
+            });
+
+            window.addEventListener('resize', function() {
+                selects.forEach(function(s) {
+                    s.classList.remove('open');
+                });
+            });
+        }
+
+        initCustomDropdowns();
+
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             ManagerService.logout();
@@ -225,9 +313,7 @@
         });
         
         document.getElementById('search-input').addEventListener('input', debounce(loadUsers, 300));
-        document.getElementById('tier-filter').addEventListener('change', loadUsers);
-        document.getElementById('status-filter').addEventListener('change', loadUsers);
-        
+
         document.getElementById('save-user-btn').addEventListener('click', saveUserChanges);
         
         function loadUsers() {
@@ -244,9 +330,13 @@
                 { id: 'u8', name: 'Jennifer Taylor', email: 'jennifer@example.com', phone: '+254700000008', tier: 'explorer', bookings: 4, joined: '2025-09-12', status: 'active' }
             ];
             
-            var search = document.getElementById('search-input').value.toLowerCase();
-            var tier = document.getElementById('tier-filter').value;
-            var status = document.getElementById('status-filter').value;
+            var searchInput = document.getElementById('search-input');
+            var tierFilter = document.getElementById('tier-filter');
+            var statusFilter = document.getElementById('status-filter');
+            
+            var search = searchInput ? searchInput.value.toLowerCase() : '';
+            var tier = tierFilter ? tierFilter.value : '';
+            var status = statusFilter ? statusFilter.value : '';
             
             var filtered = mockUsers.filter(function(u) {
                 if (search && u.name.toLowerCase().indexOf(search) === -1 && u.email.toLowerCase().indexOf(search) === -1) return false;
@@ -420,7 +510,9 @@
                 setTimeout(function() { toast.remove(); }, 300);
             }, 3000);
         };
-    })();
-    </script>
-</body>
-</html>
+     })();
+     </script>
+
+     <script src="../js/mobile-menu.js"></script>
+ </body>
+ </html>

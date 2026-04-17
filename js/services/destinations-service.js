@@ -1,9 +1,21 @@
 /* Destinations Service — Muts Safaris */
 /* Provides mock data for safari destinations. Replace with API calls when backend is ready. */
+/**
+ * @module DestinationsService
+ * @example
+ * // ES6 import (when bundler used)
+ * import { DestinationsService } from './services/index.js';
+ * 
+ * // Or legacy global
+ * MutsDestinationsService.getAll().then(...)
+ */
 (function (window) {
     'use strict';
 
     var API_READY = false;
+
+    // ES6 export (for module bundlers)
+    var DestinationsService = {
 
     var mockDestinations = [
         {
@@ -225,3 +237,6 @@
 
     window.MutsDestinationsService = DestinationsService;
 })(window);
+
+// ES6 module export (for bundlers)
+export default window.destinationsService || window.destinationsService;

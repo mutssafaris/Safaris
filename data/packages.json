@@ -1,0 +1,74 @@
+{
+  "packages": [
+    {
+      "id": "p1",
+      "name": "Honeymoon Safari",
+      "category": "honeymoon",
+      "duration": "7 Nights",
+      "description": "Romantic safari for couples with private game drives, luxury accommodations, and intimate dining experiences.",
+      "destinations": ["Maasai Mara", "Diani Beach"],
+      "highlights": ["Private game drives", "Beach time", "Candle-lit dinners"],
+      "price": 3500,
+      "rating": 4.9,
+      "includes": ["Flights", "Hotels", "Meals", "Transfers"],
+      "image": "/images/packages/honeymoon.jpg",
+      "status": "published"
+    },
+    {
+      "id": "p2",
+      "name": "Family Adventure Safari",
+      "category": "family",
+      "duration": "5 Nights",
+      "description": "Perfect family safari combining wildlife viewing with beach relaxation, designed for children of all ages.",
+      "destinations": ["Amboseli", "Diani Beach"],
+      "highlights": ["Elephant encounters", "Beach activities", "Family-friendly lodges"],
+      "price": 2800,
+      "rating": 4.8,
+      "includes": ["Hotels", "Meals", "Game Drives", "Beach Activities"],
+      "image": "/images/packages/family.jpg",
+      "status": "published"
+    },
+    {
+      "id": "p3",
+      "name": "Luxury Kenya Explorer",
+      "category": "luxury",
+      "duration": "10 Nights",
+      "description": "Ultimate luxury safari experience visiting multiple reserves with premium accommodations and exclusive experiences.",
+      "destinations": ["Maasai Mara", "Amboseli", "Tsavo"],
+      "highlights": ["Multiple reserves", "Luxury camps", "Exclusive experiences"],
+      "price": 6500,
+      "rating": 4.9,
+      "includes": ["Luxury Hotels", "Private Guide", "All Meals", "Internal Flights"],
+      "image": "/images/packages/luxury.jpg",
+      "status": "published"
+    },
+    {
+      "id": "p4",
+      "name": "Budget Beach Getaway",
+      "category": "budget",
+      "duration": "4 Nights",
+      "description": "Affordable beach holiday with comfortable accommodations and all the essentials for a relaxing vacation.",
+      "destinations": ["Diani Beach"],
+      "highlights": ["Beach relaxation", "Water sports", "Local cuisine"],
+      "price": 800,
+      "rating": 4.5,
+      "includes": ["Hotel", "Meals", "Airport Transfer"],
+      "image": "/images/packages/budget.jpg",
+      "status": "published"
+    },
+    {
+      "id": "p5",
+      "name": "Photography Safari",
+      "category": "specialty",
+      "duration": "6 Nights",
+      "description": "Specialized safari for photography enthusiasts with expert guides and optimal wildlife viewing opportunities.",
+      "destinations": ["Maasai Mara", "Amboseli"],
+      "highlights": ["Photography workshops", "Expert guides", "Best light conditions"],
+      "price": 4200,
+      "rating": 4.7,
+      "includes": ["Photography Guide", "Hotels", "Meals", "Editing Software"],
+      "image": "/images/packages/photography.jpg",
+      "status": "draft"
+    }
+  ]
+}

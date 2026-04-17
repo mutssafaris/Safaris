@@ -322,3 +322,5 @@
 
     window.MutsPaymentService = PaymentService;
 })(window);
+// ES6 module export (for bundlers)
+export default window.paymentService || window.paymentService;

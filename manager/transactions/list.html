@@ -36,6 +36,7 @@
                 <a href="../reviews/list.html" class="nav-item">Reviews</a>
                 <a href="../gallery/list.html" class="nav-item">Gallery</a>
                 <div class="nav-section">Account</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
                 <a href="../settings/index.html" class="nav-item">Settings</a>
                 <a href="#" id="logout-btn">Logout</a>
             </nav>
@@ -43,6 +44,9 @@
         
         <main class="main-content">
             <div class="page-header">
+                <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
                 <h1>Transactions Management</h1>
                 <button class="btn btn-primary" onclick="exportTransactions()">Export CSV</button>
             </div>
@@ -70,19 +74,32 @@
             <!-- Filters -->
             <div class="filters-bar">
                 <input type="text" class="search-input" id="search-input" placeholder="Search transactions...">
-                <select class="filter-select" id="status-filter">
-                    <option value="">All Status</option>
-                    <option value="completed">Completed</option>
-                    <option value="pending">Pending</option>
-                    <option value="failed">Failed</option>
-                </select>
-                <select class="filter-select" id="category-filter">
-                    <option value="">All Categories</option>
-                    <option value="Safari">Safari</option>
-                    <option value="Hotel">Hotel</option>
-                    <option value="Marketplace">Marketplace</option>
-                    <option value="Package">Package</option>
-                </select>
+
+                <!-- Status Filter -->
+                <div class="custom-select" id="status-select">
+                    <input type="hidden" id="status-filter" value="">
+                    <div class="select-trigger"><span>All Status</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Status</li>
+                        <li class="dropdown-item" data-value="completed">Completed</li>
+                        <li class="dropdown-item" data-value="pending">Pending</li>
+                        <li class="dropdown-item" data-value="failed">Failed</li>
+                    </ul>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="custom-select" id="category-select">
+                    <input type="hidden" id="category-filter" value="">
+                    <div class="select-trigger"><span>All Categories</span></div>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item selected" data-value="">All Categories</li>
+                        <li class="dropdown-item" data-value="Safari">Safari</li>
+                        <li class="dropdown-item" data-value="Hotel">Hotel</li>
+                        <li class="dropdown-item" data-value="Marketplace">Marketplace</li>
+                        <li class="dropdown-item" data-value="Package">Package</li>
+                    </ul>
+                </div>
+
                 <input type="date" class="filter-select" id="date-from" placeholder="From">
                 <input type="date" class="filter-select" id="date-to" placeholder="To">
             </div>
@@ -134,7 +151,12 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
     <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script src="../js/custom-datepicker.js"></script>
     <script>
     var REFRESH_INTERVAL_MS = 30000;
     var refreshInterval = null;
@@ -142,6 +164,86 @@
     (function() {
         if (!ManagerService.checkAuth()) return;
         
+        // Mobile Menu Toggle
+        var menuBtn = document.getElementById('mobile-menu-btn');
+        var sidebar = document.querySelector('.sidebar');
+        if (menuBtn && sidebar) {
+            menuBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Custom dropdown functionality
+        function initCustomDropdowns() {
+            var selects = document.querySelectorAll('.custom-select');
+
+            function repositionDropdowns() {
+                if (window.innerWidth > 480) return;
+                selects.forEach(function(select) {
+                    var list = select.querySelector('.dropdown-list');
+                    var trigger = select.querySelector('.select-trigger');
+                    if (!list || !trigger) return;
+
+                    var rect = trigger.getBoundingClientRect();
+                    var topPos = rect.bottom + 4;
+                    var leftPos = rect.left;
+                    var maxHeight = window.innerHeight - rect.bottom - 20;
+
+                    list.style.position = 'fixed';
+                    list.style.top = topPos + 'px';
+                    list.style.left = leftPos + 'px';
+                    list.style.right = 'auto';
+                    list.style.maxHeight = Math.min(maxHeight, 200) + 'px';
+                });
+            }
+
+            selects.forEach(function(select) {
+                var trigger = select.querySelector('.select-trigger');
+                var list = select.querySelector('.dropdown-list');
+                var items = select.querySelectorAll('.dropdown-item');
+                var span = trigger.querySelector('span');
+
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selects.forEach(function(other) {
+                        if (other !== select) other.classList.remove('open');
+                    });
+                    select.classList.toggle('open');
+                    // Delay to allow CSS transition to start
+                    setTimeout(repositionDropdowns, 50);
+                });
+
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var value = item.getAttribute('data-value');
+                        var text = item.textContent;
+                        span.textContent = text;
+                        items.forEach(function(i) { i.classList.remove('selected'); });
+                        item.classList.add('selected');
+                        select.classList.remove('open');
+
+                        var filterId = select.id.replace('-select', '-filter');
+                        var hiddenFilter = document.getElementById(filterId);
+                        if (hiddenFilter) hiddenFilter.value = value;
+                        loadTransactions();
+                    });
+                });
+            });
+
+            document.addEventListener('click', function() {
+                selects.forEach(function(s) { s.classList.remove('open'); });
+            });
+
+            window.addEventListener('resize', function() {
+                selects.forEach(function(s) {
+                    s.classList.remove('open');
+                });
+            });
+        }
+
+        initCustomDropdowns();
+
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             ManagerService.logout();
@@ -154,16 +256,18 @@
         });
         
         document.getElementById('search-input').addEventListener('input', debounce(loadTransactions, 300));
-        document.getElementById('status-filter').addEventListener('change', loadTransactions);
-        document.getElementById('category-filter').addEventListener('change', loadTransactions);
-        
+
         function loadTransactions() {
             var tbody = document.getElementById('transactions-table');
             tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px;"><div class="loading"><div class="spinner"></div></div></td></tr>';
             
-            var search = document.getElementById('search-input').value;
-            var status = document.getElementById('status-filter').value;
-            var category = document.getElementById('category-filter').value;
+            var searchInput = document.getElementById('search-input');
+            var statusFilter = document.getElementById('status-filter');
+            var categoryFilter = document.getElementById('category-filter');
+            
+            var search = searchInput ? searchInput.value : '';
+            var status = statusFilter ? statusFilter.value : '';
+            var category = categoryFilter ? categoryFilter.value : '';
             
             var filters = {};
             if (search) filters.search = search;
