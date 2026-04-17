@@ -359,12 +359,37 @@
 
         document.getElementById('login-form').onsubmit = function(e) {
             e.preventDefault();
-            var result = window.MutsAuth.login(document.getElementById('login-email').value, document.getElementById('login-password').value);
-            if (result.success) {
+            var email = document.getElementById('login-email').value;
+            var password = document.getElementById('login-password').value;
+            var btn = document.querySelector('#login-form button');
+            btn.disabled = true;
+            btn.textContent = 'Logging in...';
+            
+            // Handle both sync and async responses
+            var result = window.MutsAuth.login(email, password);
+            if (result && typeof result.then === 'function') {
+                result.then(function(data) {
+                    btn.disabled = false;
+                    btn.textContent = 'Login';
+                    if (data.success) {
+                        window.MutsTour.show();
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        alert('AUTH_FAILED: ' + data.message);
+                    }
+                })['catch'](function(err) {
+                    btn.disabled = false;
+                    btn.textContent = 'Login';
+                    alert('AUTH_FAILED: ' + err.message);
+                });
+            } else if (result.success) {
                 window.MutsTour.show();
                 window.location.href = 'pages/dashboard/index.html';
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Login';
+                alert('AUTH_FAILED: ' + result.message);
             }
-            else alert('AUTH_FAILED: ' + result.message);
         };
 
         document.getElementById('signup-form').onsubmit = function(e) {
@@ -378,12 +403,34 @@
                 interest: document.getElementById('signup-interest').value,
                 newsletter: document.getElementById('signup-newsletter').checked
             };
+            var btn = document.querySelector('#signup-form button');
+            btn.disabled = true;
+            btn.textContent = 'Creating account...';
+            
             var result = window.MutsAuth.signup(userData.name, userData.email, userData.password, userData);
-            if (result.success) {
+            if (result && typeof result.then === 'function') {
+                result.then(function(data) {
+                    btn.disabled = false;
+                    btn.textContent = 'Create Account';
+                    if (data.success) {
+                        window.MutsTour.show();
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        alert('REGISTRATION_FAILED: ' + data.message);
+                    }
+                })['catch'](function(err) {
+                    btn.disabled = false;
+                    btn.textContent = 'Create Account';
+                    alert('REGISTRATION_FAILED: ' + err.message);
+                });
+            } else if (result.success) {
                 window.MutsTour.show();
                 window.location.href = 'pages/dashboard/index.html';
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+                alert('REGISTRATION_FAILED: ' + result.message);
             }
-            else alert('REGISTRATION_FAILED: ' + result.message);
         };
     })();
     </script>
