@@ -477,6 +477,8 @@
     ];
 
     var AfricasaService = {
+        CACHE_TTL: 30 * 60 * 1000,
+        
         getAll: function () {
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/africasa');

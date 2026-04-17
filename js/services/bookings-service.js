@@ -112,6 +112,12 @@
     }
 
     var BookingsService = {
+        // Cache TTL - shorter for bookings (15 min) since availability changes
+        CACHE_TTL: 15 * 60 * 1000,
+        
+        // Note: User bookings should NOT be cached long-term (security)
+        // Only cache public availability data
+        
         getRecent: function (userId, limit) {
             var self = this;
             if (_apiReady) {

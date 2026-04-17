@@ -57,6 +57,7 @@
     ];
 
     var PaymentService = {
+        CACHE_TTL: 60 * 60 * 1000, // 1 hour for payment config (public)
         _config: mockPayments,
 
         init: function(config) {

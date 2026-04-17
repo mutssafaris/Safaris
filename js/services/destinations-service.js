@@ -151,9 +151,15 @@
     ];
 
     var DestinationsService = {
+        CACHE_TTL: 30 * 60 * 1000, // 30 min
+
         getAll: function () {
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/destinations');
+            }
+            // Check cache first
+            if (window.MutsCache && window.MutsCache.has('destinations_all')) {
+                return Promise.resolve(window.MutsCache.get('destinations_all'));
             }
             return Promise.resolve(mockDestinations.slice());
         },
@@ -162,7 +168,13 @@
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI('/destinations?popular=true');
             }
-            return Promise.resolve(mockDestinations.slice());
+            // Check cache first
+            if (window.MutsCache && window.MutsCache.has('destinations_popular')) {
+                return Promise.resolve(window.MutsCache.get('destinations_popular'));
+            }
+            var result = mockDestinations.slice();
+            window.MutsCache && window.MutsCache.set('destinations_popular', result, this.CACHE_TTL);
+            return Promise.resolve(result);
         },
 
         getById: function (id) {

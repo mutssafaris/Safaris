@@ -15,6 +15,7 @@
 
     var ExperiencesService = {
         _dataPromise: null,
+        CACHE_TTL: 30 * 60 * 1000,
 
         _loadFromJSON: function() {
             var self = this;
@@ -42,11 +43,13 @@
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI();
             }
+            if (window.MutsCache && window.MutsCache.has('experiences_all')) {
+                return Promise.resolve(window.MutsCache.get('experiences_all'));
+            }
             return this._loadFromJSON().then(function(data) {
-                if (data.experiences) {
-                    return data.experiences;
-                }
-                return embeddedExperiences;
+                var result = data.experiences || embeddedExperiences;
+                window.MutsCache && window.MutsCache.set('experiences_all', result, self.CACHE_TTL);
+                return result;
             });
         },
 

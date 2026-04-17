@@ -21,6 +21,7 @@
 
     var ToursService = {
         _dataPromise: null,
+        CACHE_TTL: 30 * 60 * 1000, // 30 min
 
         _loadFromJSON: function() {
             var self = this;
@@ -48,11 +49,14 @@
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
                 return this.fetchFromAPI();
             }
+            // Check cache first
+            if (window.MutsCache && window.MutsCache.has('tours_all')) {
+                return Promise.resolve(window.MutsCache.get('tours_all'));
+            }
             return this._loadFromJSON().then(function(data) {
-                if (data.destinations) {
-                    return data;
-                }
-                return { destinations: data.tours || [] };
+                var result = data.destinations ? data : { destinations: data.tours || [] };
+                window.MutsCache && window.MutsCache.set('tours_all', result, self.CACHE_TTL);
+                return result;
             });
         },
 

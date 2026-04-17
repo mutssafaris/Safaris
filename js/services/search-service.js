@@ -8,6 +8,7 @@
         _lastResults: null,
         _history: [],
         _maxHistory: 10,
+        CACHE_TTL: 10 * 60 * 1000, // 10 min for search results
 
         // ============ MAIN SEARCH ============
         search: function(query, filters) {

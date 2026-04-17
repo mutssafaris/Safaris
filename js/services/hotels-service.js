@@ -1,10 +1,16 @@
 /* Hotels Service — Muts Safaris */
 /* Dynamic hotel data service. Replace API calls with real backend when ready. */
+/**
+ * @module HotelsService
+ * @example
+ * import { HotelsService } from './services/index.js';
+ * HotelsService.getAll()
+ */
 (function(window) {
     'use strict';
 
-    var STORAGE_KEY = 'muts_hotels_cache';
     var API_READY = false;
+    var CACHE_TTL = 30 * 60 * 1000; // 30 minutes cache
 
     var mockHotels = [
         {
@@ -551,11 +557,26 @@
                 return this.fetchFromAPI();
             }
             
-            // Try to load from localStorage first
+            // Try to load from MutsCache first (with TTL support)
+            if (window.MutsCache) {
+                var cached = window.MutsCache.get('hotels_all');
+                if (cached) {
+                    return Promise.resolve(cached.map(function(h) {
+                        var defaultHotel = mockHotels.find(function(d) { return d.id === h.id; });
+                        return defaultHotel ? Object.assign({}, defaultHotel, h) : h;
+                    }));
+                }
+            }
+            
+            // Legacy localStorage fallback
             try {
-                var stored = localStorage.getItem(STORAGE_KEY);
+                var stored = localStorage.getItem('muts_hotels_cache');
                 if (stored) {
                     var parsed = JSON.parse(stored);
+                    // Store in new cache for next time
+                    if (window.MutsCache) {
+                        window.MutsCache.set('hotels_all', parsed, CACHE_TTL);
+                    }
                     return Promise.resolve(parsed.map(function(h) {
                         var defaultHotel = mockHotels.find(function(d) { return d.id === h.id; });
                         return defaultHotel ? Object.assign({}, defaultHotel, h) : h;
@@ -664,9 +685,12 @@
             if (hotel) {
                 hotel.reviews = count;
             }
-            // Persist to localStorage
+            // Persist to cache (both legacy and new)
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(mockHotels));
+                localStorage.setItem('muts_hotels_cache', JSON.stringify(mockHotels));
+                if (window.MutsCache) {
+                    window.MutsCache.set('hotels_all', mockHotels, CACHE_TTL);
+                }
             } catch (e) {}
         },
 

@@ -4,6 +4,7 @@
     'use strict';
 
     var API_READY = false;
+    var CACHE_TTL = 30 * 60 * 1000; // 30 min
 
     var mockData = {
         tours: [

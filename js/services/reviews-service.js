@@ -38,6 +38,8 @@
     };
 
     var ReviewsService = {
+        CACHE_TTL: 15 * 60 * 1000, // 15 min for reviews (can change frequently)
+        
         // ============ GET REVIEWS ============
         getReviewsForItem: function(itemType, itemId) {
             if (window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
