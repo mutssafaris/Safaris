@@ -1,10 +1,19 @@
 /* Auth Module — Muts Safaris */
 /* Security Enhanced - Token-Based Auth Ready */
-(function () {
-    if (window.mutsAuthInitialized) return;
-    window.mutsAuthInitialized = true;
+// DEBUG: Log immediately when auth loads
+console.log('[Auth] ===== AUTH MODULE LOADED =====');
+console.log('[Auth] Time:', new Date().toISOString());
 
-    var SESSION_KEY = 'muts_session';
+try {
+    (function () {
+        if (window.mutsAuthInitialized) {
+            console.log('[Auth] Already initialized, skipping');
+            return;
+        }
+        window.mutsAuthInitialized = true;
+        console.log('[Auth] Initializing...');
+
+        var SESSION_KEY = 'muts_session';
     var USERS_KEY = 'muts_users';
     var BOOKINGS_KEY = 'muts_bookings';
     var FAVORITES_KEY = 'muts_favorites';
@@ -61,19 +70,25 @@
     function getUsers() {
         var users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
         
+        console.log('[Auth] Current users in localStorage:', users.length);
+        
         // Add demo user if no users exist
         if (users.length === 0) {
+            console.log('[Auth] Creating demo user...');
+            var demoSalt = generateSalt();
             users = [{
                 id: 'demo-user',
                 name: 'Demo User',
                 email: 'demo@mutssafaris.com',
-                salt: 'demo123',
-                passwordHash: hashPassword('demo123', 'demo123'),
+                salt: demoSalt,
+                passwordHash: hashPassword('demo123', demoSalt),
                 createdAt: new Date().toISOString()
             }];
             localStorage.setItem(USERS_KEY, JSON.stringify(users));
+            console.log('[Auth] Demo user created with email: demo@mutssafaris.com');
         }
         
+        console.log('[Auth] Returning users:', users.map(function(u) { return u.email; }));
         return users;
     }
 
@@ -323,18 +338,29 @@
         }
         
         // Local storage fallback
+        console.log('[Auth] Using local storage fallback');
         var users = getUsers();
+        console.log('[Auth] Looking for:', email);
         var user = users.find(function (u) { return u.email === email; });
         
+        console.log('[Auth] Found user:', user ? user.email : 'NOT FOUND');
+        
         if (!user) {
+            console.log('[Auth] User not found - returning error');
             return Promise.resolve({ success: false, message: 'Invalid email or password.' });
         }
         
+        console.log('[Auth] Comparing password...');
         var hashedInput = hashPassword(password, user.salt);
+        console.log('[Auth] Input hash:', hashedInput);
+        console.log('[Auth] Stored hash:', user.passwordHash);
+        console.log('[Auth] Match:', hashedInput === user.passwordHash);
+        
         if (hashedInput !== user.passwordHash) {
             return Promise.resolve({ success: false, message: 'Invalid email or password.' });
         }
         
+        console.log('[Auth] Login SUCCESS!');
         setSession(user, rememberMe);
         return Promise.resolve({ success: true });
     }
@@ -342,14 +368,28 @@
     function signup(name, email, password, extraData) {
         extraData = extraData || {};
         
-        // Detect static host
+        // DEBUG: Log environment
+        console.log('[Auth] ===== LOGIN DEBUG =====');
+        console.log('[Auth] Hostname:', window.location.hostname);
+        console.log('[Auth] API_READY:', API_READY);
+        
+        // Detect static host (no backend available)
         var isStaticHost = typeof window !== 'undefined' && (
             window.location.hostname.includes('vercel.app') || 
             window.location.hostname.includes('netlify.app') ||
             window.location.hostname.includes('github.io') ||
             window.location.hostname.includes('surge.sh') ||
-            window.location.protocol === 'file:'
+            window.location.hostname.includes('mutssafaris.com') ||
+            window.location.hostname.includes('localhost') ||
+            window.location.protocol === 'file:' ||
+            !window.location.hostname.includes('.') // naked domain
         );
+        
+        // ALWAYS use local mode for now (no backend)
+        isStaticHost = true;
+        console.log('[Auth] Forcing local mode (API not available)');
+        
+        console.log('[Auth] isStaticHost:', isStaticHost);
         
         if (!API_READY || isStaticHost) {
             console.log('[Auth] Using local signup (static host)');
@@ -572,4 +612,15 @@
     window.addEventListener('beforeunload', function() {
         clearTimeout(refreshTimer);
     });
-})();
+    
+    console.log('[Auth] ===== AUTH INIT COMPLETE =====');
+    })(); // End IIFE
+    
+} catch (err) {
+    console.error('[Auth] FATAL ERROR:', err);
+    window.MutsAuth = {
+        login: function() { return Promise.resolve({ success: false, message: 'Auth error: ' + err.message }); },
+        signup: function() { return Promise.resolve({ success: false, message: 'Auth error: ' + err.message }); },
+        getSession: function() { return null; }
+    };
+}
