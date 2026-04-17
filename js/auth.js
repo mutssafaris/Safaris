@@ -290,7 +290,19 @@
     function login(email, password, rememberMe) {
         rememberMe = rememberMe || false;
         
-        if (API_READY) {
+        // Detect if running on static hosting (Vercel, Netlify, etc.) - no backend
+        var isStaticHost = typeof window !== 'undefined' && (
+            window.location.hostname.includes('vercel.app') || 
+            window.location.hostname.includes('netlify.app') ||
+            window.location.hostname.includes('github.io') ||
+            window.location.hostname.includes('surge.sh') ||
+            window.location.protocol === 'file:'
+        );
+        
+        // Force local mode on static hosts (no backend available)
+        if (!API_READY || isStaticHost) {
+            console.log('[Auth] Using local mode (static host detected)');
+        } else if (API_READY) {
             return fetchFromAPI('/auth/login', {
                 method: 'POST',
                 body: { email: email, password: password, rememberMe: rememberMe }
@@ -305,9 +317,7 @@
                 return response;
             })
             .catch(function(err) {
-                // API failed - fallback to local storage
                 console.warn('[Auth] API unavailable, using local fallback');
-                API_READY = false;
                 return login(email, password, rememberMe);
             });
         }
@@ -332,7 +342,18 @@
     function signup(name, email, password, extraData) {
         extraData = extraData || {};
         
-        if (API_READY) {
+        // Detect static host
+        var isStaticHost = typeof window !== 'undefined' && (
+            window.location.hostname.includes('vercel.app') || 
+            window.location.hostname.includes('netlify.app') ||
+            window.location.hostname.includes('github.io') ||
+            window.location.hostname.includes('surge.sh') ||
+            window.location.protocol === 'file:'
+        );
+        
+        if (!API_READY || isStaticHost) {
+            console.log('[Auth] Using local signup (static host)');
+        } else if (API_READY) {
             return fetchFromAPI('/auth/register', {
                 method: 'POST',
                 body: { 
@@ -355,9 +376,7 @@
                 return response;
             })
             .catch(function(err) {
-                // API failed - fallback to local
-                console.warn('[Auth] API unavailable, using local fallback');
-                API_READY = false;
+                console.warn('[Auth] API unavailable, local signup');
                 return signup(name, email, password, extraData);
             });
         }
