@@ -19,7 +19,13 @@
             var saved = localStorage.getItem('muts_lang');
             var lang = saved || defaultLang || 'en';
             
-            this.setLanguage(lang);
+            // Load bundled strings directly (no API needed)
+            this.strings = this._getBundledStrings(lang);
+            this.currentLang = lang;
+            this.loaded = true;
+            this._updateDOM();
+            
+            console.log('[i18n] initialized:', lang);
         },
         
         /**
@@ -29,19 +35,20 @@
         setLanguage: function(lang) {
             var self = this;
             
+            // Use only bundled strings (no API needed)
+            this.strings = this._getBundledStrings(lang);
             this.currentLang = lang;
+            this.loaded = true;
             localStorage.setItem('muts_lang', lang);
             
-            // Load strings from API or use bundled
-            this._loadStrings(lang).then(function() {
-                self.loaded = true;
-                self._updateDOM();
-                
-                // Dispatch event for other components
-                window.dispatchEvent(new CustomEvent('languageChanged', { 
-                    detail: { lang: lang } 
-                }));
-            });
+            this._updateDOM();
+            
+            // Dispatch event for other components
+            window.dispatchEvent(new CustomEvent('languageChanged', { 
+                detail: { lang: lang } 
+            }));
+            
+            console.log('[i18n] language set:', lang);
         },
         
         /**
@@ -72,11 +79,148 @@
         },
         
         /**
-         * Get bundled strings (fallback)
+         * Get bundled strings (fallback when API unavailable)
          */
         _getBundledStrings: function(lang) {
-            // Return embedded strings based on language
-            return window.i18nBundledStrings || {};
+            var bundles = {
+                en: {
+                    // Navigation
+                    'nav.dashboard': 'Dashboard',
+                    'nav.travel_info': 'Travel Info',
+                    'nav.my_trips': 'My Trips',
+                    'nav.gallery': 'Gallery',
+                    'nav.map': 'Map',
+                    'nav.beaches': 'Beaches',
+                    'nav.packages': 'Packages',
+                    'nav.africasa': 'Africasa',
+                    'nav.blog': 'Blog',
+                    'nav.faq': 'FAQ',
+                    'nav.about': 'About',
+                    'nav.contact': 'Contact',
+                    'nav.favorites': 'Favorites',
+                    'nav.messages': 'Messages',
+                    'nav.transactions': 'Transactions',
+                    'nav.settings': 'Settings',
+                    'nav.logout': 'Logout',
+                    'nav.loyalty': 'My Points',
+                    'nav.hotels': 'Hotels',
+                    'nav.tours': 'Tours',
+                    'nav.experiences': 'Experiences',
+                    
+                    // Common
+                    'common.search': 'Search',
+                    'common.loading': 'Loading...',
+                    'common.no_results': 'No results found',
+                    'common.error': 'An error occurred',
+                    'common.save': 'Save',
+                    'common.cancel': 'Cancel',
+                    'common.delete': 'Delete',
+                    'common.edit': 'Edit',
+                    'common.view': 'View',
+                    'common.back': 'Back',
+                    'common.next': 'Next',
+                    'common.previous': 'Previous',
+                    'common.submit': 'Submit',
+                    'common.close': 'Close',
+                    
+                    // Auth
+                    'auth.login': 'Login',
+                    'auth.signup': 'Sign Up',
+                    'auth.logout': 'Logout',
+                    'auth.email': 'Email',
+                    'auth.password': 'Password',
+                    'auth.forgot_password': 'Forgot Password?',
+                    'auth.remember_me': 'Remember Me',
+                    
+                    // Blog
+                    'blog.create': 'Create Blog',
+                    'blog.title': 'Title',
+                    'blog.content': 'Content',
+                    'blog.category': 'Category',
+                    'blog.tags': 'Tags',
+                    'blog.publish': 'Publish',
+                    'blog.draft': 'Save as Draft',
+                    'blog.my_blogs': 'My Blogs',
+                    'blog.all_blogs': 'All Blogs',
+                    
+                    // Footer
+                    'footer.about': 'About Muts Safaris',
+                    'footer.contact': 'Contact Us',
+                    'footer.privacy': 'Privacy Policy',
+                    'footer.terms': 'Terms of Service',
+                    'footer.copyright': '© 2026 Muts Safaris. All rights reserved.'
+                },
+                
+                sw: {
+                    // Navigation
+                    'nav.dashboard': 'Dashibodi',
+                    'nav.travel_info': 'Habari ya Safari',
+                    'nav.my_trips': 'Safari zangu',
+                    'nav.gallery': 'Picha',
+                    'nav.map': 'Ramani',
+                    'nav.beaches': 'Mwani',
+                    'nav.packages': 'Vifurushi',
+                    'nav.africasa': 'Africasa',
+                    'nav.blog': 'Blogu',
+                    'nav.faq': 'Maswali',
+                    'nav.about': 'Kuhusu',
+                    'nav.contact': 'Wasiliana',
+                    'nav.favorites': 'Vipenzi',
+                    'nav.messages': 'Mahali',
+                    'nav.transactions': 'Miamala',
+                    'nav.settings': 'Mipangilio',
+                    'nav.logout': 'Toka',
+                    'nav.loyalty': 'Pointi zangu',
+                    'nav.hotels': 'Hoteli',
+                    'nav.tours': 'Safari',
+                    'nav.experiences': 'Matukio',
+                    
+                    // Common
+                    'common.search': 'Tafuta',
+                    'common.loading': 'Inapakia...',
+                    'common.no_results': 'Hakuna matokeo',
+                    'common.error': 'Hitilafu imetokea',
+                    'common.save': 'Hifadhi',
+                    'common.cancel': 'Ghairi',
+                    'common.delete': 'Futa',
+                    'common.edit': 'Hariri',
+                    'common.view': 'Angalia',
+                    'common.back': 'Rudi',
+                    'common.next': 'Mbele',
+                    'common.previous': 'Nyuma',
+                    'common.submit': 'Wasilisha',
+                    'common.close': 'Funga',
+                    
+                    // Auth
+                    'auth.login': 'Ingia',
+                    'auth.signup': 'Jisajili',
+                    'auth.logout': 'Toka',
+                    'auth.email': 'Barua pepe',
+                    'auth.password': 'Nenosiri',
+                    'auth.forgot_password': 'Umesahau nenosiri?',
+                    'auth.remember_me': 'Nikumbuke',
+                    
+                    // Blog
+                    'blog.create': 'Andika',
+                    'blog.title': 'Kichwa',
+                    'blog.content': 'Maumbo',
+                    'blog.category': 'Kitendo',
+                    'blog.tags': 'Lebo',
+                    'blog.publish': 'Chapisha',
+                    'blog.draft': 'Hifadhi Rasimu',
+                    'blog.my_blogs': 'Blogu yangu',
+                    'blog.all_blogs': 'Blogu Zote',
+                    
+                    // Footer
+                    'footer.about': 'Kuhusu Muts Safaris',
+                    'footer.contact': 'Wasiliana',
+                    'footer.privacy': 'Sera ya Faragha',
+                    'footer.terms': 'Masharti',
+                    'footer.copyright': '© 2026 Muts Safaris. Haki zote zimehifadhiwa.'
+                }
+            };
+            
+            return bundles[lang] || bundles.en;
         },
         
         /**
@@ -146,17 +290,11 @@
         },
         
         /**
-         * Save preference to backend
+         * Save preference (uses localStorage only)
          */
         savePreference: function() {
-            var baseURL = (window.MutsAPIConfig && window.MutsAPIConfig.getBaseURL) 
-                ? window.MutsAPIConfig.getBaseURL() 
-                : '/api';
-            
-            fetch(baseURL + '/localization/preference?lang=' + this.currentLang, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            }).catch(function() {});
+            // Already saved in setLanguage via localStorage
+            console.log('[i18n] preference saved:', this.currentLang);
         }
     };
     

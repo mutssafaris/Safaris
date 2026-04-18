@@ -15,6 +15,8 @@
     <title>Hotels - Muts Safaris</title>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="icon" href="../../assets/favicon/favicon.ico">
+    <script src="../../js/image-optimizer.js"></script>
+    <script src="../../js/init-dashboard.js"></script>
 </head>
 <body>
 <div class="dashboard-layout">
@@ -124,15 +126,28 @@
     var grid = document.getElementById('hotels-grid');
     var noResults = document.getElementById('filter-no-results');
     var searchInput = document.getElementById('dashboard-search');
+    var IMG = window.MutsImageOptimizer;
 
     function renderHotelCard(hotel) {
         var tierClass = 'tier-' + hotel.tier.replace('-', '');
         var imageUrl = window.MutsHotelsService.getImage(hotel.id);
         var hotelLink = hotel.link + '#reviews';
         
+        // Build optimized picture element
+        var pictureHtml = '<picture>';
+        pictureHtml += '<source srcset="' + IMG.srcsetWebP(imageUrl) + '" type="image/webp">';
+        pictureHtml += '<img src="' + IMG.buildUrl(imageUrl, { width: 400 }) + '"';
+        pictureHtml += ' srcset="' + IMG.srcset(imageUrl) + '"';
+        pictureHtml += ' sizes="(min-width: 768px) 50vw, 100vw"';
+        pictureHtml += ' alt="' + hotel.name + '"';
+        pictureHtml += ' loading="lazy"';
+        pictureHtml += ' decoding="async"';
+        pictureHtml += ' onload="this.classList.add(\'loaded\')" onerror="this.classList.add(\'error\')">';
+        pictureHtml += '</picture>';
+        
         return '<div class="listing-card" data-tier="' + hotel.tier + '" data-location="' + hotel.location + '">' +
             '<div class="listing-card-image">' +
-                '<img src="' + imageUrl + '" alt="' + hotel.name + '" loading="lazy" onload="this.classList.add(\'loaded\')" onerror="this.classList.add(\'error\')">' +
+                pictureHtml +
             '</div>' +
             '<div class="listing-card-body">' +
                 '<span class="listing-badge ' + tierClass + '">' + hotel.badge + '</span>' +

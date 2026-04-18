@@ -71,7 +71,7 @@
         xhr.send();
     }
 
-    function renderAbout(data) {
+function renderAbout(data) {
         var container = document.getElementById('about-content');
         var html = '';
         
@@ -110,12 +110,236 @@
         });
         html += '</div>';
         
+        // Trusters section - sciFi HUD theme
+        html += renderTrusters(data.trusters);
+        
         container.innerHTML = html;
+    }
+
+    function renderTrusters(trusters) {
+        if (!trusters || trusters.length === 0) return '';
+        
+        var html = '';
+        html += '<h2 style="color:var(--text-primary);margin:2.5rem 0 0.75rem;">Our Trusters</h2>';
+        html += '<p style="color:var(--text-secondary);margin-bottom:1.5rem;font-size:0.9rem;">Partners who trust us to deliver unforgettable safari experiences</p>';
+        
+        html += '<div class="trusters-grid">';
+        trusters.forEach(function(t) {
+            var isPrimary = t.type === 'primary';
+            var cardClass = isPrimary ? 'truster-card primary' : 'truster-card';
+            
+            html += '<div class="' + cardClass + '">';
+            // SciFi HUD corners
+            html += '<div class="hud-corner top-left"></div>';
+            html += '<div class="hud-corner top-right"></div>';
+            html += '<div class="hud-corner bottom-left"></div>';
+            html += '<div class="hud-corner bottom-right"></div>';
+            // Scan line effect
+            html += '<div class="hud-scanline"></div>';
+            // Content
+            html += '<div class="truster-logo">';
+            if (t.logoType) {
+                html += '<div class="logo-mark logo-' + t.logoType + '"><span>M</span></div>';
+            } else if (t.logo) {
+                html += '<img src="' + t.logo + '" alt="' + t.name + '">';
+            } else {
+                html += '<div class="logo-placeholder">' + t.name.charAt(0) + '</div>';
+            }
+            html += '</div>';
+            html += '<div class="truster-info">';
+            html += '<h3 class="truster-name">' + t.name + '</h3>';
+            html += '<p class="truster-desc">' + t.description + '</p>';
+            html += '</div>';
+            // Status indicator
+            html += '<div class="hud-status">';
+            html += '<span class="status-dot"></span>';
+            html += '<span class="status-text">VERIFIED</span>';
+            html += '</div>';
+            html += '</div>';
+        });
+        html += '</div>';
+        
+        // Add HUD styles dynamically
+        if (!document.getElementById('hud-styles')) {
+            var styles = document.createElement('style');
+            styles.id = 'hud-styles';
+            styles.textContent = `
+                .trusters-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                    gap: 1.5rem;
+                    max-width: 900px;
+                }
+                .truster-card {
+                    position: relative;
+                    background: linear-gradient(135deg, rgba(0,212,170,0.05) 0%, rgba(8,145,178,0.08) 100%);
+                    border: 1px solid rgba(0,212,170,0.3);
+                    border-radius: 4px;
+                    padding: 1.25rem;
+                    overflow: visible;
+                    transition: all 0.3s ease;
+                }
+                .truster-card:hover {
+                    border-color: rgba(0,212,170,0.6);
+                    box-shadow: 0 0 20px rgba(0,212,170,0.15), inset 0 0 30px rgba(0,212,170,0.03);
+                    transform: translateY(-2px);
+                }
+                .truster-card.primary {
+                    background: linear-gradient(135deg, rgba(0,212,170,0.08) 0%, rgba(8,145,178,0.12) 100%);
+                    border-color: rgba(0,212,170,0.5);
+                    grid-column: 1 / -1;
+                    max-width: 320px;
+                    margin: 0 auto;
+                }
+                .hud-corner {
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-color: #00d4aa;
+                    border-style: solid;
+                }
+                .hud-corner.top-left { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+                .hud-corner.top-right { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+                .hud-corner.bottom-left { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+                .hud-corner.bottom-right { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+                .hud-scanline {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: linear-gradient(90deg, transparent 0%, rgba(0,212,170,0.4) 50%, transparent 100%);
+                    animation: scanline 2s linear infinite;
+                }
+                @keyframes scanline {
+                    0% { top: 0; }
+                    100% { top: 100%; }
+                }
+                .truster-logo {
+                    width: 100px;
+                    height: 100px;
+                    margin: -0.5rem auto 0.5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: visible;
+                }
+                .truster-logo img {
+                    width: 120px;
+                    height: 120px;
+                    object-fit: contain;
+                    filter: drop-shadow(0 0 12px rgba(0,212,170,0.6));
+                }
+                .logo-placeholder {
+                    width: 60px;
+                    height: 60px;
+                    background: linear-gradient(135deg, #00d4aa, #0891b2);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: #0a0a0f;
+                }
+                .logo-mark {
+                    width: 100px;
+                    height: 100px;
+                    margin: 0 auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                }
+                .logo-mark span {
+                    font-family: 'Courier New', monospace;
+                    font-size: 3.5rem;
+                    font-weight: 700;
+                    color: #00d4aa;
+                    text-shadow: 0 0 20px rgba(0,212,170,0.8), 0 0 40px rgba(0,212,170,0.4);
+                }
+                .logo-ms {
+                    background: radial-gradient(circle at center, rgba(0,212,170,0.15) 0%, transparent 70%);
+                    border: 2px solid rgba(0,212,170,0.4);
+                    border-radius: 50%;
+                    box-shadow: inset 0 0 30px rgba(0,212,170,0.1), 0 0 20px rgba(0,212,170,0.3);
+                }
+                .truster-info {
+                    text-align: center;
+                }
+                .truster-name {
+                    color: #00d4aa;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    margin: 0 0 0.25rem;
+                    font-family: 'Courier New', monospace;
+                    letter-spacing: 1px;
+                }
+                .truster-desc {
+                    color: rgba(255,255,255,0.6);
+                    font-size: 0.8rem;
+                    margin: 0;
+                    font-family: 'Courier New', monospace;
+                }
+                .hud-status {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    margin-top: 0.75rem;
+                    padding-top: 0.5rem;
+                    border-top: 1px solid rgba(0,212,170,0.2);
+                }
+                .status-dot {
+                    width: 6px;
+                    height: 6px;
+                    background: #00d4aa;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px #00d4aa;
+                    animation: pulse 1.5s ease-in-out infinite;
+                }
+                @keyframes pulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.4; }
+                }
+                .status-text {
+                    color: #00d4aa;
+                    font-size: 0.65rem;
+                    font-family: 'Courier New', monospace;
+                    letter-spacing: 2px;
+                    opacity: 0.8;
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+        
+        return html;
     }
 
     function renderStaticAbout() {
         var container = document.getElementById('about-content');
-        container.innerHTML = '<div class="about-error">Unable to load about page. Please refresh.</div>';
+        var defaultTrusters = [
+            {
+                name: "Muts Safaris",
+                logoType: "ms",
+                description: "Your Trusted Safari Partner",
+                type: "primary"
+            }
+        ];
+        
+        var html = '<div class="listing-hero"><h1>About Muts Safaris</h1><p>Your trusted partner for authentic Kenyan safari experiences since 2010.</p></div>';
+        html += '<h2 style="color:var(--text-primary);margin-bottom:0.75rem;">Our Story</h2>';
+        html += '<p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;max-width:800px;">Muts Safaris was founded in 2010 by experienced safari guides and conservationists who believed that tourism could be a force for good. The name "Muts Safaris" means "Good Safari" in Swahili - and that\'s exactly what we deliver.</p>';
+        html += '<h2 style="color:var(--text-primary);margin-bottom:0.75rem;">By the Numbers</h2>';
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;">';
+        html += '<div class="summary-card"><h4 style="color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;margin:0 0 0.5rem;">Happy Travelers</h4><p class="summary-amount">5,000+</p></div>';
+        html += '<div class="summary-card"><h4 style="color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;margin:0 0 0.5rem;">Years Experience</h4><p class="summary-amount">15+</p></div>';
+        html += '<div class="summary-card"><h4 style="color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;margin:0 0 0.5rem;">Satisfaction Rate</h4><p class="summary-amount">98%</p></div>';
+        html += '<div class="summary-card"><h4 style="color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;margin:0 0 0.5rem;">Partner Communities</h4><p class="summary-amount">50+</p></div>';
+        html += '</div>';
+        html += renderTrusters(defaultTrusters);
+        
+        container.innerHTML = html;
     }
 
     // Auto-refresh every 30 seconds

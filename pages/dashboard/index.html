@@ -14,6 +14,13 @@
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://mutssafaris.com/dashboard">
     <title>Dashboard - Muts Safaris</title>
+    <!-- Critical CSS for immediate render -->
+    <style>
+    body{background:#050510;color:#fff;font-family:'Courier New',monospace;margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    .loading-screen{text-align:center}
+    .loading-spinner{width:40px;height:40px;border:3px solid rgba(255,184,0,0.2);border-top-color:#ffb800;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="stylesheet" href="../../css/mobile-responsive.css">
     <link rel="stylesheet" href="../../css/animations.css">
@@ -317,6 +324,10 @@
         if (window.AnimationController) {
             AnimationController.init();
         }
+        
+        // Remove loading screen
+        var loading = document.querySelector('.loading-screen');
+        if (loading) loading.remove();
     });
 </script>
 

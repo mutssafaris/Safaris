@@ -40,27 +40,27 @@
         return page;
     }
 
-    function initSidebar() {
+function initSidebar() {
         var expectedItems = [
-            { href: 'index.html', label: 'Dashboard', icon: 'M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z' },
-            { href: 'travel-info/index.html', label: 'Travel Info', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z' },
-            { href: 'my-trips.html', label: 'My Trips', icon: 'M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z' },
-            { href: 'gallery.html', label: 'Gallery', icon: 'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z' },
-            { href: 'map.html', label: 'Map', icon: 'M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z' },
-            { href: 'beaches.html', label: 'Beaches', icon: 'M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z' },
-            { href: 'packages.html', label: 'Packages', icon: 'M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z' },
-            { href: 'hotels.html', label: 'Hotels', icon: 'M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z' },
-            { href: 'tours.html', label: 'Tours', icon: 'M14 6l-1-2H5v17h2v-7h5l1 2h7V6h-6zm4 8h-4l-1-2H7v2h4l1 2h6v-2z' },
-            { href: 'experiences.html', label: 'Experiences', icon: 'M13.5.67s.87 3 3.48 3 3.48-3 3.48-3H17v14h2v-8.28c0-2.22-1.78-4-4-4-1.33 0-2.44.83-2.89 1.98l-1.61 2.1c-.38.48-.6 1.08-.6 1.75v3.25H7v-3.18c0-.97-.39-1.85-1.02-2.45L7.5 6.7 5.5 4 4 5.5l2 2 1.5-1.5V1h3v4h2V2.5l1.5 1.5-1.5 1.5 1.5 1.5V17h2V3.5c0-.83-.67-1.5-1.5-1.5z' },
-            { href: 'africasa.html', label: 'Africasa', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z' },
-            { href: 'blog.html', label: 'Blog', icon: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z' },
-            { href: 'faq.html', label: 'FAQ', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z' },
-            { href: 'about.html', label: 'About', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z' },
-            { href: 'contact.html', label: 'Contact', icon: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z' },
-            { href: 'favorites.html', label: 'Favorites', icon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
-            { href: 'messages.html', label: 'Messages', icon: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z', badge: true },
-            { href: 'transactions.html', label: 'Transactions', icon: 'M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z' },
-            { href: 'profile.html', label: 'Settings', icon: 'M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z' }
+            { href: 'index.html', label: 'Dashboard', icon: 'M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z', i18n: 'nav.dashboard' },
+            { href: 'travel-info/index.html', label: 'Travel Info', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z', i18n: 'nav.travel_info' },
+            { href: 'my-trips.html', label: 'My Trips', icon: 'M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z', i18n: 'nav.my_trips' },
+            { href: 'gallery.html', label: 'Gallery', icon: 'M21 19V5c0-1.1-.9-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z', i18n: 'nav.gallery' },
+            { href: 'map.html', label: 'Map', icon: 'M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z', i18n: 'nav.map' },
+            { href: 'beaches.html', label: 'Beaches', icon: 'M13.127 14.56l1.43-1.43 6.44 6.443L19.57 21zm4.293-5.73l2.86-2.86c-3.95-3.95-10.35-3.96-14.3-.02 3.93-1.3 8.31-.25 11.44 2.88zM5.95 5.98c-3.94 3.95-3.93 10.35.02 14.3l2.86-2.86C5.7 14.29 4.65 9.91 5.95 5.98zm.02-.02l-.01.01c-.38 3.01 1.17 6.88 4.3 10.02l5.73-5.73c-3.13-3.13-7.01-4.68-10.02-4.3z', i18n: 'nav.beaches' },
+            { href: 'packages.html', label: 'Packages', icon: 'M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z', i18n: 'nav.packages' },
+            { href: 'hotels.html', label: 'Hotels', icon: 'M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z', i18n: 'nav.hotels' },
+            { href: 'tours.html', label: 'Tours', icon: 'M14 6l-1-2H5v17h2v-7h5l1 2h7V6h-6zm4 8h-4l-1-2H7v2h4l1 2h6v-2z', i18n: 'nav.tours' },
+            { href: 'experiences.html', label: 'Experiences', icon: 'M13.5.67s.87 3 3.48 3 3.48-3 3.48-3H17v14h2v-8.28c0-2.22-1.78-4-4-4-1.33 0-2.44.83-2.89 1.98l-1.61 2.1c-.38.48-.6 1.08-.6 1.75v3.25H7v-3.18c0-.97-.39-1.85-1.02-2.45L7.5 6.7 5.5 4 4 5.5l2 2 1.5-1.5V1h3v4h2V2.5l1.5 1.5-1.5 1.5 1.5 1.5V17h2V3.5c0-.83-.67-1.5-1.5-1.5z', i18n: 'nav.experiences' },
+            { href: 'africasa.html', label: 'Africasa', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z', i18n: 'nav.africasa' },
+            { href: 'blog.html', label: 'Blog', icon: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z', i18n: 'nav.blog' },
+            { href: 'faq.html', label: 'FAQ', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z', i18n: 'nav.faq' },
+            { href: 'about.html', label: 'About', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z', i18n: 'nav.about' },
+            { href: 'contact.html', label: 'Contact', icon: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z', i18n: 'nav.contact' },
+            { href: 'favorites.html', label: 'Favorites', icon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', i18n: 'nav.favorites' },
+            { href: 'messages.html', label: 'Messages', icon: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z', badge: true, i18n: 'nav.messages' },
+            { href: 'transactions.html', label: 'Transactions', icon: 'M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z', i18n: 'nav.transactions' },
+            { href: 'profile.html', label: 'Settings', icon: 'M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.12-.21.08-.47-.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.12.21-.08.47.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z', i18n: 'nav.settings' }
         ];
         
         try {
@@ -81,7 +81,7 @@
                 if (!existingLinks[item.href]) {
                     var badgeHTML = item.badge ? '<span class="badge" id="unread-badge"></span>' : '';
                     var li = document.createElement('li');
-                    li.innerHTML = '<a href="' + item.href + '" class="nav-item"><svg viewBox="0 0 24 24"><path d="' + item.icon + '"/></svg><span class="nav-label">' + item.label + '</span>' + badgeHTML + '</a>';
+                    li.innerHTML = '<a href="' + item.href + '" class="nav-item"><svg viewBox="0 0 24 24"><path d="' + item.icon + '"/></svg><span class="nav-label" data-i18n="' + item.i18n + '">' + item.label + '</span>' + badgeHTML + '</a>';
                     navList.appendChild(li);
                     addedCount++;
                 }
@@ -109,6 +109,49 @@
         } catch (e) {
             console.error('[initSidebar] Error:', e);
         }
+    }
+
+    function translateExistingNavLabels() {
+        if (!window.MutsI18n) return;
+        
+        var navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+        var navTextMap = {
+            'Dashboard': 'nav.dashboard',
+            'Travel Info': 'nav.travel_info',
+            'My Trips': 'nav.my_trips',
+            'Gallery': 'nav.gallery',
+            'Map': 'nav.map',
+            'Beaches': 'nav.beaches',
+            'Packages': 'nav.packages',
+            'Hotels': 'nav.hotels',
+            'Tours': 'nav.tours',
+            'Experiences': 'nav.experiences',
+            'Africasa': 'nav.africasa',
+            'Blog': 'nav.blog',
+            'FAQ': 'nav.faq',
+            'About': 'nav.about',
+            'Contact': 'nav.contact',
+            'Favorites': 'nav.favorites',
+            'Messages': 'nav.messages',
+            'Transactions': 'nav.transactions',
+            'Settings': 'nav.settings',
+            'Logout': 'nav.logout',
+            'My Points': 'nav.loyalty'
+        };
+        
+        navItems.forEach(function(item) {
+            var label = item.querySelector('.nav-label');
+            if (label) {
+                var text = label.textContent.trim();
+                var i18nKey = navTextMap[text];
+                if (i18nKey) {
+                    label.setAttribute('data-i18n', i18nKey);
+                    label.textContent = window.MutsI18n.t(i18nKey);
+                }
+            }
+        });
+        
+        console.log('[i18n] Translated existing nav labels');
     }
 
     function initMobileSidebar() {
@@ -772,6 +815,21 @@
     // Init
     document.addEventListener('DOMContentLoaded', function () {
         initSidebar();
+        
+        // Initialize i18n after sidebar is set up
+        if (window.MutsI18n) {
+            window.MutsI18n.init('en');
+            window.MutsI18n._updateDOM();
+            
+            // Also update nav labels that exist in HTML (not dynamically added)
+            translateExistingNavLabels();
+            
+            // Re-translate on language change
+            window.addEventListener('languageChanged', function() {
+                translateExistingNavLabels();
+            });
+        }
+        
         initMobileSidebar();
         loadGreeting();
         loadUnreadBadge();

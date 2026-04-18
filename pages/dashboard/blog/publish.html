@@ -7,9 +7,14 @@
     <meta name="description" content="Create and publish your own travel blog post on Muts Safaris. Share safari experiences, wildlife encounters, and travel tips.">
     <title>Create Blog Post - Muts Safaris</title>
     <link rel="stylesheet" href="../../../css/dashboard-theme.css">
+    <link rel="stylesheet" href="../../../css/themes.css">
     <link rel="icon" href="../../../assets/favicon/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="../../../js/muts-dropdown.js"></script>
+    <script src="../../../js/muts-editor.js"></script>
+    <script src="../../../js/media-library.js"></script>
+    <script src="../../../js/seo-manager.js"></script>
     <style>
         .publish-container { max-width: 800px; margin: 0 auto; padding: 2rem; }
         .publish-header { margin-bottom: 2rem; }
@@ -18,10 +23,22 @@
         .publish-form { display: flex; flex-direction: column; gap: 1.5rem; }
         .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
         .form-group label { color: var(--text-primary); font-weight: 600; font-size: 0.9rem; }
-        .form-group input, .form-group textarea, .form-group select { 
-            background: var(--surface-card); border: 1px solid var(--border-color);
-            color: var(--text-primary); padding: 0.75rem; font-size: 1rem; border-radius: 4px;
+        .publish-form select { 
+            background: var(--surface-card);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a227' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            padding: 0.75rem 36px 0.75rem 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            min-width: 180px;
         }
+        .publish-form select:hover { border-color: var(--accent); }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--shadow-glow);
         }
@@ -32,6 +49,7 @@
         .tags-input input:focus { outline: none; box-shadow: none; }
         .tag-badge { display: flex; align-items: center; gap: 0.25rem; background: var(--accent); color: var(--text-on-accent); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
         .tag-badge button { background: none; border: none; cursor: pointer; padding: 0; line-height: 1; color: var(--text-on-accent); }
+        .tag-badge button:hover { color: var(--danger); }
         .image-upload { border: 2px dashed var(--border-color); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s; }
         .image-upload:hover { border-color: var(--accent); background: var(--surface-hover); }
         .image-upload p { color: var(--text-muted); margin: 0; }
@@ -106,7 +124,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="post-category">Category</label>
-                        <select id="post-category" required>
+                        <select id="post-category" class="theme-select" required>
                             <option value="">Select category...</option>
                             <option value="Safari Guide">Safari Guide</option>
                             <option value="Travel Planning">Travel Planning</option>
@@ -123,7 +141,7 @@
                 </div>
                 <div class="form-group">
                     <label for="post-content">Content</label>
-                    <textarea id="post-content" placeholder="Write your blog post content here... (HTML supported)"></textarea>
+                    <textarea id="post-content" class="blog-editor" data-editor data-placeholder="Start writing your blog content here. Use the toolbar to format headings, add bold text, create lists, and more..."></textarea>
                 </div>
                 <div class="form-group">
                     <label>Tags</label>
@@ -397,6 +415,40 @@
             }
         });
     });
+    
+    // Initialize SEO Manager
+    var tagsContainer = document.getElementById('tags-input-container');
+    if (tagsContainer && tagsContainer.parentElement) {
+        var seoContainer = document.createElement('div');
+        seoContainer.id = 'seo-manager-container';
+        tagsContainer.parentElement.parentElement.appendChild(seoContainer);
+        new MutsSEOManager('seo-manager-container', {
+            defaultTitle: 'Muts Safaris Blog',
+            defaultDescription: 'Discover amazing safari experiences, travel tips, and wildlife adventures in Kenya.'
+        });
+    }
+    
+    // Initialize Media Library for gallery
+    var galleryUploads = document.getElementById('gallery-uploads');
+    if (galleryUploads) {
+        new MutsMediaLibrary('#gallery-uploads', {
+            maxFiles: 10,
+            maxSize: 10 * 1024 * 1024,
+            onSelect: function(file, index, action) {
+                console.log('[Publish] Gallery image selected:', file ? file.name : 'removed');
+            }
+        });
+    }
+    
+    // Initialize custom dropdown for category
+    if (document.getElementById('post-category')) {
+        new MutsDropdown('post-category', {
+            placeholder: 'Select category...',
+            onChange: function(value, text) {
+                console.log('[Publish] Category selected:', value);
+            }
+        });
+    }
 })();
 </script>
 </body>

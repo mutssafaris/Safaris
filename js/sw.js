@@ -19,7 +19,6 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
       console.log('[SW] Caching static assets');
-      // Filter to only cache existing files
       return Promise.all(STATIC_ASSETS.map(function(url) {
         return fetch(url, { mode: 'no-cors' }).then(function() {
           return cache.add(url);
@@ -73,11 +72,19 @@ self.addEventListener('fetch', function(event) {
   // API calls - network only (don't cache API)
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(
-      fetch(request).catch(function() {
-        return new Response(JSON.stringify({ error: 'Offline', offline: true }), {
-          headers: { 'Content-Type': 'application/json' }
-        });
-      })
+      fetch(request)
+        .then(function(response) {
+          return response;
+        })
+        .catch(function() {
+          return new Response(
+            JSON.stringify({ error: 'Offline', offline: true }),
+            {
+              status: 503,
+              headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }
+          );
+        })
     );
     return;
   }
@@ -96,8 +103,16 @@ self.addEventListener('fetch', function(event) {
       .catch(function() {
         // Fallback to cache
         return caches.match(request).then(function(response) {
-          return response || caches.match('/offline.html').then(function(offline) {
-            return offline || new Response('Offline', { status: 503 });
+          if (response) return response;
+          return caches.match('/offline.html').then(function(offline) {
+            if (offline) return offline;
+            return new Response(
+              '<html><body><h1>Offline</h1><p>Please check your connection.</p></body></html>',
+              {
+                status: 503,
+                headers: { 'Content-Type': 'text/html; charset=utf-8' }
+              }
+            );
           });
         });
       })

@@ -18,6 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Muts Safaris - The Future of African Exploration">
     <meta name="twitter:description" content="Experience the future of African wildlife exploration.">
+    <link rel="manifest" href="/manifest.json">
     <link rel="canonical" href="https://mutssafaris.com/login">
     <title>Muts Safaris - The Future of African Exploration</title>
     <link rel="stylesheet" href="css/login-landing.css">
@@ -82,7 +83,7 @@
             </div>
             
             <div class="hero-image-container">
-                <img src="images/hero/safari-guide.jpg" alt="Safari Guide">
+                <img src="images/hero/safari-guide.jpg" alt="Safari Guide" fetchpriority="high" loading="eager">
                 <div class="floating-stat top-left">
                     <span>Adventure</span>
                 </div>
@@ -100,12 +101,12 @@
     </section>
 
     <!-- AUTH MODAL -->
-    <div class="auth-overlay" id="auth-overlay">
-        <span class="close-auth" id="close-auth">&times;</span>
+    <div class="auth-overlay" id="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <span class="close-auth" id="close-auth" aria-label="Close authentication dialog">&times;</span>
         <div class="auth-container">
             <div class="auth-branding-panel">
                 <div class="split-badge">SECURE_TRANSMISSION</div>
-                <h3 style="font-family: var(--font-family-heading); font-size: 1.6rem; color: var(--text-primary); margin: 1rem 0;">AUTHENTICATE</h3>
+                <h3 id="auth-title" style="font-family: var(--font-family-heading); font-size: 1.6rem; color: var(--text-primary); margin: 1rem 0;">AUTHENTICATE</h3>
                 <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; border-left: 1px solid var(--auth-accent); padding-left: 1rem;">
                     Lets connect to explore<br>
                     Muts will take you to places beyond Imagination
@@ -116,16 +117,22 @@
                     <button class="auth-tab active" data-form="login">LOGIN_ID</button>
                     <button class="auth-tab" data-form="signup">CREATE_ID</button>
                 </div>
-                <form class="auth-form active" id="login-form">
-                    <div class="form-group"><label>USER_ID (EMAIL)</label><input type="email" id="login-email" required></div>
-                    <div class="form-group"><label>SECURITY_PASSKEY</label><input type="password" id="login-password" required></div>
+                <form class="auth-form active" id="login-form" novalidate>
+                    <div class="form-group"><label for="login-email">USER_ID (EMAIL)</label><input type="email" id="login-email" required aria-describedby="login-email-error"></div>
+                    <div id="login-email-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="login-password">SECURITY_PASSKEY</label><input type="password" id="login-password" required aria-describedby="login-password-error"></div>
+                    <div id="login-password-error" class="form-error" hidden></div>
+                    <div id="login-general-error" class="form-error" role="alert" aria-live="polite" hidden></div>
                     <button type="submit" class="btn btn-primary btn-block">INITIALIZE_AUTH</button>
                 </form>
-                <form class="auth-form" id="signup-form">
-                    <div class="form-group"><label>IDENTITY_NAME</label><input type="text" id="signup-name" required></div>
-                    <div class="form-group"><label>USER_ID (EMAIL)</label><input type="email" id="signup-email" required></div>
-                    <div class="form-group"><label>SECURITY_PASSKEY</label><input type="password" id="signup-password" required></div>
-                    <div class="form-group"><label>PHONE_CONTACT</label><input type="tel" id="signup-phone"></div>
+                <form class="auth-form" id="signup-form" novalidate>
+                    <div class="form-group"><label for="signup-name">IDENTITY_NAME</label><input type="text" id="signup-name" required aria-describedby="signup-name-error"></div>
+                    <div id="signup-name-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="signup-email">USER_ID (EMAIL)</label><input type="email" id="signup-email" required aria-describedby="signup-email-error"></div>
+                    <div id="signup-email-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="signup-password">SECURITY_PASSKEY</label><input type="password" id="signup-password" required aria-describedby="signup-password-error" minlength="6"></div>
+                    <div id="signup-password-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="signup-phone">PHONE_CONTACT</label><input type="tel" id="signup-phone"></div>
                     <div class="form-group">
                         <label>NATIONALITY</label>
                         <select id="signup-country">
@@ -209,6 +216,7 @@
                         <input type="checkbox" id="signup-newsletter" value="true">
                         <label for="signup-newsletter">ENABLE_TELEMETRY (NEWSLETTER)</label>
                     </div>
+                    <div id="signup-general-error" class="form-error" role="alert" aria-live="polite" hidden></div>
                     <button type="submit" class="btn btn-primary btn-block">CREATE_IDENTITY</button>
                 </form>
             </div>
@@ -270,6 +278,7 @@
         </div>
     </div>
 
+    <script src="js/a11y.js"></script>
     <script src="js/theme-switcher.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/cache.js"></script>
@@ -343,10 +352,22 @@
         var overlay = document.getElementById('auth-overlay');
         var openBtn = document.getElementById('open-auth');
         var closeBtn = document.getElementById('close-auth');
+        var releaseFocus = null;
 
         function toggleOverlay(state) {
             overlay.classList.toggle('active', state);
             document.body.style.overflow = state ? 'hidden' : '';
+            
+            if (state) {
+                // Trap focus in modal
+                releaseFocus = window.MutsA11y.trapFocus(overlay);
+            } else {
+                // Release focus trap
+                if (releaseFocus) {
+                    releaseFocus();
+                    releaseFocus = null;
+                }
+            }
         }
 
         openBtn.onclick = function() { toggleOverlay(true); };

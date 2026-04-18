@@ -1,17 +1,35 @@
 {
-    "name": "Muts Safaris",
-    "short_name": "Muts Safaris",
-    "description": "Don't be a Tourist, be a Traveller — Authentic Kenyan Safari Experiences",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#050510",
-    "theme_color": "#FFB800",
-    "orientation": "portrait-primary",
-    "icons": [
-        {
-            "src": "assets/favicon/favicon.ico",
-            "sizes": "64x64",
-            "type": "image/x-icon"
-        }
-    ]
+  "name": "Muts Safaris",
+  "short_name": "MutsSafaris",
+  "description": "Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, Diani Beach and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fbff",
+  "theme_color": "#c9a227",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/favicon/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/favicon/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/favicon/favicon.ico",
+      "sizes": "128x128",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
 }

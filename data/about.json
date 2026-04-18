@@ -5,7 +5,7 @@
   },
   "story": {
     "title": "Our Story",
-    "content": "Muts Safaris was founded in 2010 by experienced safari guides and conservationists who believed that tourism could be a force for good. The name \"Muts Safaris\" means \"Good Safari\" in Swahili — and that's exactly what we deliver. From the vast savannahs of the Maasai Mara to the pristine beaches of the Kenyan coast, we create journeys that connect travelers with the authentic beauty of Kenya."
+    "content": "Muts Safaris was founded in 2010 by experienced safari guides and conservationists who believed that tourism could be a force for good. The name Muts Safaris means Good Safari in Swahili — and that's exactly what we deliver. From the vast savannahs of the Maasai Mara to the pristine beaches of the Kenyan coast, we create journeys that connect travelers with the authentic beauty of Kenya."
   },
   "mission": {
     "title": "Our Mission",
@@ -54,5 +54,13 @@
     { "label": "Years Experience", "value": "15+" },
     { "label": "Satisfaction Rate", "value": "98%" },
     { "label": "Partner Communities", "value": "50+" }
+  ],
+  "trusters": [
+    {
+      "name": "AFRITHECUS",
+      "logo": "/images/trusts/afrithecus.png",
+      "description": "Trusted Partner",
+      "type": "primary"
+    }
   ]
 }

@@ -1,7 +1,5 @@
 /* Manager Dashboard Styles - Muts Safaris */
-/* Sci-Fi HUD Theme */
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap');
+/* Sci-Fi HUD Theme - Uses system fonts for offline compatibility */
 
 * {
     margin: 0;
@@ -27,8 +25,8 @@
     --info: #00b0ff;
     --neon-pink: #ff2e88;
     --neon-cyan: #00e5ff;
-    --font-family: 'Share Tech Mono', monospace;
-    --font-heading: 'Orbitron', sans-serif;
+    --font-family: 'Courier New', 'Share Tech Mono', monospace;
+    --font-heading: 'Courier New', 'Orbitron', sans-serif;
 }
 
 body {

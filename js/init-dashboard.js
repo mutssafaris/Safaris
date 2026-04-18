@@ -18,7 +18,15 @@
     window._dashboardReady = false;
 
     var libs = [
+        '../../js/a11y.js',
         '../../js/cache.js',
+        '../../js/i18n.js',
+        '../../js/image-optimizer.js',
+        '../../js/lang-switcher.js',
+        '../../js/media-library.js',
+        '../../js/muts-dropdown.js',
+        '../../js/muts-editor.js',
+        '../../js/seo-manager.js',
         '../../js/validation.js',
         '../../js/sw-register.js'
     ];

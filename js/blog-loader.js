@@ -462,6 +462,18 @@
         getImagePath: getImagePath,
         getArticleImages: getArticleImages,
         formatDate: formatDate,
+        getUserPosts: function() {
+            // Get posts for current logged-in user
+            var user = window.MutsAuth ? window.MutsAuth.getSession() : null;
+            if (!user || !blogData || !blogData.posts) return [];
+            var userId = user.id || user.email || user.name;
+            return blogData.posts.filter(function(p) {
+                return p.author === userId || p.authorName === userId;
+            });
+        },
+        getAllPosts: function() {
+            return blogData ? blogData.posts : [];
+        },
         getRelated: function(slug, limit) {
             if (!blogData || !blogData.posts) return [];
             return blogData.posts.filter(function(p) { return p.slug !== slug; }).slice(0, limit);

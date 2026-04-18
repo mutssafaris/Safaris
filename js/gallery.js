@@ -151,7 +151,7 @@
             var imgSrc = img.image.indexOf('data:') === 0 ? img.image : getImagePath(img.image);
             var userInitial = img.userName ? img.userName.charAt(0).toUpperCase() : 'U';
             return '<div class="gallery-item" data-index="' + index + '">' +
-                '<img src="' + imgSrc + '" alt="' + img.title + '" loading="lazy" oncontextmenu="return false;" ondragstart="return false;">' +
+                '<img src="' + imgSrc + '" alt="' + img.title + '" loading="lazy" decoding="async" oncontextmenu="return false;" ondragstart="return false;">' +
                 '<div class="gallery-item-overlay">' +
                     '<h3 class="gallery-item-title">' + img.title + '</h3>' +
                     '<p class="gallery-item-meta">' + (img.likes || 0) + ' likes</p>' +
