@@ -150,7 +150,172 @@ POST /api/auth/register
 GET /api/auth/me
 PUT /api/auth/profile
 PUT /api/auth/password
+POST /api/auth/social/google
+POST /api/auth/social/facebook
+POST /api/auth/social/apple
+POST /api/auth/apply-referral   // Apply referral code after signup
 ```
+
+**Register Request Body:**
+```javascript
+// POST /api/auth/register
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword123",
+  "phone": "+254712345678",
+  "country": "KE",
+  "interest": "safari",
+  "referralCode": "MUTS-GOLD-7X4K9",  // Optional - earns 500 bonus points
+  "newsletter": true
+}
+```
+
+**Register Response:**
+```javascript
+{
+  "success": true,
+  "user": {
+    "id": "user_123",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "tier": "bronze",
+    "referralCode": "MUTS-BRONZE-ABCD1",
+    "referredBy": "MUTS-GOLD-7X4K9",  // Code used (if any) - different from own referralCode
+    "points": 500,  // Bonus points from using referral code
+    "referralCount": 0  // How many people used YOUR code
+  },
+  "token": "jwt_access_token",
+  "refreshToken": "jwt_refresh_token"
+}
+```
+
+**User Profile Fields for Referral:**
+```javascript
+// Full user object includes:
+{
+  "id": "user_123",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "tier": "gold",
+  "referralCode": "MUTS-GOLD-7X4K9",     // User's own code to share
+  "referredBy": "MUTS-SILVER-XY12",     // Code user used when they signed up
+  "referralCount": 3,                  // How many people used this user's code
+  "points": 2450,
+  "createdAt": "2024-08-15",
+  "referredUsers": [                     // Optional: list of users who used this code
+    { "id": "user_456", "name": "Jane", "date": "2024-09-01" },
+    { "id": "user_789", "name": "Bob", "date": "2024-10-15" }
+  ]
+}
+```
+
+### 4.1 Social Login Endpoints (Required for OAuth)
+
+**Request Schemas:**
+
+```javascript
+// POST /api/auth/social/google
+// Body: { idToken: "JWT_from_google" }
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "user_123",
+      "name": "John Doe",
+      "email": "john@gmail.com",
+      "avatar": "https://...",
+      "provider": "google",
+      "providerId": "google:123456789"
+    },
+    "token": "jwt_access_token",
+    "refreshToken": "jwt_refresh_token"
+  }
+}
+
+// POST /api/auth/social/facebook
+// Body: { accessToken: "facebook_access_token" }
+
+// POST /api/auth/social/apple
+// Body: { idToken: "JWT_from_apple" }
+```
+
+**Backend Requirements:**
+
+1. **Google OAuth**
+   - Create OAuth 2.0 client in Google Cloud Console
+   - Client ID: `YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com`
+   - Verify JWT signature with Google's public keys
+   - Extract user info from `sub` claim
+   - Link or create user record with `provider: 'google'` and `providerId: 'google:' + sub`
+
+2. **Facebook OAuth**
+   - Create Facebook App in Meta Developer Portal
+   - Get App ID and App Secret
+   - Exchange code for access token
+   - Fetch user info from `/me` Graph API endpoint
+   - Link or create user with `provider: 'facebook'`
+
+3. **Apple Sign-In**
+   - Configure App ID with Sign in with Apple capability
+   - Verify JWT using Apple's public keys
+   - Extract user info from identity token
+   - Handle email privacy (may be "relay" email)
+
+4. **User Creation/Linking Logic**
+   ```javascript
+   // Pseudo-code for user creation:
+   function handleSocialUser(provider, providerId, email, name, avatar) {
+       let user = users.find(u => u.providerId === providerId);
+       if (user) {
+           // Existing social user - update tokens
+           user.accessToken = newToken;
+           user.refreshToken = newRefreshToken;
+           return user;
+       }
+       
+       // Check if email exists (regular account)
+       let existingUser = users.find(u => u.email === email);
+       if (existingUser) {
+           // Link social to existing account
+           existingUser.provider = provider;
+           existingUser.providerId = providerId;
+           return existingUser;
+       }
+       
+       // Create new social user
+       user = {
+           id: generateId(),
+           email: email,
+           name: name,
+           avatar: avatar,
+           provider: provider,
+           providerId: providerId,
+           tier: 'explorer',
+           createdAt: new Date().toISOString()
+       };
+       users.push(user);
+       return user;
+   }
+   ```
+
+5. **Security Considerations**
+   - Validate `idToken` JWT signatures server-side
+   - Verify `aud` claim matches your client ID
+   - Check token expiry
+   - Store refresh tokens securely
+   - Implement CSRF protection with state parameter
+   - Rate limit social login endpoints
+
+6. **Frontend Configuration**
+   - Update `GOOGLE_CLIENT_ID` in `login.html`
+   - Configure `FB_APP_ID` for Facebook SDK
+   - Configure Apple Service ID in dashboard
+
+7. **Client ID Setup Notes**
+   - Google: Update in `login.html` - `GOOGLE_CLIENT_ID` variable
+   - Facebook: Set in FB.init() call or app config
+   - Apple: Configure in Apple Developer Portal
 
 **Response Schemas:**
 
@@ -326,10 +491,37 @@ GET /api/localization/strings?lang=en
 GET /api/loyalty/profile
 GET /api/loyalty/transactions
 GET /api/loyalty/referral-code
-POST /api/loyalty/redeem?points={amount}
+POST /api/loyalty/redeem?points={amount}&bookingId={id}
 POST /api/loyalty/refer?code={referralCode}
 GET /api/loyalty/calculate?points={amount}
+GET /api/loyalty/tiers
+GET /api/loyalty/redeem-options
+POST /api/loyalty/generate-referral-code   // Generate/regenerate user's code
 ```
+
+**Auth:** All endpoints require `Authorization: Bearer {token}` header (user JWT)
+
+**Important Validation Notes:**
+
+1. **Referral Code Validation:**
+   - Validate format: `^MUTS-[A-Z0-9]{4,6}-[A-Z0-9]{4,6}$`
+   - Check code exists in database
+   - Check code belongs to DIFFERENT user (prevent self-use)
+   - Check user hasn't already used a referral code (`referredBy` IS NULL)
+
+2. **Points Awarding (Backend Must Handle):**
+   - When code is used at signup: Award 500 points to NEW USER
+   - When code is used: Award 500 points to REFERRER (increment their `referralCount`)
+   - Both should happen in a single transaction
+
+3. **Transaction Descriptions:**
+   - New user: "Welcome Bonus - Used referral code"
+   - Referrer: "Referral Bonus - [new_user_name] used your code"
+
+4. **Code Generation:**
+   - Each user should have exactly ONE referral code
+   - Code format: `MUTS-{USER_TIER}-{RANDOM}` (e.g., `MUTS-GOLD-7X4K9`)
+   - If user regenerates, invalidate old code (or allow multiple codes)
 
 **Response Schemas:**
 
@@ -377,6 +569,66 @@ GET /api/loyalty/calculate?points={amount}
     "page": 1
   }
 }
+
+// POST /api/loyalty/redeem?points=500
+{
+  "success": true,
+  "message": "500 points redeemed successfully",
+  "data": {
+    "pointsRedeemed": 500,
+    "discount": 75,
+    "newBalance": 1950,
+    "bookingId": null,
+    "discountCode": "LOYALTY-2026-ABCD"
+  }
+}
+
+// GET /api/loyalty/redeem-options
+{
+  "success": true,
+  "data": [
+    { "points": 100, "value": 10, "label": "$10 off booking" },
+    { "points": 250, "value": 30, "label": "$30 off booking" },
+    { "points": 500, "value": 75, "label": "$75 off booking" },
+    { "points": 1000, "value": 175, "label": "$175 off booking" },
+    { "points": 2000, "value": 400, "label": "$400 off booking" }
+  ]
+}
+
+// GET /api/loyalty/tiers
+{
+  "success": true,
+  "data": [
+    { "name": "Bronze", "minPoints": 0, "maxPoints": 999, "multiplier": 1, "benefits": ["Base points earning", "Member welcome bonus"] },
+    { "name": "Silver", "minPoints": 1000, "maxPoints": 4999, "multiplier": 1.25, "benefits": ["+25% points", "Early access to deals"] },
+    { "name": "Gold", "minPoints": 5000, "maxPoints": 14999, "multiplier": 1.5, "benefits": ["+50% points", "Free room upgrades", "Priority support"] },
+    { "name": "Platinum", "minPoints": 15000, "maxPoints": null, "multiplier": 2, "benefits": ["2x points", "VIP support", "Exclusive experiences", "Annual bonus"] }
+  ]
+}
+
+// POST /api/loyalty/refer?code=MUTS-GOLD-7X4K9
+{
+  "success": true,
+  "message": "Referral code applied successfully",
+  "data": {
+    "bonusPoints": 500,
+    "referredCode": "MUTS-GOLD-7X4K9"
+  }
+}
+
+// Error Responses
+{
+  "success": false,
+  "message": "Insufficient points for redemption"
+}
+{
+  "success": false,
+  "message": "Invalid or expired referral code"
+}
+{
+  "success": false,
+  "message": "Referral code already used"
+}
 ```
 
 **Tier System:**
@@ -386,6 +638,109 @@ GET /api/loyalty/calculate?points={amount}
 | Silver | 1,000-4,999 | 1.25x | +25% points, early access |
 | Gold | 5,000-14,999 | 1.5x | +50%, free upgrades |
 | Platinum | 15,000+ | 2x | VIP, exclusive experiences |
+
+**Ways to Earn Points:**
+| Action | Points Earned |
+|--------|---------------|
+| Book Safari/Tour | 1 point per $1 spent |
+| Refer Friend | 500 bonus points |
+| Write Review | 100 points |
+| Share Experience | 50 points |
+
+**Points Expiration:** Points expire after 12 months of inactivity. Active bookings reset expiration.
+
+### Referral Program
+
+**How it Works:**
+1. Each member receives a unique referral code on signup (format: `MUTS-{TIER}-{CODE}`)
+2. Share your code with friends - they get points on signup, you get 500 bonus points when they use it
+3. Each account can only use ONE referral code (one-time use)
+4. Referral codes never expire
+5. Both parties get 500 points: referrer (who owns code) + referred (new user)
+
+**Backend Logic Required:**
+
+```
+Referral Code Usage Flow:
+1. User A shares referral code "MUTS-GOLD-7X4K9"
+2. New User B signs up with code "MUTS-GOLD-7X4K9"
+3. Backend:
+   a. Find User A by referralCode
+   b. Increment User A's referralCount by 1
+   c. Add 500 points to User A's account (referrer bonus)
+   d. Create transaction record: "Referral Bonus - User B used your code"
+   e. Create User B with referredBy = "MUTS-GOLD-7X4K9"
+   f. Add 500 points to User B's account (signup bonus)
+   g. Create transaction record: "Welcome Bonus - Used referral code"
+4. Return success to both callers
+```
+
+**Points Distribution:**
+| Action | Points | Recipient | Transaction Description |
+|--------|--------|-----------|---------------------|
+| Sign up with referral code | +500 | NEW USER | "Welcome Bonus - Used referral code" |
+| Someone used your code | +500 | REFERRER | "Referral Bonus - [name] used your code" |
+
+**Signup Integration:**
+- Referral code field on signup form (optional)
+- Validates format: `MUTS-XXXX-XXXX`
+- 500 bonus points awarded on successful signup
+- Referral bonus applied automatically after account creation
+- `referredBy` field stored on new user's profile
+
+**Referral Code Format:**
+- Prefix: `MUTS-`
+- Tier: `BRONZE`, `SILVER`, `GOLD`, or `PLATINUM`
+- Code: 6-character alphanumeric (e.g., `7X4K9`)
+- Example: `MUTS-GOLD-7X4K9`
+- Note: Tier in code reflects REFERRER's tier, not new user's tier
+
+**Referral API Endpoints:**
+```
+GET /api/loyalty/referral-code         // Get user's own referral code
+POST /api/loyalty/generate-referral-code  // Regenerate new code (if needed)
+POST /api/loyalty/refer?code={code}   // Apply someone else's referral code
+POST /api/auth/register         // Include referralCode in body
+GET /api/users/{id}/referrals   // Get users who used your code (optional)
+```
+
+**Apply Referral Response:**
+```javascript
+// POST /api/loyalty/refer?code=MUTS-GOLD-7X4K9
+{
+  "success": true,
+  "message": "Referral code applied successfully",
+  "data": {
+    "bonusPoints": 500,
+    "referredCode": "MUTS-GOLD-7X4K9",
+    "newPointsBalance": 2950
+  }
+}
+
+// Error: Code already used
+{
+  "success": false,
+  "message": "Referral code already used"
+}
+
+// Error: Invalid code
+{
+  "success": false,
+  "message": "Invalid referral code"
+}
+
+// Error: Using own code
+{
+  "success": false,
+  "message": "Cannot use your own referral code"
+}
+
+// Error: User already used a code
+{
+  "success": false,
+  "message": "You have already used a referral code"
+}
+```
 
 ---
 
@@ -1199,6 +1554,153 @@ Response: { "success": true, "token": "new_token", "refreshToken": "new_refresh"
 - rating: 1-5 star filter
 
 **Fallback:** Uses mockReviews() in list.html
+
+## Public Reviews API
+
+**Base Endpoint:** `/api/reviews`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/reviews | List reviews for an item |
+| GET | ?type=hotels&itemId=h123 | Get reviews for specific item |
+| POST | /api/reviews | Submit new review |
+
+**Query Parameters (GET):**
+- type: hotels, tours, destinations, products, experiences
+- itemId: The item's unique ID (e.g., h123, t1, dest-1)
+
+**Request Body (POST):**
+```json
+{
+  "type": "hotels",
+  "itemId": "h123",
+  "rating": 5,
+  "text": "Amazing experience! Would definitely return.",
+  "user": "John D."
+}
+```
+
+**Response (GET):**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "r1",
+      "user": "John D.",
+      "rating": 5,
+      "text": "Amazing experience!",
+      "date": "2026-03-15",
+      "helpful": 12
+    }
+  ],
+  "rating": {
+    "average": 4.5,
+    "count": 78,
+    "distribution": { "1": 2, "2": 5, "3": 10, "4": 20, "5": 41 }
+  }
+}
+```
+
+**Response (POST):**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "r999",
+    "user": "John D.",
+    "rating": 5,
+    "text": "Amazing experience!",
+    "date": "2026-04-19",
+    "helpful": 0
+  }
+}
+```
+
+**Frontend Usage:**
+```javascript
+// Get reviews for dynamically fetched hotel
+MutsReviewsService.getReviewsForItem('hotels', hotelId).then(reviews => {
+    if (reviews.length > 0) {
+        // Show reviews section
+        MutsReviewsWidget.init({
+            itemType: 'hotels',
+            itemId: hotelId,
+            containerId: 'reviews-widget'
+        });
+    }
+});
+```
+
+### Booking Verification (Required)
+Only users who have **recently attended** (within last 90 days) can submit reviews.
+
+**Frontend check - Recent Attendance:**
+```javascript
+const RECENT_DAYS = 90;
+
+async function canUserReview(itemType, itemId) {
+    if (!window.MutsAuth || !window.MutsAuth.getSession()) {
+        return { canReview: false, reason: 'login' };
+    }
+    
+    // Get user's recent completed bookings
+    const bookings = await MutsBookingsService.getByFilter({
+        status: 'completed',
+        itemType: itemType,
+        itemId: itemId
+    });
+    
+    if (bookings.length === 0) {
+        return { canReview: false, reason: 'noBooking' };
+    }
+    
+    // Check if attendance was recent (within 90 days)
+    const recentCutoff = new Date();
+    recentCutoff.setDate(recentCutoff.getDate() - RECENT_DAYS);
+    
+    const recentBooking = bookings.find(b => new Date(b.endDate) >= recentCutoff);
+    
+    if (!recentBooking) {
+        return { canReview: false, reason: 'notRecent' };
+    }
+    
+    return { canReview: true, booking: recentBooking };
+}
+
+// Usage
+canUserReview('hotels', 'h123').then(result => {
+    if (result.canReview) {
+        // Show "Write a Review" button
+    } else if (result.reason === 'login') {
+        // Show "Login to review"
+    } else {
+        // Show "Only guests who attended recently can review"
+        // But still show existing reviews (read-only)
+    }
+});
+```
+
+**For Dynamic Items (all visitors can view):**
+```javascript
+// Any user can VIEW reviews
+MutsReviewsService.getReviewsForItem('hotels', 'h123').then(reviews => {
+    // Always display reviews (read-only)
+    displayReviews(reviews);
+});
+
+// Only recent guests can WRITE reviews
+canUserReview('hotels', 'h123').then(result => {
+    if (result.canReview) {
+        showReviewForm();
+    }
+});
+```
+
+**Notes:**
+- Reviews are linked to items by type + itemId (not item UUID)
+- Manager moderates via `/api/manager/content/reviews`
+- Frontend checks `MutsAPIConfig.isConnected()` to decide mock vs API
 
 ---
 

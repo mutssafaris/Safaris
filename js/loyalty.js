@@ -127,6 +127,33 @@
         },
         
         /**
+         * Generate/regenerate referral code for user
+         */
+        generateReferralCode: function() {
+            var self = this;
+            var baseURL = this._getBaseURL();
+            
+            return fetch(baseURL + '/loyalty/generate-referral-code', {
+                method: 'POST',
+                headers: this._getAuthHeaders()
+            })
+            .then(function(response) {
+                if (!response.ok) throw new Error('Failed to generate code');
+                return response.json();
+            })
+            .then(function(data) { return data.code; })
+            .catch(function() { 
+                // Generate locally only - but this should sync with backend later
+                var session = localStorage.getItem('muts_user_session');
+                var sessionObj = session ? JSON.parse(session) : null;
+                var tier = sessionObj ? (sessionObj.tier || 'bronze') : 'bronze';
+                var code = 'MUTS-' + tier.toUpperCase().substr(0, 6) + '-' + Math.random().toString(36).substr(2, 4).toUpperCase();
+                console.log('[Loyalty] Generated local referral code:', code);
+                return code;
+            });
+        },
+        
+        /**
          * Use a referral code
          */
         useReferralCode: function(code) {

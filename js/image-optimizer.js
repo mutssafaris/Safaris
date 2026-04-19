@@ -12,8 +12,13 @@
 (function() {
     'use strict';
 
+    // CDN only used in production - development uses local paths
+    var isProduction = window.location.hostname !== '127.0.0.1' && 
+                       window.location.hostname !== 'localhost' &&
+                       !window.location.hostname.endsWith('.local');
+    
     var CDNs = {
-        primary: 'https://images.mutssafaris.com',
+        primary: isProduction ? 'https://images.mutssafaris.com' : '',
         fallback: 'https://via.placeholder.com'
     };
 
@@ -69,7 +74,8 @@
             var baseUrl = this.buildUrl(path);
             
             return sizes.map(function(w) {
-                return baseUrl + '?w=' + w + '&q=' + defaults.quality + ' ' + w + 'w';
+                var separator = baseUrl.includes('?') ? '&' : '?';
+                return baseUrl + separator + 'w=' + w + '&q=' + defaults.quality + ' ' + w + 'w';
             }).join(', ');
         },
 
@@ -105,9 +111,37 @@
                 return path;
             }
             
-            // Ensure leading slash
+            // Handle relative paths (starting with .. or .) - return as-is for local dev
+            if (path.startsWith('..') || path.startsWith('./')) {
+                // Add query params even for relative paths
+                var queryParams = [];
+                if (params) {
+                    if (params.width) queryParams.push('w=' + params.width);
+                    if (params.height) queryParams.push('h=' + params.height);
+                    if (params.quality) queryParams.push('q=' + params.quality);
+                    if (params.format) queryParams.push('fmt=' + params.format);
+                    if (params.fit) queryParams.push('fit=' + params.fit);
+                }
+                
+                var result = path;
+                if (queryParams.length > 0) {
+                    result += '?' + queryParams.join('&');
+                }
+                
+                if (!CDNs.primary) {
+                    return result;
+                }
+                return CDNs.primary + '/' + path + (queryParams.length > 0 ? '?' + queryParams.join('&') : '');
+            }
+            
+            // Ensure leading slash for absolute paths
             if (!path.startsWith('/')) {
                 path = '/' + path;
+            }
+            
+            // If no CDN configured, return local path
+            if (!CDNs.primary) {
+                return path;
             }
             
             var url = CDNs.primary + path;

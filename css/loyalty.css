@@ -948,6 +948,66 @@
     padding: 16px;
 }
 
+.redeem-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.redeem-header {
+    margin-bottom: 12px;
+}
+
+.redeem-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-family: 'Courier New', 'Orbitron', sans-serif;
+    color: var(--hud-cyan);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.redeem-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.redeem-option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 12px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.redeem-option-btn:hover {
+    border-color: var(--hud-cyan);
+    background: rgba(0, 240, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.redeem-points {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'Courier New', 'Orbitron', sans-serif;
+}
+
+.redeem-value {
+    font-size: 12px;
+    color: var(--hud-green);
+}
+
 .transactions-header {
     display: flex;
     justify-content: space-between;
@@ -1322,6 +1382,94 @@ flex-direction: column;
     overflow: hidden;
 }
 
+.apply-referral-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 255, 136, 0.05) 100%);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.apply-referral-header {
+    margin-bottom: 18px;
+}
+
+.apply-referral-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-family: 'Courier New', 'Orbitron', sans-serif;
+    color: var(--hud-green);
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.apply-referral-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.apply-referral-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.apply-referral-form input {
+    flex: 1;
+    padding: 14px 18px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--hud-cyan);
+    font-family: 'Share Tech Mono', monospace;
+    text-transform: uppercase;
+}
+
+.apply-referral-form input:focus {
+    outline: none;
+    border-color: var(--hud-green);
+}
+
+.apply-referral-form input::placeholder {
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+}
+
+.apply-btn {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--hud-green), #00cc66);
+    color: var(--bg-card);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Courier New', 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+}
+
+.apply-referral-note {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin: 0;
+    }
+
 .referral-card::before {
     content: '';
     position: absolute;
@@ -1376,11 +1524,108 @@ flex-direction: column;
     font-family: 'Share Tech Mono', monospace;
 }
 
+.referral-stats {
+    margin-top: 14px;
+    text-align: center;
+}
+
+.referral-count {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.referral-count strong {
+    color: var(--hud-cyan);
+    font-size: 18px;
+}
+
+.referred-by-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 215, 0, 0.08) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 14px;
+    padding: 24px;
+}
+
+.referred-by-header {
+    margin-bottom: 14px;
+}
+
+.referred-by-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-family: 'Courier New', 'Orbitron', sans-serif;
+    color: #ffd700;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.referred-by-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.referred-by-code code {
+    padding: 14px 24px;
+    background: var(--bg-secondary);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #ffd700;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.referred-by-label {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
 .transactions-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 22px;
+}
+
+.redeem-section {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 240, 255, 0.05) 100%);
+    border: 1px solid var(--hud-cyan-dim);
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.redeem-header {
+    margin-bottom: 18px;
+}
+
+.redeem-header h3 {
+    font-size: 15px;
+}
+
+.redeem-options-grid {
+    display: flex;
+    gap: 14px;
+}
+
+.redeem-option-btn {
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 16px;
+}
+
+.redeem-points {
+    font-size: 20px;
+}
+
+.redeem-value {
+    font-size: 13px;
 }
 
 .transactions-header {
@@ -1716,5 +1961,81 @@ flex-direction: column;
     
     .txn-points {
         font-size: 13px !important;
+    }
+    
+    .redeem-section {
+        padding: 12px !important;
+    }
+    
+    .redeem-header h3 {
+        font-size: 12px !important;
+    }
+    
+    .redeem-options-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .redeem-option-btn {
+        width: 100% !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        padding: 12px !important;
+    }
+    
+    .redeem-points {
+        font-size: 14px !important;
+    }
+    
+    .redeem-value {
+        font-size: 12px !important;
+    }
+    
+    .apply-referral-card {
+        padding: 12px !important;
+    }
+    
+    .apply-referral-header h3 {
+        font-size: 12px !important;
+    }
+    
+    .apply-referral-subtitle {
+        font-size: 11px !important;
+    }
+    
+    .apply-referral-form {
+        flex-direction: column !important;
+    }
+    
+    .apply-referral-form input {
+        font-size: 14px !important;
+        padding: 12px !important;
+    }
+    
+    .apply-btn {
+        width: 100% !important;
+        padding: 12px !important;
+    }
+    
+    .referral-stats {
+        margin-top: 10px !important;
+    }
+    
+    .referral-count {
+        font-size: 11px !important;
+    }
+    
+    .referred-by-card {
+        padding: 12px !important;
+    }
+    
+    .referred-by-header h3 {
+        font-size: 12px !important;
+    }
+    
+    .referred-by-code code {
+        font-size: 14px !important;
+        padding: 10px 16px !important;
     }
 }

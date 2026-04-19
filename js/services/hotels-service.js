@@ -299,7 +299,7 @@
             price: 95,
             rating: 4.2,
             reviews: 78,
-            image: '../../images/hotels/eco-budget/laikipia-camp.jpg',
+            image: '../../images/hotels/eco-budget/laikipia-community-camp.jpg',
             imageLoaded: false,
             amenities: [
                 { icon: '🍽️', name: 'Restaurant' },
@@ -367,7 +367,7 @@
             price: 400,
             rating: 4.8,
             reviews: 267,
-            image: '../../images/hotels/norfolk-hotel.jpg',
+            image: '../../images/hotels/luxury/nairobi-lodge.jpg',
             imageLoaded: false,
             amenities: [
                 { icon: '📶', name: 'WiFi' },
@@ -437,7 +437,7 @@
             price: 320,
             rating: 4.5,
             reviews: 198,
-            image: '../../images/hotels/mara-serena.jpg',
+            image: '../../images/hotels/mid-range/mara-serena.jpg',
             imageLoaded: false,
             amenities: [
                 { icon: '📶', name: 'WiFi' },
@@ -460,7 +460,7 @@
             price: 75,
             rating: 3.9,
             reviews: 89,
-            image: '../../images/hotels/eco-budget/mombasa-guesthouse.jpg',
+            image: '../../images/hotels/eco-budget/coastal-budget-guesthouse.jpg',
             imageLoaded: false,
             amenities: [
                 { icon: '📶', name: 'WiFi' },
@@ -481,7 +481,7 @@
             price: 0,
             rating: 4.9,
             reviews: 312,
-            image: '../../images/hotels/matteos-restaurant.jpg',
+            image: '../../images/hotels/luxury/matteos-hero.jpg',
             imageLoaded: false,
             amenities: [
                 { icon: '🍽️', name: 'Fine Dining' },
@@ -697,6 +697,7 @@
                 return response.json();
             }).catch(function() {
                 console.warn('[HotelsService] API unavailable, using mock data');
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockHotels;
             });
             
@@ -705,6 +706,7 @@
             });
             
             return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockHotels;
             });
         },

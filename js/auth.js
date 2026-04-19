@@ -467,6 +467,8 @@ try {
             country: extraData.country || '',
             interest: extraData.interest || '',
             newsletter: extraData.newsletter || false,
+            referralCode: extraData.referralCode || '',
+            referredBy: '',  // Will be set when using someone else's code
             role: 'user',
             emailVerified: false,
             createdAt: new Date().toISOString()
@@ -476,6 +478,39 @@ try {
         saveUsers(users);
         seedUserData(user.id);
         setSession(user, false);
+        
+        // Check if user already used a referral code
+        if (user.referredBy) {
+            console.log('[Auth] User already used referral code:', user.referredBy);
+        } else if (extraData.referralCode) {
+            var referralCode = extraData.referralCode.toUpperCase().trim();
+            if (/^MUTS-[A-Z0-9]{4,12}$/.test(referralCode)) {
+                // Validate it's not their own code
+                var users = getUsers();
+                var referrer = users.find(function(u) { return u.referralCode === referralCode; });
+                if (referrer && referrer.id === user.id) {
+                    console.warn('[Auth] Cannot use own referral code');
+                } else {
+                    console.log('[Auth] Applying referral code:', referralCode);
+                    user.referredBy = referralCode;
+                    var idx = users.findIndex(function(u) { return u.id === user.id; });
+                    if (idx !== -1) {
+                        users[idx].referredBy = referralCode;
+                        saveUsers(users);
+                    }
+                    // Only call API for bonus - skip local to avoid double credit
+                    if (window.MutsLoyaltyService && window.MutsAPIConfig && window.MutsAPIConfig.isConnected()) {
+                        window.MutsLoyaltyService.useReferralCode(referralCode).then(function(result) {
+                            if (result && result.success) {
+                                console.log('[Auth] Referral bonus applied:', result.data.bonusPoints);
+                            }
+                        })['catch'](function(e) {
+                            console.warn('[Auth] Referral apply failed:', e.message);
+                        });
+                    }
+                }
+            }
+        }
         
         return Promise.resolve({ success: true });
     }
@@ -609,6 +644,48 @@ try {
         return API_READY;
     }
 
+    function socialLogin(provider, idToken) {
+        var validProviders = ['google', 'facebook', 'apple'];
+        
+        if (!provider || validProviders.indexOf(provider) === -1) {
+            return Promise.resolve({ 
+                success: false, 
+                message: 'Invalid provider. Supported: google, facebook, apple' 
+            });
+        }
+        
+        console.log('[Auth] Social login with:', provider);
+        
+        if (!API_READY) {
+            console.log('[Auth] API not ready - social login unavailable on static host');
+            return Promise.resolve({ 
+                success: false, 
+                message: 'Social login is not available on static hosting. Please use email login.' 
+            });
+        }
+        
+        return fetchFromAPI('/auth/social/' + provider, {
+            method: 'POST',
+            body: { idToken: idToken }
+        })
+        .then(function(response) {
+            if (response.success) {
+                setSession(response.user, false, {
+                    token: response.token,
+                    refreshToken: response.refreshToken
+                });
+            }
+            return response;
+        })
+        ['catch'](function(err) {
+            console.error('[Auth] Social login error:', err);
+            return { 
+                success: false, 
+                message: 'Social login failed. Please try again or use email login.' 
+            };
+        });
+    }
+
     window.MutsAuth = {
         login: login,
         signup: signup,
@@ -624,7 +701,8 @@ try {
         isAPILive: isAPILive,
         refreshToken: refreshToken,
         scheduleTokenRefresh: scheduleTokenRefresh,
-        isTokenExpired: handleTokenExpired
+        isTokenExpired: handleTokenExpired,
+        socialLogin: socialLogin
     };
 
     document.addEventListener('DOMContentLoaded', function () {
