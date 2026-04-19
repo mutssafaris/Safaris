@@ -62,10 +62,15 @@
 </div>
 <div class="filter-no-results"><p>No tours match your filters. <a href="#" onclick="document.querySelector('.filter-clear-btn').click();return false;">Clear filters</a> to see all.</p></div>
         <div class="listing-grid" id="tours-grid"></div>
+        <div id="tours-reviews-widget" class="reviews-widget" style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border-glow);"></div>
     </main>
 </div>
 <script src="../../js/auth.js"></script>
-    <script src="../../js/init-dashboard.js"></script><script src="../../js/favorites.js"></script><script src="../../js/dashboard-theme.js"></script>
+<script src="../../js/init-dashboard.js"></script>
+<script src="../../js/favorites.js"></script>
+<script src="../../js/dashboard-theme.js"></script>
+<script src="../../js/services/reviews-service.js"></script>
+<script src="../../js/reviews-widget.js"></script>
 <script>
 // Embedded fallback data - works without HTTP server
 var embeddedDestinations = {
@@ -261,6 +266,19 @@ function initFavoriteActions() {
         });
     });
 }
+
+// Initialize reviews widget for tours listing
+(function() {
+    var widgetContainer = document.getElementById('tours-reviews-widget');
+    if (widgetContainer && window.MutsReviewsWidget) {
+        var widget = window.MutsReviewsWidget.create({
+            itemType: 'tours',
+            itemId: 'all',
+            containerId: 'tours-reviews-widget'
+        });
+        widget.render();
+    }
+})();
 </script>
 </body>
 </html>

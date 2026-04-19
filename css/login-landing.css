@@ -1251,6 +1251,69 @@ img:not([data-src]) {
     font-size: 0.75rem;
 }
 
+/* Social Login Buttons */
+.social-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.25rem 0;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+}
+
+.social-divider::before,
+.social-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 220, 100, 0.2);
+}
+
+.social-divider span {
+    padding: 0 0.75rem;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 220, 100, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+    font-family: inherit;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 220, 100, 0.5);
+}
+
+.social-btn svg {
+    flex-shrink: 0;
+}
+
+.social-btn.google:hover {
+    border-color: #4285F4;
+    box-shadow: 0 0 12px rgba(66, 133, 244, 0.3);
+}
+
+.social-btn.apple:hover {
+    border-color: #fff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
 .close-auth {
     position: absolute;
     top: 0.75rem;

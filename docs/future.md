@@ -24,12 +24,12 @@ This document tracks planned features and improvements for the Muts Safaris plat
 
 ## Phase 3: User Features
 
-- [ ] Social login (Google, Facebook)
-- [ ] User reviews and ratings
+- [x] Social login (Google, Facebook)
+- [x] User reviews and ratings - js/reviews-widget.js + existing reviews-service.js (backend-ready)
 - [ ] Wishlists sync across devices
 - [ ] Booking modifications
-- [ ] Loyalty points dashboard
-- [ ] Referral program
+- [x] Loyalty points dashboard - pages/dashboard/loyalty.html (full UI with redeem, history)
+- [x] Referral program - apply code UI, 500pts bonus, generate code, referredBy tracking
 
 ## Phase 4: Performance
 
@@ -51,6 +51,21 @@ This document tracks planned features and improvements for the Muts Safaris plat
 - [x] Critical inline CSS - dashboard shows loading spinner immediately
 - [x] Desktop layout fix - removed centering/overflow issues, blank spaces on sides
 - [x] Sidebar gradient - matches main content purple/pink sci-fi gradient
+- [x] Social login UI - login.html (Google, Apple buttons)
+- [x] Social login handler - MutsAuth.socialLogin(provider, idToken) in js/auth.js
+- [x] Social login documentation - docs/FRONTEND_INTEGRATION.md (backend endpoints, schemas)
+- [x] Navigation guard - js/nav-guard.js protects all dashboard pages except contact
+- [x] Protected nav links - login.html (Home, Explore, My Trips, Blog require auth; Contact stays open)
+- [x] Contact page update - more general inquiry text, compact contact cards
+- [x] Contact form options - added General Inquiry, Partnership, Media, Support subjects
+- [x] Mock data indicator - js/mock-indicator.js shows subtle "Demo" badge when using mock data
+- [x] Mock indicator CSS - css/mock-indicator.css with pulsing dot animation
+- [x] Booking detail page UI - added missing CSS styles for booking-detail-header, booking-detail-grid, timeline, cards
+- [x] Booking action buttons - custom HUD-styled buttons with gold/red theming (28px icons)
+- [x] Loyalty dashboard enhancements - redeem section, apply referral code, referredBy tracking, referral count display
+- [x] Referral program - signup integration, generate code, track referredBy, prevent self-referral
+- [x] Image auto-conversion - js/image-auto-convert.js converts data-image-key to picture/WebP elements
+- [ ] HUD hover effects - add sci-fi sweep animation, glow, lift on booking action buttons (TBD)
 
 ### Completed ✅ (2026-04-18)
 - [x] Replace remaining eval() calls - js/booking-management.js
@@ -96,6 +111,10 @@ This document tracks planned features and improvements for the Muts Safaris plat
 ### Low Priority (Pending)
 - [ ] Code comments cleanup --done incrementally over time
 - [ ] Deprecated browser support --browser-check.js added
+- [ ] Hotel pages reviews migration - migrate 19 hotel detail pages from static HTML to unified reviews-widget.js
+  - See docs/reviews-migration-plan.md for detailed steps
+  - Hotelfiles: eco-budget (6), luxury (7), mid-range (6) need widget integration
+- [ ] Backend reviews API - implement /api/reviews endpoints (see .kilo/plans/reviews-api-plan.md)
 
 ---
 

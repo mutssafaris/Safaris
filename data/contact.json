@@ -25,12 +25,15 @@
   },
   "formOptions": {
     "subjects": [
+      "General Inquiry",
       "Booking Inquiry",
       "Custom Tour Planning",
       "Hotel Information",
       "Tour Packages",
-      "General Information",
-      "Feedback"
+      "Partnership Opportunity",
+      "Media Request",
+      "Feedback",
+      "Support"
     ],
     "destinations": [
       "Maasai Mara",

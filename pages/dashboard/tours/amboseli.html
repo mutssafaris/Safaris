@@ -90,10 +90,25 @@
                 <a href="#" class="btn btn-primary">Book This Safari</a>
                 <a href="index.html" class="btn btn-outline" style="margin-left:1rem;">Back to Tours</a>
             </div>
+<div id="tour-reviews-widget" class="reviews-widget" style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border-glow);">
+            </div>
         </div>
     </main>
 </div>
-<script src="../../../js/auth.js"></script>
+<script src="../../../js/services/reviews-service.js"></script>
+<script src="../../../js/reviews-widget.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var widgetContainer = document.getElementById('tour-reviews-widget');
+        if (widgetContainer && window.MutsReviewsWidget) {
+            window.MutsReviewsWidget.init({
+                itemType: 'tours',
+                itemId: 'amboseli',
+                containerId: 'tour-reviews-widget'
+            });
+        }
+    });
+</script>
     <script src="../../js/init-dashboard.js"></script><script src="../../../js/dashboard-theme.js"></script>
 </body>
 </html>

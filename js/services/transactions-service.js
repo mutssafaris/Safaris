@@ -105,6 +105,7 @@
                 return response.json();
             }).catch(function (err) {
                 console.warn('[TransactionsService] API unavailable, using mock data:', err.message);
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return self._ensureData().then(function(data) {
                     if (endpoint.indexOf('/summary') !== -1) {
                         return data.summary || { total: 0, pending: 0, completed: 0 };
@@ -118,6 +119,7 @@
             });
             
             return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return self._ensureData().then(function(data) {
                     if (endpoint.indexOf('/summary') !== -1) {
                         return data.summary || { total: 0, pending: 0, completed: 0 };

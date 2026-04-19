@@ -549,6 +549,7 @@
                 return response.json();
             }).catch(function (err) {
                 console.warn('[AfricasaService] API unavailable, using mock data:', err.message);
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return products;
             });
             
@@ -557,6 +558,7 @@
             });
             
             return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return products;
             });
         },

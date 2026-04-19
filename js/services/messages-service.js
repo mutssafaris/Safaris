@@ -127,6 +127,7 @@
                 return response.json();
             }).catch(function (err) {
                 console.warn('[MessagesService] API unavailable, using mock data:', err.message);
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockConversations;
             });
             
@@ -135,6 +136,7 @@
             });
             
             return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockConversations;
             });
         },

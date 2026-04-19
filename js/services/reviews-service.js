@@ -13,6 +13,55 @@
             ],
             'h2': [
                 { id: 'r3', user: 'Mike R.', rating: 5, text: 'The Kilimanjaro views were breathtaking. Best safari experience ever!', date: '2026-03-10', helpful: 15 }
+            ],
+            'laikipia-community-camp': [
+                { id: 'r13', user: 'David L.', rating: 5, text: 'Authentic experience! The community-run camp was incredible.', date: '2026-04-12', helpful: 15 },
+                { id: 'r14', user: 'Maria S.', rating: 4, text: 'Great cultural immersion. Guides were very knowledgeable.', date: '2026-04-08', helpful: 7 }
+            ],
+            'h11': [
+                { id: 'r24', user: 'James W.', rating: 5, text: 'Amazing wildlife viewing right from the camp!', date: '2026-04-10', helpful: 11 },
+                { id: 'r25', user: 'Linda M.', rating: 4, text: 'Great conservation efforts. Loved the elephants.', date: '2026-04-02', helpful: 6 }
+            ],
+            'h12': [
+                { id: 'r26', user: 'Robert K.', rating: 4, text: 'Red elephants were incredible to see!', date: '2026-03-25', helpful: 9 }
+            ],
+            'h4': [
+                { id: 'r27', user: 'Patricia A.', rating: 5, text: 'Great value for money. Friendly staff.', date: '2026-04-15', helpful: 14 },
+                { id: 'r28', user: 'Thomas B.', rating: 4, text: 'Good safari experience. Would recommend.', date: '2026-04-05', helpful: 8 }
+            ],
+            'h10': [
+                { id: 'r29', user: 'Nancy C.', rating: 5, text: 'Perfect location for flamingos!', date: '2026-03-20', helpful: 12 }
+            ],
+            'h20': [
+                { id: 'r30', user: 'Susan D.', rating: 4, text: 'Good budget option near the beach.', date: '2026-04-01', helpful: 5 }
+            ],
+            'h5': [
+                { id: 'r31', user: 'Karen E.', rating: 5, text: 'Luxury at its best! Beach front location perfect.', date: '2026-04-18', helpful: 16 },
+                { id: 'r32', user: 'Charles F.', rating: 5, text: 'Amazing resort. Will definitely return.', date: '2026-04-12', helpful: 11 }
+            ],
+            'h6': [
+                { id: 'r33', user: 'Helen G.', rating: 4, text: 'Great views over the river. Loved it.', date: '2026-03-28', helpful: 7 }
+            ],
+            'h15': [
+                { id: 'r34', user: 'Brian H.', rating: 5, text: 'Outstanding safari experience!', date: '2026-04-08', helpful: 13 }
+            ],
+            'h16': [
+                { id: 'r35', user: 'Elizabeth I.', rating: 5, text: 'Nostalgic luxury. Classic English hotel.', date: '2026-04-15', helpful: 10 }
+            ],
+            'h17': [
+                { id: 'r36', user: 'George J.', rating: 4, text: 'Good location for lake viewing.', date: '2026-03-15', helpful: 6 }
+            ],
+            'h18': [
+                { id: 'r37', user: 'Dorothy K.', rating: 5, text: 'Wonderful community experience!', date: '2026-04-02', helpful: 9 }
+            ],
+            'h19': [
+                { id: 'r38', user: 'Frank L.', rating: 4, text: 'Great game viewing from the lodge.', date: '2026-03-22', helpful: 8 }
+            ],
+            'h21': [
+                { id: 'r39', user: 'Irene M.', rating: 5, text: 'Best Italian food in Kenya!', date: '2026-04-10', helpful: 12 }
+            ],
+            'h22': [
+                { id: 'r40', user: 'Peter N.', rating: 5, text: 'Luxury safari at its finest!', date: '2026-04-18', helpful: 15 }
             ]
         },
         destinations: {
@@ -27,6 +76,34 @@
         tours: {
             't1': [
                 { id: 'r7', user: 'Alex P.', rating: 5, text: 'Professional guides, excellent accommodations. Highly recommended!', date: '2026-03-25', helpful: 14 }
+            ],
+            'samburu': [
+                { id: 'r10', user: 'Emma K.', rating: 5, text: 'Incredible wildlife sightings! Our guide was amazing.', date: '2026-04-10', helpful: 8 },
+                { id: 'r11', user: 'John D.', rating: 4, text: 'Great experience, well organized tour.', date: '2026-04-05', helpful: 5 }
+            ],
+            'maasai-mara': [
+                { id: 'r12', user: 'Sarah M.', rating: 5, text: 'Witnessed the Great Migration! Dream come true!', date: '2026-04-01', helpful: 20 }
+            ],
+            'tsavo': [
+                { id: 'r15', user: 'Michael B.', rating: 5, text: 'The red elephants were incredible! Best safari experience.', date: '2026-04-15', helpful: 12 },
+                { id: 'r16', user: 'Lisa R.', rating: 4, text: 'Great wildlife viewing, well organized tour.', date: '2026-04-10', helpful: 7 }
+            ],
+            'amboseli': [
+                { id: 'r17', user: 'Tom H.', rating: 5, text: 'Elephants with Kilimanjaro backdrop - absolutely magical!', date: '2026-04-12', helpful: 18 },
+                { id: 'r18', user: 'Anna K.', rating: 5, text: 'Best place to see elephants up close. Our guide was fantastic!', date: '2026-04-08', helpful: 14 }
+            ],
+            'lake-nakuru': [
+                { id: 'r19', user: 'David W.', rating: 5, text: 'Flamingos everywhere! A pink paradise.', date: '2026-03-28', helpful: 11 }
+            ],
+            'nairobi-np': [
+                { id: 'r20', user: 'Sophie L.', rating: 4, text: 'Perfect for a day trip. Saw lions and rhinos!', date: '2026-04-05', helpful: 6 }
+            ],
+            'hells-gate': [
+                { id: 'r21', user: 'Chris P.', rating: 5, text: 'Amazing cycling experience through the gorge!', date: '2026-04-02', helpful: 9 },
+                { id: 'r22', user: 'Nina S.', rating: 4, text: 'Great hike, saw plenty of wildlife. Highly recommend!', date: '2026-03-25', helpful: 5 }
+            ],
+            'mount-kenya': [
+                { id: 'r23', user: 'James R.', rating: 5, text: 'Summit attempt was incredible. Tough but worth it!', date: '2026-03-15', helpful: 16 }
             ]
         },
         products: {

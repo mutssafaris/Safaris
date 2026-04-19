@@ -43,7 +43,14 @@
 .contact-success { display: none; padding: 1rem; background: var(--success-bg); border: 1px solid var(--success); color: var(--success); margin-top: 0.5rem; }
 .contact-success.visible { display: block; }
 .contact-loading, .contact-error { text-align: center; padding: 2rem; color: var(--text-muted); }
-.contact-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-cards { display: flex; flex-direction: column; gap: 0.5rem; }
+.contact-card-mini { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-glow); border-radius: 0; }
+.contact-card-label { font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+.contact-card-value { font-size: 0.8rem; color: var(--text-primary); text-decoration: none; }
+.contact-card-value:hover { color: var(--accent); }
+.contact-card-mini.emergency { border-color: var(--error); }
+.contact-card-mini.emergency .contact-card-label { color: var(--error); }
+.contact-card-note { font-size: 0.7rem; color: var(--text-muted); font-style: italic; }
 @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -70,7 +77,7 @@
 <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div><div class="sidebar-overlay" id="sidebar-overlay"></div>
 <main class="dashboard-main">
 <header class="dashboard-topbar"><div class="user-profile"><div class="user-info"><span class="user-name" id="user-name">Traveler</span><span class="user-tier">Traveler Pro</span></div><div class="user-avatar" id="user-avatar">T</div></div></header>
-<div class="listing-hero"><h1>Contact Us</h1><p>Ready to plan your Kenyan adventure? Get in touch with our expert team.</p></div>
+<div class="listing-hero"><h1>Contact Us</h1><p>We're here to help with any questions, feedback, or assistance you need.</p></div>
 <div class="contact-grid">
 <div>
 <h2 style="color:var(--text-primary);margin-bottom:1rem;font-size:1.1rem;">Get in Touch</h2>
@@ -134,31 +141,31 @@
         var html = '';
         
         if (info.office) {
-            html += '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">' + info.office.type + '</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">' + info.office.details + '</p></div>';
+            html += '<div class="contact-card-mini"><span class="contact-card-label">' + info.office.type + '</span><span class="contact-card-value">' + info.office.details + '</span></div>';
         }
         
         if (info.phones) {
             info.phones.forEach(function(p) {
-                html += '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">' + p.type + '</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">' + p.details + '</p></div>';
+                html += '<div class="contact-card-mini"><span class="contact-card-label">' + p.type + '</span><a href="tel:' + p.details.replace(/\s/g, '') + ' class="contact-card-value">' + p.details + '</a></div>';
             });
         }
         
         if (info.emails) {
             info.emails.forEach(function(e) {
-                html += '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">' + e.type + '</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">' + e.details + '</p></div>';
+                html += '<div class="contact-card-mini"><span class="contact-card-label">' + e.type + '</span><a href="mailto:' + e.details + ' class="contact-card-value">' + e.details + '</a></div>';
             });
         }
         
         if (info.whatsapp) {
-            html += '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">' + info.whatsapp.type + '</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">' + info.whatsapp.details + '</p></div>';
+            html += '<div class="contact-card-mini"><span class="contact-card-label">' + info.whatsapp.type + '</span><a href="https://wa.me/' + info.whatsapp.details.replace(/\s/g, '') + '" class="contact-card-value" target="_blank">' + info.whatsapp.details + '</a></div>';
         }
         
         if (info.businessHours) {
-            html += '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">' + info.businessHours.type + '</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;white-space:pre-line;">' + info.businessHours.details + '</p></div>';
+            html += '<div class="contact-card-mini"><span class="contact-card-label">' + info.businessHours.type + '</span><span class="contact-card-value" style="white-space:pre-line;">' + info.businessHours.details + '</span></div>';
         }
         
         if (info.emergency) {
-            html += '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">' + info.emergency.type + '</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">' + info.emergency.details + (info.emergency.note ? '<br><em>' + info.emergency.note + '</em>' : '') + '</p></div>';
+            html += '<div class="contact-card-mini emergency"><span class="contact-card-label">' + info.emergency.type + '</span><a href="tel:' + info.emergency.details.replace(/\s/g, '') + ' class="contact-card-value">' + info.emergency.details + '</a>' + (info.emergency.note ? '<span class="contact-card-note">' + info.emergency.note + '</span>' : '') + '</div>';
         }
         
         container.innerHTML = html;
@@ -166,9 +173,9 @@
 
     function renderStaticContactInfo() {
         var container = document.getElementById('contact-cards');
-        container.innerHTML = '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">Office</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">Koinange Street, CBD, Nairobi</p></div>' +
-            '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">Phone</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">+254 700 123 456</p></div>' +
-            '<div class="listing-card" style="padding:1rem;"><span class="listing-badge">Email</span><p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">info@mutsafaris.com</p></div>';
+        container.innerHTML = '<div class="contact-card-mini"><span class="contact-card-label">Office</span><span class="contact-card-value">Koinange Street, CBD, Nairobi</span></div>' +
+            '<div class="contact-card-mini"><span class="contact-card-label">Phone</span><a href="tel:+254700123456" class="contact-card-value">+254 700 123 456</a></div>' +
+            '<div class="contact-card-mini"><span class="contact-card-label">Email</span><a href="mailto:info@mutsafaris.com" class="contact-card-value">info@mutsafaris.com</a></div>';
     }
 
     function populateFormOptions(options) {

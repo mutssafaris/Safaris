@@ -9,6 +9,7 @@
     "pointsToNextTier": 5220,
     "tierProgress": 32,
     "referralCode": "MUTS-GOLD-7X4K9",
+    "referredBy": "MUTS-SILVER-AB12",
     "referralCount": 3,
     "memberSince": "2024-08-15"
   },
@@ -28,6 +29,14 @@
       "points": 380,
       "date": "2026-03-22T09:15:00Z",
       "bookingId": "BK-77389"
+    },
+    {
+      "id": "pt_002b",
+      "type": "earned",
+      "description": "Welcome Bonus - Used referral code",
+      "points": 500,
+      "date": "2024-08-15T10:00:00Z",
+      "referredBy": "MUTS-SILVER-AB12"
     },
     {
       "id": "pt_003",

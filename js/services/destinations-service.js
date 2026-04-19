@@ -196,6 +196,7 @@
                 return response.json();
             }).catch(function (err) {
                 console.warn('[DestinationsService] API unavailable, using mock data:', err.message);
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockDestinations;
             });
             
@@ -204,6 +205,7 @@
             });
             
             return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockDestinations;
             });
         },

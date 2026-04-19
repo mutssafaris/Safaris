@@ -252,6 +252,7 @@
                 return response.json();
             }).catch(function (err) {
                 console.warn('[ListingsService] API unavailable, using mock data:', err.message);
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 if (endpoint.indexOf('tours') !== -1) return mockData.tours;
                 if (endpoint.indexOf('packages') !== -1) return mockData.packages;
                 if (endpoint.indexOf('beaches') !== -1) return mockData.beaches;
@@ -265,6 +266,7 @@
             });
             
             return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
+                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
                 return mockData;
             });
         },
