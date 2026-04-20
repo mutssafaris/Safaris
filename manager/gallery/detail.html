@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Gallery Image Details - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+    <style>
+        .detail-image {
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 4/3;
+            background: var(--bg-input);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="list.html" class="nav-item active">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Image Details</h1>
+                <div class="btn-group">
+                    <a href="list.html" class="btn btn-secondary">Back to List</a>
+                    <a href="edit.html?id=" class="btn btn-primary" id="edit-btn">Edit Image</a>
+                </div>
+            </div>
+            
+            <div id="loading-container" style="text-align: center; padding: 60px 20px;">
+                <div class="loading"><div class="spinner"></div></div>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading image details...</p>
+            </div>
+            
+            <div id="image-content" style="display: none;">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Image</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="detail-image" id="image-display">
+                            <img src="" alt="" id="image-src">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Image ID</label>
+                                <div class="detail-value" id="image-id">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div id="image-status">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <div class="detail-value" id="image-title">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <div class="detail-value" id="image-category">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <div class="detail-value" id="image-description">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Alt Text</label>
+                                <div class="detail-value" id="image-alt">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Featured</label>
+                                <div id="image-featured">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Uploaded Date</label>
+                                <div class="detail-value" id="image-uploaded">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>URL</label>
+                                <div class="detail-value" id="image-url">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-container" style="display: none; text-align: center; padding: 60px 20px;">
+                <p style="color: var(--error); font-size: 1.2rem;">Image not found</p>
+                <p style="color: var(--text-muted);">The requested image could not be loaded.</p>
+                <a href="list.html" class="btn btn-secondary" style="margin-top: 20px;">Back to List</a>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+    var currentImageId = null;
+    var currentImage = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var imageId = urlParams.get('id');
+        
+        if (!imageId) {
+            showError();
+            return;
+        }
+        
+        currentImageId = imageId;
+        document.getElementById('edit-btn').href = 'edit.html?id=' + imageId;
+        loadImage(imageId);
+        
+        function loadImage(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getGalleryImage(id).then(function(image) {
+                    if (image) renderImage(image);
+                    else showError();
+                }).catch(function(err) {
+                    console.error('Error loading image:', err);
+                    renderMockImage(id);
+                });
+            } else {
+                setTimeout(function() { renderMockImage(id); }, 300);
+            }
+        }
+        
+        function renderMockImage(id) {
+            var mockImages = {
+                'IMG-001': { id: 'IMG-001', title: 'Maasai Mara Sunset', description: 'Beautiful sunset over the savanna plains', category: 'safari', imageUrl: 'https://images.mutssafaris.com/gallery/maasai-mara-sunset.jpg', altText: 'Sunset over Maasai Mara', featured: 'no', status: 'active', uploaded: '2026-01-15' },
+                'IMG-002': { id: 'IMG-002', title: 'Elephant Herd', description: 'Elephants crossing the river', category: 'wildlife', imageUrl: 'https://images.mutssafaris.com/gallery/elephants.jpg', altText: 'Elephant herd', featured: 'yes', status: 'active', uploaded: '2026-01-10' },
+                'IMG-003': { id: 'IMG-003', title: 'Diani Beach', description: 'Pristine white sand beach', category: 'beach', imageUrl: 'https://images.mutssafaris.com/gallery/diani-beach.jpg', altText: 'Diani Beach', featured: 'no', status: 'active', uploaded: '2025-12-20' }
+            };
+            
+            var image = mockImages[id] || mockImages['IMG-001'];
+            if (id) image.id = id;
+            
+            renderImage(image);
+        }
+        
+        function renderImage(image) {
+            currentImage = image;
+            
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('image-content').style.display = 'block';
+            
+            var imgSrc = document.getElementById('image-src');
+            imgSrc.src = image.imageUrl || image.url || '';
+            imgSrc.alt = image.altText || image.title || '';
+            
+            imgSrc.onerror = function() {
+                this.style.display = 'none';
+            };
+            
+            document.getElementById('image-id').textContent = image.id || '-';
+            
+            var statusBadge = image.status === 'active' ? 'badge-success' : 'badge-danger';
+            document.getElementById('image-status').innerHTML = '<span class="badge ' + statusBadge + '">' + image.status + '</span>';
+            
+            document.getElementById('image-title').textContent = image.title || '-';
+            
+            var categoryLabel = image.category ? image.category.charAt(0).toUpperCase() + image.category.slice(1) : '-';
+            document.getElementById('image-category').textContent = categoryLabel;
+            
+            document.getElementById('image-description').textContent = image.description || '-';
+            document.getElementById('image-alt').textContent = image.altText || '-';
+            
+            var featuredBadge = image.featured === 'yes' ? 'badge-warning' : 'badge-secondary';
+            document.getElementById('image-featured').innerHTML = '<span class="badge ' + featuredBadge + '">' + (image.featured === 'yes' ? 'Yes' : 'No') + '</span>';
+            
+            document.getElementById('image-uploaded').textContent = image.uploaded || image.createdAt || '-';
+            document.getElementById('image-url').textContent = image.imageUrl || image.url || '-';
+        }
+        
+        function showError() {
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

@@ -298,6 +298,75 @@
 
         isAPILive: function () {
             return _apiReady;
+        },
+
+        canCancel: function (id) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/' + id + '/canCancel');
+            }
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var booking = all.find(function (b) { return b.id === id; });
+            if (!booking) {
+                booking = mockBookings.find(function (b) { return b.id === id; });
+            }
+            if (!booking) {
+                return Promise.resolve({ canCancel: false });
+            }
+            var status = booking.status;
+            var canCancel = status === 'upcoming' || status === 'pending';
+            return Promise.resolve({ canCancel: canCancel });
+        },
+
+        canModify: function (id) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/' + id + '/canModify');
+            }
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY) || '[]');
+            var booking = all.find(function (b) { return b.id === id; });
+            if (!booking) {
+                booking = mockBookings.find(function (b) { return b.id === id; });
+            }
+            if (!booking) {
+                return Promise.resolve({ canModify: false });
+            }
+            var status = booking.status;
+            var checkin = new Date(booking.checkin);
+            var now = new Date();
+            var daysUntil = Math.ceil((checkin - now) / (1000 * 60 * 60 * 24));
+            var canModify = (status === 'upcoming' || status === 'pending') && daysUntil > 3;
+            return Promise.resolve({ canModify: canModify });
+        },
+
+        getCancellationPolicy: function (daysUntil) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/policy?days=' + daysUntil);
+            }
+            var policy = 'Standard';
+            var refund = 1;
+            if (daysUntil >= 14) {
+                policy = 'Full refund';
+                refund = 1;
+            } else if (daysUntil >= 7) {
+                policy = '75% refund';
+                refund = 0.75;
+            } else if (daysUntil >= 3) {
+                policy = '50% refund';
+                refund = 0.5;
+            } else if (daysUntil >= 1) {
+                policy = '25% refund';
+                refund = 0.25;
+            } else {
+                policy = 'No refund';
+                refund = 0;
+            }
+            return Promise.resolve({ policy: policy, refund: refund });
+        },
+
+        getAvailability: function (destinationId, checkin, checkout) {
+            if (_apiReady) {
+                return this.fetchFromAPI('/bookings/availability?destination=' + destinationId + '&checkin=' + checkin + '&checkout=' + checkout);
+            }
+            return Promise.resolve({ available: true, message: 'Available' });
         }
     };
 

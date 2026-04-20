@@ -26,8 +26,8 @@ This document tracks planned features and improvements for the Muts Safaris plat
 
 - [x] Social login (Google, Facebook)
 - [x] User reviews and ratings - js/reviews-widget.js + existing reviews-service.js (backend-ready)
-- [ ] Wishlists sync across devices
-- [ ] Booking modifications
+- [x] Wishlists sync across devices - js/wishlist-service.js, pages/dashboard/my-wishlist.html
+- [x] Booking modifications
 - [x] Loyalty points dashboard - pages/dashboard/loyalty.html (full UI with redeem, history)
 - [x] Referral program - apply code UI, 500pts bonus, generate code, referredBy tracking
 
@@ -42,6 +42,15 @@ This document tracks planned features and improvements for the Muts Safaris plat
 ---
 
 ## Technical Debt
+
+### Completed ✅ (2026-04-19) - Booking System Enhancements
+- [x] Stepped booking widget - js/booking-widget.js (3-step form with progress indicator)
+- [x] Booking widget CSS - css/booking-widget.css (sci-fi HUD themed)
+- [x] Enhanced bookings service - js/services/bookings-service.js (canCancel, canModify, getCancellationPolicy, getAvailability)
+- [x] Booking management enhancements - js/booking-management.js (ARIA labels, accessibility)
+- [x] Booking validation - js/validation.js (isValidBookingDates, isValidGuestCount, isValidPrice, isValidPromoCode)
+- [x] Booking analytics - js/booking-analytics.js (stats, revenue reports, popular destinations)
+- [x] Promo codes - SAFARI25, AMBOSELI20, WELCOME10, MUTS2026
 
 ### Completed ✅ (2026-04-19)
 - [x] Trusters section on About page - sciFi HUD themed cards with logoType (CSS-generated logos, no base64)
@@ -149,4 +158,4 @@ This document tracks planned features and improvements for the Muts Safaris plat
 ---
 
 *Last Updated: 2026-04-19*
-*Completed: Trusters section, service worker fix, PWA manifest, Google Fonts removal, critical CSS, desktop layout, sidebar gradient*
+*Completed: Trusters section, service worker fix, PWA manifest, Google Fonts removal, critical CSS, desktop layout, sidebar gradient, booking enhancements*

@@ -10,6 +10,14 @@
 </head>
 <body>
     <div class="dashboard-layout">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <span></span><span></span><span></span>
+        </button>
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <h2>MUTS MANAGER</h2>
@@ -110,7 +118,7 @@
     </div>
     
     <!-- View/Respond Modal -->
-    <div class="modal-overlay" id="view-modal">
+    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden;">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>Review Details</h2>
@@ -245,7 +253,11 @@
         };
         
         window.closeModal = function() {
-            document.getElementById('view-modal').classList.remove('show');
+            var modal = document.getElementById('view-modal');
+            modal.classList.remove('show');
+            // Clear inline styles when closing
+            modal.style.opacity = '';
+            modal.style.visibility = '';
             currentReviewId = null;
         };
         

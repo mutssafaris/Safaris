@@ -227,6 +227,91 @@
             }
 
             return { valid: isValid, errors: errors };
+        },
+
+        /**
+         * Validate booking dates (checkin < checkout, both in future)
+         * @param {string} checkin 
+         * @param {string} checkout 
+         * @returns {object} { valid: boolean, message: string }
+         */
+        isValidBookingDates: function(checkin, checkout) {
+            if (!this.isDate(checkin) || !this.isDate(checkout)) {
+                return { valid: false, message: 'Invalid date format' };
+            }
+            var checkinDate = new Date(checkin);
+            var checkoutDate = new Date(checkout);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (checkinDate < today) {
+                return { valid: false, message: 'Check-in date must be in the future' };
+            }
+            if (checkoutDate <= checkinDate) {
+                return { valid: false, message: 'Check-out must be after check-in' };
+            }
+            var nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+            if (nights < 1) {
+                return { valid: false, message: 'Minimum 1 night required' };
+            }
+            if (nights > 30) {
+                return { valid: false, message: 'Maximum 30 nights allowed' };
+            }
+            return { valid: true, nights: nights };
+        },
+
+        /**
+         * Validate guest count (adults, children, infants)
+         * @param {number} adults 
+         * @param {number} children 
+         * @param {number} infants 
+         * @returns {object} { valid: boolean, message: string }
+         */
+        isValidGuestCount: function(adults, children, infants) {
+            adults = parseInt(adults) || 0;
+            children = parseInt(children) || 0;
+            infants = parseInt(infants) || 0;
+            if (adults < 1) {
+                return { valid: false, message: 'At least 1 adult required' };
+            }
+            if (adults > 20) {
+                return { valid: false, message: 'Maximum 20 adults per booking' };
+            }
+            if (children > 10) {
+                return { valid: false, message: 'Maximum 10 children per booking' };
+            }
+            if (infants > 5) {
+                return { valid: false, message: 'Maximum 5 infants per booking' };
+            }
+            var total = adults + children + infants;
+            if (total > 25) {
+                return { valid: false, message: 'Maximum 25 guests per booking' };
+            }
+            return { valid: true, total: total };
+        },
+
+        /**
+         * Validate price amount
+         * @param {number} amount 
+         * @param {number} min 
+         * @param {number} max 
+         * @returns {boolean}
+         */
+        isValidPrice: function(amount, min, max) {
+            var n = parseFloat(amount);
+            if (isNaN(n) || n < 0) return false;
+            if (min !== undefined && n < min) return false;
+            if (max !== undefined && n > max) return false;
+            return true;
+        },
+
+        /**
+         * Validate promo code format
+         * @param {string} code 
+         * @returns {boolean}
+         */
+        isValidPromoCode: function(code) {
+            if (typeof code !== 'string') return false;
+            return /^[A-Z0-9]{4,15}$/i.test(code.trim());
         }
     };
 

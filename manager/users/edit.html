@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Edit User - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="list.html" class="nav-item active">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 id="page-title">Edit User</h1>
+            </div>
+            
+            <form id="user-form">
+                <input type="hidden" id="user-id" name="user-id">
+                
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>User Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="+254700000000">
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" placeholder="Kenya">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Account Settings</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tier">Membership Tier</label>
+                                <select id="tier">
+                                    <option value="guest">Guest</option>
+                                    <option value="traveler">Traveler</option>
+                                    <option value="explorer">Explorer</option>
+                                    <option value="adventurer">Adventurer</option>
+                                    <option value="vip">VIP</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select id="status">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">New Password</label>
+                                <input type="password" id="password" placeholder="Leave blank to keep current">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Preferences</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="newsletter">Newsletter</label>
+                            <div class="custom-select" id="newsletter-select" style="width: 100%;">
+                                <input type="hidden" id="newsletter" value="yes">
+                                <div class="select-trigger"><span>Subscribed</span></div>
+                                <ul class="dropdown-list">
+                                    <li class="dropdown-item selected" data-value="yes">Subscribed</li>
+                                    <li class="dropdown-item" data-value="no">Unsubscribed</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Internal Notes</label>
+                            <textarea id="notes" rows="3" placeholder="Internal notes about this user..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script>
+    var isNewUser = true;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var userId = urlParams.get('id');
+        
+        if (userId) {
+            isNewUser = false;
+            document.getElementById('page-title').textContent = 'Edit User';
+            document.getElementById('user-id').value = userId;
+            loadUser(userId);
+        } else {
+            document.getElementById('page-title').textContent = 'New User';
+        }
+        
+        initCustomDropdowns();
+        
+        document.getElementById('user-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveUser();
+        });
+        
+        function loadUser(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getUser(id).then(function(user) {
+                    if (user) populateForm(user);
+                }).catch(function(err) {
+                    console.error('Error loading user:', err);
+                    populateForm(getMockUser(id));
+                });
+            } else {
+                setTimeout(function() { populateForm(getMockUser(id)); }, 300);
+            }
+        }
+        
+        function getMockUser(id) {
+            return {
+                id: id,
+                name: 'John Smith',
+                email: 'john@example.com',
+                phone: '+254700000001',
+                country: 'Kenya',
+                tier: 'explorer',
+                status: 'active',
+                newsletter: 'yes',
+                notes: ''
+            };
+        }
+        
+        function populateForm(user) {
+            document.getElementById('user-id').value = user.id || '';
+            document.getElementById('name').value = user.name || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('country').value = user.country || '';
+            document.getElementById('tier').value = user.tier || 'guest';
+            document.getElementById('status').value = user.status || 'active';
+            document.getElementById('newsletter').value = user.newsletter || 'yes';
+            document.getElementById('notes').value = user.notes || '';
+            
+            var newsletterSelect = document.getElementById('newsletter-select');
+            var newsletterSpan = newsletterSelect.querySelector('.select-trigger span');
+            var newsletterItems = newsletterSelect.querySelectorAll('.dropdown-item');
+            newsletterItems.forEach(function(item) {
+                item.classList.remove('selected');
+                if (item.getAttribute('data-value') === user.newsletter) {
+                    item.classList.add('selected');
+                    newsletterSpan.textContent = item.textContent;
+                }
+            });
+        }
+        
+        function initCustomDropdowns() {
+            var selects = document.querySelectorAll('.custom-select');
+            selects.forEach(function(select) {
+                var trigger = select.querySelector('.select-trigger');
+                var list = select.querySelector('.dropdown-list');
+                var items = select.querySelectorAll('.dropdown-item');
+                var hidden = select.querySelector('input[type="hidden"]');
+                var span = trigger.querySelector('span');
+                
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selects.forEach(function(other) {
+                        if (other !== select) other.classList.remove('open');
+                    });
+                    select.classList.toggle('open');
+                });
+                
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var value = item.getAttribute('data-value');
+                        hidden.value = value;
+                        span.textContent = item.textContent;
+                        items.forEach(function(i) { i.classList.remove('selected'); });
+                        item.classList.add('selected');
+                        select.classList.remove('open');
+                    });
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                selects.forEach(function(s) { s.classList.remove('open'); });
+            });
+        }
+        
+        function saveUser() {
+            var userData = {
+                id: document.getElementById('user-id').value,
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                country: document.getElementById('country').value.trim(),
+                tier: document.getElementById('tier').value,
+                status: document.getElementById('status').value,
+                newsletter: document.getElementById('newsletter').value,
+                notes: document.getElementById('notes').value.trim()
+            };
+            
+            var password = document.getElementById('password').value;
+            if (password) userData.password = password;
+            
+            if (!userData.name || !userData.email) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (ManagerService.isAPILive()) {
+                var action = isNewUser ? ManagerService.createUser(userData) : ManagerService.updateUser(userData);
+                action.then(function() {
+                    showToast(isNewUser ? 'User created successfully' : 'User updated successfully');
+                    setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                }).catch(function(err) {
+                    showToast('Failed to save user', 'error');
+                });
+            } else {
+                showToast(isNewUser ? 'User created successfully' : 'User updated successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

@@ -196,6 +196,81 @@ img:not([data-src]) {
     gap: 3rem;
 }
 
+.nav-link-mobile {
+    display: none;
+    color: #ffb800;
+    text-decoration: none;
+    font-family: var(--font-family-heading);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ffb800;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    animation: sweep 2s ease-in-out infinite;
+}
+
+.nav-link-mobile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 184, 0, 0.4), transparent);
+    animation: sweep-left 3s ease-in-out infinite;
+}
+
+/* Sweep animation keyframes */
+@keyframes sweep {
+    0%, 100% { box-shadow: 0 0 5px rgba(255, 184, 0, 0.3); }
+    50% { box-shadow: 0 0 15px rgba(255, 184, 0, 0.6); }
+}
+
+@keyframes sweep-left {
+    0% { left: -50%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+.nav-link-mobile:hover {
+    background: #ffb800;
+    color: #000;
+    animation: none;
+}
+
+.nav-link-mobile:hover::before {
+    animation: none;
+}
+
+/* Desktop Explore button sweep animation */
+.nav-link[href*="explore"] {
+    position: relative;
+    overflow: hidden;
+    animation: sweep 2s ease-in-out infinite;
+}
+
+.nav-link[href*="explore"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 184, 0, 0.3), transparent);
+    animation: sweep-left 3s ease-in-out infinite;
+}
+
+.nav-link[href*="explore"]:hover {
+    animation: none;
+}
+
+.nav-link[href*="explore"]:hover::before {
+    animation: none;
+}
+
 .nav-link {
     color: #ffffff;
     text-decoration: none;
@@ -749,6 +824,11 @@ img:not([data-src]) {
 
     .nav-links {
         display: none;
+    }
+    
+    .nav-link-mobile {
+        display: block;
+        margin-right: 0.5rem;
     }
     
     .auth-logo {

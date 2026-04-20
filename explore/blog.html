@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="description" content="Blog - Travel tips, safari guides, and stories from Muts Safaris.">
+    <meta name="keywords" content="safari blog, kenya travel, safari tips, maasai mara guide">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mutssafaris.com/explore/blog">
+    <title>Blog - Muts Safaris</title>
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dashboard-theme.css">
+    <link rel="stylesheet" href="../css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="icon" href="../assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'dark';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'light' || stored === 'dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="explore-navbar">
+        <a href="../login.html" class="explore-brand">MUTS_SAFARIS</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="explore-nav-links" id="explore-nav-links">
+            <a href="index.html">Home</a>
+            <a href="beaches.html">Beaches</a>
+            <a href="packages.html">Packages</a>
+            <a href="africasa.html">Africasa</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <a href="../login.html" class="explore-login-btn">Login</a>
+    </nav>
+
+    <main class="explore-main">
+        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/blog.jpg') center/cover no-repeat;">
+            <div class="hero-content">
+                <span class="hero-badge">Travel guides</span>
+                <h1 class="hero-title">BLOG</h1>
+                <p class="hero-subtitle">Tips, guides, and stories from the wild.</p>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <div class="blog-grid" id="blog-grid"></div>
+            <div class="blog-readonly-notice">
+                <p>Reading mode only. <a href="../login.html">Login</a> to like, comment, and save posts.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="explore-footer">
+        <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
+        <p>Don't be a Tourist, be a Traveller</p>
+    </footer>
+
+    <script>
+    (function() {
+        var API_BASE = '/api';
+        
+        function img(src) {
+            if (!src) return '';
+            if (src.startsWith('http')) return src;
+            return '../images/' + src;
+        }
+        
+        function onImageLoad(img) {
+            img.classList.add('loaded');
+        }
+        
+        var staticBlog = [
+            { title: 'Best Time to Visit Kenya', description: 'A complete guide to planning your safari timing for the best wildlife sightings and weather conditions.', category: 'Guide', image: 'blog/best-time.jpg' },
+            { title: 'Great Migration Guide', description: 'Everything you need to know about Africa\'s greatest natural wonder.', category: 'Wildlife', image: 'blog/migration.jpg' },
+            { title: 'Family Safari Tips', description: 'How to make the most of your family adventure in the African bush.', category: 'Tips', image: 'blog/family.jpg' },
+            { title: 'Maasai Culture', description: 'Understanding the traditions of Kenya\'s indigenous people.', category: 'Culture', image: 'blog/culture.jpg' },
+            { title: 'Birdwatching Guide', description: 'Spotting Kenya\'s 1,000+ bird species in their natural habitat.', category: 'Wildlife', image: 'blog/birdwatching.jpg' },
+            { title: 'Packing Essentials', description: 'What to bring for your safari adventure.', category: 'Tips', image: 'blog/packing.jpg' }
+        ];
+        
+        function renderBlog(items) {
+            var html = '';
+            items.forEach(function(item) {
+                html += '<article class="blog-card">' +
+                    '<img src="' + img(item.image) + '" alt="' + item.title + '" loading="lazy" onload="onImageLoad(this)">' +
+                    '<div class="blog-content">' +
+                        '<div class="blog-meta">' +
+                            '<span class="blog-category">' + item.category + '</span>' +
+                        '</div>' +
+                        '<h3 class="blog-title">' + item.title + '</h3>' +
+                        '<p class="blog-excerpt">' + item.description + '</p>' +
+                        '<div class="blog-footer">' +
+                            '<span class="blog-read-more" onclick="redirectToLogin()">Read More →</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</article>';
+            });
+            document.getElementById('blog-grid').innerHTML = html;
+        }
+        
+        renderBlog(staticBlog);
+        
+        fetch(API_BASE + '/blogs')
+            .then(function(res) { return res.json(); })
+            .then(function(response) {
+                if (response.success && response.data && response.data.length > 0) {
+                    renderBlog(response.data);
+                }
+            })
+            .catch(function() {
+                // Keep static data on error
+            });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.querySelectorAll('.blog-card').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }, 300);
+        });
+        
+        window.onImageLoad = onImageLoad;
+    })();
+    </script>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        function redirectToLogin() {
+            window.location.href = '../login.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="description" content="Contact Muts Safaris - Get in touch for safari bookings, inquiries, and customer support in Kenya.">
+    <meta name="keywords" content="contact muts safaris, safari booking inquiry, kenya travel contact, customer support">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mutssafaris.com/explore/contact">
+    <title>Contact - Muts Safaris</title>
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dashboard-theme.css">
+    <link rel="stylesheet" href="../css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="icon" href="../assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'dark';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'light' || stored === 'dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="explore-navbar">
+        <a href="../login.html" class="explore-brand">MUTS_SAFARIS</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="explore-nav-links" id="explore-nav-links">
+            <a href="index.html">Home</a>
+            <a href="beaches.html">Beaches</a>
+            <a href="packages.html">Packages</a>
+            <a href="africasa.html">Africasa</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html" class="active">Contact</a>
+        </div>
+        <a href="../login.html" class="explore-login-btn">Login</a>
+    </nav>
+
+    <main class="explore-main">
+        <section class="landing-hero" style="min-height: 40vh; background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/contact-background.jpg') center/cover no-repeat;">
+            <div class="hero-content">
+                <span class="hero-badge">Get in touch</span>
+                <h1 class="hero-title">CONTACT</h1>
+                <p class="hero-subtitle">We're here to help with any questions.</p>
+            </div>
+        </section>
+
+        <section class="contact-container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <div class="contact-cards" id="contact-cards">
+                        <div class="skeleton skeleton-card">
+                            <div class="skeleton skeleton-text" style="width: 40%"></div>
+                            <div class="skeleton skeleton-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-section">
+                    <h2>Send a Message</h2>
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="c-name">Full Name *</label>
+                            <input type="text" id="c-name" required placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="c-email">Email Address *</label>
+                            <input type="email" id="c-email" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="c-phone">Phone Number</label>
+                            <input type="tel" id="c-phone" placeholder="+254 ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="c-subject">Subject *</label>
+                            <select id="c-subject" required>
+                                <option value="">Select a subject</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="c-message">Message *</label>
+                            <textarea id="c-message" required placeholder="Tell us about your dream safari..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <div class="contact-success" id="contact-success">Message sent successfully! Our team will respond within 24 hours.</div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="explore-footer">
+        <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
+        <p>Don't be a Tourist, be a Traveller</p>
+    </footer>
+
+    <script>
+    (function() {
+        var API_BASE = '/api';
+        
+        var staticContact = {
+            office: { type: 'Main Office', details: 'Nairobi, Kenya' },
+            phones: [{ type: 'Phone', details: '+254 700 000 000' }],
+            emails: [{ type: 'Email', details: 'info@mutssafaris.com' }],
+            hours: 'Mon-Fri 8AM-6PM'
+        };
+        
+        var defaultSubjects = ['Booking Inquiry', 'General Question', 'Feedback', 'Partnership', 'Support'];
+        
+        function renderContactInfo(info) {
+            var container = document.getElementById('contact-cards');
+            var html = '';
+            
+            if (info.office) {
+                html += '<div class="contact-card-mini"><span class="contact-card-label">' + info.office.type + '</span><span class="contact-card-value">' + info.office.details + '</span></div>';
+            }
+            if (info.phones) {
+                info.phones.forEach(function(p) {
+                    html += '<div class="contact-card-mini"><span class="contact-card-label">' + p.type + '</span><a href="tel:' + p.details.replace(/\s/g, '') + '" class="contact-card-value">' + p.details + '</a></div>';
+                });
+            }
+            if (info.emails) {
+                info.emails.forEach(function(e) {
+                    html += '<div class="contact-card-mini"><span class="contact-card-label">' + e.type + '</span><a href="mailto:' + e.details + '" class="contact-card-value">' + e.details + '</a></div>';
+                });
+            }
+            if (info.hours) {
+                html += '<div class="contact-card-mini"><span class="contact-card-label">Hours</span><span class="contact-card-value">' + info.hours + '</span></div>';
+            }
+            
+            container.innerHTML = html || renderStaticContact();
+        }
+        
+        function renderStaticContact() {
+            return '<div class="contact-card-mini"><span class="contact-card-label">Main Office</span><span class="contact-card-value">Nairobi, Kenya</span></div>' +
+                '<div class="contact-card-mini"><span class="contact-card-label">Phone</span><a href="tel:+254700000000" class="contact-card-value">+254 700 000 000</a></div>' +
+                '<div class="contact-card-mini"><span class="contact-card-label">Email</span><a href="mailto:info@mutssafaris.com" class="contact-card-value">info@mutssafaris.com</a></div>' +
+                '<div class="contact-card-mini"><span class="contact-card-label">Hours</span><span class="contact-card-value">Mon-Fri 8AM-6PM</span></div>';
+        }
+        
+        function populateSubjects(subjects) {
+            var select = document.getElementById('c-subject');
+            (subjects || defaultSubjects).forEach(function(s) {
+                var opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                select.appendChild(opt);
+            });
+        }
+        
+        renderContactInfo(staticContact);
+        populateSubjects();
+        
+        fetch('/data/contact.json')
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.contactInfo) renderContactInfo(data.contactInfo);
+                if (data.formOptions && data.formOptions.subjects) populateSubjects(data.formOptions.subjects);
+            })
+            .catch(function() {
+                // Keep static data on error
+            });
+        
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('contact-success').classList.add('visible');
+            this.reset();
+            setTimeout(function() {
+                document.getElementById('contact-success').classList.remove('visible');
+            }, 5000);
+        });
+    })();
+    </script>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

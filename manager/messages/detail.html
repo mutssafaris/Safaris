@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Message Details - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="list.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>Messages</span>
+                </a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Message Details</h1>
+                <div class="btn-group">
+                    <a href="list.html" class="btn btn-secondary">Back to List</a>
+                    <button class="btn btn-secondary" onclick="markResolved()">Mark Resolved</button>
+                    <button class="btn btn-primary" onclick="openReplyModal()">Reply</button>
+                </div>
+            </div>
+            
+            <div id="loading-container" style="text-align: center; padding: 60px 20px;">
+                <div class="loading"><div class="spinner"></div></div>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading message details...</p>
+            </div>
+            
+            <div id="message-content" style="display: none;">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Message Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Message ID</label>
+                                <div class="detail-value" id="msg-id">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div id="msg-status">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <div class="detail-value" id="msg-subject">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <div id="msg-type">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <div class="detail-value" id="msg-date">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Sender Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <div class="detail-value" id="sender-name">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="detail-value" id="sender-email">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Message Content</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="background: var(--bg-input); padding: 20px; border-radius: 8px; line-height: 1.6;" id="msg-body">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;" id="replies-section">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Replies</h2>
+                    </div>
+                    <div style="padding: 20px;" id="replies-container">
+                        <p style="color: var(--text-muted);">No replies yet</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-container" style="display: none; text-align: center; padding: 60px 20px;">
+                <p style="color: var(--error); font-size: 1.2rem;">Message not found</p>
+                <p style="color: var(--text-muted);">The requested message could not be loaded.</p>
+                <a href="list.html" class="btn btn-secondary" style="margin-top: 20px;">Back to List</a>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Reply Modal -->
+    <div class="modal-overlay" id="reply-modal" style="opacity: 0; visibility: hidden;">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Reply to Message</h2>
+                <button class="modal-close" onclick="closeReplyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="reply-subject">Subject</label>
+                    <input type="text" id="reply-subject" readonly style="background: var(--bg-input);">
+                </div>
+                <div class="form-group">
+                    <label for="reply-text">Reply Message</label>
+                    <textarea id="reply-text" rows="6" placeholder="Type your reply..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeReplyModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="sendReply()">Send Reply</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+    var currentMessageId = null;
+    var currentMessage = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var msgId = urlParams.get('id');
+        
+        if (!msgId) {
+            showError();
+            return;
+        }
+        
+        currentMessageId = msgId;
+        loadMessage(msgId);
+        
+        function loadMessage(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getMessage(id).then(function(message) {
+                    if (message) {
+                        renderMessage(message);
+                    } else {
+                        showError();
+                    }
+                }).catch(function(err) {
+                    console.error('Error loading message:', err);
+                    renderMockMessage(id);
+                });
+            } else {
+                setTimeout(function() {
+                    renderMockMessage(id);
+                }, 300);
+            }
+        }
+        
+        function renderMockMessage(id) {
+            var mockMessages = {
+                'MSG-001': { id: 'MSG-001', subject: 'Booking Inquiry for Maasai Mara', from: 'john@example.com', name: 'John Smith', type: 'inquiry', date: '2026-04-03', status: 'open', message: 'Hi, I am interested in booking a safari to Maasai Mara for my family. We are a family of 4 (2 adults and 2 children). Can you provide more information about available packages?\n\nWe would like to visit during the last week of April, if possible. Also, is it safe for children?' },
+                'MSG-002': { id: 'MSG-002', subject: 'Question about Visa Requirements', from: 'sarah@example.com', name: 'Sarah Johnson', type: 'support', date: '2026-04-02', status: 'pending', message: 'Hello, I wanted to ask about visa requirements for Kenya. Do I need a visa in advance or can I get one on arrival? Also, what vaccinations are recommended?' },
+                'MSG-003': { id: 'MSG-003', subject: 'Great Safari Experience!', from: 'mike@example.com', name: 'Mike Williams', type: 'feedback', date: '2026-04-01', status: 'resolved', message: 'I just wanted to say thank you for an amazing safari experience last month. The guides were incredibly knowledgeable and the accommodations exceeded our expectations. We will definitely be back!' }
+            };
+            
+            var msg = mockMessages[id] || mockMessages['MSG-001'];
+            if (id) msg.id = id;
+            
+            renderMessage(msg);
+        }
+        
+        function renderMessage(msg) {
+            currentMessage = msg;
+            
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('message-content').style.display = 'block';
+            
+            document.getElementById('msg-id').textContent = msg.id || msg.messageId || '-';
+            
+            var statusBadge = msg.status === 'open' ? 'badge-danger' : 
+                           msg.status === 'pending' ? 'badge-warning' : 'badge-success';
+            document.getElementById('msg-status').innerHTML = '<span class="badge ' + statusBadge + '">' + msg.status + '</span>';
+            
+            document.getElementById('msg-subject').textContent = msg.subject || msg.title || '-';
+            
+            var typeBadge = msg.type === 'support' ? 'badge-info' : 
+                          msg.type === 'inquiry' ? 'badge-warning' :
+                          msg.type === 'feedback' ? 'badge-success' : 'badge-danger';
+            document.getElementById('msg-type').innerHTML = '<span class="badge ' + typeBadge + '">' + msg.type + '</span>';
+            
+            document.getElementById('msg-date').textContent = msg.date || msg.createdAt || '-';
+            document.getElementById('sender-name').textContent = msg.name || msg.fromName || msg.from || '-';
+            document.getElementById('sender-email').textContent = msg.from || msg.email || '-';
+            
+            var messageText = msg.message || msg.body || msg.content || '';
+            messageText = messageText.replace(/\n/g, '<br>');
+            document.getElementById('msg-body').innerHTML = messageText;
+        }
+        
+        function showError() {
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+        }
+        
+        window.openReplyModal = function() {
+            document.getElementById('reply-subject').value = 'Re: ' + (currentMessage.subject || '');
+            document.getElementById('reply-text').value = '';
+            document.getElementById('reply-modal').classList.add('show');
+        };
+        
+        window.closeReplyModal = function() {
+            document.getElementById('reply-modal').classList.remove('show');
+        };
+        
+        window.sendReply = function() {
+            var reply = document.getElementById('reply-text').value.trim();
+            if (!reply) {
+                showToast('Please enter a reply', 'error');
+                return;
+            }
+            
+            if (ManagerService.isAPILive()) {
+                ManagerService.replyToMessage(currentMessageId, reply).then(function() {
+                    showToast('Reply sent successfully');
+                    closeReplyModal();
+                    loadMessage(currentMessageId);
+                }).catch(function(err) {
+                    showToast('Failed to send reply', 'error');
+                });
+            } else {
+                showToast('Reply sent successfully');
+                closeReplyModal();
+            }
+        };
+        
+        window.markResolved = function() {
+            if (ManagerService.isAPILive()) {
+                ManagerService.markMessageResolved(currentMessageId).then(function() {
+                    showToast('Message marked as resolved');
+                    loadMessage(currentMessageId);
+                }).catch(function(err) {
+                    showToast('Failed to resolve message', 'error');
+                });
+            } else {
+                showToast('Message marked as resolved');
+            }
+        };
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

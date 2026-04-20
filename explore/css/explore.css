@@ -1,0 +1,386 @@
+:root {
+    --explore-bg: var(--bg-primary, #050510);
+    --explore-surface: var(--bg-secondary, #0a0a1a);
+    --explore-border: var(--border-glow, #1a1a2e);
+    --explore-text: var(--text-primary, #ffffff);
+    --explore-text-muted: var(--text-muted, #8888aa);
+    --explore-accent: var(--accent, #ffb800);
+    --explore-accent-hover: #ffc933;
+    --explore-card-bg: var(--bg-card, #0f0f20);
+    --explore-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --explore-radius: 8px;
+    --nav-height: 60px;
+}
+
+[data-theme="light"] {
+    --explore-bg: #f8fbff;
+    --explore-surface: #ffffff;
+    --explore-border: #e0e8f0;
+    --explore-text: #1a1a2e;
+    --explore-text-muted: #666688;
+    --explore-accent: #d97706;
+    --explore-card-bg: #ffffff;
+    --explore-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family, 'Courier New', monospace);
+    background: var(--explore-bg);
+    color: var(--explore-text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--explore-accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--explore-accent-hover);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: var(--explore-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--explore-accent);
+    color: #000;
+}
+
+.btn-primary:hover {
+    background: var(--explore-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--explore-shadow);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--explore-accent);
+    color: var(--explore-accent);
+}
+
+.btn-outline:hover {
+    background: var(--explore-accent);
+    color: #000;
+}
+
+.explore-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    background: var(--explore-surface);
+    border-bottom: 1px solid var(--explore-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 1000;
+}
+
+.explore-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--explore-accent);
+    letter-spacing: 2px;
+}
+
+.explore-nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.explore-nav-links a {
+    color: var(--explore-text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.explore-nav-links a:hover,
+.explore-nav-links a.active {
+    color: var(--explore-accent);
+    border-bottom-color: var(--explore-accent);
+}
+
+.explore-login-btn {
+    padding: 0.5rem 1.25rem;
+    background: var(--explore-accent);
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: var(--explore-radius);
+    transition: all 0.2s ease;
+}
+
+.explore-login-btn:hover {
+    background: var(--explore-accent-hover);
+    transform: translateY(-2px);
+    color: #000;
+}
+
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-menu-btn span {
+    width: 24px;
+    height: 2px;
+    background: var(--explore-text);
+    transition: all 0.3s ease;
+}
+
+.explore-main {
+    padding-top: var(--nav-height);
+    min-height: calc(100vh - 60px);
+}
+
+.explore-hero {
+    padding: 4rem 1.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--explore-surface) 0%, var(--explore-bg) 100%);
+    border-bottom: 1px solid var(--explore-border);
+}
+
+.explore-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--explore-accent);
+    margin-bottom: 1rem;
+    letter-spacing: 3px;
+}
+
+.explore-hero p {
+    font-size: 1.1rem;
+    color: var(--explore-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.explore-section {
+    padding: 3rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.explore-section h2 {
+    font-size: 1.5rem;
+    color: var(--explore-text);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.explore-section-desc {
+    text-align: center;
+    color: var(--explore-text-muted);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.explore-card {
+    background: var(--explore-card-bg);
+    border: 1px solid var(--explore-border);
+    border-radius: var(--explore-radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.explore-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--explore-shadow);
+    border-color: var(--explore-accent);
+}
+
+.explore-card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: var(--explore-surface);
+}
+
+.explore-card-content {
+    padding: 1.25rem;
+}
+
+.explore-card-title {
+    font-size: 1rem;
+    color: var(--explore-text);
+    margin-bottom: 0.5rem;
+}
+
+.explore-card-desc {
+    font-size: 0.85rem;
+    color: var(--explore-text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.explore-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--explore-text-muted);
+}
+
+.explore-card-price {
+    color: var(--explore-accent);
+    font-weight: 600;
+}
+
+.explore-card-link {
+    color: var(--explore-accent);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.explore-card-link:hover {
+    text-decoration: underline;
+}
+
+.explore-cta {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.explore-gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.explore-gallery-preview img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: var(--explore-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.explore-gallery-preview img:hover {
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.explore-footer {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: var(--explore-surface);
+    border-top: 1px solid var(--explore-border);
+    color: var(--explore-text-muted);
+    font-size: 0.85rem;
+}
+
+.explore-footer p:first-child {
+    margin-bottom: 0.5rem;
+    color: var(--explore-accent);
+}
+
+@media (max-width: 768px) {
+    .explore-nav-links {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: var(--explore-surface);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+        border-bottom: 1px solid var(--explore-border);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .explore-nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .explore-nav-links a {
+        padding: 1rem;
+        border-bottom: 1px solid var(--explore-border);
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .explore-login-btn {
+        display: none;
+    }
+
+    .explore-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .explore-gallery-preview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .explore-hero {
+        padding: 2rem 1rem;
+    }
+
+    .explore-section {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .explore-navbar {
+        padding: 0 1rem;
+    }
+
+    .explore-brand {
+        font-size: 0.9rem;
+    }
+}

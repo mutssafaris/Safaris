@@ -119,6 +119,13 @@ POST /api/bookings
 PUT /api/bookings/{id}
 DELETE /api/bookings/{id}
 PUT /api/bookings/{id}/status
+GET /api/bookings/{id}/canCancel
+GET /api/bookings/{id}/canModify
+GET /api/bookings/policy?days={days}
+GET /api/bookings/availability?destination={id}&checkin={date}&checkout={date}
+GET /api/bookings/stats
+GET /api/bookings/{id}/promo
+POST /api/bookings/{id}/promo
 ```
 
 **Booking Fields Required:**
@@ -140,6 +147,53 @@ PUT /api/bookings/{id}/status
   "createdAt": "ISO date",
   "reservedAt": "ISO date (optional)",
   "expiresAt": "ISO date (optional - 15-min hold)"
+}
+```
+
+**New Booking Endpoints (2026-04-19):**
+
+```javascript
+// GET /api/bookings/{id}/canCancel
+{
+  "success": true,
+  "data": { "canCancel": true | false }
+}
+
+// GET /api/bookings/{id}/canModify
+{
+  "success": true,
+  "data": { "canModify": true | false }
+}
+
+// GET /api/bookings/policy?days=10
+{
+  "success": true,
+  "data": { "policy": "75% refund", "refund": 0.75 }
+}
+
+// GET /api/bookings/availability?destination=maasai-mara&checkin=2026-05-01&checkout=2026-05-05
+{
+  "success": true,
+  "data": { "available": true, "message": "Rooms available!" }
+}
+
+// GET /api/bookings/stats
+{
+  "success": true,
+  "data": {
+    "total": 7,
+    "upcoming": 4,
+    "completed": 2,
+    "cancelled": 1,
+    "totalSpent": 8510
+  }
+}
+
+// POST /api/bookings/{id}/promo
+// Body: { "code": "SAFARI25" }
+{
+  "success": true,
+  "data": { "discount": 0.25, "description": "25% off safari packages" }
 }
 ```
 
@@ -354,7 +408,67 @@ GET /api/notifications/unread-count
 PUT /api/notifications/{id}/read
 ```
 
-### 6. Messages/Conversations
+### 6. Wishlist
+```
+GET /api/wishlist
+POST /api/wishlist
+DELETE /api/wishlist/:type/:id
+```
+
+**Item Types:** `product`, `destination`, `tour`, `hotel`
+
+**Add Item Request:**
+```javascript
+// POST /api/wishlist
+{
+  "type": "product",
+  "id": "p123"
+}
+```
+
+**Add Item Response:**
+```javascript
+{
+  "success": true,
+  "data": {
+    "type": "product",
+    "id": "p123",
+    "addedAt": "2026-04-19T14:30:00Z"
+  },
+  "message": "Item added to wishlist"
+}
+```
+
+**Get Wishlist Response:**
+```javascript
+{
+  "success": true,
+  "data": {
+    "items": [
+      { "type": "destination", "id": "d5", "addedAt": "2026-04-15T10:00:00Z" },
+      { "type": "product", "id": "p123", "addedAt": "2026-04-19T14:30:00Z" },
+      { "type": "tour", "id": "t2", "addedAt": "2026-04-18T09:15:00Z" }
+    ]
+  },
+  "message": "Wishlist retrieved"
+}
+```
+
+**Frontend Service:** `MutsWishlistService`
+- `addItem(type, id)` - Add item to wishlist
+- `removeItem(type, id)` - Remove item from wishlist
+- `getItems(type?)` - Get all items or filtered by type
+- `getItemsByType()` - Get items grouped by type
+- `isInWishlist(type, id)` - Check if item in wishlist
+- `getCount(type?)` - Get count of items
+- `syncWithAPI()` - Force sync with server
+- `getFromAPI()` - Fetch from server (returns Promise)
+- `migrateFavorites()` - Migrate legacy favorites
+
+**Local Storage Key:** `muts_wishlist` (unified format)
+**Legacy Migration:** Automatically migrates `muts_favorites` on init
+
+### 7. Messages/Conversations
 ```
 GET /api/conversations
 GET /api/conversations/{id}
@@ -1776,4 +1890,78 @@ curl -X POST http://localhost:3000/api/manager/content/destinations/1/publish \
 
 ---
 
-*Documentation Updated: 2026-04-17*
+## Manager Gallery API
+
+**Base Endpoint:** `/api/manager/content/gallery`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/manager/content/gallery | List all images |
+| GET | ?category=safari&status=active | Filter gallery |
+| GET | /api/manager/content/gallery/:id | Get image details |
+| POST | /api/manager/content/gallery | Upload image |
+| PUT | /api/manager/content/gallery/:id | Update image |
+| DELETE | /api/manager/content/gallery/:id | Delete image |
+
+**Query Parameters:**
+- category: safari, landscape, wildlife, culture, beach, team, other
+- status: active, inactive
+- featured: yes, no
+- search: Search by title
+
+**Request Body (POST/PUT):**
+```json
+{
+  "title": "Maasai Mara Sunset",
+  "description": "Beautiful sunset over the savanna",
+  "category": "safari",
+  "imageUrl": "https://images.mutssafaris.com/gallery/...",
+  "altText": "Sunset over Maasai Mara plains",
+  "featured": "no",
+  "status": "active"
+}
+```
+
+**Response (GET):**
+```json
+{
+  "success": true,
+  "data": {
+    "images": [
+      {
+        "id": "IMG-001",
+        "title": "Maasai Mara Sunset",
+        "description": "Beautiful sunset over the savanna",
+        "category": "safari",
+        "imageUrl": "https://images.mutssafaris.com/gallery/...",
+        "altText": "Sunset over Maasai Mara",
+        "featured": "no",
+        "status": "active",
+        "uploaded": "2026-01-15"
+      }
+    ],
+    "total": 24,
+    "page": 1,
+    "limit": 20
+  }
+}
+```
+
+**Frontend Usage (Manager Service):**
+```javascript
+// Get all gallery images
+ManagerService.getGalleryImages().then(images => renderGallery(images));
+
+// Get single image
+ManagerService.getGalleryImage(id).then(image => renderImage(image));
+
+// Create/update image
+ManagerService.createGalleryImage(imageData).then(() => refresh());
+ManagerService.updateGalleryImage(imageData).then(() => refresh());
+```
+
+**Fallback:** Uses mock images in list.html
+
+---
+
+*Documentation Updated: 2026-04-19*

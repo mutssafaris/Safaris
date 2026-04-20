@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Edit Blog Post - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Dashboard</span></a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span>Blogs</span></a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Edit Blog Post</h1>
+            </div>
+            <form id="blog-form">
+                <input type="hidden" id="blog-id" name="blog-id">
+                
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Post Details</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="title">Title *</label>
+                            <input type="text" id="title" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category">Category *</label>
+                                <div class="custom-select" id="category-select">
+                                    <input type="hidden" id="category" value="" required>
+                                    <div class="select-trigger" role="button" aria-haspopup="listbox" aria-expanded="false"><span>Select Category</span></div>
+                                    <ul class="dropdown-list">
+                                        <li class="dropdown-item selected" data-value="">Select Category</li>
+                                        <li class="dropdown-item" data-value="guide">Guide</li>
+                                        <li class="dropdown-item" data-value="news">News</li>
+                                        <li class="dropdown-item" data-value="tips">Tips</li>
+                                        <li class="dropdown-item" data-value="stories">Safari Stories</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="excerpt">Excerpt</label>
+                                <input type="text" id="excerpt" placeholder="Short description for listings">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Featured Image</label>
+                            <div id="blog-featured-image"></div>
+                            <small style="color: var(--text-muted);">Recommended: 1200x630px (16:9 ratio)</small>
+                            <div class="image-preview" id="image-preview">
+                                <span>Image preview will appear here</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="content">Content *</label>
+                            <textarea id="content" rows="12" required placeholder="Write your blog post content here..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Additional Images (for content)</label>
+                            <div id="blog-content-images"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>SEO Settings</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="seo-title">SEO Title</label>
+                                <input type="text" id="seo-title" placeholder="Custom title for search engines">
+                            </div>
+                            <div class="form-group">
+                                <label for="seo-keywords">Keywords</label>
+                                <input type="text" id="seo-keywords" placeholder="Comma-separated keywords">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="seo-description">Meta Description</label>
+                            <textarea id="seo-description" rows="3" placeholder="Description for search results"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="button" class="btn btn-secondary" onclick="saveDraft()">Save Draft</button>
+                    <button type="submit" class="btn btn-primary">Update & Publish</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+    
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/manager-image-service.js"></script>
+    <script src="../js/image-upload-component.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script>
+    var blogImages = { featured: '', content: [] };
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        ImageUploadComponent.create(document.getElementById('blog-featured-image'), {
+            fieldId: 'blog-featured',
+            multiple: false,
+            value: [],
+            onImageAdd: function(src, data) {
+                blogImages.featured = data.url || data.data || src;
+                updatePreview('image-preview', blogImages.featured);
+            },
+            onImageRemove: function(data) { blogImages.featured = ''; }
+        });
+        
+        ImageUploadComponent.create(document.getElementById('blog-content-images'), {
+            fieldId: 'blog-content-imgs',
+            multiple: true,
+            maxImages: 5,
+            value: [],
+            onImageAdd: function(src, data) { blogImages.content.push(data.url || data.data || src); },
+            onImageRemove: function(data) {
+                var idx = blogImages.content.indexOf(data.url || data.data);
+                if (idx > -1) blogImages.content.splice(idx, 1);
+            }
+        });
+        
+        var params = new URLSearchParams(window.location.search);
+        var blogId = params.get('id');
+        document.getElementById('blog-id').value = blogId || '';
+        
+        loadBlog(blogId);
+        
+        function loadBlog(id) {
+            if (!id) {
+                showToast('No blog ID provided', 'error');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                return;
+            }
+            
+            ManagerService.getBlog(id).then(function(response) {
+                var blog = response.data || response;
+                populateForm(blog);
+            }).catch(function(err) {
+                console.warn('Using mock data:', err);
+                var mockBlogs = {
+                    'b1': { id: 'b1', title: 'Best Time to Visit Kenya', category: 'guide', excerpt: 'A complete guide to planning your safari.', content: 'Full article content here...', featuredImage: '', contentImages: [], seo: { title: '', keywords: '', description: '' } },
+                    'b2': { id: 'b2', title: 'Great Migration Guide', category: 'guide', excerpt: 'Everything about the migration.', content: 'Migration content...', featuredImage: '', contentImages: [], seo: { title: '', keywords: '', description: '' } }
+                };
+                var blog = mockBlogs[id] || mockBlogs['b1'];
+                if (blog) populateForm(blog);
+            });
+        }
+        
+        function populateForm(blog) {
+            document.getElementById('title').value = blog.title || '';
+            document.getElementById('category').value = blog.category || '';
+            document.getElementById('excerpt').value = blog.excerpt || '';
+            document.getElementById('content').value = blog.content || '';
+            
+            if (blog.seo) {
+                document.getElementById('seo-title').value = blog.seo.title || '';
+                document.getElementById('seo-keywords').value = blog.seo.keywords || '';
+                document.getElementById('seo-description').value = blog.seo.description || '';
+            }
+            
+            if (blog.featuredImage) {
+                blogImages.featured = blog.featuredImage;
+                if (blog.featuredImage.startsWith('http')) {
+                    updatePreview('image-preview', blog.featuredImage);
+                }
+            }
+            if (blog.contentImages && blog.contentImages.length > 0) {
+                blogImages.content = blog.contentImages;
+            }
+        }
+        
+        function updatePreview(containerId, src) {
+            var container = document.getElementById(containerId);
+            if (src) {
+                container.innerHTML = '<img src="' + src + '" alt="Preview" onerror="this.parentNode.innerHTML=\'<span>Invalid image URL</span>\'">';
+            } else {
+                container.innerHTML = '<span>Image preview will appear here</span>';
+            }
+        }
+        
+        document.getElementById('blog-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            publishBlog();
+        });
+        
+        window.saveDraft = function() {
+            var formData = getFormData();
+            formData.status = 'draft';
+            var blogId = document.getElementById('blog-id').value;
+            showToast('Saving as draft...');
+            saveBlog(blogId, formData);
+        };
+        
+        function publishBlog() {
+            var formData = getFormData();
+            formData.status = 'published';
+            var blogId = document.getElementById('blog-id').value;
+            showToast('Publishing...');
+            saveBlog(blogId, formData);
+        }
+        
+        function saveBlog(blogId, formData) {
+            ManagerService.updateBlog(blogId, formData).then(function() {
+                showToast('Changes saved successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }).catch(function(err) {
+                console.error('Update error:', err);
+                showToast('Failed to save changes', 'error');
+            });
+        }
+        
+        function getFormData() {
+            return {
+                id: document.getElementById('blog-id').value,
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                excerpt: document.getElementById('excerpt').value,
+                content: document.getElementById('content').value,
+                featuredImage: blogImages.featured,
+                contentImages: blogImages.content,
+                seo: {
+                    title: document.getElementById('seo-title').value,
+                    keywords: document.getElementById('seo-keywords').value,
+                    description: document.getElementById('seo-description').value
+                }
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

@@ -1,18 +1,13 @@
 /* Mobile Menu Auto-Init - Muts Safaris Manager */
 /* Automatically adds mobile menu toggle if not present */
 (function() {
-    document.addEventListener('DOMContentLoaded', function() {
-        initMobileMenu();
-    });
-    
-    // Also try on load for late-loading pages
-    window.addEventListener('load', function() {
-        if (!document.getElementById('mobile-menu-initialized')) {
-            initMobileMenu();
-        }
-    });
+    // Prevent multiple initializations
+    if (document.getElementById('mobile-menu-initialized')) return;
     
     function initMobileMenu() {
+        // Double-check marker exists (might be loaded via different script)
+        if (document.getElementById('mobile-menu-initialized')) return;
+        
         var dashboardLayout = document.querySelector('.dashboard-layout');
         if (!dashboardLayout) return;
         
@@ -82,8 +77,23 @@
 (function() {
     function repositionDropdowns() {
         var dropdowns = document.querySelectorAll('.custom-select');
-        if (window.innerWidth > 480) return;
         
+        // Reset inline styles on desktop
+        if (window.innerWidth > 480) {
+            dropdowns.forEach(function(dropdown) {
+                var list = dropdown.querySelector('.dropdown-list');
+                if (list && list.style.position === 'fixed') {
+                    list.style.position = '';
+                    list.style.top = '';
+                    list.style.left = '';
+                    list.style.right = '';
+                    list.style.maxHeight = '';
+                }
+            });
+            return;
+        }
+        
+        // Apply fixed positioning on mobile
         dropdowns.forEach(function(dropdown) {
             var trigger = dropdown.querySelector('.select-trigger');
             var list = dropdown.querySelector('.dropdown-list');

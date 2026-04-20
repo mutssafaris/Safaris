@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Edit Gallery Image - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+    <style>
+        .image-preview {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 4/3;
+            background: var(--bg-input);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .image-preview .placeholder {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="list.html" class="nav-item active">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 id="page-title">Edit Gallery Image</h1>
+            </div>
+            
+            <form id="gallery-form">
+                <input type="hidden" id="gallery-id" name="gallery-id">
+                
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Image Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="title">Title *</label>
+                            <input type="text" id="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" rows="3" placeholder="Describe this image..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category">
+                                <option value="safari">Safari</option>
+                                <option value="landscape">Landscape</option>
+                                <option value="wildlife">Wildlife</option>
+                                <option value="culture">Culture</option>
+                                <option value="beach">Beach</option>
+                                <option value="team">Team</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Image</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="image-url">Image URL *</label>
+                            <input type="url" id="image-url" placeholder="https://images.mutssafaris.com/..." required>
+                            <small style="color: var(--text-muted);">Enter CDN URL or upload new image</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Preview</label>
+                            <div class="image-preview" id="image-preview">
+                                <span class="placeholder">Image preview will appear here</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alt-text">Alt Text</label>
+                            <input type="text" id="alt-text" placeholder="Descriptive alt text for accessibility">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>SEO & Display</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="featured">Featured</label>
+                                <div class="custom-select" id="featured-select" style="width: 100%;">
+                                    <input type="hidden" id="featured" value="no">
+                                    <div class="select-trigger"><span>No</span></div>
+                                    <ul class="dropdown-list">
+                                        <li class="dropdown-item" data-value="yes">Yes</li>
+                                        <li class="dropdown-item selected" data-value="no">No</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select id="status">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script>
+    var isNewImage = true;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var imageId = urlParams.get('id');
+        
+        if (imageId) {
+            isNewImage = false;
+            document.getElementById('page-title').textContent = 'Edit Gallery Image';
+            document.getElementById('gallery-id').value = imageId;
+            loadImage(imageId);
+        } else {
+            document.getElementById('page-title').textContent = 'New Gallery Image';
+        }
+        
+        document.getElementById('image-url').addEventListener('input', function() {
+            updatePreview();
+        });
+        
+        initCustomDropdowns();
+        
+        document.getElementById('gallery-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveImage();
+        });
+        
+        function loadImage(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getGalleryImage(id).then(function(image) {
+                    if (image) populateForm(image);
+                }).catch(function(err) {
+                    console.error('Error loading image:', err);
+                    populateForm(getMockImage(id));
+                });
+            } else {
+                setTimeout(function() { populateForm(getMockImage(id)); }, 300);
+            }
+        }
+        
+        function getMockImage(id) {
+            return {
+                id: id,
+                title: 'Maasai Mara Sunset',
+                description: 'Beautiful sunset over the savanna',
+                category: 'safari',
+                imageUrl: 'https://images.mutssafaris.com/gallery/maasai-mara-sunset.jpg',
+                altText: 'Sunset over Maasai Mara plains',
+                featured: 'no',
+                status: 'active'
+            };
+        }
+        
+        function populateForm(image) {
+            document.getElementById('gallery-id').value = image.id || '';
+            document.getElementById('title').value = image.title || '';
+            document.getElementById('description').value = image.description || '';
+            document.getElementById('category').value = image.category || 'safari';
+            document.getElementById('image-url').value = image.imageUrl || image.url || '';
+            document.getElementById('alt-text').value = image.altText || '';
+            document.getElementById('featured').value = image.featured || 'no';
+            document.getElementById('status').value = image.status || 'active';
+            
+            updatePreview();
+            updateDropdown('featured-select', image.featured || 'no');
+        }
+        
+        function updatePreview() {
+            var url = document.getElementById('image-url').value;
+            var preview = document.getElementById('image-preview');
+            if (url) {
+                preview.innerHTML = '<img src="' + url + '" onerror="this.parentNode.innerHTML=\'<span class=\'placeholder\'>Failed to load image</span>\'">';
+            } else {
+                preview.innerHTML = '<span class="placeholder">Image preview will appear here</span>';
+            }
+        }
+        
+        function initCustomDropdowns() {
+            var selects = document.querySelectorAll('.custom-select');
+            selects.forEach(function(select) {
+                var trigger = select.querySelector('.select-trigger');
+                var list = select.querySelector('.dropdown-list');
+                var items = select.querySelectorAll('.dropdown-item');
+                var hidden = select.querySelector('input[type="hidden"]');
+                var span = trigger.querySelector('span');
+                
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selects.forEach(function(other) {
+                        if (other !== select) other.classList.remove('open');
+                    });
+                    select.classList.toggle('open');
+                });
+                
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var value = item.getAttribute('data-value');
+                        hidden.value = value;
+                        span.textContent = item.textContent;
+                        items.forEach(function(i) { i.classList.remove('selected'); });
+                        item.classList.add('selected');
+                        select.classList.remove('open');
+                    });
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                selects.forEach(function(s) { s.classList.remove('open'); });
+            });
+        }
+        
+        function updateDropdown(selectId, value) {
+            var select = document.getElementById(selectId);
+            if (!select) return;
+            var items = select.querySelectorAll('.dropdown-item');
+            var span = select.querySelector('.select-trigger span');
+            items.forEach(function(item) {
+                item.classList.remove('selected');
+                if (item.getAttribute('data-value') === value) {
+                    item.classList.add('selected');
+                    span.textContent = item.textContent;
+                }
+            });
+        }
+        
+        function saveImage() {
+            var imageData = {
+                id: document.getElementById('gallery-id').value,
+                title: document.getElementById('title').value.trim(),
+                description: document.getElementById('description').value.trim(),
+                category: document.getElementById('category').value,
+                imageUrl: document.getElementById('image-url').value.trim(),
+                altText: document.getElementById('alt-text').value.trim(),
+                featured: document.getElementById('featured').value,
+                status: document.getElementById('status').value
+            };
+            
+            if (!imageData.title || !imageData.imageUrl) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (ManagerService.isAPILive()) {
+                var action = isNewImage ? ManagerService.createGalleryImage(imageData) : ManagerService.updateGalleryImage(imageData);
+                action.then(function() {
+                    showToast(isNewImage ? 'Image added successfully' : 'Image updated successfully');
+                    setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                }).catch(function(err) {
+                    showToast('Failed to save image', 'error');
+                });
+            } else {
+                showToast(isNewImage ? 'Image added successfully' : 'Image updated successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

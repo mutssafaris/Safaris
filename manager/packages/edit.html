@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Edit Package - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="list.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A3 3 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span>Packages</span>
+                </a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Edit Package</h1>
+            </div>
+            <form id="package-form">
+                <input type="hidden" id="package-id" name="package-id">
+                
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Package Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Package Name *</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration">Duration *</label>
+                                <input type="text" id="duration" placeholder="e.g., 5-10 Nights" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Price ($) *</label>
+                                <input type="number" id="price" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category">
+                                    <option value="">Select Category</option>
+                                    <option value="honeymoon">Honeymoon</option>
+                                    <option value="family">Family</option>
+                                    <option value="adventure">Adventure</option>
+                                    <option value="luxury">Luxury</option>
+                                    <option value="budget">Budget</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Short Description *</label>
+                            <textarea id="description" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="overview">Full Overview</label>
+                            <textarea id="overview" rows="4" placeholder="Detailed package description with itinerary"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Package Image</label>
+                            <div id="package-image-upload"></div>
+                            <small style="color: var(--text-muted);">Upload image or enter CDN URL. Recommended: 1200x800px</small>
+                            <div class="image-preview" id="image-preview">
+                                <span>Image preview will appear here</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Gallery Images</label>
+                            <div id="package-gallery-upload"></div>
+                            <small style="color: var(--text-muted);">Add multiple images. Max 10 images.</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Itinerary Day Images</label>
+                            <div id="package-itinerary-upload"></div>
+                            <small style="color: var(--text-muted);">Images for each day of the itinerary. Max 14 images.</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="button" class="btn btn-secondary" onclick="saveChanges()">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Update & Publish</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+    
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/manager-image-service.js"></script>
+    <script src="../js/image-upload-component.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script>
+    var packageImages = { main: '', gallery: [], itinerary: [] };
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        ImageUploadComponent.create(document.getElementById('package-image-upload'), {
+            fieldId: 'package-main-image',
+            multiple: false,
+            value: [],
+            onImageAdd: function(src, data) {
+                packageImages.main = data.url || data.data || src;
+                updatePreview('image-preview', packageImages.main);
+            },
+            onImageRemove: function(data) { packageImages.main = ''; }
+        });
+        
+        ImageUploadComponent.create(document.getElementById('package-gallery-upload'), {
+            fieldId: 'package-gallery',
+            multiple: true,
+            maxImages: 10,
+            value: [],
+            onImageAdd: function(src, data) { packageImages.gallery.push(data.url || data.data || src); },
+            onImageRemove: function(data) {
+                var idx = packageImages.gallery.indexOf(data.url || data.data);
+                if (idx > -1) packageImages.gallery.splice(idx, 1);
+            }
+        });
+        
+        ImageUploadComponent.create(document.getElementById('package-itinerary-upload'), {
+            fieldId: 'package-itinerary',
+            multiple: true,
+            maxImages: 14,
+            value: [],
+            onImageAdd: function(src, data) { packageImages.itinerary.push(data.url || data.data || src); },
+            onImageRemove: function(data) {
+                var idx = packageImages.itinerary.indexOf(data.url || data.data);
+                if (idx > -1) packageImages.itinerary.splice(idx, 1);
+            }
+        });
+        
+        var params = new URLSearchParams(window.location.search);
+        var packageId = params.get('id');
+        document.getElementById('package-id').value = packageId || '';
+        
+        loadPackage(packageId);
+        
+        function loadPackage(id) {
+            if (!id) {
+                showToast('No package ID provided', 'error');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                return;
+            }
+            
+            ManagerService.getPackage(id).then(function(response) {
+                var pkg = response.data || response;
+                populateForm(pkg);
+            }).catch(function(err) {
+                console.warn('Using mock data:', err);
+                var mockPackages = {
+                    'p1': { id: 'p1', name: 'Classic Safari', duration: '5-7 Nights', price: 2500, category: 'adventure', description: 'Explore the best of Kenya.', overview: 'Full itinerary details...', image: '', gallery: [], itineraryImages: [] },
+                    'p2': { id: 'p2', name: 'Luxury Escape', duration: '7-10 Nights', price: 5000, category: 'luxury', description: 'Premium lodges experience.', overview: 'Luxury details...', image: '', gallery: [], itineraryImages: [] }
+                };
+                var pkg = mockPackages[id] || mockPackages['p1'];
+                if (pkg) populateForm(pkg);
+            });
+        }
+        
+        function populateForm(pkg) {
+            document.getElementById('name').value = pkg.name || '';
+            document.getElementById('duration').value = pkg.duration || '';
+            document.getElementById('price').value = pkg.price || '';
+            document.getElementById('category').value = pkg.category || '';
+            document.getElementById('description').value = pkg.description || '';
+            document.getElementById('overview').value = pkg.overview || '';
+            
+            if (pkg.image) {
+                packageImages.main = pkg.image;
+                if (pkg.image.startsWith('http')) {
+                    updatePreview('image-preview', pkg.image);
+                }
+            }
+            if (pkg.gallery && pkg.gallery.length > 0) {
+                packageImages.gallery = pkg.gallery;
+            }
+            if (pkg.itineraryImages && pkg.itineraryImages.length > 0) {
+                packageImages.itinerary = pkg.itineraryImages;
+            }
+        }
+        
+        function updatePreview(containerId, src) {
+            var container = document.getElementById(containerId);
+            if (src) {
+                container.innerHTML = '<img src="' + src + '" alt="Preview" onerror="this.parentNode.innerHTML=\'<span>Invalid image URL</span>\'">';
+            } else {
+                container.innerHTML = '<span>Image preview will appear here</span>';
+            }
+        }
+        
+        document.getElementById('package-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            publishChanges();
+        });
+        
+        function saveChanges() {
+            var formData = getFormData();
+            var packageId = document.getElementById('package-id').value;
+            showToast('Saving changes...');
+            uploadAndSave(packageId, formData);
+        }
+        
+        function publishChanges() {
+            var formData = getFormData();
+            formData.status = 'published';
+            var packageId = document.getElementById('package-id').value;
+            showToast('Publishing...');
+            uploadAndSave(packageId, formData);
+        }
+        
+        function uploadAndSave(packageId, formData) {
+            var uploadPromises = [];
+            
+            if (packageImages.main && !packageImages.main.startsWith('http')) {
+                uploadPromises.push(new Promise(function(resolve) {
+                    if (packageImages.main.startsWith('data:')) {
+                        formData.image = packageImages.main;
+                        resolve();
+                    } else {
+                        ImageService.uploadImage(packageImages.main, { category: 'packages' })
+                            .then(function(result) { formData.image = result.url; resolve(); })
+                            .catch(function() { formData.image = packageImages.main; resolve(); });
+                    }
+                }));
+            } else {
+                formData.image = packageImages.main || '';
+            }
+            
+            Promise.all(uploadPromises).then(function() {
+                return ManagerService.updatePackage(packageId, formData);
+            }).then(function() {
+                showToast('Changes saved successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }).catch(function(err) {
+                console.error('Update error:', err);
+                showToast('Failed to save changes', 'error');
+            });
+        }
+        
+        function getFormData() {
+            return {
+                id: document.getElementById('package-id').value,
+                name: document.getElementById('name').value,
+                duration: document.getElementById('duration').value,
+                price: parseFloat(document.getElementById('price').value),
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value,
+                overview: document.getElementById('overview').value,
+                image: packageImages.main,
+                gallery: packageImages.gallery,
+                itineraryImages: packageImages.itinerary
+            };
+        }
+        
+        window.saveChanges = saveChanges;
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Review Details - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">Dashboard</a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="list.html" class="nav-item active">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">Account</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Review Details</h1>
+                <a href="list.html" class="btn btn-secondary">← Back to Reviews</a>
+            </div>
+            
+            <div id="review-content">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+            
+            <!-- Response Section -->
+            <div class="data-table-container" style="margin-top: 20px;">
+                <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                    <h2>Manager Actions</h2>
+                </div>
+                <div style="padding: 20px;">
+                    <div class="form-group">
+                        <label>Manager Response</label>
+                        <textarea id="response-text" rows="4" placeholder="Write a response to this review..."></textarea>
+                    </div>
+                    <div class="btn-group" style="flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="updateStatus('approved')">Approve</button>
+                        <button class="btn btn-warning" onclick="updateStatus('pending')">Mark Pending</button>
+                        <button class="btn btn-danger" onclick="updateStatus('flagged')">Flag Review</button>
+                        <button class="btn btn-primary" onclick="sendResponse()">Send Response</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+    var currentReviewId = null;
+    var currentReview = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var params = new URLSearchParams(window.location.search);
+        var reviewId = params.get('id');
+        
+        if (!reviewId) {
+            showToast('No review ID provided', 'error');
+            setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            return;
+        }
+        
+        currentReviewId = reviewId;
+        loadReview(reviewId);
+        
+        function loadReview(id) {
+            var mockReviews = {
+                'r1': { id: 'r1', itemType: 'hotel', itemId: 'h1', itemName: "Governors' Camp", user: 'John Smith', email: 'john@example.com', rating: 5, text: 'Absolutely amazing experience! The staff was incredibly friendly and the wildlife viewing was spectacular. We saw all the Big Five within the first two days. The tent accommodations were luxurious and the food was exceptional. Highly recommend for anyone looking for an authentic safari experience.', date: '2026-04-02', status: 'approved', response: null, helpful: 12 },
+                'r2': { id: 'r2', itemType: 'hotel', itemId: 'h2', itemName: 'Tortilis Camp', user: 'Sarah Johnson', email: 'sarah@example.com', rating: 4, text: 'Great location with stunning Kilimanjaro views. The staff went above and beyond to make our honeymoon special. Food could be slightly better but overall a wonderful experience.', date: '2026-04-01', status: 'approved', response: 'Thank you for your feedback, Sarah! We are glad you enjoyed the Kilimanjaro views. We will work on improving our food options.', helpful: 5 },
+                'r3': { id: 'r3', itemType: 'tour', itemId: 't1', itemName: 'Maasai Mara Safari', user: 'Mike Williams', email: 'mike@example.com', rating: 5, text: 'Best safari ever! The guides knew exactly where to find the animals. We were lucky to witness the great migration. Our guide David was incredibly knowledgeable about wildlife.', date: '2026-03-30', status: 'pending', response: null, helpful: 8 },
+                'r4': { id: 'r4', itemType: 'hotel', itemId: 'h5', itemName: 'Mara Budget Camp', user: 'Emily Davis', email: 'emily@example.com', rating: 3, text: 'Good value for money but facilities were basic. Great for budget travelers who want to experience safari without the luxury price tag.', date: '2026-03-28', status: 'flagged', response: null, helpful: 3 },
+                'r5': { id: 'r5', itemType: 'hotel', itemId: 'h1', itemName: "Governors' Camp", user: 'Robert Brown', email: 'robert@example.com', rating: 5, text: 'Wonderful experience! Will definitely come back. The sunset game drives were spectacular.', date: '2026-03-25', status: 'approved', response: null, helpful: 15 },
+                'r6': { id: 'r6', itemType: 'hotel', itemId: 'h3', itemName: 'Serena Amboseli', user: 'Lisa Anderson', email: 'lisa@example.com', rating: 2, text: 'Disappointed with the service. Not worth the price. Expected much more for what we paid.', date: '2026-03-20', status: 'pending', response: null, helpful: 7 }
+            };
+            
+            var review = mockReviews[id] || mockReviews['r1'];
+            currentReview = review;
+            displayReview(review);
+        }
+        
+        function displayReview(review) {
+            var stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            var statusBadge = review.status === 'approved' ? 'badge-success' : 
+                             review.status === 'pending' ? 'badge-warning' : 'badge-danger';
+            
+            var html = '<div class="data-table-container">' +
+                '<div style="padding: 20px; border-bottom: 1px solid var(--border);">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">' +
+                        '<div>' +
+                            '<h2 style="margin: 0;">' + review.itemName + '</h2>' +
+                            '<span style="color: var(--text-muted);">' + (review.itemType === 'hotel' ? 'Hotel Review' : 'Tour Review') + '</span>' +
+                        '</div>' +
+                        '<span class="badge ' + statusBadge + '">' + review.status + '</span>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="padding: 20px;">' +
+                    '<div style="display: grid; gap: 15px;">' +
+                        '<div style="display: flex; align-items: center; gap: 10px;">' +
+                            '<div style="width: 48px; height: 48px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">' + review.user.charAt(0) + '</div>' +
+                            '<div>' +
+                                '<strong>' + review.user + '</strong><br>' +
+                                '<span style="color: var(--text-muted); font-size: 0.9em;">' + review.email + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div>' +
+                            '<strong>Rating:</strong> <span style="color: var(--accent); font-size: 1.2em;">' + stars + '</span> (' + review.rating + '/5)' +
+                        '</div>' +
+                        '<div>' +
+                            '<strong>Date:</strong> ' + review.date +
+                        '</div>' +
+                        '<div>' +
+                            '<strong>Helpful:</strong> ' + (review.helpful || 0) + ' people found this helpful' +
+                        '</div>' +
+                        '<div>' +
+                            '<strong>Review:</strong>' +
+                            '<div style="background: var(--bg-input); padding: 15px; border-radius: 8px; margin-top: 8px; line-height: 1.6;">' + review.text + '</div>' +
+                        '</div>';
+            
+            if (review.response) {
+                html += '<div>' +
+                    '<strong>Manager Response:</strong>' +
+                    '<div style="background: rgba(0,200,83,0.1); padding: 15px; border-radius: 8px; margin-top: 8px; border-left: 3px solid var(--success);">' + review.response + '</div>' +
+                '</div>';
+            }
+            
+            html += '</div></div></div>';
+            
+            document.getElementById('review-content').innerHTML = html;
+            
+            // Pre-fill response if exists
+            if (review.response) {
+                document.getElementById('response-text').value = review.response;
+            }
+        }
+        
+        window.updateStatus = function(status) {
+            showToast('Review status updated to: ' + status);
+            if (currentReview) {
+                currentReview.status = status;
+            }
+            loadReview(currentReviewId);
+        };
+        
+        window.sendResponse = function() {
+            var response = document.getElementById('response-text').value.trim();
+            if (!response) {
+                showToast('Please enter a response', 'error');
+                return;
+            }
+            
+            // In production, call API to save response
+            if (currentReview) {
+                currentReview.response = response;
+            }
+            
+            showToast('Response saved successfully');
+            loadReview(currentReviewId);
+        };
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

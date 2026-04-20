@@ -58,6 +58,7 @@
         _registerServices: function() {
             var services = [
                 'MutsAuth',
+                'MutsWishlistService',
                 'MutsBookingsService',
                 'MutsHotelsService',
                 'MutsMessagesService',

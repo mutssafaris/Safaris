@@ -1,14 +1,10 @@
 /* Favorites JS - Muts Safaris */
+/* Legacy wrapper - now uses unified MutsWishlistService */
 (function() {
     if (window.favoritesInitialized) return;
     window.favoritesInitialized = true;
 
-var FAVORITES_KEY = 'muts_favorites';
     var DESTINATIONS_KEY = 'muts_destinations_cache';
-    var API_BASE = window.API_BASE || '/api';
-    
-    // Store favorites from API
-    var apiFavorites = [];
 
     var destinationsData = null;
 
@@ -18,35 +14,10 @@ var FAVORITES_KEY = 'muts_favorites';
         return './';
     }
 
-    // Try to sync with backend API
     function syncWithAPI() {
-        // First get favorites from API
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', API_BASE + '/favorites', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        
-        // Include auth token if available
-        var session = localStorage.getItem('muts_user_session');
-        if (session) {
-            try {
-                var sessionObj = JSON.parse(session);
-                if (sessionObj.token) {
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + sessionObj.token);
-                }
-            } catch (e) {}
+        if (window.MutsWishlistService) {
+            window.MutsWishlistService.syncWithAPI();
         }
-        
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                try {
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.success && response.favorites) {
-                        apiFavorites = response.favorites.map(function(f) { return f.itemId; });
-                    }
-                } catch (e) {}
-            }
-        };
-        xhr.send();
     }
 
     // Try to add favorite via API
@@ -124,18 +95,35 @@ var FAVORITES_KEY = 'muts_favorites';
         xhr.send();
     }
 
-    function getFavorites() {
-        return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+function getFavorites() {
+        if (window.MutsWishlistService) {
+            return window.MutsWishlistService.getItems('destination').map(function(item) {
+                return item.id;
+            });
+        }
+        return JSON.parse(localStorage.getItem('muts_favorites') || '[]');
     }
 
     function isFavorite(destinationId) {
-        var favs = getFavorites();
+        if (window.MutsWishlistService) {
+            return window.MutsWishlistService.isInWishlist('destination', destinationId);
+        }
+        var favs = JSON.parse(localStorage.getItem('muts_favorites') || '[]');
         return favs.indexOf(destinationId) !== -1;
     }
 
     function toggleFavorite(destinationId) {
-        var favs = getFavorites();
-var index = favs.indexOf(destinationId);
+        if (window.MutsWishlistService) {
+            var wasIn = window.MutsWishlistService.isInWishlist('destination', destinationId);
+            if (wasIn) {
+                window.MutsWishlistService.removeItem('destination', destinationId);
+            } else {
+                window.MutsWishlistService.addItem('destination', destinationId);
+            }
+            return !wasIn;
+        }
+        var favs = JSON.parse(localStorage.getItem('muts_favorites') || '[]');
+        var index = favs.indexOf(destinationId);
         if (index === -1) {
             favs.push(destinationId);
             addFavoriteAPI('destination', destinationId);
@@ -143,7 +131,7 @@ var index = favs.indexOf(destinationId);
             favs.splice(index, 1);
             removeFavoriteAPI('destination', destinationId);
         }
-        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
+        localStorage.setItem('muts_favorites', JSON.stringify(favs));
         return index === -1;
     }
 

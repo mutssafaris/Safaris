@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="description" content="Gallery - Stunning wildlife photography from Kenya's national parks.">
+    <meta name="keywords" content="kenya wildlife, safari photos, photography, maasai mara, elephants">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mutssafaris.com/explore/gallery">
+    <title>Gallery - Muts Safaris</title>
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dashboard-theme.css">
+    <link rel="stylesheet" href="../css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="icon" href="../assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'dark';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'light' || stored === 'dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="explore-navbar">
+        <a href="../login.html" class="explore-brand">MUTS_SAFARIS</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="explore-nav-links" id="explore-nav-links">
+            <a href="index.html">Home</a>
+            <a href="beaches.html">Beaches</a>
+            <a href="packages.html">Packages</a>
+            <a href="africasa.html">Africasa</a>
+            <a href="gallery.html" class="active">Gallery</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <a href="../login.html" class="explore-login-btn">Login</a>
+    </nav>
+
+    <main class="explore-main">
+        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/gallery.jpg') center/cover no-repeat;">
+            <div class="hero-content">
+                <span class="hero-badge">From the wild</span>
+                <h1 class="hero-title">GALLERY</h1>
+                <p class="hero-subtitle">Stunning wildlife photography from Kenya's national parks.</p>
+            </div>
+        </section>
+
+        <section class="gallery-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="wildlife">Wildlife</button>
+            <button class="filter-btn" data-filter="landscapes">Landscapes</button>
+            <button class="filter-btn" data-filter="accommodations">Accommodations</button>
+        </section>
+
+        <section class="gallery-section">
+            <div class="gallery-grid" id="gallery-grid"></div>
+            <p class="gallery-note">Login to view and download high-resolution images.</p>
+            <div class="section-cta">
+                <a href="../login.html" class="btn btn-primary">Login to Download</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="explore-footer">
+        <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
+        <p>Don't be a Tourist, be a Traveller</p>
+    </footer>
+
+    <script>
+    (function() {
+        var API_BASE = '/api';
+        
+        function img(src) {
+            if (!src) return '';
+            if (src.startsWith('http')) return src;
+            return '../images/' + src;
+        }
+        
+        function onImageLoad(img) {
+            img.classList.add('loaded');
+        }
+        
+        var staticGallery = [
+            { category: 'wildlife', url: 'gallery/wildlife/elephant-family.jpg', title: 'Elephant Herd' },
+            { category: 'wildlife', url: 'gallery/wildlife/buffalo-herd.jpg', title: 'Buffalo Herd' },
+            { category: 'wildlife', url: 'gallery/wildlife/cheetah-hunt.jpg', title: 'Cheetah Hunt' },
+            { category: 'wildlife', url: 'gallery/wildlife/giraffe-neck.jpg', title: 'Giraffe' },
+            { category: 'landscapes', url: 'gallery/landscapes/sunset.jpg', title: 'Savanna Sunset' },
+            { category: 'landscapes', url: 'gallery/landscapes/flamingo-lake.jpg', title: 'Flamingo Lake' },
+            { category: 'accommodations', url: 'gallery/accommodations/camp.jpg', title: 'Tented Camp' },
+            { category: 'accommodations', url: 'gallery/accommodations/luxury-tent.jpg', title: 'Safari Lodge' }
+        ];
+        
+        function renderGallery(items) {
+            var html = '';
+            items.forEach(function(item) {
+                html += '<div class="gallery-item" data-category="' + item.category + '">' +
+                    '<img src="' + img(item.url) + '" alt="' + (item.title || 'Gallery') + '" loading="lazy" onload="onImageLoad(this)">' +
+                    '<div class="gallery-overlay"><span>' + (item.title || 'View') + '</span></div>' +
+                '</div>';
+            });
+            document.getElementById('gallery-grid').innerHTML = html;
+        }
+        
+        renderGallery(staticGallery);
+        
+        fetch(API_BASE + '/gallery')
+            .then(function(res) { return res.json(); })
+            .then(function(response) {
+                if (response.success && response.data && response.data.length > 0) {
+                    renderGallery(response.data);
+                }
+            })
+            .catch(function() {
+                // Keep static data on error
+            });
+        
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                
+                var filter = this.dataset.filter;
+                document.querySelectorAll('.gallery-item').forEach(function(item) {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.querySelectorAll('.gallery-item').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }, 300);
+        });
+        
+        window.onImageLoad = onImageLoad;
+    })();
+    </script>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

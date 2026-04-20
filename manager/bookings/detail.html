@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Booking Details - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="list.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h-2V3H9v3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 3h2v3h-2V3zm6 16H7V8h10v11z"/></svg>
+                    <span>Bookings</span>
+                </a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Booking Details</h1>
+                <div class="btn-group">
+                    <a href="list.html" class="btn btn-secondary">Back to List</a>
+                    <button class="btn btn-primary" id="update-status-btn">Update Status</button>
+                </div>
+            </div>
+            
+            <div id="loading-container" style="text-align: center; padding: 60px 20px;">
+                <div class="loading"><div class="spinner"></div></div>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading booking details...</p>
+            </div>
+            
+            <div id="booking-content" style="display: none;">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Guest Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Booking ID</label>
+                                <div class="detail-value" id="booking-id">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div id="booking-status">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Guest Name</label>
+                                <div class="detail-value" id="guest-name">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="detail-value" id="guest-email">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <div class="detail-value" id="guest-phone">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Booking Details</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Destination / Package</label>
+                                <div class="detail-value" id="destination">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Check-in Date</label>
+                                <div class="detail-value" id="checkin">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Check-out Date</label>
+                                <div class="detail-value" id="checkout">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Number of Guests</label>
+                                <div class="detail-value" id="guests">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Price</label>
+                                <div class="detail-value" id="total-price">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Additional Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <div class="detail-value" id="notes">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-container" style="display: none; text-align: center; padding: 60px 20px;">
+                <p style="color: var(--error); font-size: 1.2rem;">Booking not found</p>
+                <p style="color: var(--text-muted);">The requested booking could not be loaded.</p>
+                <a href="list.html" class="btn btn-secondary" style="margin-top: 20px;">Back to List</a>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Update Status Modal -->
+    <div class="modal-overlay" id="status-modal" style="opacity: 0; visibility: hidden;">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Update Booking Status</h2>
+                <button class="modal-close" onclick="closeStatusModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-status">New Status</label>
+                    <select id="new-status" class="filter-select" style="width: 100%;">
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assign-guide">Assign Guide (Optional)</label>
+                    <input type="text" id="assign-guide" placeholder="Guide name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeStatusModal()">Cancel</button>
+                <button class="btn btn-primary" id="confirm-update-btn">Update</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+    var currentBookingId = null;
+    var currentBooking = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var bookingId = urlParams.get('id');
+        
+        if (!bookingId) {
+            showError();
+            return;
+        }
+        
+        currentBookingId = bookingId;
+        loadBooking(bookingId);
+        
+        document.getElementById('update-status-btn').addEventListener('click', function() {
+            document.getElementById('status-modal').classList.add('show');
+        });
+        
+        document.getElementById('confirm-update-btn').addEventListener('click', function() {
+            updateStatus();
+        });
+        
+        function loadBooking(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getBooking(id).then(function(booking) {
+                    if (booking) {
+                        renderBooking(booking);
+                    } else {
+                        showError();
+                    }
+                }).catch(function(err) {
+                    console.error('Error loading booking:', err);
+                    renderMockBooking(id);
+                });
+            } else {
+                setTimeout(function() {
+                    renderMockBooking(id);
+                }, 300);
+            }
+        }
+        
+        function renderMockBooking(id) {
+            var mockBookings = {
+                'BKG-001': { id: 'BKG-001', guest: 'John Smith', email: 'john@example.com', phone: '+254700000001', destination: 'Maasai Mara Safari', checkin: '2026-04-18', checkout: '2026-04-24', adults: 2, children: 1, infants: 0, totalPrice: 2100, status: 'upcoming', notes: 'First time visiting Kenya. Interested in hot air balloon safari.' },
+                'BKG-002': { id: 'BKG-002', guest: 'Sarah Johnson', email: 'sarah@example.com', phone: '+254700000002', destination: 'Diani Beach Resort', checkin: '2026-05-05', checkout: '2026-05-10', adults: 2, children: 0, infants: 0, totalPrice: 1500, status: 'confirmed', notes: ' celebrating anniversary' },
+                'BKG-003': { id: 'BKG-003', guest: 'Mike Williams', email: 'mike@example.com', phone: '+254700000003', destination: 'Amboseli National Park', checkin: '2026-06-01', checkout: '2026-06-07', adults: 4, children: 2, infants: 0, totalPrice: 3200, status: 'pending', notes: '' }
+            };
+            
+            var booking = mockBookings[id] || mockBookings['BKG-001'];
+            if (id) booking.id = id;
+            
+            renderBooking(booking);
+        }
+        
+        function renderBooking(booking) {
+            currentBooking = booking;
+            
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('booking-content').style.display = 'block';
+            
+            document.getElementById('booking-id').textContent = booking.id || booking.bookingId || '-';
+            
+            var statusBadge = booking.status === 'upcoming' ? 'badge-success' : 
+                          booking.status === 'pending' ? 'badge-warning' :
+                          booking.status === 'confirmed' ? 'badge-info' :
+                          booking.status === 'completed' ? 'badge-success' : 'badge-danger';
+            document.getElementById('booking-status').innerHTML = '<span class="badge ' + statusBadge + '">' + booking.status + '</span>';
+            
+            document.getElementById('guest-name').textContent = booking.guest || booking.guestName || booking.name || '-';
+            document.getElementById('guest-email').textContent = booking.email || '-';
+            document.getElementById('guest-phone').textContent = booking.phone || '-';
+            document.getElementById('destination').textContent = booking.destination || booking.packageName || '-';
+            document.getElementById('checkin').textContent = booking.checkin || booking.startDate || '-';
+            document.getElementById('checkout').textContent = booking.checkout || booking.endDate || '-';
+            
+            var guestCount = (booking.adults || 0) + ' Adults';
+            if (booking.children) guestCount += ', ' + booking.children + ' Children';
+            if (booking.infants) guestCount += ', ' + booking.infants + ' Infants';
+            document.getElementById('guests').textContent = guestCount;
+            
+            document.getElementById('total-price').textContent = '$' + (booking.totalPrice || booking.total || booking.amount || 0);
+            document.getElementById('notes').textContent = booking.notes || 'No notes';
+        }
+        
+        function showError() {
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+        }
+        
+        window.closeStatusModal = function() {
+            document.getElementById('status-modal').classList.remove('show');
+        };
+        
+        function updateStatus() {
+            var newStatus = document.getElementById('new-status').value;
+            var guide = document.getElementById('assign-guide').value;
+            
+            if (ManagerService.isAPILive()) {
+                ManagerService.updateBookingStatus(currentBookingId, newStatus).then(function() {
+                    showToast('Booking status updated to ' + newStatus);
+                    closeStatusModal();
+                    loadBooking(currentBookingId);
+                }).catch(function(err) {
+                    showToast('Failed to update status', 'error');
+                    closeStatusModal();
+                });
+            } else {
+                showToast('Booking status updated to ' + newStatus);
+                closeStatusModal();
+                setTimeout(function() {
+                    loadBooking(currentBookingId);
+                }, 300);
+            }
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

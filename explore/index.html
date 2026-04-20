@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="description" content="Explore Muts Safaris - Discover Kenya's finest safari destinations, beaches, and experiences.">
+    <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, travel, adventure, beaches">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Explore - Muts Safaris">
+    <meta property="og:description" content="Discover Kenya's most spectacular destinations with Muts Safaris.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://mutssafaris.com/explore">
+    <title>Explore - Muts Safaris</title>
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dashboard-theme.css">
+    <link rel="stylesheet" href="../css/mobile-responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="icon" href="../assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'dark';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'light' || stored === 'dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="explore-navbar">
+        <a href="../login.html" class="explore-brand">MUTS_SAFARIS</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="explore-nav-links" id="explore-nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="beaches.html">Beaches</a>
+            <a href="packages.html">Packages</a>
+            <a href="africasa.html">Africasa</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <a href="../login.html" class="explore-login-btn">Login</a>
+    </nav>
+
+    <main class="explore-main">
+        <!-- HERO SECTION -->
+        <section class="landing-hero" style="background: linear-gradient(180deg, rgba(5,5,16,0.5) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/kenya-safari.jpg') center/cover no-repeat;">
+            <div class="hero-content">
+                <span class="hero-badge">Don't be a Tourist, be a Traveller</span>
+                <h1 class="hero-title">DISCOVER<br>KENYA</h1>
+                <p class="hero-subtitle">The heart of African wilderness awaits. Experience safari like never before.</p>
+                <div class="hero-actions">
+                    <a href="packages.html" class="btn btn-primary">Explore Packages</a>
+                    <a href="beaches.html" class="btn btn-outline">Beach Getaway</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Destinations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Species</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK CATEGORIES -->
+        <section class="categories-section">
+            <div class="categories-grid">
+                <a href="beaches.html" class="category-card" style="--delay: 0">
+                    <div class="category-icon">🏖️</div>
+                    <h3>Beaches</h3>
+                    <p>Diani, Malindi, Lamu & more</p>
+                </a>
+                <a href="packages.html" class="category-card" style="--delay: 1">
+                    <div class="category-icon">🦁</div>
+                    <h3>Safari</h3>
+                    <p>Maasai Mara, Amboseli & more</p>
+                </a>
+                <a href="africasa.html" class="category-card" style="--delay: 2">
+                    <div class="category-icon">🎭</div>
+                    <h3>Culture</h3>
+                    <p>Maasai villages & heritage</p>
+                </a>
+                <a href="gallery.html" class="category-card" style="--delay: 3">
+                    <div class="category-icon">📸</div>
+                    <h3>Gallery</h3>
+                    <p>Wildlife photography</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- FEATURED DESTINATIONS -->
+        <section class="featured-section">
+            <h2 class="section-title">Popular Destinations</h2>
+            <div class="destinations-grid" id="destinations-grid">
+                <!-- Loaded via JS -->
+            </div>
+            <div class="section-cta">
+                <a href="packages.html" class="btn btn-outline">View All Destinations</a>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE TYPES -->
+        <section class="experience-section">
+            <h2 class="section-title">Choose Your Experience</h2>
+            <div class="experience-grid" id="experience-grid">
+                <!-- Loaded via JS -->
+            </div>
+        </section>
+
+        <!-- GALLERY PREVIEW -->
+        <section class="gallery-preview-section">
+            <h2 class="section-title">From the Wild</h2>
+            <div class="gallery-preview-grid" id="gallery-grid">
+                <!-- Loaded via JS -->
+            </div>
+            <div class="section-cta">
+                <a href="gallery.html" class="btn btn-outline">Explore Gallery</a>
+            </div>
+        </section>
+
+        <!-- BLOG PREVIEW -->
+        <section class="blog-preview-section">
+            <h2 class="section-title">Travel Guides</h2>
+            <div class="blog-preview-grid" id="blog-grid">
+                <!-- Loaded via JS -->
+            </div>
+            <div class="section-cta">
+                <a href="blog.html" class="btn btn-outline">All Articles</a>
+            </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready for Your Adventure?</h2>
+                <p>Login to book your dream safari and create unforgettable memories.</p>
+                <a href="../login.html" class="btn btn-primary btn-large">Get Started</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="explore-footer">
+        <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
+        <p>Don't be a Tourist, be a Traveller</p>
+    </footer>
+
+    <script>
+    (function() {
+        var API_BASE = '/api';
+        
+        // Local image helper
+        function img(src) {
+            if (!src) return '';
+            if (src.startsWith('http')) return src;
+            return '../images/' + src;
+        }
+        
+        // Image load handler with fade
+        function onImageLoad(img) {
+            img.classList.add('loaded');
+        }
+        
+        // Skeleton HTML generators
+        function skeletonCard(count) {
+            var html = '';
+            for (var i = 0; i < count; i++) {
+                html += '<div class="destination-card skeleton"></div>';
+            }
+            return html;
+        }
+        
+        function skeletonExperience(count) {
+            var html = '';
+            for (var i = 0; i < count; i++) {
+                html += '<div class="experience-card skeleton"></div>';
+            }
+            return html;
+        }
+        
+        // Static fallback data - these will always show
+        var staticDestinations = [
+            { name: 'Maasai Mara', desc: 'Witness the Great Migration', price: 'From $2,500', image: 'tours/maasai-mara.jpg' },
+            { name: 'Amboseli', desc: 'Elephants with Kilimanjaro', price: 'From $1,800', image: 'tours/amboseli.jpg' },
+            { name: 'Tsavo', desc: 'Land of red elephants', price: 'From $1,200', image: 'tours/tsavo.jpg' },
+            { name: 'Samburu', desc: 'Northern frontier magic', price: 'From $1,500', image: 'tours/samburu.jpg' }
+        ];
+        
+        var staticExperiences = [
+            { name: 'Luxury Safari', desc: 'Premium lodges & exclusive', price: 'From $5,000', image: 'hotels-luxury.jpg' },
+            { name: 'Family Friendly', desc: 'Perfect for the whole family', price: 'From $3,200', image: 'experiences/family.jpg' },
+            { name: 'Honeymoon', desc: 'Romantic getaways', price: 'From $4,500', image: 'experiences/honeymoon.jpg' },
+            { name: 'Adventure', desc: 'Treks & extreme experiences', price: 'From $2,000', image: 'experiences/adventure.jpg' }
+        ];
+        
+        var staticGallery = [
+            'gallery/wildlife/elephant-family.jpg',
+            'gallery/wildlife/buffalo-herd.jpg',
+            'gallery/landscapes/sunset.jpg',
+            'gallery/accommodations/camp.jpg'
+        ];
+        
+        var staticBlog = [
+            { title: 'Best Time to Visit Kenya', desc: 'Plan your safari for the perfect experience.', tag: 'Guide', image: 'blog/best-time.jpg' },
+            { title: 'Great Migration', desc: 'Everything about this natural wonder.', tag: 'Wildlife', image: 'blog/migration.jpg' },
+            { title: 'Family Safari Tips', desc: 'Making magical memories together.', tag: 'Tips', image: 'blog/family.jpg' }
+        ];
+        
+        // Render functions
+        function renderDestinations(items) {
+            var html = '';
+            items.forEach(function(item) {
+                html += '<div class="destination-card">' +
+                    '<img src="' + img(item.image || item.thumbnail) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
+                    '<div class="destination-info">' +
+                        '<h3>' + item.name + '</h3>' +
+                        '<p>' + (item.description || item.shortDescription || item.desc) + '</p>' +
+                        '<span class="destination-price">' + item.price + '</span>' +
+                        '<span class="destination-cta" onclick="redirectToLogin()">Explore →</span>' +
+                    '</div>' +
+                '</div>';
+            });
+            document.getElementById('destinations-grid').innerHTML = html;
+        }
+        
+        function renderExperiences(items) {
+            var html = '';
+            items.forEach(function(item) {
+                html += '<div class="experience-card">' +
+                    '<img src="' + img(item.image || item.thumbnail) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
+                    '<div class="experience-content">' +
+                        '<h3>' + item.name + '</h3>' +
+                        '<p>' + (item.description || item.shortDescription || item.desc) + '</p>' +
+                        '<span>' + item.price + '</span>' +
+                    '</div>' +
+                '</div>';
+            });
+            document.getElementById('experience-grid').innerHTML = html;
+        }
+        
+        function renderGallery(items) {
+            var html = '';
+            items.forEach(function(item) {
+                // Handle both string (static) and object (API) formats
+                var src = typeof item === 'string' ? item : (item.image || item.url);
+                html += '<img src="' + img(src) + '" alt="Gallery" loading="lazy" onload="onImageLoad(this)">';
+            });
+            document.getElementById('gallery-grid').innerHTML = html;
+        }
+        
+        function renderBlog(items) {
+            var html = '';
+            items.forEach(function(item) {
+                html += '<article class="blog-preview-card">' +
+                    '<img src="' + img(item.image || item.coverImage) + '" alt="' + item.title + '" loading="lazy" onload="onImageLoad(this)">' +
+                    '<div class="blog-preview-content">' +
+                        '<span class="blog-tag">' + item.category + '</span>' +
+                        '<h3>' + item.title + '</h3>' +
+                        '<p>' + (item.excerpt || item.description || item.desc) + '</p>' +
+                        '<span onclick="redirectToLogin()">Read More →</span>' +
+                    '</div>' +
+                '</article>';
+            });
+            document.getElementById('blog-grid').innerHTML = html;
+        }
+        
+        // Fetch with fallback
+        function fetchWithFallback(endpoint, renderFn, fallbackData) {
+            var container;
+            if (endpoint.includes('destination')) container = document.getElementById('destinations-grid');
+            else if (endpoint.includes('experience')) container = document.getElementById('experience-grid');
+            else if (endpoint.includes('gallery')) container = document.getElementById('gallery-grid');
+            else if (endpoint.includes('blog')) container = document.getElementById('blog-grid');
+            
+            // Show skeleton while loading
+            if (container) {
+                if (endpoint.includes('destination')) container.innerHTML = skeletonCard(4);
+                else if (endpoint.includes('experience')) container.innerHTML = skeletonExperience(4);
+                else if (endpoint.includes('gallery')) container.innerHTML = '<div class="skeleton skeleton-image"></div><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-image"></div>';
+                else if (endpoint.includes('blog')) container.innerHTML = skeletonCard(3);
+            }
+            
+            renderFn(fallbackData);
+            
+            fetch(API_BASE + endpoint)
+                .then(function(res) { return res.json(); })
+                .then(function(response) {
+                    if (response.success && response.data && response.data.length > 0) {
+                        renderFn(response.data);
+                    }
+                })
+                .catch(function() {
+                    // Keep static data on error
+                });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchWithFallback('/destinations', renderDestinations, staticDestinations);
+            fetchWithFallback('/tours', renderExperiences, staticExperiences);
+            fetchWithFallback('/gallery', renderGallery, staticGallery);
+            fetchWithFallback('/blogs', renderBlog, staticBlog);
+            
+            // Add visibility animations
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            setTimeout(function() {
+                document.querySelectorAll('.destination-card, .experience-card, .blog-preview-card, .category-card').forEach(function(el) {
+                    el.classList.add('visible');
+                    observer.observe(el);
+                });
+            }, 500);
+        });
+        
+        window.onImageLoad = onImageLoad;
+    })();
+    </script>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        function redirectToLogin() {
+            window.location.href = '../login.html';
+        }
+    </script>
+</body>
+</html>

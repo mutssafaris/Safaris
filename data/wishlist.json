@@ -1,0 +1,4 @@
+{
+  "wishlist": [],
+  "note": "User wishlist stored server-side. This file used as mock/fallback when API unavailable."
+}

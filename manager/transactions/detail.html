@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Transaction Details - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="list.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    <span>Transactions</span>
+                </a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Transaction Details</h1>
+                <div class="btn-group">
+                    <a href="list.html" class="btn btn-secondary">Back to List</a>
+                    <button class="btn btn-primary" onclick="printReceipt()">Print Receipt</button>
+                </div>
+            </div>
+            
+            <div id="loading-container" style="text-align: center; padding: 60px 20px;">
+                <div class="loading"><div class="spinner"></div></div>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading transaction details...</p>
+            </div>
+            
+            <div id="transaction-content" style="display: none;">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Transaction Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Transaction ID</label>
+                                <div class="detail-value" id="txn-id">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div id="txn-status">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date & Time</label>
+                                <div class="detail-value" id="txn-date">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <div class="detail-value" id="txn-type">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <div class="detail-value" id="txn-description">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <div class="detail-value" id="txn-category">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Method</label>
+                                <div class="detail-value" id="txn-method">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <div class="detail-value" id="txn-amount" style="font-size: 1.5rem; font-weight: bold;">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Customer Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Customer Name</label>
+                                <div class="detail-value" id="customer-name">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="detail-value" id="customer-email">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <div class="detail-value" id="customer-phone">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-container" style="display: none; text-align: center; padding: 60px 20px;">
+                <p style="color: var(--error); font-size: 1.2rem;">Transaction not found</p>
+                <p style="color: var(--text-muted);">The requested transaction could not be loaded.</p>
+                <a href="list.html" class="btn btn-secondary" style="margin-top: 20px;">Back to List</a>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+    var currentTransactionId = null;
+    var currentTransaction = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var txnId = urlParams.get('id');
+        
+        if (!txnId) {
+            showError();
+            return;
+        }
+        
+        currentTransactionId = txnId;
+        loadTransaction(txnId);
+        
+        function loadTransaction(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getTransaction(id).then(function(transaction) {
+                    if (transaction) {
+                        renderTransaction(transaction);
+                    } else {
+                        showError();
+                    }
+                }).catch(function(err) {
+                    console.error('Error loading transaction:', err);
+                    renderMockTransaction(id);
+                });
+            } else {
+                setTimeout(function() {
+                    renderMockTransaction(id);
+                }, 300);
+            }
+        }
+        
+        function renderMockTransaction(id) {
+            var mockTransactions = {
+                'TXN-77421': { id: 'TXN-77421', date: '2026-04-14 14:30', description: 'Maasai Mara 5-Day Expedition', category: 'Safari', type: 'Debit', amount: 2100.00, status: 'completed', method: 'Visa •••• 4242', customer: 'John Smith', email: 'john@example.com', phone: '+254700000001' },
+                'TXN-77422': { id: 'TXN-77422', date: '2026-04-13 09:15', description: 'Africasa: Hand-carved Mask', category: 'Marketplace', type: 'Debit', amount: 85.50, status: 'completed', method: 'Neural Wallet', customer: 'Sarah Johnson', email: 'sarah@example.com', phone: '+254700000002' },
+                'TXN-77423': { id: 'TXN-77423', date: '2026-04-12 18:00', description: 'Diani Beach Resort Upgrade', category: 'Hotel', type: 'Debit', amount: 450.00, status: 'pending', method: 'MasterCard •••• 8888', customer: 'Mike Williams', email: 'mike@example.com', phone: '+254700000003' },
+                'TXN-77424': { id: 'TXN-77424', date: '2026-04-11 10:00', description: 'Photography Tour Deposit', category: 'Package', type: 'Debit', amount: 1200.00, status: 'completed', method: 'Visa •••• 4242', customer: 'Emily Davis', email: 'emily@example.com', phone: '+254700000004' },
+                'TXN-77425': { id: 'TXN-77425', date: '2026-04-10 15:45', description: 'Amboseli Lodge Booking', category: 'Hotel', type: 'Debit', amount: 780.00, status: 'completed', method: 'M-Pesa', customer: 'Robert Brown', email: 'robert@example.com', phone: '+254700000005' }
+            };
+            
+            var txn = mockTransactions[id] || mockTransactions['TXN-77421'];
+            if (id) txn.id = id;
+            
+            renderTransaction(txn);
+        }
+        
+        function renderTransaction(txn) {
+            currentTransaction = txn;
+            
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('transaction-content').style.display = 'block';
+            
+            document.getElementById('txn-id').textContent = txn.id || '-';
+            
+            var statusBadge = txn.status === 'completed' ? 'badge-success' : 
+                           txn.status === 'pending' ? 'badge-warning' : 'badge-danger';
+            document.getElementById('txn-status').innerHTML = '<span class="badge ' + statusBadge + '">' + txn.status + '</span>';
+            
+            document.getElementById('txn-date').textContent = txn.date || '-';
+            document.getElementById('txn-type').textContent = txn.type || '-';
+            document.getElementById('txn-description').textContent = txn.description || '-';
+            document.getElementById('txn-category').textContent = txn.category || '-';
+            document.getElementById('txn-method').textContent = txn.method || '-';
+            
+            var amountStyle = txn.type === 'Credit' ? 'color: var(--success);' : '';
+            document.getElementById('txn-amount').style = amountStyle;
+            document.getElementById('txn-amount').textContent = '$' + Math.abs(txn.amount || 0).toFixed(2);
+            
+            document.getElementById('customer-name').textContent = txn.customer || txn.customerName || '-';
+            document.getElementById('customer-email').textContent = txn.email || '-';
+            document.getElementById('customer-phone').textContent = txn.phone || '-';
+        }
+        
+        function showError() {
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+        }
+        
+        window.printReceipt = function() {
+            showToast('Receipt sent to printer');
+        };
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

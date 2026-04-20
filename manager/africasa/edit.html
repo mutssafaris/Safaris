@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Edit Product - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand"><h2>MUTS MANAGER</h2><span>Content Management</span></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Dashboard</span></a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span>Africasa</span></a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header"><h1>Edit Product</h1></div>
+            <form id="product-form">
+                <input type="hidden" id="product-id" name="product-id">
+                
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Product Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Product Name *</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price ($) *</label>
+                                <input type="number" id="price" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category">
+                                    <option value="">Select Category</option>
+                                    <option value="jewelry">Jewelry</option>
+                                    <option value="carvings">Carvings</option>
+                                    <option value="textiles">Textiles</option>
+                                    <option value="art">Art</option>
+                                    <option value="crafts">Crafts</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="stock">Stock Quantity</label>
+                                <input type="number" id="stock" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description *</label>
+                            <textarea id="description" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <div id="product-image-upload"></div>
+                            <small style="color: var(--text-muted);">Upload image or enter CDN URL. Recommended: 800x800px</small>
+                            <div class="image-preview" id="image-preview">
+                                <span>Image preview will appear here</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="featured"> Mark as Featured
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <a href="list.html" class="btn btn-secondary">Cancel</a>
+                    <button type="button" class="btn btn-secondary" onclick="saveChanges()">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Update & Publish</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+    
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/manager-image-service.js"></script>
+    <script src="../js/image-upload-component.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script>
+    var productImage = '';
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        ImageUploadComponent.create(document.getElementById('product-image-upload'), {
+            fieldId: 'product-image',
+            multiple: false,
+            value: [],
+            onImageAdd: function(src, data) {
+                productImage = data.url || data.data || src;
+                updatePreview('image-preview', productImage);
+            },
+            onImageRemove: function(data) { productImage = ''; }
+        });
+        
+        var params = new URLSearchParams(window.location.search);
+        var productId = params.get('id');
+        document.getElementById('product-id').value = productId || '';
+        
+        loadProduct(productId);
+        
+        function loadProduct(id) {
+            if (!id) {
+                showToast('No product ID provided', 'error');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                return;
+            }
+            
+            ManagerService.getProduct(id).then(function(response) {
+                var product = response.data || response;
+                populateForm(product);
+            }).catch(function(err) {
+                console.warn('Using mock data:', err);
+                var mockProducts = {
+                    'pr1': { id: 'pr1', name: 'Maasai Beads', price: 45, category: 'jewelry', stock: 50, description: 'Handcrafted traditional jewelry.', image: '', featured: true },
+                    'pr2': { id: 'pr2', name: 'Wooden Carvings', price: 120, category: 'carvings', stock: 20, description: 'Artisan carved sculptures.', image: '', featured: false }
+                };
+                var product = mockProducts[id] || mockProducts['pr1'];
+                if (product) populateForm(product);
+            });
+        }
+        
+        function populateForm(product) {
+            document.getElementById('name').value = product.name || '';
+            document.getElementById('price').value = product.price || '';
+            document.getElementById('category').value = product.category || '';
+            document.getElementById('stock').value = product.stock || 0;
+            document.getElementById('description').value = product.description || '';
+            document.getElementById('featured').checked = product.featured || false;
+            
+            if (product.image) {
+                productImage = product.image;
+                if (product.image.startsWith('http')) {
+                    updatePreview('image-preview', product.image);
+                }
+            }
+        }
+        
+        function updatePreview(containerId, src) {
+            var container = document.getElementById(containerId);
+            if (src) {
+                container.innerHTML = '<img src="' + src + '" alt="Preview" onerror="this.parentNode.innerHTML=\'<span>Invalid image URL</span>\'">';
+            } else {
+                container.innerHTML = '<span>Image preview will appear here</span>';
+            }
+        }
+        
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            publishChanges();
+        });
+        
+        function saveChanges() {
+            var formData = getFormData();
+            var productId = document.getElementById('product-id').value;
+            showToast('Saving changes...');
+            uploadAndSave(productId, formData);
+        }
+        
+        function publishChanges() {
+            var formData = getFormData();
+            formData.status = 'published';
+            var productId = document.getElementById('product-id').value;
+            showToast('Publishing...');
+            uploadAndSave(productId, formData);
+        }
+        
+        function uploadAndSave(productId, formData) {
+            if (productImage && !productImage.startsWith('http')) {
+                if (productImage.startsWith('data:')) {
+                    formData.image = productImage;
+                    saveProduct(productId, formData);
+                } else {
+                    ImageService.uploadImage(productImage, { category: 'products' })
+                        .then(function(result) { formData.image = result.url; saveProduct(productId, formData); })
+                        .catch(function() { formData.image = productImage; saveProduct(productId, formData); });
+                }
+            } else {
+                formData.image = productImage || '';
+                saveProduct(productId, formData);
+            }
+        }
+        
+        function saveProduct(productId, formData) {
+            ManagerService.updateProduct(productId, formData).then(function() {
+                showToast('Changes saved successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }).catch(function(err) {
+                console.error('Update error:', err);
+                showToast('Failed to save changes', 'error');
+            });
+        }
+        
+        function getFormData() {
+            return {
+                id: document.getElementById('product-id').value,
+                name: document.getElementById('name').value,
+                price: parseFloat(document.getElementById('price').value),
+                category: document.getElementById('category').value,
+                stock: parseInt(document.getElementById('stock').value) || 0,
+                description: document.getElementById('description').value,
+                featured: document.getElementById('featured').checked,
+                image: productImage
+            };
+        }
+        
+        window.saveChanges = saveChanges;
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

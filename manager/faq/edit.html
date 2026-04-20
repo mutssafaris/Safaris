@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Edit FAQ - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+    <style>
+        .form-container { max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; background: var(--bg-input); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); font-family: var(--font-family); }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
+        .btn-cancel { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.75rem 1.5rem; cursor: pointer; border-radius: 4px; }
+        .btn-cancel:hover { border-color: var(--text-primary); color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand"><h2>MUTS MANAGER</h2><span>Content Management</span></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Dashboard</span></a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <a href="list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="../users/list.html" class="nav-item">Users</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" id="logout-btn" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span>Logout</span></a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header"><h1>Edit FAQ</h1></div>
+            <div class="form-container">
+                <form id="faq-form">
+                    <input type="hidden" id="faq-id" name="faq-id">
+                    
+                    <div class="form-group">
+                        <label for="question">Question *</label>
+                        <input type="text" id="question" name="question" required placeholder="Enter the question">
+                    </div>
+                    <div class="form-group">
+                        <label for="answer">Answer *</label>
+                        <textarea id="answer" name="answer" required placeholder="Enter the answer"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <div class="custom-select" id="category-select">
+                            <input type="hidden" id="category" name="category" value="">
+                            <div class="select-trigger"><span>Select a category</span></div>
+                            <ul class="dropdown-list">
+                                <li class="dropdown-item selected" data-value="">Select a category</li>
+                                <li class="dropdown-item" data-value="booking">Booking</li>
+                                <li class="dropdown-item" data-value="payment">Payment</li>
+                                <li class="dropdown-item" data-value="safari">Safari</li>
+                                <li class="dropdown-item" data-value="safety">Safety</li>
+                                <li class="dropdown-item" data-value="visa">Visa</li>
+                                <li class="dropdown-item" data-value="general">General</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="order">Display Order</label>
+                        <input type="number" id="order" name="order" value="0" min="0" placeholder="Order number">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="published" name="published" value="true"> Published
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <a href="list.html" class="btn-cancel">Cancel</a>
+                        <button type="button" class="btn btn-secondary" onclick="saveChanges()">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Update FAQ</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/custom-select.js"></script>
+    <script>
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        // Initialize custom dropdowns
+        var selects = document.querySelectorAll('.custom-select');
+        
+        function repositionDropdowns() {
+            if (window.innerWidth > 480) return;
+            selects.forEach(function(select) {
+                var list = select.querySelector('.dropdown-list');
+                var trigger = select.querySelector('.select-trigger');
+                if (!list || !trigger) return;
+                var rect = trigger.getBoundingClientRect();
+                list.style.position = 'fixed';
+                list.style.top = (rect.bottom + 4) + 'px';
+                list.style.left = rect.left + 'px';
+                list.style.right = 'auto';
+                list.style.maxHeight = Math.min(window.innerHeight - rect.bottom - 20, 200) + 'px';
+            });
+        }
+        
+        selects.forEach(function(select) {
+            var trigger = select.querySelector('.select-trigger');
+            var list = select.querySelector('.dropdown-list');
+            var items = select.querySelectorAll('.dropdown-item');
+            var span = trigger.querySelector('span');
+            var hiddenInput = select.querySelector('input[type="hidden"]');
+            
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                selects.forEach(function(other) { if (other !== select) other.classList.remove('open'); });
+                select.classList.toggle('open');
+                setTimeout(repositionDropdowns, 50);
+            });
+            
+            items.forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var value = item.getAttribute('data-value');
+                    span.textContent = item.textContent;
+                    items.forEach(function(i) { i.classList.remove('selected'); });
+                    item.classList.add('selected');
+                    select.classList.remove('open');
+                    if (hiddenInput) hiddenInput.value = value;
+                });
+            });
+        });
+        
+        document.addEventListener('click', function() { selects.forEach(function(s) { s.classList.remove('open'); }); });
+        window.addEventListener('resize', function() { selects.forEach(function(s) { s.classList.remove('open'); }); });
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); ManagerService.logout(); });
+        
+        var params = new URLSearchParams(window.location.search);
+        var faqId = params.get('id');
+        document.getElementById('faq-id').value = faqId || '';
+        
+        loadFAQ(faqId);
+        
+        function loadFAQ(id) {
+            if (!id) {
+                showToast('No FAQ ID provided', 'error');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+                return;
+            }
+            
+            ManagerService.getFAQ(id).then(function(response) {
+                var faq = response.data || response;
+                populateForm(faq);
+            }).catch(function(err) {
+                console.warn('Using mock data:', err);
+                var mockFAQs = {
+                    'f1': { id: 'f1', question: 'What is the best time to visit Kenya?', answer: 'The best time to visit Kenya is during the dry seasons from June to October and December to March.', category: 'safari', order: 1, published: true },
+                    'f2': { id: 'f2', question: 'Do I need a visa?', answer: 'Most visitors need a visa. You can apply for an e-visa online before travel.', category: 'visa', order: 2, published: true }
+                };
+                var faq = mockFAQs[id] || mockFAQs['f1'];
+                if (faq) populateForm(faq);
+            });
+        }
+        
+        function populateForm(faq) {
+            document.getElementById('question').value = faq.question || '';
+            document.getElementById('answer').value = faq.answer || '';
+            document.getElementById('category').value = faq.category || '';
+            document.getElementById('order').value = faq.order || 0;
+            document.getElementById('published').checked = faq.published !== false;
+            
+            // Update dropdown display
+            var categorySelect = document.getElementById('category-select');
+            var categoryValue = faq.category || '';
+            var trigger = categorySelect.querySelector('.select-trigger span');
+            var items = categorySelect.querySelectorAll('.dropdown-item');
+            items.forEach(function(item) {
+                if (item.getAttribute('data-value') === categoryValue) {
+                    trigger.textContent = item.textContent;
+                    items.forEach(function(i) { i.classList.remove('selected'); });
+                    item.classList.add('selected');
+                }
+            });
+        }
+        
+        window.saveChanges = function() {
+            var formData = getFormData();
+            var faqId = document.getElementById('faq-id').value;
+            
+            ManagerService.updateFAQ(faqId, formData).then(function() {
+                showToast('FAQ updated successfully');
+                setTimeout(function() { window.location.href = 'list.html'; }, 1000);
+            }).catch(function(err) {
+                console.error('Update error:', err);
+                showToast('Failed to update FAQ', 'error');
+            });
+        };
+        
+        document.getElementById('faq-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveChanges();
+        });
+        
+        function getFormData() {
+            return {
+                id: document.getElementById('faq-id').value,
+                question: document.getElementById('question').value,
+                answer: document.getElementById('answer').value,
+                category: document.getElementById('category').value,
+                order: parseInt(document.getElementById('order').value) || 0,
+                published: document.getElementById('published').checked
+            };
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

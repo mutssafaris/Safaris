@@ -1,0 +1,419 @@
+/* Booking Widget Styles - Muts Safaris */
+/* Modern stepped booking form with sci-fi HUD theme */
+
+.booking-widget {
+    --bw-primary: #8b5cf6;
+    --bw-secondary: #ec4899;
+    --bw-success: #10b981;
+    --bw-danger: #ef4444;
+    --bw-warning: #f59e0b;
+    --bw-bg: #0f172a;
+    --bw-bg-light: #1e293b;
+    --bw-text: #f8fafc;
+    --bw-text-muted: #94a3b8;
+    --bw-border: #334155;
+    --bw-gold: #fbbf24;
+    --bw-accent: #06b6d4;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: var(--bw-bg-light);
+    border: 1px solid var(--bw-border);
+    border-radius: 12px;
+    font-family: 'Courier New', monospace;
+    color: var(--bw-text);
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
+}
+
+.booking-widget *,
+.booking-widget *::before,
+.booking-widget *::after {
+    box-sizing: border-box;
+}
+
+.booking-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--bw-bg);
+    border: 2px solid var(--bw-border);
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active .step-number {
+    background: linear-gradient(135deg, var(--bw-primary), var(--bw-secondary));
+    border-color: var(--bw-primary);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.progress-step.completed .step-number {
+    background: var(--bw-success);
+    border-color: var(--bw-success);
+}
+
+.step-label {
+    font-size: 0.75rem;
+    color: var(--bw-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.progress-step.active .step-label {
+    color: var(--bw-text);
+}
+
+.progress-line {
+    flex: 1;
+    height: 2px;
+    background: var(--bw-border);
+    margin: 0 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.progress-line.completed {
+    background: var(--bw-success);
+}
+
+.booking-steps {
+    margin-bottom: 1.5rem;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--bw-text);
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--bw-text-muted);
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bw-bg);
+    border: 1px solid var(--bw-border);
+    border-radius: 8px;
+    color: var(--bw-text);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--bw-primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.form-control::placeholder {
+    color: var(--bw-text-muted);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+select.form-control {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+input[type="date"].form-control {
+    color-scheme: dark;
+}
+
+input[type="email"].form-control,
+input[type="tel"].form-control {
+    color: var(--bw-text);
+}
+
+.availability-note {
+    padding: 0.75rem;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 8px;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.availability-note .loading {
+    color: var(--bw-warning);
+}
+
+.availability-note .available {
+    color: var(--bw-success);
+}
+
+.travelers-summary {
+    padding: 1rem;
+    background: rgba(6, 182, 212, 0.1);
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.travelers-summary p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.travelers-summary strong {
+    color: var(--bw-accent);
+    font-size: 1.25rem;
+}
+
+.promo-code-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--bw-border);
+}
+
+.promo-input-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.promo-input-group .form-control {
+    flex: 1;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--bw-primary), var(--bw-secondary));
+    color: white;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--bw-bg);
+    color: var(--bw-text);
+    border: 1px solid var(--bw-border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--bw-primary);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--bw-success), var(--bw-accent));
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.booking-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.booking-error {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--bw-danger);
+    border-radius: 8px;
+    color: var(--bw-danger);
+    text-align: center;
+    display: none;
+}
+
+.booking-error.visible {
+    display: block;
+}
+
+.promo-message {
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.promo-message .success {
+    color: var(--bw-success);
+}
+
+.promo-message .error {
+    color: var(--bw-danger);
+}
+
+.booking-summary {
+    padding: 1.5rem;
+    background: var(--bw-bg);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.summary-row span:first-child {
+    color: var(--bw-text-muted);
+}
+
+.summary-row span:last-child {
+    font-weight: 600;
+}
+
+.summary-row.price-row span:last-child {
+    color: var(--bw-gold);
+}
+
+.summary-row.discount-row span:last-child {
+    color: var(--bw-success);
+}
+
+.summary-row.deposit-row span:last-child {
+    color: var(--bw-accent);
+    font-size: 1.1rem;
+}
+
+.booking-summary hr {
+    border: none;
+    border-top: 1px solid var(--bw-border);
+    margin: 0.75rem 0;
+}
+
+.deposit-amount {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--bw-gold);
+}
+
+.price-amount {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--bw-gold);
+}
+
+.terms-check {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.terms-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--bw-primary);
+    cursor: pointer;
+}
+
+.terms-check label {
+    font-size: 0.875rem;
+    color: var(--bw-text-muted);
+    cursor: pointer;
+}
+
+.terms-check label a {
+    color: var(--bw-primary);
+    text-decoration: none;
+}
+
+.terms-check label a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .booking-widget {
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .booking-navigation {
+        flex-direction: column-reverse;
+    }
+
+    .booking-navigation .btn {
+        width: 100%;
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+    }
+
+    .step-label {
+        font-size: 0.625rem;
+    }
+
+    .progress-line {
+        margin: 0 0.25rem;
+    }
+}

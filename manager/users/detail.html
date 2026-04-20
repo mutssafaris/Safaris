@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>User Details - Muts Safaris Manager</title>
+    <link rel="stylesheet" href="../css/manager.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>MUTS MANAGER</h2>
+                <span>Content Management</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <a href="../dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <div class="nav-section">Content</div>
+                <a href="../hotels/list.html" class="nav-item">Hotels</a>
+                <a href="../destinations/list.html" class="nav-item">Destinations</a>
+                <a href="../tours/list.html" class="nav-item">Tours</a>
+                <a href="../packages/list.html" class="nav-item">Packages</a>
+                <a href="../blogs/list.html" class="nav-item">Blogs</a>
+                <a href="../africasa/list.html" class="nav-item">Africasa</a>
+                <div class="nav-section">Operations</div>
+                <a href="../bookings/list.html" class="nav-item">Bookings</a>
+                <a href="../messages/list.html" class="nav-item">Messages</a>
+                <a href="../transactions/list.html" class="nav-item">Transactions</a>
+                <a href="list.html" class="nav-item active">Users</a>
+                <a href="../reviews/list.html" class="nav-item">Reviews</a>
+                <a href="../gallery/list.html" class="nav-item">Gallery</a>
+                <div class="nav-section">System</div>
+                <a href="../faq/list.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg><span>FAQs</span></a>
+                <a href="../settings/index.html" class="nav-item">Settings</a>
+                <a href="#" class="nav-item" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1>User Details</h1>
+                <div class="btn-group">
+                    <a href="list.html" class="btn btn-secondary">Back to List</a>
+                    <a href="edit.html?id=" class="btn btn-primary" id="edit-btn">Edit User</a>
+                </div>
+            </div>
+            
+            <div id="loading-container" style="text-align: center; padding: 60px 20px;">
+                <div class="loading"><div class="spinner"></div></div>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading user details...</p>
+            </div>
+            
+            <div id="user-content" style="display: none;">
+                <div class="data-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Account Information</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>User ID</label>
+                                <div class="detail-value" id="user-id">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div id="user-status">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <div class="detail-value" id="user-name">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Tier</label>
+                                <div id="user-tier">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="detail-value" id="user-email">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <div class="detail-value" id="user-phone">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Activity</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Member Since</label>
+                                <div class="detail-value" id="user-joined">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Login</label>
+                                <div class="detail-value" id="user-last-login">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Total Bookings</label>
+                                <div class="detail-value" id="user-bookings">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Spent</label>
+                                <div class="detail-value" id="user-spent">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-table-container" style="margin-top: 20px;">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h2>Preferences</h2>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <div class="detail-value" id="user-country">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Newsletter</label>
+                                <div class="detail-value" id="user-newsletter">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-container" style="display: none; text-align: center; padding: 60px 20px;">
+                <p style="color: var(--error); font-size: 1.2rem;">User not found</p>
+                <p style="color: var(--text-muted);">The requested user could not be loaded.</p>
+                <a href="list.html" class="btn btn-secondary" style="margin-top: 20px;">Back to List</a>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../../js/api-config.js"></script>
+    <script src="../js/manager-service.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/rate-limiter.js"></script>
+    <script src="../../js/api-logger.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+    var currentUserId = null;
+    var currentUser = null;
+    
+    (function() {
+        if (!ManagerService.checkAuth()) return;
+        
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            ManagerService.logout();
+        });
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var userId = urlParams.get('id');
+        
+        if (!userId) {
+            showError();
+            return;
+        }
+        
+        currentUserId = userId;
+        document.getElementById('edit-btn').href = 'edit.html?id=' + userId;
+        loadUser(userId);
+        
+        function loadUser(id) {
+            if (ManagerService.isAPILive()) {
+                ManagerService.getUser(id).then(function(user) {
+                    if (user) renderUser(user);
+                    else showError();
+                }).catch(function(err) {
+                    console.error('Error loading user:', err);
+                    renderMockUser(id);
+                });
+            } else {
+                setTimeout(function() { renderMockUser(id); }, 300);
+            }
+        }
+        
+        function renderMockUser(id) {
+            var mockUsers = {
+                'USR-001': { id: 'USR-001', name: 'John Smith', email: 'john@example.com', phone: '+254700000001', country: 'Kenya', tier: 'explorer', status: 'active', joined: '2025-06-15', lastLogin: '2026-04-18', bookings: 5, spent: 4200, newsletter: 'Subscribed' },
+                'USR-002': { id: 'USR-002', name: 'Sarah Johnson', email: 'sarah@example.com', phone: '+254700000002', country: 'USA', tier: 'vip', status: 'active', joined: '2024-01-10', lastLogin: '2026-04-17', bookings: 12, spent: 12500, newsletter: 'Subscribed' },
+                'USR-003': { id: 'USR-003', name: 'Mike Williams', email: 'mike@example.com', phone: '+254700000003', country: 'UK', tier: 'traveler', status: 'inactive', joined: '2025-09-22', lastLogin: '2026-02-28', bookings: 2, spent: 850, newsletter: 'Unsubscribed' }
+            };
+            
+            var user = mockUsers[id] || mockUsers['USR-001'];
+            if (id) user.id = id;
+            
+            renderUser(user);
+        }
+        
+        function renderUser(user) {
+            currentUser = user;
+            
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('user-content').style.display = 'block';
+            
+            document.getElementById('user-id').textContent = user.id || '-';
+            
+            var statusBadge = user.status === 'active' ? 'badge-success' : 'badge-danger';
+            document.getElementById('user-status').innerHTML = '<span class="badge ' + statusBadge + '">' + user.status + '</span>';
+            
+            document.getElementById('user-name').textContent = user.name || '-';
+            
+            var tierBadge = user.tier === 'vip' ? 'badge-warning' : 
+                         user.tier === 'adventurer' ? 'badge-info' :
+                         user.tier === 'explorer' ? 'badge-success' : 'badge-secondary';
+            var tierLabel = user.tier ? user.tier.charAt(0).toUpperCase() + user.tier.slice(1) : '-';
+            document.getElementById('user-tier').innerHTML = '<span class="badge ' + tierBadge + '">' + tierLabel + '</span>';
+            
+            document.getElementById('user-email').textContent = user.email || '-';
+            document.getElementById('user-phone').textContent = user.phone || '-';
+            document.getElementById('user-joined').textContent = user.joined || user.joinDate || '-';
+            document.getElementById('user-last-login').textContent = user.lastLogin || '-';
+            document.getElementById('user-bookings').textContent = user.bookings || '0';
+            document.getElementById('user-spent').textContent = '$' + (user.spent || user.totalSpent || 0);
+            document.getElementById('user-country').textContent = user.country || '-';
+            document.getElementById('user-newsletter').textContent = user.newsletter || '-';
+        }
+        
+        function showError() {
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+        }
+        
+        window.showToast = function(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        };
+    })();
+    </script>
+</body>
+</html>

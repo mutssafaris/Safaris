@@ -55,11 +55,14 @@
             
             var modal = document.createElement('div');
             modal.className = 'booking-modal';
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-labelledby', 'cancel-modal-title');
+            modal.setAttribute('aria-modal', 'true');
             modal.innerHTML = 
                 '<div class="modal-content">' +
                     '<div class="modal-header">' +
-                        '<h2>Cancel Booking</h2>' +
-                        '<button class="modal-close">&times;</button>' +
+                        '<h2 id="cancel-modal-title">Cancel Booking</h2>' +
+                        '<button class="modal-close" aria-label="Close">&times;</button>' +
                     '</div>' +
                     '<div class="modal-body">' +
                         '<p>Are you sure you want to cancel this booking?</p>' +
@@ -68,7 +71,7 @@
                             '<p><strong>Check-in:</strong> ' + (this.booking.checkin || '') + '</p>' +
                             '<p><strong>Total:</strong> $' + (this.booking.totalPrice || 0) + '</p>' +
                         '</div>' +
-                        '<div class="refund-preview" id="refund-preview">' +
+                        '<div class="refund-preview" id="refund-preview" aria-live="polite">' +
                             '<p>Calculating refund...</p>' +
                         '</div>' +
                         '<div class="form-group">' +
