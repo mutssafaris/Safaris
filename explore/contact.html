@@ -10,12 +10,18 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://mutssafaris.com/explore/contact">
     <title>Contact - Muts Safaris</title>
+    <!-- Preconnect to critical resources -->
+    <link rel="preconnect" href="https://images.mutssafaris.com">
+    <link rel="dns-prefetch" href="http://localhost:3000">
+    <!-- Critical CSS (render-blocking) -->
     <link rel="stylesheet" href="../css/themes.css">
-    <link rel="stylesheet" href="../css/dashboard-theme.css">
     <link rel="stylesheet" href="../css/mobile-responsive.css">
     <link rel="stylesheet" href="css/explore.css">
     <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/landing.css">
+    <!-- Non-critical CSS (async) -->
+    <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
     <script>
         (function () {
@@ -60,10 +66,10 @@
                 <div class="contact-info">
                     <h2>Get in Touch</h2>
                     <div class="contact-cards" id="contact-cards">
-                        <div class="skeleton skeleton-card">
-                            <div class="skeleton skeleton-text" style="width: 40%"></div>
-                            <div class="skeleton skeleton-text"></div>
-                        </div>
+                        <div class="contact-card-mini skeleton" style="height: 60px;"></div>
+                        <div class="contact-card-mini skeleton" style="height: 60px;"></div>
+                        <div class="contact-card-mini skeleton" style="height: 60px;"></div>
+                        <div class="contact-card-mini skeleton" style="height: 60px;"></div>
                     </div>
                 </div>
                 <div class="contact-form-section">
@@ -163,18 +169,27 @@
             });
         }
         
-        renderContactInfo(staticContact);
-        populateSubjects();
+        function loadContactData() {
+            renderContactInfo(staticContact);
+            populateSubjects();
+            
+            fetch('/data/contact.json')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.contactInfo) renderContactInfo(data.contactInfo);
+                    if (data.formOptions && data.formOptions.subjects) populateSubjects(data.formOptions.subjects);
+                })
+                .catch(function() {
+                    // Keep static data on error
+                });
+        }
         
-        fetch('/data/contact.json')
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
-                if (data.contactInfo) renderContactInfo(data.contactInfo);
-                if (data.formOptions && data.formOptions.subjects) populateSubjects(data.formOptions.subjects);
-            })
-            .catch(function() {
-                // Keep static data on error
-            });
+        // Defer data loading until after initial render
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadContactData);
+        } else {
+            setTimeout(loadContactData, 100);
+        }
         
         document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();

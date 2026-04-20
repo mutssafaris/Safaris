@@ -75,6 +75,9 @@
     (function() {
         if (!ManagerService.checkAuth()) return;
         
+        // Show dashboard after authentication
+        document.querySelector('.dashboard-layout').style.display = 'flex';
+        
         // Custom dropdown functionality
         function initCustomDropdowns() {
             var selects = document.querySelectorAll('.custom-select');

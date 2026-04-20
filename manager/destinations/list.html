@@ -124,6 +124,9 @@
     (function() {
         if (!ManagerService.checkAuth()) return;
         
+        // Show dashboard after authentication
+        document.querySelector('.dashboard-layout').style.display = 'flex';
+        
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             ManagerService.logout();

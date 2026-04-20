@@ -278,7 +278,7 @@ body {
 
 /* Dashboard Layout */
 .dashboard-layout {
-    display: flex;
+    display: none;
     min-height: 100vh;
 }
 

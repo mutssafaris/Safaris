@@ -110,3 +110,20 @@
         padding: 1.5rem 1rem;
     }
 }
+
+/* Skeleton Loading States */
+.blog-card.skeleton {
+    height: 360px;
+    background: linear-gradient(90deg, var(--explore-surface) 25%, rgba(255, 184, 0, 0.05) 50%, var(--explore-surface) 75%) !important;
+    background-size: 200% 100% !important;
+    animation: skeleton-loading 1.5s infinite !important;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

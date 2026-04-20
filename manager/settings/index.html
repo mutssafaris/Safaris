@@ -323,6 +323,9 @@
             return;
         }
         
+        // Show dashboard after authentication
+        document.querySelector('.dashboard-layout').style.display = 'flex';
+        
         var user = ManagerService.getCurrentUser();
         if (user) {
             document.getElementById('session-info').textContent = 'Logged in as ' + (user.name || 'Manager');

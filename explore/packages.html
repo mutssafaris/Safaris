@@ -10,11 +10,17 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://mutssafaris.com/explore/packages">
     <title>Packages - Muts Safaris</title>
+    <!-- Preconnect to critical resources -->
+    <link rel="preconnect" href="https://images.mutssafaris.com">
+    <link rel="dns-prefetch" href="http://localhost:3000">
+    <!-- Critical CSS (render-blocking) -->
     <link rel="stylesheet" href="../css/themes.css">
-    <link rel="stylesheet" href="../css/dashboard-theme.css">
     <link rel="stylesheet" href="../css/mobile-responsive.css">
     <link rel="stylesheet" href="css/explore.css">
     <link rel="stylesheet" href="css/landing.css">
+    <!-- Non-critical CSS (async) -->
+    <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
     <script>
         (function () {

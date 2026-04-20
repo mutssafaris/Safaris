@@ -384,3 +384,70 @@ a:hover {
         font-size: 0.9rem;
     }
 }
+
+/* Skeleton Loading States - Higher specificity to override card styles */
+.destination-card.skeleton,
+.experience-card.skeleton,
+.blog-preview-card.skeleton,
+.gallery-item.skeleton {
+    background: linear-gradient(90deg, var(--explore-surface) 25%, rgba(255, 184, 0, 0.05) 50%, var(--explore-surface) 75%) !important;
+    background-size: 200% 100% !important;
+    animation: skeleton-loading 1.5s infinite !important;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.destination-card.skeleton {
+    height: 340px;
+    border: 1px solid var(--explore-border);
+    border-radius: var(--explore-radius);
+    overflow: hidden;
+}
+
+.experience-card.skeleton {
+    height: 320px;
+    border: 1px solid var(--explore-border);
+    border-radius: var(--explore-radius);
+    overflow: hidden;
+}
+
+.blog-preview-card.skeleton {
+    height: 340px;
+    border: 1px solid var(--explore-border);
+    border-radius: var(--explore-radius);
+    overflow: hidden;
+}
+
+.gallery-item {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--explore-radius);
+}
+
+.gallery-item.skeleton {
+    height: 200px;
+    border-radius: var(--explore-radius);
+    display: block;
+}
+
+/* Smooth fade-in when content loads */
+img.loaded {
+    animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

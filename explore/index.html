@@ -13,12 +13,17 @@
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://mutssafaris.com/explore">
     <title>Explore - Muts Safaris</title>
+    <!-- Preconnect to critical resources -->
+    <link rel="preconnect" href="https://images.mutssafaris.com">
+    <link rel="dns-prefetch" href="http://localhost:3000">
+    <!-- Critical CSS (render-blocking) -->
     <link rel="stylesheet" href="../css/themes.css">
-    <link rel="stylesheet" href="../css/dashboard-theme.css">
     <link rel="stylesheet" href="../css/mobile-responsive.css">
-    <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="css/explore.css">
     <link rel="stylesheet" href="css/landing.css">
+    <!-- Non-critical CSS (async) -->
+    <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
     <script>
         (function () {
@@ -107,7 +112,10 @@
         <section class="featured-section">
             <h2 class="section-title">Popular Destinations</h2>
             <div class="destinations-grid" id="destinations-grid">
-                <!-- Loaded via JS -->
+                <div class="destination-card skeleton"></div>
+                <div class="destination-card skeleton"></div>
+                <div class="destination-card skeleton"></div>
+                <div class="destination-card skeleton"></div>
             </div>
             <div class="section-cta">
                 <a href="packages.html" class="btn btn-outline">View All Destinations</a>
@@ -118,7 +126,10 @@
         <section class="experience-section">
             <h2 class="section-title">Choose Your Experience</h2>
             <div class="experience-grid" id="experience-grid">
-                <!-- Loaded via JS -->
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
             </div>
         </section>
 
@@ -126,7 +137,10 @@
         <section class="gallery-preview-section">
             <h2 class="section-title">From the Wild</h2>
             <div class="gallery-preview-grid" id="gallery-grid">
-                <!-- Loaded via JS -->
+                <div class="gallery-item skeleton"></div>
+                <div class="gallery-item skeleton"></div>
+                <div class="gallery-item skeleton"></div>
+                <div class="gallery-item skeleton"></div>
             </div>
             <div class="section-cta">
                 <a href="gallery.html" class="btn btn-outline">Explore Gallery</a>
@@ -137,7 +151,9 @@
         <section class="blog-preview-section">
             <h2 class="section-title">Travel Guides</h2>
             <div class="blog-preview-grid" id="blog-grid">
-                <!-- Loaded via JS -->
+                <article class="blog-preview-card skeleton"></article>
+                <article class="blog-preview-card skeleton"></article>
+                <article class="blog-preview-card skeleton"></article>
             </div>
             <div class="section-cta">
                 <a href="blog.html" class="btn btn-outline">All Articles</a>
@@ -314,11 +330,21 @@
         }
         
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        function loadData() {
             fetchWithFallback('/destinations', renderDestinations, staticDestinations);
             fetchWithFallback('/tours', renderExperiences, staticExperiences);
             fetchWithFallback('/gallery', renderGallery, staticGallery);
             fetchWithFallback('/blogs', renderBlog, staticBlog);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use requestIdleCallback to defer data loading until after initial render
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadData);
+            } else {
+                // Fallback for browsers without requestIdleCallback
+                setTimeout(loadData, 100);
+            }
             
             // Add visibility animations
             var observer = new IntersectionObserver(function(entries) {

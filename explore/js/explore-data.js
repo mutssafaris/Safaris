@@ -187,10 +187,24 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        loadDestinations();
-        loadPackages();
-        loadAfricasa();
-        loadGallery();
-        loadBlog();
+        // Use requestIdleCallback to defer data loading until after initial render
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                loadDestinations();
+                loadPackages();
+                loadAfricasa();
+                loadGallery();
+                loadBlog();
+            });
+        } else {
+            // Fallback for browsers without requestIdleCallback
+            setTimeout(() => {
+                loadDestinations();
+                loadPackages();
+                loadAfricasa();
+                loadGallery();
+                loadBlog();
+            }, 100);
+        }
     });
 })();
