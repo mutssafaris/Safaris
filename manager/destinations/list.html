@@ -93,7 +93,7 @@
     </div>
     
     <!-- Delete Confirmation Modal -->
-    <div class="modal-overlay" id="delete-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="delete-modal" style="display: none;">
         <div class="modal" style="max-width: 400px;">
             <div class="modal-header">
                 <h2>Confirm Delete</h2>
@@ -270,11 +270,15 @@
         
         window.confirmDelete = function(id) {
             deleteDestinationId = id;
-            document.getElementById('delete-modal').classList.add('show');
+            var modal = document.getElementById('delete-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeDeleteModal = function() {
-            document.getElementById('delete-modal').classList.remove('show');
+            var modal = document.getElementById('delete-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
             deleteDestinationId = null;
         };
         

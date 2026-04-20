@@ -124,7 +124,7 @@
     </div>
     
     <!-- View Booking Modal -->
-    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="view-modal" style="display: none;">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>Booking Details</h2>
@@ -140,7 +140,7 @@
     </div>
     
     <!-- Update Status Modal -->
-    <div class="modal-overlay" id="status-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="status-modal" style="display: none;">
         <div class="modal" style="max-width: 400px;">
             <div class="modal-header">
                 <h2>Update Booking Status</h2>
@@ -294,20 +294,28 @@
             '</div>';
             
             document.getElementById('booking-details').innerHTML = detailsHtml;
-            document.getElementById('view-modal').classList.add('show');
+            var modal = document.getElementById('view-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeViewModal = function() {
-            document.getElementById('view-modal').classList.remove('show');
+            var modal = document.getElementById('view-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         window.openStatusModal = function(id) {
             currentBookingId = id;
-            document.getElementById('status-modal').classList.add('show');
+            var modal = document.getElementById('status-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeStatusModal = function() {
-            document.getElementById('status-modal').classList.remove('show');
+            var modal = document.getElementById('status-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
             currentBookingId = null;
         };
         

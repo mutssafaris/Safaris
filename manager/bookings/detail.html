@@ -153,7 +153,7 @@
     </div>
     
     <!-- Update Status Modal -->
-    <div class="modal-overlay" id="status-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="status-modal" style="display: none;">
         <div class="modal" style="max-width: 400px;">
             <div class="modal-header">
                 <h2>Update Booking Status</h2>
@@ -214,7 +214,9 @@
         loadBooking(bookingId);
         
         document.getElementById('update-status-btn').addEventListener('click', function() {
-            document.getElementById('status-modal').classList.add('show');
+            var modal = document.getElementById('status-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         });
         
         document.getElementById('confirm-update-btn').addEventListener('click', function() {
@@ -236,7 +238,7 @@
             } else {
                 setTimeout(function() {
                     renderMockBooking(id);
-                }, 300);
+                }, 600);
             }
         }
         
@@ -289,7 +291,9 @@
         }
         
         window.closeStatusModal = function() {
-            document.getElementById('status-modal').classList.remove('show');
+            var modal = document.getElementById('status-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         function updateStatus() {

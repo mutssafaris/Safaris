@@ -118,11 +118,11 @@
     </div>
     
     <!-- View/Respond Modal -->
-    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden; display: none;">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>Review Details</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" type="button" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body" id="review-details">
                 <!-- Dynamic content -->
@@ -133,9 +133,9 @@
                     <textarea id="response-text" rows="3" placeholder="Write a response to this review..."></textarea>
                 </div>
                 <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                    <button class="btn btn-secondary" onclick="updateStatus('approved')">Approve</button>
-                    <button class="btn btn-danger" onclick="updateStatus('flagged')">Flag</button>
-                    <button class="btn btn-primary" onclick="sendResponse()">Send Response</button>
+                    <button class="btn btn-secondary" type="button" onclick="updateStatus('approved')">Approve</button>
+                    <button class="btn btn-danger" type="button" onclick="updateStatus('flagged')">Flag</button>
+                    <button class="btn btn-primary" type="button" onclick="sendResponse()">Send Response</button>
                 </div>
             </div>
         </div>
@@ -153,6 +153,16 @@
     var REFRESH_INTERVAL_MS = 30000;
     var refreshInterval = null;
     var currentReviewId = null;
+    
+    // Global mock data for reviews
+    var reviewsData = {
+        'r1': { id: 'r1', hotel: "Governors' Camp", user: 'John Smith', email: 'john@example.com', rating: 5, text: 'Absolutely amazing experience! The staff was incredibly friendly and the wildlife viewing was spectacular.', date: '2026-04-02', status: 'approved', response: null },
+        'r2': { id: 'r2', hotel: 'Tortilis Camp', user: 'Sarah Johnson', email: 'sarah@example.com', rating: 4, text: 'Great location with stunning Kilimanjaro views. Food could be slightly better.', date: '2026-04-01', status: 'approved', response: 'Thank you for your feedback, Sarah! We are glad you enjoyed the Kilimanjaro views. We will work on improving our food options.', helpful: 5 },
+        'r3': { id: 'r3', hotel: 'Kicheche Laikipia', user: 'Mike Williams', email: 'mike@example.com', rating: 5, text: 'Best safari ever! The guides knew exactly where to find the animals.', date: '2026-03-30', status: 'pending', response: null, helpful: 8 },
+        'r4': { id: 'r4', hotel: 'Mara Budget Camp', user: 'Emily Davis', email: 'emily@example.com', rating: 3, text: 'Good value for money but facilities were basic. Great for budget travelers.', date: '2026-03-28', status: 'flagged', response: null, helpful: 3 },
+        'r5': { id: 'r5', hotel: "Governors' Camp", user: 'Robert Brown', email: 'robert@example.com', rating: 5, text: 'Wonderful experience! Will definitely come back.', date: '2026-03-25', status: 'approved', response: null, helpful: 15 },
+        'r6': { id: 'r6', hotel: 'Serena Amboseli', user: 'Lisa Anderson', email: 'lisa@example.com', rating: 2, text: 'Disappointed with the service. Not worth the price.', date: '2026-03-20', status: 'pending', response: null, helpful: 7 }
+    };
     
     (function() {
         if (!ManagerService.checkAuth()) return;
@@ -172,17 +182,15 @@
         document.getElementById('status-filter').addEventListener('change', loadReviews);
         document.getElementById('rating-filter').addEventListener('change', loadReviews);
         
+        // Modal event listeners
+        document.getElementById('view-modal').addEventListener('click', function(e) {
+            if (e.target.id === 'view-modal') {
+                closeModal();
+            }
+        });
+        
         function loadReviews() {
             var tbody = document.getElementById('reviews-table');
-            
-            var mockReviews = [
-                { id: 'r1', hotel: "Governors' Camp", user: 'John Smith', rating: 5, text: 'Absolutely amazing experience! The staff was incredibly friendly and the wildlife viewing was spectacular.', date: '2026-04-02', status: 'approved' },
-                { id: 'r2', hotel: 'Tortilis Camp', user: 'Sarah Johnson', rating: 4, text: 'Great location with stunning Kilimanjaro views. Food could be slightly better.', date: '2026-04-01', status: 'approved' },
-                { id: 'r3', hotel: 'Kicheche Laikipia', user: 'Mike Williams', rating: 5, text: 'Best safari ever! The guides knew exactly where to find the animals.', date: '2026-03-30', status: 'pending' },
-                { id: 'r4', hotel: 'Mara Budget Camp', user: 'Emily Davis', rating: 3, text: 'Good value for money but facilities were basic. Great for budget travelers.', date: '2026-03-28', status: 'flagged' },
-                { id: 'r5', hotel: "Governors' Camp", user: 'Robert Brown', rating: 5, text: 'Wonderful experience! Will definitely come back.', date: '2026-03-25', status: 'approved' },
-                { id: 'r6', hotel: 'Serena Amboseli', user: 'Lisa Anderson', rating: 2, text: 'Disappointed with the service. Not worth the price.', date: '2026-03-20', status: 'pending' }
-            ];
             
             var searchInput = document.getElementById('search-input');
             var statusFilter = document.getElementById('status-filter');
@@ -192,7 +200,7 @@
             var status = statusFilter ? statusFilter.value : '';
             var rating = ratingFilter ? ratingFilter.value : '';
             
-            var filtered = mockReviews.filter(function(r) {
+            var filtered = Object.values(reviewsData).filter(function(r) {
                 if (search && r.hotel.toLowerCase().indexOf(search) === -1 && r.user.toLowerCase().indexOf(search) === -1) return false;
                 if (status && r.status !== status) return false;
                 if (rating && r.rating !== parseInt(rating)) return false;
@@ -227,12 +235,12 @@
         }
         
         window.viewReview = function(id) {
-            var mockReviews = {
-                'r1': { id: 'r1', hotel: "Governors' Camp", user: 'John Smith', email: 'john@example.com', rating: 5, text: 'Absolutely amazing experience! The staff was incredibly friendly and the wildlife viewing was spectacular.', date: '2026-04-02', status: 'approved', response: null },
-                'r3': { id: 'r3', hotel: 'Kicheche Laikipia', user: 'Mike Williams', email: 'mike@example.com', rating: 5, text: 'Best safari ever! The guides knew exactly where to find the animals.', date: '2026-03-30', status: 'pending', response: null }
-            };
+            var r = reviewsData[id];
+            if (!r) {
+                showToast('Review not found', 'error');
+                return;
+            }
             
-            var r = mockReviews[id] || mockReviews['r1'];
             currentReviewId = id;
             
             var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
@@ -249,15 +257,19 @@
             
             document.getElementById('review-details').innerHTML = detailsHtml;
             document.getElementById('response-text').value = r.response || '';
-            document.getElementById('view-modal').classList.add('show');
+            var overlay = document.getElementById('view-modal');
+            overlay.style.display = 'flex';
+            overlay.classList.add('show');
         };
         
         window.closeModal = function() {
-            var modal = document.getElementById('view-modal');
-            modal.classList.remove('show');
-            // Clear inline styles when closing
-            modal.style.opacity = '';
-            modal.style.visibility = '';
+            var overlay = document.getElementById('view-modal');
+            if (!overlay) {
+                console.error('Modal overlay not found');
+                return;
+            }
+            overlay.classList.remove('show');
+            overlay.style.display = 'none';
             currentReviewId = null;
         };
         
@@ -267,15 +279,30 @@
                 showToast('Please enter a response', 'error');
                 return;
             }
-            // In production, call API
+            
+            if (!currentReviewId || !reviewsData[currentReviewId]) {
+                showToast('Review not found', 'error');
+                return;
+            }
+            
+            // Update the review with the response
+            reviewsData[currentReviewId].response = response;
+            
             showToast('Response sent successfully');
             closeModal();
             loadReviews();
         };
         
         window.updateStatus = function(status) {
-            // In production, call API
-            showToast('Review ' + status);
+            if (!currentReviewId || !reviewsData[currentReviewId]) {
+                showToast('Review not found', 'error');
+                return;
+            }
+            
+            // Update the review status
+            reviewsData[currentReviewId].status = status;
+            
+            showToast('Review ' + status + ' successfully');
             closeModal();
             loadReviews();
         };

@@ -146,7 +146,7 @@
     </div>
     
     <!-- View Message Modal -->
-    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="view-modal" style="display: none;">
         <div class="modal" style="max-width: 700px;">
             <div class="modal-header">
                 <h2 id="message-subject">Message</h2>
@@ -169,7 +169,7 @@
     </div>
     
     <!-- Compose Message Modal -->
-    <div class="modal-overlay" id="compose-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="compose-modal" style="display: none;">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>Compose Message</h2>
@@ -381,11 +381,15 @@
             
             document.getElementById('message-content').innerHTML = contentHtml;
             document.getElementById('reply-text').value = '';
-            document.getElementById('view-modal').classList.add('show');
+            var modal = document.getElementById('view-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeViewModal = function() {
-            document.getElementById('view-modal').classList.remove('show');
+            var modal = document.getElementById('view-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
             currentMessageId = null;
         };
         
@@ -422,11 +426,15 @@
             document.getElementById('compose-type').value = '';
             document.getElementById('compose-subject').value = '';
             document.getElementById('compose-message').value = '';
-            document.getElementById('compose-modal').classList.add('show');
+            var modal = document.getElementById('compose-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeComposeModal = function() {
-            document.getElementById('compose-modal').classList.remove('show');
+            var modal = document.getElementById('compose-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         window.sendComposeMessage = function() {

@@ -125,7 +125,7 @@
     </div>
     
     <!-- View User Modal -->
-    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="view-modal" style="display: none;">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>User Details</h2>
@@ -143,7 +143,7 @@
     </div>
     
     <!-- Send Message Modal -->
-    <div class="modal-overlay" id="message-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="message-modal" style="display: none;">
         <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
                 <h2>Send Message to User</h2>
@@ -182,7 +182,7 @@
     </div>
     
     <!-- Edit User Modal -->
-    <div class="modal-overlay" id="edit-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="edit-modal" style="display: none;">
         <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
                 <h2>Edit User</h2>
@@ -397,20 +397,30 @@
             '</div>';
             
             document.getElementById('user-details').innerHTML = detailsHtml;
-            document.getElementById('view-modal').classList.add('show');
+            var modal = document.getElementById('view-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeModal = function() {
-            document.getElementById('view-modal').classList.remove('show');
+            var modal = document.getElementById('view-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         window.editUser = function() {
-            document.getElementById('view-modal').classList.remove('show');
-            document.getElementById('edit-modal').classList.add('show');
+            var viewModal = document.getElementById('view-modal');
+            viewModal.classList.remove('show');
+            viewModal.style.display = 'none';
+            var editModal = document.getElementById('edit-modal');
+            editModal.style.display = 'flex';
+            editModal.classList.add('show');
         };
         
         window.closeEditModal = function() {
-            document.getElementById('edit-modal').classList.remove('show');
+            var modal = document.getElementById('edit-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         // ========== SEND MESSAGE FUNCTIONS ==========
@@ -427,7 +437,9 @@
             document.getElementById('msg-subject').value = '';
             document.getElementById('msg-text').value = '';
             
-            document.getElementById('message-modal').classList.add('show');
+            var modal = document.getElementById('message-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.sendMessageToUser = function() {
@@ -445,12 +457,18 @@
             document.getElementById('msg-subject').value = '';
             document.getElementById('msg-text').value = '';
             
-            document.getElementById('view-modal').classList.remove('show');
-            document.getElementById('message-modal').classList.add('show');
+            var viewModal = document.getElementById('view-modal');
+            viewModal.classList.remove('show');
+            viewModal.style.display = 'none';
+            var messageModal = document.getElementById('message-modal');
+            messageModal.style.display = 'flex';
+            messageModal.classList.add('show');
         };
         
         window.closeMessageModal = function() {
-            document.getElementById('message-modal').classList.remove('show');
+            var modal = document.getElementById('message-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         window.sendUserMessage = function() {

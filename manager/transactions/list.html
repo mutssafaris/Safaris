@@ -132,7 +132,7 @@
     </div>
     
     <!-- View Transaction Modal -->
-    <div class="modal-overlay" id="view-modal" style="opacity: 0; visibility: hidden;">
+    <div class="modal-overlay" id="view-modal" style="display: none;">
         <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
                 <h2>Transaction Details</h2>
@@ -371,11 +371,15 @@
             '</div>';
             
             document.getElementById('transaction-details').innerHTML = detailsHtml;
-            document.getElementById('view-modal').classList.add('show');
+            var modal = document.getElementById('view-modal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
         };
         
         window.closeModal = function() {
-            document.getElementById('view-modal').classList.remove('show');
+            var modal = document.getElementById('view-modal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
         };
         
         window.printReceipt = function() {
