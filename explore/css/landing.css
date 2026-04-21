@@ -127,6 +127,16 @@ html, body {
     flex-wrap: wrap;
 }
 
+.hero-actions .btn-outline {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.hero-actions .btn-outline:hover {
+    background: #ffffff;
+    color: #0f172a;
+}
+
 .btn-large {
     padding: 1rem 2.5rem;
     font-size: 1rem;
@@ -240,7 +250,9 @@ html, body {
 }
 
 .destinations-grid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .experience-grid {
@@ -573,14 +585,14 @@ html, body {
     .gallery-preview-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-preview-grid img { height: 120px; }
     .destinations-grid { grid-template-columns: 1fr 1fr; }
-    .destination-card { aspect-ratio: 1/1; }
+    .experience-card { aspect-ratio: 1/1; }
     .featured-section, .experience-section, .gallery-preview-section, .blog-preview-section, .cta-section { padding: 3rem 1rem; }
 }
 
 @media (max-width: 480px) {
     .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
     .destinations-grid { grid-template-columns: 1fr; }
-    .destination-card { aspect-ratio: 4/3; }
+    .experience-card { aspect-ratio: 16/10; }
     .experience-grid { grid-template-columns: 1fr; }
     .blog-preview-grid { grid-template-columns: 1fr; }
     .gallery-preview-grid { grid-template-columns: 1fr 1fr 1fr; }

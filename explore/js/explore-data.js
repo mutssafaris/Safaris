@@ -33,15 +33,12 @@
         }
 
         return `
-            <div class="explore-card">
-                <img src="${getImageUrl(image)}" alt="${title}" class="explore-card-image" loading="lazy">
-                <div class="explore-card-content">
-                    <h3 class="explore-card-title">${title}</h3>
-                    <p class="explore-card-desc">${desc.substring(0, 100)}${desc.length > 100 ? '...' : ''}</p>
-                    <div class="explore-card-meta">
-                        ${price ? `<span class="explore-card-price">$${price}</span>` : '<span></span>'}
-                        <span class="explore-card-link" onclick="${onClick}">${linkText}</span>
-                    </div>
+            <div class="experience-card">
+                <img src="${getImageUrl(image)}" alt="${title}" loading="lazy" onload="this.classList.add('loaded')">
+                <div class="experience-content">
+                    <h3>${title}</h3>
+                    <p>${desc.substring(0, 80)}${desc.length > 80 ? '...' : ''}</p>
+                    ${price ? `<span>$${price}</span>` : ''}
                 </div>
             </div>
         `;

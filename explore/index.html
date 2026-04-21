@@ -86,22 +86,22 @@
         <section class="categories-section">
             <div class="categories-grid">
                 <a href="beaches.html" class="category-card" style="--delay: 0">
-                    <div class="category-icon">🏖️</div>
+                    <div class="category-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h-10a1 1 0 01-1-1v-8a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1z"/><path d="M2 20h20"/><path d="M5 20v-4"/><path d="M9 20v-2"/><path d="M13 20v-6"/></svg></div>
                     <h3>Beaches</h3>
                     <p>Diani, Malindi, Lamu & more</p>
                 </a>
                 <a href="packages.html" class="category-card" style="--delay: 1">
-                    <div class="category-icon">🦁</div>
+                    <div class="category-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
                     <h3>Safari</h3>
                     <p>Maasai Mara, Amboseli & more</p>
                 </a>
                 <a href="africasa.html" class="category-card" style="--delay: 2">
-                    <div class="category-icon">🎭</div>
+                    <div class="category-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
                     <h3>Culture</h3>
                     <p>Maasai villages & heritage</p>
                 </a>
                 <a href="gallery.html" class="category-card" style="--delay: 3">
-                    <div class="category-icon">📸</div>
+                    <div class="category-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2h18a2 2 0 012 2v14z"/><circle cx="12" cy="13" r="4"/></svg></div>
                     <h3>Gallery</h3>
                     <p>Wildlife photography</p>
                 </a>
@@ -112,10 +112,10 @@
         <section class="featured-section">
             <h2 class="section-title">Popular Destinations</h2>
             <div class="destinations-grid" id="destinations-grid">
-                <div class="destination-card skeleton"></div>
-                <div class="destination-card skeleton"></div>
-                <div class="destination-card skeleton"></div>
-                <div class="destination-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
             </div>
             <div class="section-cta">
                 <a href="packages.html" class="btn btn-outline">View All Destinations</a>
@@ -200,7 +200,7 @@
         function skeletonCard(count) {
             var html = '';
             for (var i = 0; i < count; i++) {
-                html += '<div class="destination-card skeleton"></div>';
+                html += '<div class="experience-card skeleton"></div>';
             }
             return html;
         }
@@ -245,13 +245,12 @@
         function renderDestinations(items) {
             var html = '';
             items.forEach(function(item) {
-                html += '<div class="destination-card">' +
+                html += '<div class="experience-card">' +
                     '<img src="' + img(item.image || item.thumbnail) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
-                    '<div class="destination-info">' +
+                    '<div class="experience-content">' +
                         '<h3>' + item.name + '</h3>' +
                         '<p>' + (item.description || item.shortDescription || item.desc) + '</p>' +
-                        '<span class="destination-price">' + item.price + '</span>' +
-                        '<span class="destination-cta" onclick="redirectToLogin()">Explore →</span>' +
+                        '<span>' + item.price + '</span>' +
                     '</div>' +
                 '</div>';
             });

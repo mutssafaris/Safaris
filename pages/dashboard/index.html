@@ -262,11 +262,26 @@
                     overlay.classList.remove('active');
                     document.body.style.overflow = '';
                 }
+            },
+            
+            refresh: function() {
+                var overlay = document.getElementById('onboarding-overlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                    void overlay.offsetWidth;
+                    if (!localStorage.getItem(ONBOARDING_KEY)) {
+                        overlay.classList.add('active');
+                    }
+                }
             }
         };
         
         document.addEventListener('DOMContentLoaded', function() {
             MutsTour.show();
+        });
+        
+        window.addEventListener('themeChanged', function(e) {
+            MutsTour.refresh();
         });
         
         if ('serviceWorker' in navigator) {

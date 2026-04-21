@@ -58,6 +58,9 @@
                 metaThemeColor.setAttribute('content', browserColor);
             }
 
+            // Update theme switcher UI
+            this.updateUI();
+
             // Dispatch custom event for other components to listen
             window.dispatchEvent(new CustomEvent('themeChanged', {
                 detail: { theme: theme }

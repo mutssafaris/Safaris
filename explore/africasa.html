@@ -110,13 +110,12 @@
         function renderListings(items) {
             var html = '';
             items.forEach(function(item) {
-                html += '<div class="destination-card">' +
+                html += '<div class="experience-card">' +
                     '<img src="' + img(item.image) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
-                    '<div class="destination-info">' +
+                    '<div class="experience-content">' +
                         '<h3>' + item.name + '</h3>' +
                         '<p>' + item.description + '</p>' +
-                        '<span class="destination-price">' + item.price + '</span>' +
-                        '<span class="destination-cta" onclick="redirectToLogin()">View Item →</span>' +
+                        '<span>' + item.price + '</span>' +
                     '</div>' +
                 '</div>';
             });
@@ -138,7 +137,7 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
-                document.querySelectorAll('.destination-card').forEach(function(el) {
+                document.querySelectorAll('.experience-card').forEach(function(el) {
                     el.classList.add('visible');
                 });
             }, 300);
