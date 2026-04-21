@@ -346,7 +346,7 @@ a:hover {
 .dashboard-layout {
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
     overflow-x: hidden;
     background: transparent;
@@ -380,8 +380,13 @@ a:hover {
 }
 
 .sidebar-brand {
-    padding: 0 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    margin: 0.75rem;
+    border-bottom: none;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border-radius: 12px;
+    border: 1px solid var(--border-glow);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 0 20px var(--accent-glow);
 }
 
 .sidebar-brand a {
@@ -418,6 +423,7 @@ a:hover {
     color: var(--text-muted);
     font-style: italic;
     line-height: 1.3;
+    margin-top: 0.25rem;
 }
 
 .sidebar-nav {
@@ -435,35 +441,43 @@ a:hover {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.7rem 1.25rem;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0.75rem;
     color: var(--text-secondary);
     text-decoration: none;
-    border-left: 3px solid transparent;
-    transition: all 0.2s ease;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
     position: relative;
     font-size: 0.9rem;
+    background: transparent;
 }
 
 .sidebar-nav .nav-item:hover {
     color: var(--text-primary);
     background: var(--bg-hover);
+    border-color: var(--border);
+    transform: translateX(4px);
 }
 
 .sidebar-nav .nav-item.active {
     color: var(--accent);
     background: var(--bg-hover);
-    border-left-color: var(--accent);
+    border-color: var(--accent-glow);
     text-shadow: 0 0 10px var(--accent-glow);
+    box-shadow: 0 0 15px var(--accent-glow), inset 0 0 20px rgba(255, 184, 0, 0.05);
 }
 
 .sidebar-nav .nav-item.active::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
     background: var(--accent);
+    border-radius: 0 4px 4px 0;
     box-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--shadow-glow);
 }
 
@@ -484,38 +498,52 @@ a:hover {
 
 .sidebar-nav .badge {
     position: absolute;
-    right: 1rem;
+    right: 0.75rem;
     background: var(--accent);
     color: var(--text-on-accent);
     font-size: 0.6rem;
     font-weight: 700;
     padding: 0.15rem 0.5rem;
-    border-radius: 0;
+    border-radius: 10px;
     box-shadow: 0 0 8px var(--accent-glow);
     font-family: 'Share Tech Mono', monospace;
 }
 
 .sidebar-footer {
-    padding: 1rem 0;
+    padding: 1rem;
+    margin-top: 0.5rem;
     border-top: 1px solid var(--border);
+}
+
+.sidebar-footer::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin-bottom: 1rem;
 }
 
 .logout-btn {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.7rem 1.25rem;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0.75rem;
     color: var(--text-secondary);
     text-decoration: none;
-    border-left: 3px solid transparent;
-    transition: all 0.2s ease;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
     cursor: pointer;
     font-size: 0.9rem;
+    background: transparent;
 }
 
 .logout-btn:hover {
     color: var(--danger);
     background: var(--danger-bg);
+    border-color: var(--danger-glow, rgba(220, 38, 38, 0.3));
+    transform: translateX(4px);
 }
 
 .logout-btn svg {
@@ -549,7 +577,8 @@ a:hover {
 .dashboard-sidebar.icon-only .sidebar-brand {
     display: flex;
     justify-content: center;
-    padding: 0 0.5rem 1.5rem;
+    padding: 0.75rem;
+    margin: 0.5rem;
 }
 
 .dashboard-sidebar.icon-only .logout-btn {
@@ -619,7 +648,7 @@ a:hover {
     color: var(--text-primary);
     overflow-y: auto;
     overflow-x: visible;
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
     z-index: 1;
     display: block;
@@ -4053,6 +4082,8 @@ input:checked + .slider:before {
         grid-template-columns: 1fr;
         overflow-x: hidden;
         width: 100%;
+        height: auto;
+        min-height: 100vh;
     }
 
     .dashboard-sidebar {
@@ -4063,6 +4094,8 @@ input:checked + .slider:before {
         min-width: 0;
         width: 100%;
         overflow-x: hidden;
+        height: auto;
+        min-height: 100vh;
         padding: 1rem;
         padding-top: 4rem;
         padding-left: 3rem;
