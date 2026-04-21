@@ -24,10 +24,10 @@
     <link rel="icon" href="../assets/favicon/favicon.ico">
     <script>
         (function () {
-            var theme = 'dark';
+            var theme = 'corporate-light';
             try {
                 var stored = localStorage.getItem('muts-safaris-theme');
-                if (stored === 'light' || stored === 'dark') theme = stored;
+                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark') theme = stored;
             } catch (e) {}
             document.documentElement.setAttribute('data-theme', theme);
         })();

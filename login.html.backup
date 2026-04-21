@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0418">
+    <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
+    <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Cache-Control" content="max-age=31536000">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="Muts Safaris - The Future of African Exploration">
+    <meta property="og:description" content="Experience the future of African wildlife exploration. Join Muts Safaris for an unforgettable journey through Kenya.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mutssafaris.com/login">
+    <meta property="og:image" content="https://mutssafaris.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Muts Safaris - The Future of African Exploration">
+    <meta name="twitter:description" content="Experience the future of African wildlife exploration.">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="canonical" href="https://mutssafaris.com/login">
+    <title>Muts Safaris - The Future of African Exploration</title>
+    <link rel="stylesheet" href="css/login-landing.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="icon" href="assets/favicon/favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <!-- Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Facebook SDK -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        (function () {
+            // Set initial theme before render to prevent flash - light is default
+            var theme = 'light';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'light' || stored === 'grey' || stored === 'scifi') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.style.colorScheme = theme;
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) {
+                var colors = { 'light': '#f5f9fd', 'grey': '#1f2937', 'scifi': '#050510' };
+                meta.setAttribute('content', colors[theme] || '#f5f9fd');
+            }
+        })();
+    </script>
+</head>
+<body>
+    
+    <div class="hud-overlay"></div>
+    <div class="ambient-particles"></div>
+    <div class="scanlines"></div>
+
+    <!-- HERO -->
+    <section class="landing-hero">
+        <nav class="auth-navbar" style="position: absolute; top: 0; left: 0; width: 100%; padding: 1.5rem 6%; display: flex; justify-content: space-between; align-items: center; z-index: 1000;">
+            <a href="index.html" class="auth-logo" data-auth="redirect">MUTS_SAFARIS</a>
+            <a href="explore/beaches.html" class="nav-link-mobile" aria-label="Explore">Explore</a>
+            <div class="nav-links">
+                <a href="explore/index.html" class="nav-link">Home</a>
+                <a href="explore/beaches.html" class="nav-link">Explore</a>
+                <a href="pages/dashboard/my-trips.html" class="nav-link" data-auth="required">My Trips</a>
+                <a href="explore/contact.html" class="nav-link">Contact</a>
+                <a href="explore/blog.html" class="nav-link">Blog</a>
+            </div>
+            <div class="nav-controls">
+                <div id="theme-switcher-container"></div>
+                <button class="nav-login-btn" id="open-auth">CONNECT</button>
+            </div>
+        </nav>
+        <div class="split-hero-container">
+            <div class="hero-text-panel">
+                <div class="hero-badge">Don't be a tourist, be a Traveller</div>
+                <h1 class="hero-glitch">EXPEDITION</h1>
+                <p class="hero-tagline">The Future of African Wildlife Exploration</p>
+                
+                <div class="hero-actions">
+                    <button class="btn btn-primary check-session">INITIALIZE_EXPEDITION</button>
+                    <button class="btn btn-outline">LEARN_MORE →</button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">5000+</div>
+                        <div class="stat-label">DESTINATIONS</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">AUTHENTIC</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">SUPPORT</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image-container">
+                <img src="images/hero/safari-guide.jpg" alt="Safari Guide" fetchpriority="high" loading="eager">
+                <div class="floating-stat top-left">
+                    <span>Adventure</span>
+                </div>
+                <div class="floating-stat top-right">
+                    <span>Unique</span>
+                </div>
+                <div class="floating-stat mid-right">
+                    <span>Culture</span>
+                </div>
+                <div class="floating-stat bottom-left">
+                    <span>Relaxation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTH MODAL -->
+    <div class="auth-overlay" id="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <span class="close-auth" id="close-auth" aria-label="Close authentication dialog">&times;</span>
+        <div class="auth-container">
+            <div class="auth-branding-panel">
+                <div class="split-badge">SECURE_TRANSMISSION</div>
+                <h3 id="auth-title" style="font-family: var(--font-family-heading); font-size: 1.6rem; color: var(--text-primary); margin: 1rem 0;">AUTHENTICATE</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; border-left: 1px solid var(--auth-accent); padding-left: 1rem;">
+                    Lets connect to explore<br>
+                    Muts will take you to places beyond Imagination
+                </p>
+            </div>
+            <div class="auth-form-panel">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-form="login">LOGIN_ID</button>
+                    <button class="auth-tab" data-form="signup">CREATE_ID</button>
+                </div>
+                <form class="auth-form active" id="login-form" novalidate>
+                    <div class="form-group"><label for="login-email">USER_ID (EMAIL)</label><input type="email" id="login-email" required aria-describedby="login-email-error"></div>
+                    <div id="login-email-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="login-password">SECURITY_PASSKEY</label><input type="password" id="login-password" required aria-describedby="login-password-error"></div>
+                    <div id="login-password-error" class="form-error" hidden></div>
+                    <div id="login-general-error" class="form-error" role="alert" aria-live="polite" hidden></div>
+                    <button type="submit" class="btn btn-primary btn-block">INITIALIZE_AUTH</button>
+                    <div class="social-divider">
+                        <span>OR_CONTINUE_WITH</span>
+                    </div>
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google" id="google-login-btn" aria-label="Continue with Google">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.836 2.82v2.345h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.345c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.81A4.993 4.993 0 0 1 3.957 9c0-.662.115-1.305.321-1.91V4.758H.957A8.976 8.976 0 0 0 0 9c0 1.491.382 2.91 1.024 4.179l3.11-2.369z"/><path fill="#EA4335" d="M9 3.419c1.094 0 2.099.376 2.878 1.112l2.687-2.687A8.895 8.895 0 0 0 9 0 8.997 8.997 0 0 0 .957 4.758L3.964 7.09c.708-2.127 2.692-3.71 5.036-3.71z"/></svg>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" class="social-btn apple" id="apple-login-btn" aria-label="Continue with Apple">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path fill="currentColor" d="M17.05 13.429c-.091.493-.455.988-.938 1.216-.372.183-.771.278-1.235.195.085-.19.164-.387.227-.593.33-1.122.164-2.46-.494-3.605-.381-.687-.949-1.495-1.773-1.495-.783 0-1.343.733-1.762 1.494-.448.838-.605 1.938-.439 2.96.027.164.054.338.054.503-.339.073-.771.155-1.235.073-.534-.109-1.047-.422-1.416-.845-.44-.511-.783-1.137-.958-1.843-.495-.164-.861-.253-1.272-.195-.198.018-.39.091-.581.164.027-.368.109-.697.27-.967.381-.699 1.136-1.228 1.96-1.228.753 0 1.455.446 1.873 1.228.137.229.223.459.258.699.013.073.04.146.04.211.312-.04.625-.067.939-.067 2.442 0 4.45 1.978 4.45 4.456 0 .237-.04.474-.094.693-.163.044-.352.093-.558.108zM14.32 2.891c.783 0 1.574.443 1.96 1.443.44 1.137.27 2.6.055 3.615-.493.146-1.048.253-1.624.195-.548-.052-1.048-.253-1.514-.566-.349-.234-.653-.567-.912-.948-.182-.253-.349-.511-.482-.771-.094.507-.147 1.024-.147 1.543 0 .536.094 1.048.281 1.543-.294.349-.622.652-.993.882-.38.229-.79.396-1.223.493-.229.052-.459.093-.689.093-.811 0-1.588-.443-2.058-1.443-.543-1.137-.353-2.632-.108-3.723.533-.146 1.072-.253 1.611-.195.549.058 1.047.253 1.515.566.349.234.652.566.912.947.182.253.348.511.482.772.093-.493.147-1.009.147-1.536 0-.507-.094-1.019-.28-1.51.282-.358.61-.66.969-.887z"/></svg>
+                            <span>Apple</span>
+                        </button>
+                    </div>
+                </form>
+                <form class="auth-form" id="signup-form" novalidate>
+                    <div class="form-group"><label for="signup-name">IDENTITY_NAME</label><input type="text" id="signup-name" required aria-describedby="signup-name-error"></div>
+                    <div id="signup-name-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="signup-email">USER_ID (EMAIL)</label><input type="email" id="signup-email" required aria-describedby="signup-email-error"></div>
+                    <div id="signup-email-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="signup-password">SECURITY_PASSKEY</label><input type="password" id="signup-password" required aria-describedby="signup-password-error" minlength="6"></div>
+                    <div id="signup-password-error" class="form-error" hidden></div>
+                    <div class="form-group"><label for="signup-phone">PHONE_CONTACT</label><input type="tel" id="signup-phone"></div>
+                    <div class="form-group">
+                        <label>NATIONALITY</label>
+                        <select id="signup-country">
+                            <option value="">SELECT_REGION</option>
+                            <optgroup label="African Countries">
+                                <option value="KE">Kenya</option>
+                                <option value="TZ">Tanzania</option>
+                                <option value="UG">Uganda</option>
+                                <option value="ZA">South Africa</option>
+                                <option value="RW">Rwanda</option>
+                                <option value="ET">Ethiopia</option>
+                                <option value="GH">Ghana</option>
+                                <option value="NG">Nigeria</option>
+                                <option value="EG">Egypt</option>
+                                <option value="MA">Morocco</option>
+                                <option value="BW">Botswana</option>
+                                <option value="NA">Namibia</option>
+                                <option value="ZM">Zambia</option>
+                                <option value="ZW">Zimbabwe</option>
+                                <option value="MZ">Mozambique</option>
+                            </optgroup>
+                            <optgroup label="Europe">
+                                <option value="GB">United Kingdom</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="IT">Italy</option>
+                                <option value="ES">Spain</option>
+                                <option value="NL">Netherlands</option>
+                                <option value="BE">Belgium</option>
+                                <option value="CH">Switzerland</option>
+                                <option value="AT">Austria</option>
+                                <option value="SE">Sweden</option>
+                                <option value="NO">Norway</option>
+                                <option value="DK">Denmark</option>
+                                <option value="FI">Finland</option>
+                                <option value="PT">Portugal</option>
+                                <option value="GR">Greece</option>
+                                <option value="PL">Poland</option>
+                            </optgroup>
+                            <optgroup label="Americas">
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="BR">Brazil</option>
+                                <option value="MX">Mexico</option>
+                                <option value="AR">Argentina</option>
+                            </optgroup>
+                            <optgroup label="Asia & Oceania">
+                                <option value="AU">Australia</option>
+                                <option value="NZ">New Zealand</option>
+                                <option value="JP">Japan</option>
+                                <option value="CN">China</option>
+                                <option value="IN">India</option>
+                                <option value="SG">Singapore</option>
+                                <option value="AE">United Arab Emirates</option>
+                            </optgroup>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>EXPEDITION_TYPE</label>
+                        <select id="signup-interest">
+                            <option value="">SELECT_PREFERENCE</option>
+                            <option value="safari">SAFARI_ADVENTURE</option>
+                            <option value="beach">BEACH_RELAXATION</option>
+                            <option value="cultural">CULTURAL_TOUR</option>
+                            <option value="luxury">LUXURY_EXPERIENCE</option>
+                            <option value="family">FAMILY_SAFARI</option>
+                            <option value="photography">PHOTOGRAPHY_TOUR</option>
+                            <option value="adventure">ADVENTURE_TREK</option>
+                            <option value="honeymoon">HONEYMOON_ROMANCE</option>
+                            <option value="wildlife">WILDLIFE_CONSERVATION</option>
+                            <option value="mountain">MOUNTAIN_CLIMBING</option>
+                            <option value="desert">DESERT_EXPLORATION</option>
+                            <option value="ecotourism">ECOTOURISM</option>
+                            <option value="volunteer">VOLUNTEER_TOUR</option>
+                            <option value="business">BUSINESS_TRAVEL</option>
+                            <option value="other">OTHER</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-referral">REFERRAL_CODE (OPTIONAL)</label>
+                        <input type="text" id="signup-referral" placeholder="MUTS-XXXX-XXXX" maxlength="20" autocomplete="off" style="text-transform: uppercase;">
+                        <small class="form-hint">Got a friend's code? Enter it to earn 500 bonus points!</small>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="signup-newsletter" value="true">
+                        <label for="signup-newsletter">ENABLE_TELEMETRY (NEWSLETTER)</label>
+                    </div>
+                    <div id="signup-general-error" class="form-error" role="alert" aria-live="polite" hidden></div>
+                    <button type="submit" class="btn btn-primary btn-block">CREATE_IDENTITY</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/a11y.js"></script>
+    <script src="js/theme-switcher.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/nav-guard.js"></script>
+    <script>
+    // DEBUG: Alert if auth isn't loading!
+    setTimeout(function() {
+        if (!window.MutsAuth) {
+            alert('[FATAL] MutsAuth not loaded! Check console for errors.');
+        } else {
+            console.log('[Login] MutsAuth is available:', typeof window.MutsAuth);
+            console.log('[Login] MutsAuth.login:', typeof window.MutsAuth.login);
+        }
+    }, 1000);
+    </script>
+    <script>
+    (function() {
+        var overlay = document.getElementById('auth-overlay');
+        var openBtn = document.getElementById('open-auth');
+        var closeBtn = document.getElementById('close-auth');
+        var releaseFocus = null;
+
+        function toggleOverlay(state) {
+            overlay.classList.toggle('active', state);
+            document.body.style.overflow = state ? 'hidden' : '';
+            
+            if (state) {
+                // Trap focus in modal
+                releaseFocus = window.MutsA11y.trapFocus(overlay);
+            } else {
+                // Release focus trap
+                if (releaseFocus) {
+                    releaseFocus();
+                    releaseFocus = null;
+                }
+            }
+        }
+
+        openBtn.onclick = function() { toggleOverlay(true); };
+        closeBtn.onclick = function() { toggleOverlay(false); };
+
+        document.querySelectorAll('.check-session').forEach(function(btn) {
+            btn.onclick = function() {
+                if (window.MutsAuth.getSession()) window.location.href = 'pages/dashboard/index.html';
+                else toggleOverlay(true);
+            };
+        });
+
+        document.querySelectorAll('.auth-tab').forEach(function(tab) {
+            tab.onclick = function() {
+                document.querySelectorAll('.auth-tab').forEach(function(t) { t.classList.remove('active'); });
+                document.querySelectorAll('.auth-form').forEach(function(f) { f.classList.remove('active'); });
+                this.classList.add('active');
+                document.getElementById(this.dataset.form + '-form').classList.add('active');
+            };
+        });
+
+        document.getElementById('login-form').onsubmit = function(e) {
+            e.preventDefault();
+            var email = document.getElementById('login-email').value;
+            var password = document.getElementById('login-password').value;
+            var btn = document.querySelector('#login-form button');
+            btn.disabled = true;
+            btn.textContent = 'Logging in...';
+            
+            // DEBUG: Log directly to page
+            var debug = document.getElementById('login-debug') || (function() {
+                var d = document.createElement('div');
+                d.id = 'login-debug';
+                d.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#000;color:#0f0;padding:10px;z-index:99999;font-family:monospace;font-size:12px;';
+                document.body.appendChild(d);
+                return d;
+            })();
+            debug.innerHTML = '[DEBUG] Starting login for: ' + email + '<br>';
+            
+            if (!window.MutsAuth) {
+                debug.innerHTML += '[ERROR] MutsAuth not loaded!<br>';
+                btn.disabled = false;
+                btn.textContent = 'Login';
+                alert('MutsAuth not loaded! Check console.');
+                return;
+            }
+            
+            debug.innerHTML += '[DEBUG] Calling MutsAuth.login...<br>';
+            
+            // Handle both sync and async responses
+            var result = window.MutsAuth.login(email, password);
+            if (result && typeof result.then === 'function') {
+                debug.innerHTML += '[DEBUG] Got Promise, waiting...<br>';
+                result.then(function(data) {
+                    btn.disabled = false;
+                    btn.textContent = 'Login';
+                    debug.innerHTML += '[DEBUG] Promise resolved: ' + JSON.stringify(data) + '<br>';
+                    if (data.success) {
+                        debug.innerHTML += '[DEBUG] SUCCESS! Redirecting...<br>';
+                        
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        alert('AUTH_FAILED: ' + data.message);
+                    }
+                })['catch'](function(err) {
+                    btn.disabled = false;
+                    btn.textContent = 'Login';
+                    debug.innerHTML += '[DEBUG] ERROR: ' + err.message + '<br>';
+                    alert('AUTH_FAILED: ' + err.message);
+                });
+            } else if (result.success) {
+                debug.innerHTML += '[DEBUG] Sync success!<br>';
+                
+                window.location.href = 'pages/dashboard/index.html';
+            } else {
+                debug.innerHTML += '[DEBUG] Sync failed: ' + result.message + '<br>';
+                btn.disabled = false;
+                btn.textContent = 'Login';
+                alert('AUTH_FAILED: ' + result.message);
+            }
+        };
+
+document.getElementById('signup-form').onsubmit = function(e) {
+            e.preventDefault();
+            var userData = {
+                name: document.getElementById('signup-name').value,
+                email: document.getElementById('signup-email').value,
+                password: document.getElementById('signup-password').value,
+                phone: document.getElementById('signup-phone').value,
+                country: document.getElementById('signup-country').value,
+                interest: document.getElementById('signup-interest').value,
+                referralCode: document.getElementById('signup-referral').value.trim().toUpperCase(),
+                newsletter: document.getElementById('signup-newsletter').checked
+            };
+            var btn = document.querySelector('#signup-form button');
+            btn.disabled = true;
+            btn.textContent = 'Creating account...';
+            
+            var result = window.MutsAuth.signup(userData.name, userData.email, userData.password, userData);
+            if (result && typeof result.then === 'function') {
+                result.then(function(data) {
+                    btn.disabled = false;
+                    btn.textContent = 'Create Account';
+                    if (data.success) {
+                        
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        alert('REGISTRATION_FAILED: ' + data.message);
+                    }
+                })['catch'](function(err) {
+                    btn.disabled = false;
+                    btn.textContent = 'Create Account';
+                    alert('REGISTRATION_FAILED: ' + err.message);
+                });
+            } else if (result.success) {
+                
+                window.location.href = 'pages/dashboard/index.html';
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+                alert('REGISTRATION_FAILED: ' + result.message);
+            }
+        };
+    })();
+    </script>
+    <script>
+    (function() {
+        var GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+        
+        function initGoogle() {
+            if (typeof google === 'undefined') {
+                console.log('[Social] Google SDK not loaded yet');
+                setTimeout(initGoogle, 500);
+                return;
+            }
+            google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleGoogleResponse,
+                auto_select: false,
+                cancel_on_tap_outside: false
+            });
+            console.log('[Social] Google Identity Services initialized');
+        }
+        
+        function handleGoogleResponse(response) {
+            var credential = response.credential;
+            console.log('[Social] Google credential received');
+            if (window.MutsAuth) {
+                var btn = document.getElementById('google-login-btn');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.textContent = 'Authenticating...';
+                }
+                window.MutsAuth.socialLogin('google', credential).then(function(data) {
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.836 2.82v2.345h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.345c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.81A4.993 4.993 0 0 1 3.957 9c0-.662.115-1.305.321-1.91V4.758H.957A8.976 8.976 0 0 0 9 9c0 1.491.382 2.91 1.024 4.179l3.11-2.369z"/><path fill="#EA4335" d="M9 3.419c1.094 0 2.099.376 2.878 1.112l2.687-2.687A8.895 8.895 0 0 0 9 0 8.997 8.997 0 0 0 .957 4.758L3.964 7.09c.708-2.127 2.692-3.71 5.036-3.71z"/></svg><span>Google</span>';
+                    }
+                    if (data.success) {
+                        
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        alert('SOCIAL_LOGIN_FAILED: ' + (data.message || 'Unable to authenticate with Google'));
+                    }
+                })['catch'](function(err) {
+                    if (btn) btn.disabled = false;
+                    alert('SOCIAL_LOGIN_ERROR: ' + err.message);
+                });
+            }
+        }
+        
+        function handleAppleLogin() {
+            if (typeof AppleID === 'undefined') {
+                alert('Apple Sign-In is not available. Please use another method.');
+                return;
+            }
+            AppleID.auth.signIn({
+                clientId: 'YOUR_APPLE_SERVICE_ID',
+                scope: 'name email',
+                redirectURI: window.location.origin + '/auth/apple/callback'
+            });
+        }
+        
+        var googleBtn = document.getElementById('google-login-btn');
+        var appleBtn = document.getElementById('apple-login-btn');
+        
+        if (googleBtn) {
+            googleBtn.addEventListener('click', function() {
+                if (typeof google !== 'undefined') {
+                    google.accounts.id.prompt();
+                } else {
+                    alert('Google Sign-In is not available. Please use another method.');
+                }
+            });
+        }
+        
+        if (appleBtn) {
+            appleBtn.addEventListener('click', handleAppleLogin);
+        }
+        
+        setTimeout(initGoogle, 1000);
+    })();
+    </script>
+    <script>
+    (function() {
+        document.querySelectorAll('.nav-link, .auth-logo').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                var href = this.getAttribute('href');
+                if (!href || href === '#') {
+                    e.preventDefault();
+                    return;
+                }
+                var authRequired = this.dataset.auth === 'required';
+                var redirectOnly = this.dataset.auth === 'redirect';
+                if (redirectOnly) {
+                    e.preventDefault();
+                    if (window.MutsAuth.getSession()) {
+                        window.location.href = 'pages/dashboard/index.html';
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                } else if (authRequired && !window.MutsAuth.getSession()) {
+                    e.preventDefault();
+                    document.getElementById('auth-overlay').classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+    })();
+    </script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                console.log('[App] Service Worker registered:', reg.scope);
+            }).catch(function(err) {
+                console.log('[App] Service Worker registration failed:', err);
+            });
+        });
+    }
+    </script>
+</body>
+</html>

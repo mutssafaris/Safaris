@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0418">
+    <meta name="theme-color" content="#0f172a">
     <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
     <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
     <meta name="author" content="Muts Safaris">
@@ -32,10 +32,19 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
         (function () {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            document.documentElement.style.colorScheme = 'dark';
+            // Set initial theme before render to prevent flash - light is default
+            var theme = 'corporate-light';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.style.colorScheme = theme;
             var meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', '#0a0418');
+            if (meta) {
+                var colors = { 'corporate-light': '#f5f9fd', 'corporate-dark': '#0f172a', 'dark': '#050510' };
+                meta.setAttribute('content', colors[theme] || '#f5f9fd');
+            }
         })();
     </script>
 </head>
@@ -58,6 +67,7 @@
                 <a href="explore/blog.html" class="nav-link">Blog</a>
             </div>
             <div class="nav-controls">
+                <div id="theme-switcher-container"></div>
                 <button class="nav-login-btn" id="open-auth">CONNECT</button>
             </div>
         </nav>
@@ -247,61 +257,6 @@
         </div>
     </div>
 
-    <!-- ONBOARDING TOUR -->
-    <div class="onboarding-overlay" id="onboarding-overlay">
-        <div class="onboarding-modal">
-            <div class="onboarding-progress">
-                <span class="active"></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <div class="onboarding-slide active" data-slide="1">
-                <img src="images/hero/kenya-safari.jpg" alt="Welcome">
-                <h2>WELCOME TO MUTS_SAFARIS</h2>
-                <p>Your journey into the heart of African wilderness begins here. Experience Kenya like never before with our premium safari expeditions.</p>
-                <div class="onboarding-nav">
-                    <button class="onboarding-skip" onclick="MutsTour.skip()">SKIP</button>
-                    <button class="onboarding-done" onclick="MutsTour.next()">NEXT</button>
-                </div>
-            </div>
-            
-            <div class="onboarding-slide" data-slide="2">
-                <img src="images/hero/tours.jpg" alt="Book Safaris">
-                <h2>BOOK YOUR EXPEDITION</h2>
-                <p>Choose from curated safari packages, luxury lodges, and unique experiences. Our neural-linked system ensures real-time availability.</p>
-                <div class="onboarding-nav">
-                    <button class="onboarding-skip" onclick="MutsTour.skip()">SKIP</button>
-                    <button class="onboarding-done" onclick="MutsTour.next()">NEXT</button>
-                </div>
-            </div>
-            
-            <div class="onboarding-slide" data-slide="3">
-                <img src="images/hero/gallery.jpg" alt="Gallery">
-                <h2>EXPLORE THE GALLERY</h2>
-                <p>Browse stunning wildlife photography and travel videos. Get inspired by the beauty of Kenya's national parks and reserves.</p>
-                <div class="onboarding-nav">
-                    <button class="onboarding-skip" onclick="MutsTour.skip()">SKIP</button>
-                    <button class="onboarding-done" onclick="MutsTour.next()">NEXT</button>
-                </div>
-            </div>
-            
-            <div class="onboarding-slide" data-slide="4">
-                <img src="images/hero/africasa.jpg" alt="Africasa">
-                <h2>AFRICASA MARKET</h2>
-                <p>Own a piece of African heritage. Purchase authenticated artifacts and handcrafted souvenirs through our secure blockchain system.</p>
-                <div class="onboarding-nav">
-                    <label class="onboarding-dont-show">
-                        <input type="checkbox" id="dont-show-again">
-                        Don't show this again
-                    </label>
-                    <button class="onboarding-done" onclick="MutsTour.complete()">GET_STARTED</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="js/a11y.js"></script>
     <script src="js/theme-switcher.js"></script>
     <script src="js/auth.js"></script>
@@ -318,59 +273,6 @@
             console.log('[Login] MutsAuth.login:', typeof window.MutsAuth.login);
         }
     }, 1000);
-    </script>
-    <script>
-    (function() {
-        var ONBOARDING_KEY = 'muts_onboarding_done';
-        var currentSlide = 1;
-        var totalSlides = 4;
-        
-        window.MutsTour = {
-            show: function() {
-                if (localStorage.getItem(ONBOARDING_KEY)) return;
-                var overlay = document.getElementById('onboarding-overlay');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            },
-            
-            next: function() {
-                if (currentSlide < totalSlides) {
-                    this.goToSlide(currentSlide + 1);
-                }
-            },
-            
-            goToSlide: function(slideNum) {
-                currentSlide = slideNum;
-                document.querySelectorAll('.onboarding-slide').forEach(function(s) {
-                    s.classList.remove('active');
-                });
-                document.querySelector('.onboarding-slide[data-slide="' + slideNum + '"]').classList.add('active');
-                
-                document.querySelectorAll('.onboarding-progress span').forEach(function(p, i) {
-                    p.classList.remove('active', 'completed');
-                    if (i < slideNum - 1) p.classList.add('completed');
-                    if (i === slideNum - 1) p.classList.add('active');
-                });
-            },
-            
-            skip: function() {
-                this.close();
-            },
-            
-            complete: function() {
-                if (document.getElementById('dont-show-again').checked) {
-                    localStorage.setItem(ONBOARDING_KEY, 'true');
-                }
-                this.close();
-            },
-            
-            close: function() {
-                var overlay = document.getElementById('onboarding-overlay');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        };
-    })();
     </script>
     <script>
     (function() {
@@ -452,7 +354,7 @@
                     debug.innerHTML += '[DEBUG] Promise resolved: ' + JSON.stringify(data) + '<br>';
                     if (data.success) {
                         debug.innerHTML += '[DEBUG] SUCCESS! Redirecting...<br>';
-                        window.MutsTour.show();
+                        
                         window.location.href = 'pages/dashboard/index.html';
                     } else {
                         alert('AUTH_FAILED: ' + data.message);
@@ -465,7 +367,7 @@
                 });
             } else if (result.success) {
                 debug.innerHTML += '[DEBUG] Sync success!<br>';
-                window.MutsTour.show();
+                
                 window.location.href = 'pages/dashboard/index.html';
             } else {
                 debug.innerHTML += '[DEBUG] Sync failed: ' + result.message + '<br>';
@@ -497,7 +399,7 @@ document.getElementById('signup-form').onsubmit = function(e) {
                     btn.disabled = false;
                     btn.textContent = 'Create Account';
                     if (data.success) {
-                        window.MutsTour.show();
+                        
                         window.location.href = 'pages/dashboard/index.html';
                     } else {
                         alert('REGISTRATION_FAILED: ' + data.message);
@@ -508,7 +410,7 @@ document.getElementById('signup-form').onsubmit = function(e) {
                     alert('REGISTRATION_FAILED: ' + err.message);
                 });
             } else if (result.success) {
-                window.MutsTour.show();
+                
                 window.location.href = 'pages/dashboard/index.html';
             } else {
                 btn.disabled = false;
@@ -552,7 +454,7 @@ document.getElementById('signup-form').onsubmit = function(e) {
                         btn.innerHTML = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.836 2.82v2.345h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.345c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.81A4.993 4.993 0 0 1 3.957 9c0-.662.115-1.305.321-1.91V4.758H.957A8.976 8.976 0 0 0 9 9c0 1.491.382 2.91 1.024 4.179l3.11-2.369z"/><path fill="#EA4335" d="M9 3.419c1.094 0 2.099.376 2.878 1.112l2.687-2.687A8.895 8.895 0 0 0 9 0 8.997 8.997 0 0 0 .957 4.758L3.964 7.09c.708-2.127 2.692-3.71 5.036-3.71z"/></svg><span>Google</span>';
                     }
                     if (data.success) {
-                        window.MutsTour.show();
+                        
                         window.location.href = 'pages/dashboard/index.html';
                     } else {
                         alert('SOCIAL_LOGIN_FAILED: ' + (data.message || 'Unable to authenticate with Google'));

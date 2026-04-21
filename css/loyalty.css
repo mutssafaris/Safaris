@@ -1,26 +1,14 @@
-/* Loyalty Component Styles - Sci-Fi HUD Theme */
+/* Loyalty Component Styles - Theme-Aware */
 
 /* Uses system fonts - works offline */
-
-:root {
-    --loyalty-bronze: #cd7f32;
-    --loyalty-silver: #c0c0c0;
-    --loyalty-gold: #ffd700;
-    --loyalty-platinum: #e5e4e2;
-    --loyalty-platinum-glow: linear-gradient(135deg, #e5e4e2, #a0a0a0, #e5e4e2);
-    --hud-cyan: #00f0ff;
-    --hud-cyan-dim: rgba(0, 240, 255, 0.3);
-    --hud-orange: #ff6b00;
-    --hud-green: #00ff88;
-}
 
 .loyalty-card {
     background: var(--bg-card);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 
+    box-shadow:
         0 4px 20px var(--shadow),
-        0 0 40px rgba(0, 240, 255, 0.1),
+        0 0 40px var(--accent-glow),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     max-width: 420px;
     border: 1px solid var(--border);
@@ -35,7 +23,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, transparent, var(--hud-cyan), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
     opacity: 0.6;
 }
 
@@ -46,7 +34,7 @@
     right: 10px;
     width: 20px;
     height: 20px;
-    border: 2px solid var(--hud-cyan-dim);
+    border: 2px solid var(--accent-glow);
     border-radius: 50%;
     animation: pulse-glow 2s ease-in-out infinite;
 }
@@ -97,24 +85,23 @@
 }
 
 .tier-badge.bronze { 
-    border-color: var(--loyalty-bronze); 
-    color: var(--loyalty-bronze);
+    border-color: var(--bronze);
+    color: var(--bronze);
     box-shadow: 0 0 10px rgba(205, 127, 50, 0.3);
 }
-.tier-badge.silver { 
-    border-color: var(--loyalty-silver); 
-    color: var(--loyalty-silver);
+.tier-badge.silver {
+    border-color: var(--silver);
+    color: var(--silver);
     box-shadow: 0 0 10px rgba(192, 192, 192, 0.3);
 }
-.tier-badge.gold { 
-    border-color: var(--loyalty-gold); 
-    color: var(--loyalty-gold);
+.tier-badge.gold {
+    border-color: var(--gold);
+    color: var(--gold);
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
-.tier-badge.platinum { 
-    border-color: var(--loyalty-platinum); 
-    color: var(--loyalty-platinum);
-    box-shadow: 0 0 15px rgba(229, 228, 226, 0.4);
+.tier-badge.platinum {
+    border-color: var(--platinum);
+    color: var(--platinum);
 }
 
 .points-display {
@@ -130,7 +117,7 @@
     font-weight: 900;
     font-family: 'Courier New', 'Orbitron', sans-serif;
     line-height: 1;
-    background: linear-gradient(180deg, #fff 0%, var(--hud-cyan) 100%);
+    background: linear-gradient(180deg, var(--text-white) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 30px var(--hud-cyan);
@@ -785,10 +772,10 @@
     font-family: 'Courier New', 'Orbitron', sans-serif;
 }
 
-.tier-badge.bronze { background: rgba(205, 127, 50, 0.2); color: #cd7f32; border: 1px solid #cd7f32; }
-.tier-badge.silver { background: rgba(192, 192, 192, 0.2); color: #c0c0c0; border: 1px solid #c0c0c0; }
-.tier-badge.gold { background: rgba(255, 215, 0, 0.2); color: #ffd700; border: 1px solid #ffd700; }
-.tier-badge.platinum { background: rgba(229, 228, 226, 0.2); color: #a0a0a0; border: 1px solid #a0a0a0; }
+.tier-badge.bronze { background: var(--bronze-bg, rgba(205, 127, 50, 0.2)); color: var(--bronze); border: 1px solid var(--bronze); }
+.tier-badge.silver { background: var(--silver-bg, rgba(192, 192, 192, 0.2)); color: var(--silver); border: 1px solid var(--silver); }
+.tier-badge.gold { background: var(--gold-bg, rgba(255, 215, 0, 0.2)); color: var(--gold); border: 1px solid var(--gold); }
+.tier-badge.platinum { background: var(--platinum-bg, rgba(229, 228, 226, 0.2)); color: var(--platinum); border: 1px solid var(--platinum); }
 
 .tier-info {
     font-size: 12px;
@@ -1271,10 +1258,10 @@ flex-direction: column;
     font-family: 'Courier New', 'Orbitron', sans-serif;
 }
 
-.tier-badge.bronze { background: rgba(205, 127, 50, 0.2); color: #cd7f32; border: 1px solid #cd7f32; }
-.tier-badge.silver { background: rgba(192, 192, 192, 0.2); color: #c0c0c0; border: 1px solid #c0c0c0; }
-.tier-badge.gold { background: rgba(255, 215, 0, 0.2); color: #ffd700; border: 1px solid #ffd700; }
-.tier-badge.platinum { background: rgba(229, 228, 226, 0.2); color: #a0a0a0; border: 1px solid #a0a0a0; }
+.tier-badge.bronze { background: var(--bronze-bg, rgba(205, 127, 50, 0.2)); color: var(--bronze); border: 1px solid var(--bronze); }
+.tier-badge.silver { background: var(--silver-bg, rgba(192, 192, 192, 0.2)); color: var(--silver); border: 1px solid var(--silver); }
+.tier-badge.gold { background: var(--gold-bg, rgba(255, 215, 0, 0.2)); color: var(--gold); border: 1px solid var(--gold); }
+.tier-badge.platinum { background: var(--platinum-bg, rgba(229, 228, 226, 0.2)); color: var(--platinum); border: 1px solid var(--platinum); }
 
 .tier-info {
     font-size: 13px;
@@ -1446,7 +1433,7 @@ flex-direction: column;
 
 .apply-btn {
     padding: 14px 28px;
-    background: linear-gradient(135deg, var(--hud-green), #00cc66);
+    background: linear-gradient(135deg, var(--success), var(--success-dark, #059669));
     color: var(--bg-card);
     border: none;
     border-radius: 8px;
@@ -1556,7 +1543,7 @@ flex-direction: column;
     gap: 10px;
     font-size: 15px;
     font-family: 'Courier New', 'Orbitron', sans-serif;
-    color: #ffd700;
+    color: var(--gold);
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -1577,7 +1564,7 @@ flex-direction: column;
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 3px;
-    color: #ffd700;
+    color: var(--gold);
     font-family: 'Share Tech Mono', monospace;
 }
 

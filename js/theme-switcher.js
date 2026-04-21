@@ -1,6 +1,6 @@
 /**
  * Muts Safaris Theme Switcher
- * Handles theme switching between dark (orange) and light (blue) themes
+ * Handles theme switching between corporate light, corporate dark, and sci-fi dark themes
  */
 
 (function() {
@@ -8,22 +8,21 @@
 
     const THEME_STORAGE_KEY = 'muts-safaris-theme';
     const THEME_DARK = 'dark';
-    const THEME_LIGHT = 'light';
+    const THEME_CORPORATE_LIGHT = 'corporate-light';
+    const THEME_CORPORATE_DARK = 'corporate-dark';
 
     class MutsThemeSwitcher {
         constructor() {
             const existingTheme = document.documentElement.getAttribute('data-theme');
-            this.currentTheme = this.getStoredTheme() || existingTheme || THEME_DARK;
+            this.currentTheme = this.getStoredTheme() || existingTheme || THEME_CORPORATE_LIGHT;
             this.init();
         }
 
         init() {
-            // Skip if dark theme is already set in HTML (login page pattern)
             const existingTheme = document.documentElement.getAttribute('data-theme');
-            if (existingTheme === 'dark') {
-                this.currentTheme = THEME_DARK;
-                this.setStoredTheme(THEME_DARK);
-                return;
+            if (existingTheme) {
+                this.currentTheme = existingTheme;
+                this.setStoredTheme(existingTheme);
             }
             this.applyTheme(this.currentTheme);
             this.setupEventListeners();
@@ -66,12 +65,15 @@
         }
 
         switchTheme() {
-            const newTheme = this.currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+            const themeOrder = [THEME_CORPORATE_LIGHT, THEME_CORPORATE_DARK, THEME_DARK];
+            const currentIndex = themeOrder.indexOf(this.currentTheme);
+            const nextIndex = (currentIndex + 1) % themeOrder.length;
+            const newTheme = themeOrder[nextIndex];
             this.applyTheme(newTheme);
         }
 
         setTheme(theme) {
-            if (theme === THEME_DARK || theme === THEME_LIGHT) {
+            if ([THEME_DARK, THEME_CORPORATE_LIGHT, THEME_CORPORATE_DARK].includes(theme)) {
                 this.applyTheme(theme);
             }
         }
@@ -82,7 +84,12 @@
             if (token) {
                 return token;
             }
-            return theme === THEME_LIGHT ? '#f8fbff' : '#050510';
+            const colors = {
+                [THEME_DARK]: '#050510',
+                [THEME_CORPORATE_LIGHT]: '#ffffff',
+                [THEME_CORPORATE_DARK]: '#0f172a'
+            };
+            return colors[theme] || '#ffffff';
         }
 
         getCurrentTheme() {
@@ -94,16 +101,23 @@
             const themeSwitcher = document.createElement('div');
             themeSwitcher.className = 'theme-switcher';
             themeSwitcher.innerHTML = `
-                <button class="theme-switcher-btn ${this.currentTheme === THEME_LIGHT ? 'active' : ''}"
-                        data-theme="${THEME_LIGHT}"
-                        title="Light Theme">
+                <button class="theme-switcher-btn ${this.currentTheme === THEME_CORPORATE_LIGHT ? 'active' : ''}"
+                        data-theme="${THEME_CORPORATE_LIGHT}"
+                        title="Corporate Light Theme">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm-14.34 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41-.39.39-1.03.39-1.41 0zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
                     </svg>
                 </button>
+                <button class="theme-switcher-btn ${this.currentTheme === THEME_CORPORATE_DARK ? 'active' : ''}"
+                        data-theme="${THEME_CORPORATE_DARK}"
+                        title="Corporate Dark Theme">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                    </svg>
+                </button>
                 <button class="theme-switcher-btn ${this.currentTheme === THEME_DARK ? 'active' : ''}"
                         data-theme="${THEME_DARK}"
-                        title="Dark Theme">
+                        title="Sci-Fi Dark Theme">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M9.37 5.51c-.18.64-.27 1.31-.27 1.99 0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27C17.45 17.19 14.93 19 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49zM12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
                     </svg>
@@ -125,32 +139,31 @@
             this.updateUI();
         }
 
-        updateUI() {
+updateUI() {
             if (!this.themeSwitcherElement) return;
 
-            const lightBtn = this.themeSwitcherElement.querySelector('[data-theme="light"]');
-            const darkBtn = this.themeSwitcherElement.querySelector('[data-theme="dark"]');
+            const lightBtn = this.themeSwitcherElement.querySelector('[data-theme="corporate-light"]');
+            const darkBtn = this.themeSwitcherElement.querySelector('[data-theme="corporate-dark"]');
+            const sciFiBtn = this.themeSwitcherElement.querySelector('[data-theme="dark"]');
 
-            if (lightBtn && darkBtn) {
-                lightBtn.classList.toggle('active', this.currentTheme === THEME_LIGHT);
-                darkBtn.classList.toggle('active', this.currentTheme === THEME_DARK);
+            if (lightBtn && darkBtn && sciFiBtn) {
+                lightBtn.classList.toggle('active', this.currentTheme === THEME_CORPORATE_LIGHT);
+                darkBtn.classList.toggle('active', this.currentTheme === THEME_CORPORATE_DARK);
+                sciFiBtn.classList.toggle('active', this.currentTheme === THEME_DARK);
             }
         }
 
         setupEventListeners() {
-            // Listen for system theme changes (if supported)
             if (window.matchMedia) {
                 const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
                 mediaQuery.addEventListener('change', (e) => {
-                    // Only auto-switch if no theme is stored (first visit)
                     if (!this.getStoredTheme()) {
-                        this.setTheme(e.matches ? THEME_LIGHT : THEME_DARK);
+                        this.setTheme(e.matches ? THEME_CORPORATE_LIGHT : THEME_DARK);
                     }
                 });
             }
         }
 
-        // Public API methods
         getThemeSwitcherElement() {
             return this.themeSwitcherElement;
         }
@@ -159,16 +172,24 @@
             this.switchTheme();
         }
 
-        toLight() {
-            this.setTheme(THEME_LIGHT);
+        toCorporateLight() {
+            this.setTheme(THEME_CORPORATE_LIGHT);
+        }
+
+        toCorporateDark() {
+            this.setTheme(THEME_CORPORATE_DARK);
         }
 
         toDark() {
             this.setTheme(THEME_DARK);
         }
 
-        isLight() {
-            return this.currentTheme === THEME_LIGHT;
+        isCorporateLight() {
+            return this.currentTheme === THEME_CORPORATE_LIGHT;
+        }
+
+        isCorporateDark() {
+            return this.currentTheme === THEME_CORPORATE_DARK;
         }
 
         isDark() {

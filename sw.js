@@ -116,7 +116,9 @@ function networkFirst(request) {
         }
         return response;
     }).catch(function() {
-        return caches.match(request);
+        return caches.match(request).then(function(cached) {
+            return cached || new Response('', { status: 503, statusText: 'Offline' });
+        });
     });
 }
 
@@ -130,8 +132,12 @@ function staleWhileRevalidate(request) {
             });
         }
         return networkResponse;
+    }).catch(function() {
+        return new Response('', { status: 503, statusText: 'Service Unavailable' });
     });
-    return cacheResponse || fetchPromise;
+    return cacheResponse.then(function(cached) {
+        return cached || fetchPromise;
+    });
 }
 
 self.addEventListener('message', function(event) {

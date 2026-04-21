@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,18 +14,20 @@
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://mutssafaris.com/dashboard">
     <title>Dashboard - Muts Safaris</title>
-    <!-- Critical CSS for immediate render -->
+    <!-- Critical CSS for immediate render - theme-aware -->
     <style>
-    body{background:#050510;color:#fff;font-family:'Courier New',monospace;margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    html{background:#050510}
+    body{background:var(--body-bg, #050510);color:var(--text-primary, #fff);font-family:var(--font-family, 'Courier New', monospace);margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh}
     .loading-screen{text-align:center}
-    .loading-spinner{width:40px;height:40px;border:3px solid rgba(255,184,0,0.2);border-top-color:#ffb800;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
+    .loading-spinner{width:40px;height:40px;border:3px solid var(--accent-glow, rgba(255,184,0,0.2));border-top-color:var(--accent, #ffb800);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
     @keyframes spin{to{transform:rotate(360deg)}}
     </style>
+    <!-- Load themes.css first for variable definitions -->
+    <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/dashboard-theme.css">
     <link rel="stylesheet" href="../../css/mock-indicator.css">
     <link rel="stylesheet" href="../../css/mobile-responsive.css">
     <link rel="stylesheet" href="../../css/animations.css">
-    <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/i18n.css">
     <link rel="stylesheet" href="../../css/notifications.css">
     <link rel="stylesheet" href="../../css/loyalty.css">
@@ -146,14 +148,6 @@
         </main>
     </div>
 
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/auth-guard.js"></script>
-    <script src="../../js/mock-indicator.js"></script>
-    <script src="../../js/init-dashboard.js"></script>
-    <script src="../../js/cache.js"></script>
-    <script src="../../js/validation.js"></script>
-    <link rel="stylesheet" href="../../css/login-landing.css">
-    <script src="../../js/services/destinations-service.js"></script>
     <!-- ONBOARDING TOUR -->
     <div class="onboarding-overlay" id="onboarding-overlay">
         <div class="onboarding-modal">
@@ -288,18 +282,15 @@
     </script>
 
 <!-- Enhanced Dashboard Components -->
-<link rel="stylesheet" href="../../css/i18n.css">
-<link rel="stylesheet" href="../../css/notifications.css">
-<link rel="stylesheet" href="../../css/loyalty.css">
-    <script src="../../js/i18n.js"></script>
-    <script src="../../js/language-switcher.js"></script>
-    <script src="../../js/notifications.js"></script>
-    <script src="../../js/notification-ui.js"></script>
-    <script src="../../js/loyalty.js"></script>
-    <script src="../../js/loyalty-ui.js"></script>
-    <script src="../../js/recommendations.js"></script>
-    <script src="../../js/recommendations-ui.js"></script>
-    <script src="../../js/theme-switcher.js"></script>
+<script src="../../js/i18n.js"></script>
+<script src="../../js/language-switcher.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/notification-ui.js"></script>
+<script src="../../js/loyalty.js"></script>
+<script src="../../js/loyalty-ui.js"></script>
+<script src="../../js/recommendations.js"></script>
+<script src="../../js/recommendations-ui.js"></script>
+<script src="../../js/theme-switcher.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Language Switcher
@@ -333,6 +324,14 @@
         if (loading) loading.remove();
     });
 </script>
+
+<script src="../../js/auth.js"></script>
+<script src="../../js/auth-guard.js"></script>
+<script src="../../js/mock-indicator.js"></script>
+<script src="../../js/init-dashboard.js"></script>
+<script src="../../js/cache.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/services/destinations-service.js"></script>
 
 <!-- Animation Controller -->
 <script src="../../js/animations.js"></script>

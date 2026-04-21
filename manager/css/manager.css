@@ -1,5 +1,8 @@
 /* Manager Dashboard Styles - Muts Safaris */
-/* Sci-Fi HUD Theme - Uses system fonts for offline compatibility */
+/* Now theme-aware via global theme system */
+
+/* Import global theme variables */
+@import url('../css/themes.css');
 
 * {
     margin: 0;
@@ -8,38 +11,96 @@
 }
 
 :root {
-    --bg-dark: #09001a;
-    --bg-card: rgba(255, 255, 255, 0.05);
-    --bg-input: rgba(255, 255, 255, 0.08);
-    --border: rgba(255, 220, 100, 0.2);
-    --border-glow: rgba(255, 220, 100, 0.4);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.5);
+    /* Dark Sci-Fi Theme variables (forced for manager) */
+    --bg-primary: #050510;
+    --bg-secondary: #080820;
+    --bg-dark: #030308;
+    --bg-card: rgba(255, 184, 0, 0.03);
+    --bg-sidebar: var(--bg-primary);
+    --bg-input: rgba(255, 184, 0, 0.04);
+    --bg-hover: rgba(255, 184, 0, 0.1);
+
+    --text-primary: #e0dcd0;
+    --text-secondary: #8a8570;
+    --text-muted: #ffffff;
+    --text-white: #ffffff;
+    --text-black: #000000;
+    --text-high-contrast: #ffffff;
+    --text-on-image: #ffffff;
+
+    --explore-text: var(--text-primary);
+    --explore-text-muted: var(--text-muted);
+    --explore-accent: #ffb800;
+
     --accent: #ffb800;
-    --accent-glow: rgba(255, 184, 0, 0.5);
-    --accent-hover: #ffc933;
-    --success: #00c853;
-    --warning: #ff9100;
-    --danger: #ff1744;
-    --info: #00b0ff;
+    --accent-dark: #cc9300;
+    --accent-light: #ffd54f;
+    --accent-glow: rgba(255, 184, 0, 0.35);
+    --accent-glow-strong: rgba(255, 184, 0, 0.55);
+    --accent-secondary: #ff8f1f;
+    --accent-secondary-dark: #b56b00;
+
+    --border: rgba(255, 184, 0, 0.1);
+    --border-glow: rgba(255, 184, 0, 0.25);
+
+    --glass-bg: rgba(255, 184, 0, 0.02);
+    --glass-border: rgba(255, 184, 0, 0.1);
+    --glass-blur: 12px;
+
+    --shadow: rgba(0, 0, 0, 0.5);
+    --shadow-glow: rgba(255, 184, 0, 0.2);
+
+    --success: #00ff88;
+    --warning: #ffaa00;
+    --danger: #ff4466;
+    --info: #4fc3f7;
+
+    --gold: #ffd700;
+    --theme-browser-color: #050510;
+
+    --surface-primary: var(--bg-primary);
+    --surface-secondary: var(--bg-secondary);
+    --surface-card: var(--bg-card);
+    --surface-sidebar: var(--bg-sidebar);
+    --surface-input: var(--bg-input);
+    --surface-hover: var(--bg-hover);
+    --surface-elevated: rgba(10, 10, 26, 0.9);
+    --border-color: var(--border);
+    --border-strong: var(--border-glow);
+    --text-on-accent: var(--text-black);
+    --scanline-color: rgba(0, 0, 0, 0.06);
+    --grid-line-color: rgba(255, 184, 0, 0.02);
+    --ambient-glow-1: rgba(255, 184, 0, 0.05);
+    --ambient-glow-2: rgba(255, 184, 0, 0.03);
+    --overlay-color: rgba(0, 0, 0, 0.85);
+    --modal-backdrop: rgba(0, 0, 0, 0.96);
+
+    --sidebar-width: 280px;
+    --sidebar-collapsed: 64px;
+    --font-family: 'Courier New', 'Share Tech Mono', monospace;
+    --font-family-heading: 'Courier New', 'Orbitron', sans-serif;
+    --body-bg: linear-gradient(135deg, #1a0030 0%, #2d0050 35%, #6b1a6b 70%, #ff00ff 100%);
+    --html-bg: linear-gradient(135deg, #1a0030 0%, #2d0050 35%, #6b1a6b 70%, #ff00ff 100%);
+    --auth-bg: linear-gradient(135deg, #1a0030 0%, #2d0050 35%, #6b1a6b 70%, #ff00ff 100%);
+
+    /* Manager-specific neon colors */
     --neon-pink: #ff2e88;
     --neon-cyan: #00e5ff;
-    --font-family: 'Courier New', 'Share Tech Mono', monospace;
-    --font-heading: 'Courier New', 'Orbitron', sans-serif;
 }
 
 body {
     font-family: var(--font-family);
-    background: linear-gradient(90deg, #09001a 0%, #1a0033 30%, #3a0050 60%, #ff2e88 100%) !important;
+    background: var(--body-bg) !important;
     background-attachment: fixed;
+    background-size: 300% 300%;
+    animation: gradientShift 12s ease infinite;
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+::-webkit-scrollbar-track { background: var(--bg-card); }
 ::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
@@ -49,7 +110,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(90deg, #09001a 0%, #1a0033 30%, #3a0050 60%, #ff2e88 100%) !important;
+    background: transparent;
     padding: 20px;
     position: relative;
     overflow: hidden;
@@ -168,7 +229,7 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 .form-group textarea {
@@ -194,11 +255,11 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(90deg, #ff2e88 0%, #3b82f6 50%, #ff2e88 100%);
+    background: linear-gradient(90deg, var(--accent-secondary), var(--accent), var(--accent-secondary));
     background-size: 200% 100%;
-    color: #ffffff;
-    border: 2px solid #ff2e88;
-    box-shadow: 0 0 20px rgba(255, 46, 136, 0.4);
+    color: var(--text-on-accent);
+    border: 2px solid var(--accent-secondary);
+    box-shadow: 0 0 20px var(--accent-glow);
     animation: gradientShift 3s ease infinite;
 }
 
@@ -206,7 +267,7 @@ body {
     background: transparent;
     color: var(--accent);
     border-color: var(--accent);
-    box-shadow: 0 0 25px var(--accent-glow);
+    box-shadow: 0 0 25px var(--accent-glow-strong);
     transform: translateY(-2px);
     animation: none;
 }
@@ -345,13 +406,13 @@ body {
 }
 
 .nav-item:hover {
-    background: rgba(255, 184, 0, 0.08);
+    background: var(--bg-hover);
     color: var(--accent);
-    box-shadow: inset 0 0 20px rgba(255, 184, 0, 0.05);
+    box-shadow: inset 0 0 20px var(--ambient-glow-1);
 }
 
 .nav-item.active {
-    background: linear-gradient(90deg, rgba(255, 184, 0, 0.15) 0%, transparent 100%);
+    background: linear-gradient(90deg, var(--accent-glow) 0%, transparent 100%);
     color: var(--accent);
     border-left-color: var(--accent);
     text-shadow: 0 0 10px var(--accent-glow);
@@ -493,8 +554,8 @@ body {
 }
 
 .data-table tr:hover td {
-    background: rgba(255, 184, 0, 0.05);
-    box-shadow: inset 0 0 20px rgba(255, 184, 0, 0.03);
+    background: var(--bg-hover);
+    box-shadow: inset 0 0 20px var(--ambient-glow-2);
 }
 
 .data-table .actions {
@@ -712,7 +773,7 @@ body {
 .filter-select:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(255, 184, 0, 0.2);
+    box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 /* Date inputs - consistent with custom-select theme */

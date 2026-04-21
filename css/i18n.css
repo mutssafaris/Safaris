@@ -10,11 +10,11 @@
     align-items: center;
     gap: 6px;
     padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 220, 100, 0.3);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 0;
     clip-path: polygon(6px 0, 100% 0, 100% 100%, 0 100%, 0 6px);
-    color: #ffffff;
+    color: var(--text-primary);
     cursor: pointer;
     font-size: 0.75rem;
     font-family: 'Share Tech Mono', monospace;
@@ -24,9 +24,9 @@
 }
 
 .lang-switcher-btn:hover {
-    background: rgba(255, 184, 0, 0.1);
-    border-color: #ffb800;
-    box-shadow: 0 0 10px rgba(255, 184, 0, 0.3);
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .lang-flag {
@@ -48,11 +48,11 @@
     right: 0;
     margin-top: 4px;
     min-width: 180px;
-    background: rgba(15, 0, 35, 0.95);
-    border: 1px solid rgba(255, 220, 100, 0.3);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 0;
     clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
-    box-shadow: 0 0 30px rgba(255, 184, 0, 0.3);
+    box-shadow: 0 0 30px var(--accent-glow);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -77,21 +77,21 @@
     border: none;
     cursor: pointer;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-secondary);
     text-align: left;
     font-family: 'Share Tech Mono', monospace;
     transition: background 0.15s ease;
 }
 
 .lang-option:hover {
-    background: rgba(255, 184, 0, 0.1);
-    color: #ffb800;
+    background: var(--bg-hover);
+    color: var(--accent);
 }
 
 .lang-option.active {
-    background: rgba(255, 184, 0, 0.15);
-    color: #ffb800;
-    border-left: 2px solid #ffb800;
+    background: var(--bg-hover);
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
 }
 
 .lang-option .lang-flag {
@@ -106,44 +106,12 @@
 
 .lang-option .lang-native {
     font-weight: 500;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .lang-option .lang-english {
     font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Dark theme variant */
-.theme-dark .lang-switcher-btn {
-    border-color: rgba(255, 220, 100, 0.3);
-    color: #fff;
-}
-
-.theme-dark .lang-dropdown {
-    background: rgba(15, 0, 35, 0.95);
-}
-
-.theme-dark .lang-option {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.theme-dark .lang-option:hover {
-    background: rgba(255, 184, 0, 0.1);
-    color: #ffb800;
-}
-
-.theme-dark .lang-option.active {
-    background: rgba(255, 184, 0, 0.15);
-    color: #ffb800;
-}
-
-.theme-dark .lang-option .lang-native {
-    color: #fff;
-}
-
-.theme-dark .lang-option .lang-english {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
 }
 
 /* Search Suggestions Styles */
@@ -218,38 +186,45 @@
 .interp-item {
     display: inline-block;
     padding: 4px 10px;
-    background: #fff;
+    background: var(--bg-card);
     border-radius: 20px;
     font-size: 12px;
-    color: #555;
-    border: 1px solid #e0e0e0;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
 }
 
 .interp-item strong {
-    color: #222;
+    color: var(--text-primary);
     font-weight: 600;
 }
 
-/* Dark theme for search */
-.theme-dark .search-suggestions {
-    background: #1a1a2e;
+/* Theme-aware search suggestions */
+[data-theme="dark"] .search-suggestions,
+[data-theme="corporate-dark"] .search-suggestions {
+    background: var(--bg-card);
 }
 
-.theme-dark .suggestion-item {
-    color: #eee;
+[data-theme="dark"] .suggestion-item,
+[data-theme="corporate-dark"] .suggestion-item {
+    color: var(--text-secondary);
 }
 
-.theme-dark .suggestion-item:hover,
-.theme-dark .suggestion-item.active {
-    background: #2a2a4a;
+[data-theme="dark"] .suggestion-item:hover,
+[data-theme="dark"] .suggestion-item.active,
+[data-theme="corporate-dark"] .suggestion-item:hover,
+[data-theme="corporate-dark"] .suggestion-item.active {
+    background: var(--bg-hover);
 }
 
-.theme-dark .search-interpretation {
-    background: #1a1a2e;
+[data-theme="dark"] .search-interpretation,
+[data-theme="corporate-dark"] .search-interpretation {
+    background: var(--bg-card);
 }
 
-.theme-dark .interpretation-label {
-    color: #aaa;
+[data-theme="dark"] .interpretation-label,
+[data-theme="corporate-dark"] .interpretation-label {
+    color: var(--text-muted);
+}
 }
 
 .theme-dark .interp-item {

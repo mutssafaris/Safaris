@@ -1,21 +1,30 @@
 /* UNIFIED PAGE BACKGROUND - applied to body */
-body {
-    background: linear-gradient(180deg, #050510 0%, #0a0a1a 30%, #0f0f28 60%, #151535 100%);
+html, body {
+    background: var(--auth-bg) !important;
     min-height: 100vh;
+    background-size: 300% 300% !important;
+    background-attachment: fixed;
+    animation: gradientShift 12s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 100%; }
+    50% { background-position: 100% 0%; }
+    100% { background-position: 0% 100%; }
 }
 
 .explore-main {
     padding-top: var(--nav-height);
 }
 
-/* TRANSPARENT CARDS - gold accent on hover */
+/* TRANSPARENT CARDS - theme adaptive */
 .destination-card,
 .experience-card,
 .blog-preview-card,
 .category-card {
-    background: rgba(20, 20, 40, 0.6);
+    background: var(--bg-card);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 184, 0, 0.15);
+    border: 1px solid var(--border);
     transition: all 0.3s ease;
 }
 
@@ -24,8 +33,40 @@ body {
 .blog-preview-card:hover,
 .category-card:hover {
     border-color: var(--explore-accent);
-    background: rgba(25, 25, 50, 0.8);
-    box-shadow: 0 0 20px rgba(255, 184, 0, 0.15);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Animated gradient top bar for all cards (THEME_DOCUMENTATION compliance) */
+.destination-card::before,
+.experience-card::before,
+.blog-preview-card::before,
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 10;
+}
+
+.destination-card:hover::before,
+.experience-card:hover::before,
+.blog-preview-card:hover::before,
+.category-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Ensure cards have position: relative for pseudo-element */
+.destination-card,
+.experience-card,
+.blog-preview-card,
+.category-card {
+    position: relative;
 }
 
 /* HERO SECTION */
@@ -37,7 +78,7 @@ body {
     align-items: center;
     text-align: center;
     padding: 6rem 1.5rem 3rem;
-    background: transparent;
+    background: var(--bg-secondary);
 }
 
 .hero-content {
@@ -54,7 +95,7 @@ body {
     display: inline-block;
     padding: 0.5rem 1rem;
     background: var(--explore-accent);
-    color: #000;
+    color: var(--text-black);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 2px;
@@ -65,14 +106,14 @@ body {
 .hero-title {
     font-size: clamp(3rem, 12vw, 7rem);
     line-height: 0.9;
-    color: var(--explore-text);
+    color: var(--text-on-image);
     margin-bottom: 1.5rem;
     letter-spacing: 4px;
 }
 
 .hero-subtitle {
     font-size: 1.2rem;
-    color: var(--explore-text-muted);
+    color: #ffffff;
     margin-bottom: 2rem;
     max-width: 500px;
     margin-left: auto;
@@ -97,7 +138,7 @@ body {
     justify-content: center;
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 184, 0, 0.2);
+    border-top: 1px solid var(--border);
 }
 
 .stat-item {
@@ -114,7 +155,7 @@ body {
 
 .stat-label {
     font-size: 0.75rem;
-    color: var(--explore-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -219,7 +260,7 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: var(--explore-radius);
-    aspect-ratio: 3/4;
+    aspect-ratio: 4/3;
     cursor: pointer;
 }
 
@@ -244,20 +285,20 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1.5rem;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-    color: #fff;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 30%, transparent);
+    color: #ffffff;
 }
 
 .destination-info h3 {
     font-size: 1.25rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
 }
 
 .destination-info p {
     font-size: 0.85rem;
     opacity: 0.8;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 .destination-price {
@@ -272,6 +313,28 @@ body {
     color: var(--explore-accent);
     font-size: 0.85rem;
     cursor: pointer;
+}
+
+/* Corporate Light Theme - Card text area fixes */
+[data-theme="corporate-light"] .destination-info {
+    background: #052e16;
+    color: #f0fdf4;
+}
+
+[data-theme="corporate-light"] .destination-info h3 {
+    color: #dcfce7;
+}
+
+[data-theme="corporate-light"] .destination-info p {
+    color: #bbf7d0;
+}
+
+[data-theme="corporate-light"] .destination-price {
+    color: #ec4899;
+}
+
+[data-theme="corporate-light"] .destination-cta {
+    color: #ec4899;
 }
 
 .destination-cta:hover {
@@ -308,8 +371,8 @@ body {
     left: 0;
     right: 0;
     padding: 1.5rem;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+    color: #ffffff;
 }
 
 .experience-content h3 {
