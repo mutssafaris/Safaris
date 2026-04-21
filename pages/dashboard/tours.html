@@ -94,55 +94,73 @@ var embeddedDestinations = {
     ]
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    var loadingEl = document.getElementById('tours-loading');
-    var gridEl = document.getElementById('tours-grid');
-    
-    var REFRESH_INTERVAL_MS = 30000;
-    var refreshInterval = null;
-    var dataLoaded = false;
-    
-    // Show loading state
-    function showLoading() {
-        if (loadingEl) loadingEl.style.display = 'flex';
-        if (gridEl) gridEl.innerHTML = '';
-    }
-    
-    function hideLoading() {
-        if (loadingEl) loadingEl.style.display = 'none';
-    }
-    
-    function loadTours() {
-        if (dataLoaded) return; // Prevent duplicate loading
-        showLoading();
-        dataLoaded = true;
-        
-        // Wait for dashboard ready, then load
-        var checkAndLoad = function() {
-            renderDestinations(embeddedDestinations);
-            hideLoading();
-        };
-        
-        if (window._dashboardReady) {
-            checkAndLoad();
-        } else {
-            setTimeout(checkAndLoad, 300);
-        }
-    }
-    
-    // Load on init
-    loadTours();
-    
-    // Auto-refresh every 30 seconds
-    refreshInterval = setInterval(loadTours, REFRESH_INTERVAL_MS);
-    
-    // Clean up on page unload
-    window.addEventListener('beforeunload', function() {
-        if (refreshInterval) {
-            clearInterval(refreshInterval);
-        }
-    });
-});
+ document.addEventListener('DOMContentLoaded', function() {
+     var loadingEl = document.getElementById('tours-loading');
+     var gridEl = document.getElementById('tours-grid');
+     
+     var REFRESH_INTERVAL_MS = 30000;
+     var refreshInterval = null;
+     var dataLoaded = false;
+     
+     // Show loading state
+     function showLoading() {
+         if (loadingEl) loadingEl.style.display = 'flex';
+         if (gridEl) gridEl.innerHTML = '';
+     }
+     
+     function hideLoading() {
+         if (loadingEl) loadingEl.style.display = 'none';
+     }
+     
+     function loadTours() {
+         if (dataLoaded) return; // Prevent duplicate loading
+         showLoading();
+         dataLoaded = true;
+         
+         // Wait for dashboard ready, then load
+         var checkAndLoad = function() {
+             renderDestinations(embeddedDestinations);
+             hideLoading();
+             
+             // Check URL parameters for destination
+             var urlParams = new URLSearchParams(window.location.search);
+             var destSlug = urlParams.get('destination');
+             
+             if (destSlug) {
+                 // Find and scroll to destination
+                 var destCard = document.querySelector('.listing-card a[href$="destination=' + destSlug + '"]').closest('.listing-card');
+                 if (destCard) {
+                     setTimeout(function() {
+                         destCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                         destCard.style.boxShadow = '0 0 30px var(--shadow-glow)';
+                         setTimeout(function() {
+                             destCard.style.boxShadow = '';
+                         }, 2000);
+                     }, 200);
+                 }
+             }
+         };
+         
+         if (window._dashboardReady) {
+             checkAndLoad();
+         } else {
+             setTimeout(checkAndLoad, 300);
+         }
+     }
+     
+     // Load on init
+     loadTours();
+     
+     // Auto-refresh every 30 seconds
+     refreshInterval = setInterval(loadTours, REFRESH_INTERVAL_MS);
+     
+     // Clean up on page unload
+     window.addEventListener('beforeunload', function() {
+         if (refreshInterval) {
+             clearInterval(refreshInterval);
+         }
+     });
+ });
 
 function renderDestinations(destData) {
     var loadingEl = document.getElementById('tours-loading');
@@ -196,7 +214,7 @@ function renderDestinations(destData) {
                 '<div class="listing-meta">' +
                     '<span class="listing-duration">' + (dest.bestTime || 'Year-Round') + '</span>' +
                 '</div>' +
-                '<a href="tours.html?destination=' + dest.slug + '" class="btn btn-primary">Explore Safari</a>' +
+                '<a href="tours/' + dest.slug + '.html" class="btn btn-primary">Explore Safari</a>' +
             '</div>';
         
         gridEl.appendChild(card);
@@ -291,5 +309,6 @@ function initFavoriteActions() {
     }
 })();
 </script>
+<script src="../../js/animations.js"></script>
 </body>
 </html>

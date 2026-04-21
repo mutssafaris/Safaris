@@ -677,6 +677,9 @@
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
         <main class="dashboard-main">
+            <div class="scroll-progress-bar">
+                <div class="scroll-progress-fill" id="scrollProgress"></div>
+            </div>
             <header class="dashboard-topbar">
                 <div class="search-bar">
                     <input type="text" placeholder="Search gallery..." id="dashboard-search">
@@ -690,7 +693,7 @@
                 </div>
             </header>
 
-            <div class="gallery-header">
+            <div class="gallery-header reveal-slide-up">
                 <h1 class="gallery-title">Gallery</h1>
                 <div class="gallery-actions">
                     <button class="upload-btn" id="upload-btn">
@@ -700,7 +703,7 @@
                 </div>
             </div>
 
-            <div class="gallery-filters">
+            <div class="gallery-filters reveal-fade">
                 <button class="gallery-filter-btn active" data-filter="all">All</button>
                 <button class="gallery-filter-btn" data-filter="wildlife">Wildlife</button>
                 <button class="gallery-filter-btn" data-filter="landscapes">Landscapes</button>
@@ -710,7 +713,7 @@
                 <button class="gallery-filter-btn" data-filter="my-uploads">My Uploads</button>
             </div>
 
-            <div class="gallery-masonry" id="gallery-masonry"></div>
+            <div class="gallery-masonry reveal-stagger" id="gallery-masonry"></div>
             <div class="gallery-empty" id="gallery-empty" style="display:none">
                 <svg class="gallery-empty-icon" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                 <p>No images found. Upload your own!</p>
@@ -784,6 +787,7 @@
     <script src="../../js/auth.js"></script>
     <script src="../../js/auth-guard.js"></script>
     <script src="../../js/init-dashboard.js"></script>
+    <script src="../../js/animations.js"></script>
     <script src="../../js/services/destinations-service.js"></script>
     <script src="../../js/services/bookings-service.js"></script>
     <script src="../../js/services/listings-service.js"></script>

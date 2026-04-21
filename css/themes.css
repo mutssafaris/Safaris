@@ -387,6 +387,51 @@
 }
 
 /* ===== THEME SWITCHER COMPONENT ===== */
+/* ===== THEME TRANSITIONS ===== */
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body, .dashboard-layout, .dashboard-main, .dashboard-sidebar, 
+.dashboard-topbar, .card, .destination-card, .experience-card,
+.listing-card, .glass-card, .summary-card, .favorite-card, 
+.trip-card, .blog-preview-card, .category-card {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Theme transition overlay */
+.theme-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--accent);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.15s ease-out;
+}
+
+.theme-transition-overlay.active {
+    opacity: 0.08;
+}
+
+/* Accent color pulse on theme change */
+@keyframes accentPulse {
+    0% { 
+        box-shadow: 0 0 0 0 var(--accent-glow-strong);
+    }
+    70% { 
+        box-shadow: 0 0 0 20px transparent;
+    }
+    100% { 
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+
+.accent-pulse {
+    animation: accentPulse 0.6s ease-out;
+}
+
+/* Theme switcher */
 .theme-switcher {
     display: flex;
     align-items: center;

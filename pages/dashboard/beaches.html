@@ -29,9 +29,12 @@
 </ul></nav><div class="sidebar-footer"><a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a></div></aside>
     <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div><div class="sidebar-overlay" id="sidebar-overlay"></div>
     <main class="dashboard-main">
+        <div class="scroll-progress-bar">
+            <div class="scroll-progress-fill" id="scrollProgress"></div>
+        </div>
         <header class="dashboard-topbar"><div class="user-profile"><div class="user-info"><span class="user-name" id="user-name">Traveler</span><span class="user-tier">Traveler Pro</span></div><div class="user-avatar" id="user-avatar">T</div></div></header>
-        <div class="listing-hero"><h1>Kenyan Beach Holidays</h1><p>Escape to Kenya's stunning Indian Ocean coastline, where pristine white-sand beaches meet vibrant coral reefs.</p></div>
-        <div class="filter-panel">
+        <div class="listing-hero reveal-slide-up"><h1>Kenyan Beach Holidays</h1><p>Escape to Kenya's stunning Indian Ocean coastline, where pristine white-sand beaches meet vibrant coral reefs.</p></div>
+        <div class="filter-panel reveal-fade">
 <div class="filter-panel-header"><span class="filter-panel-title">Filter Beaches</span><button class="filter-clear-btn">Clear All</button></div>
 <div class="filter-group" data-filter-key="activity">
 <span class="filter-group-label">Activity</span>
@@ -48,14 +51,8 @@
 <div class="filter-no-results"><p>No beaches match your filters. <a href="#" onclick="document.querySelector('.filter-clear-btn').click();return false;">Clear filters</a> to see all.</p></div>
         <style>
         .listing-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(255,184,0,0.15); }
-        .listing-badge { display: inline-block; padding: 0.25rem 0.75rem; background: rgba(255,184,0,0.15); color: var(--accent); font-size: 0.75rem; border-radius: 2px; margin-bottom: 0.75rem; }
-        .listing-card h3 { color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.5rem; }
-        .listing-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
-        .listing-meta { margin-bottom: 1rem; }
-        .listing-duration { color: var(--text-muted); font-size: 0.85rem; }
-        .listing-no-results { display: none; text-align: center; padding: 3rem; color: var(--text-muted); }
         </style>
-        <div class="listing-grid" id="beaches-grid"></div>
+        <div class="listing-grid reveal-stagger" id="beaches-grid"></div>
         <div class="listing-no-results" id="beaches-no-results">
             <p>No beaches found. <button class="filter-clear-btn">Clear filters</button></p>
         </div>
@@ -63,6 +60,7 @@
 </div>
 <script src="../../js/api-config.js"></script>
 <script src="../../js/services/listings-service.js"></script>
+<script src="../../js/animations.js"></script>
 <script src="../../js/dashboard-theme.js"></script>
 <script>
 (function() {
@@ -120,5 +118,6 @@
     });
 })();
 </script>
+<script src="js/init-dashboard.js"></script>
 </body>
 </html>

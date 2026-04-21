@@ -67,6 +67,44 @@
         height: 24px;
     }
     
+    /* Touch feedback animations */
+    .btn:active,
+    .nav-item:active,
+    .card:active,
+    a:active,
+    button:active,
+    .destination-card:active,
+    .experience-card:active,
+    .category-card:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+        transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    }
+    
+    /* Disable hover effects on touch devices */
+    .btn:hover,
+    .nav-item:hover,
+    .card:hover,
+    .destination-card:hover,
+    .experience-card:hover,
+    .category-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    /* Progressive loading mobile optimizations */
+    .skeleton {
+        animation-duration: 2s;
+    }
+    
+    .skeleton-text {
+        height: 14px;
+    }
+    
+    .skeleton-text.title {
+        height: 20px;
+    }
+    
     .btn,
     .btn-primary,
     .btn-outline {

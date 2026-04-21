@@ -51,6 +51,9 @@
     <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <main class="dashboard-main">
+        <div class="scroll-progress-bar">
+            <div class="scroll-progress-fill" id="scrollProgress"></div>
+        </div>
         <!-- Sticky Header Section -->
         <div class="africasa-sticky-header">
             <header class="dashboard-topbar compact-topbar">
@@ -70,11 +73,11 @@
                 </div>
             </header>
             
-            <div class="listing-hero compact-hero">
+            <div class="listing-hero compact-hero reveal-slide-up">
                 <h1>Africasa Marketplace</h1>
             </div>
 
-            <div class="africasa-toolbar sticky-toolbar">
+            <div class="africasa-toolbar sticky-toolbar reveal-fade">
                 <div class="filter-chips" id="filter-chips">
                     <button class="filter-chip active" data-category="all">All</button>
                     <button class="filter-chip" data-category="jewelry">Jewelry</button>
@@ -102,7 +105,7 @@
             </div>
         </div>
         
-        <div id="africasa-grid" class="africasa-grid"></div>
+        <div id="africasa-grid" class="africasa-grid reveal-stagger"></div>
         <div class="loading-skeleton" id="loading-skeleton">
             <div class="skeleton-card"></div>
             <div class="skeleton-card"></div>
@@ -266,7 +269,8 @@
 
             return '<div class="product-card" data-id="' + p.id + '" style="animation-delay: ' + (index * 0.05) + 's">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + imgSrc + '" alt="' + p.name + '" ' + (index === 0 ? 'fetchpriority="high"' : 'loading="lazy"') + ' class="product-image" onerror="this.src=\'../../images/africasa/placeholder.jpg\'">' +
+                    '<img src="' + imgSrc + '" alt="' + p.name + '" ' + (index === 0 ? 'fetchpriority="high"' : 'loading="lazy"') + ' class="product-image" onerror="this.style.display=\'none\'; this.nextElementSibling && (this.nextElementSibling.style.display=\'flex\');">' +
+                    '<div class="no-image-placeholder" style="display:none;background:var(--bg-hover);height:200px;align-items:center;justify-content:center;display:flex;"><span style="color:var(--text-muted);">' + p.category + '</span></div>' +
                     '<button class="wishlist-btn ' + (isWishlisted ? 'active' : '') + '" data-id="' + p.id + '" aria-label="' + (isWishlisted ? 'Remove from wishlist' : 'Add to wishlist') + '">' +
                         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' +
                     '</button>' +
@@ -536,11 +540,11 @@
             var imgSrc = p.images[0] ? '../../' + p.images[0] : '../../images/africasa/item1.jpg';
             
             var thumbsHtml = p.images.map(function(img, i) {
-                return '<img src="../../' + img + '" alt="Thumbnail" class="qv-thumb' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" onerror="this.src=\'../../images/africasa/item1.jpg\'">';
+                return '<img src="../../' + img + '" alt="Thumbnail" class="qv-thumb' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" onerror="this.style.opacity=\'0.3\'">';
             }).join('');
             
             body.innerHTML = '<div class="qv-gallery">' +
-                '<img src="' + imgSrc + '" alt="' + p.name + '" class="qv-main-image" id="qv-main-image" onerror="this.src=\'../../images/africasa/item1.jpg\'">' +
+                '<img src="' + imgSrc + '" alt="' + p.name + '" class="qv-main-image" id="qv-main-image" onerror="this.style.backgroundColor=\'var(--bg-hover)\'; this.alt=\'Image unavailable\'">' +
                 '<div class="qv-thumbnails">' + thumbsHtml + '</div>' +
             '</div>' +
             '<div class="qv-details">' +
@@ -714,7 +718,7 @@
                 } else {
                     container.innerHTML = results.slice(0, 5).map(function(p) {
                         return '<a href="#" class="search-result-item" data-id="' + p.id + '">' +
-                            '<img src="../../' + (p.images[0] || 'images/africasa/item1.jpg') + '" onerror="this.src=\'../../images/africasa/item1.jpg\'">' +
+                            '<img src="../../' + (p.images[0] || 'images/africasa/item1.jpg') + '" onerror="this.style.display=\'none\'">';}
                             '<div><span class="name">' + p.name + '</span><span class="price">$' + p.price.toFixed(2) + '</span></div>' +
                         '</a>';
                     }).join('');
@@ -805,5 +809,6 @@
     }
 })();
 </script>
+<script src="../../js/animations.js"></script>
 </body>
 </html>

@@ -35,16 +35,19 @@
 </ul></nav><div class="sidebar-footer"><a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a></div></aside>
     <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div><div class="sidebar-overlay" id="sidebar-overlay"></div>
     <main class="dashboard-main">
+        <div class="scroll-progress-bar">
+            <div class="scroll-progress-fill" id="scrollProgress"></div>
+        </div>
         <header class="dashboard-topbar"><div class="search-bar"><input type="text" placeholder="Search articles..." id="blog-search-topbar" aria-label="Search articles"></div><div class="user-profile"><div class="user-info"><span class="user-name" id="user-name">Traveler</span><span class="user-tier">Traveler Pro</span></div><div class="user-avatar" id="user-avatar">T</div></div></header>
-        <div class="listing-hero"><h1>Travel Blog</h1><p>Stories, guides, and tips from the wild — 15+ years of safari expertise.</p></div>
-        <div class="blog-filters"><div class="category-tabs" id="category-tabs" role="tablist" aria-label="Filter by category"></div><div class="search-container"><input type="text" placeholder="Search articles..." id="blog-search" class="blog-search-input" aria-label="Search articles"></div></div>
+        <div class="listing-hero reveal-slide-up"><h1>Travel Blog</h1><p>Stories, guides, and tips from the wild — 15+ years of safari expertise.</p></div>
+        <div class="blog-filters reveal-fade"><div class="category-tabs" id="category-tabs" role="tablist" aria-label="Filter by category"></div><div class="search-container"><input type="text" placeholder="Search articles..." id="blog-search" class="blog-search-input" aria-label="Search articles"></div></div>
         <a href="blog/publish.html" class="create-blog-fab" title="Create New Blog" aria-label="Create new blog post">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         </a>
         <a href="my-blogs.html" class="my-blogs-fab" title="My Blogs" aria-label="View my blogs">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h6v10h-6zm4 6h2v4h-2z"/></svg>
         </a>
-        <div class="listing-grid" id="blog-posts-container"></div>
+        <div class="listing-grid reveal-stagger" id="blog-posts-container"></div>
         <div class="newsletter-section">
             <div class="newsletter-content"><h2>Subscribe to Our Newsletter</h2><p>Get the latest safari tips, wildlife updates, and travel guides delivered to your inbox.</p>
                 <form class="newsletter-form" id="newsletter-form"><input type="email" placeholder="Enter your email" required aria-label="Email address"><button type="submit" class="btn btn-primary">Subscribe</button></form><p class="newsletter-feedback" id="newsletter-feedback"></p></div>
@@ -79,5 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+<script src="../../js/animations.js"></script>
 </body>
 </html>

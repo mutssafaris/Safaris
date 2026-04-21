@@ -135,6 +135,7 @@
     position: relative;
     overflow: hidden;
     transition: all var(--transition-normal);
+    transform-origin: center bottom;
 }
 
 .btn::before {
@@ -153,6 +154,14 @@
     transform: translateX(100%);
 }
 
+.btn:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
 .btn-primary {
     transition: all var(--transition-normal);
     transform: translateY(0);
@@ -160,16 +169,26 @@
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px var(--accent-glow);
 }
 
 .btn-primary:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
-/* Button Ripple Effect */
+.btn-outline {
+    transition: all var(--transition-normal);
+    transform: translateY(0);
+}
+
+.btn-outline:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+/* Button ripple effect */
 .btn-ripple {
     position: relative;
     overflow: hidden;
@@ -192,6 +211,7 @@
     transform: scale(2);
     opacity: 1;
     transition: transform 0s;
+}
 }
 
 /* Button Loading Spinner */
@@ -222,25 +242,45 @@
 /* ===========================================
    CARD ANIMATIONS
    =========================================== */
-.card {
-    transition: all var(--transition-normal);
+.card,
+.destination-card,
+.experience-card,
+.listing-card,
+.gallery-item,
+.blog-post {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+.card:hover,
+.destination-card:hover,
+.experience-card:hover,
+.listing-card:hover,
+.gallery-item:hover,
+.blog-post:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
-.card-image {
+.card-image,
+.card img,
+.destination-card img,
+.experience-card img,
+.listing-card img,
+.gallery-item img,
+.blog-post img {
     overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-image img {
-    transition: transform var(--transition-slow);
-}
-
-.card:hover .card-image img {
-    transform: scale(1.05);
+.card:hover .card-image img,
+.card:hover img,
+.destination-card:hover img,
+.experience-card:hover img,
+.listing-card:hover img,
+.gallery-item:hover img,
+.blog-post:hover img {
+    transform: scale(1.08);
 }
 
 /* Card Shine Effect */
@@ -275,13 +315,35 @@
 /* ===========================================
    INPUT ANIMATIONS
    =========================================== */
-.input-field {
-    transition: all var(--transition-normal);
+.input-field,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
 }
 
-.input-field:focus {
+.input-field:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/* Subtle scale on focus */
+input:not([type="checkbox"]):not([type="radio"]):focus,
+textarea:focus,
+select:focus {
+    transform: scale(1.01);
 }
 
 /* Input Floating Label */
@@ -532,6 +594,94 @@
     transform: translateY(0);
 }
 
+/* Scroll Reveal Animations */
+.reveal-fade {
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-fade.visible {
+    opacity: 1;
+}
+
+.reveal-slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-slide-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-slide-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-slide-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-slide-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-slide-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Staggered animation delays */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-stagger.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-stagger > :nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger > :nth-child(2) { transition-delay: 0.15s; }
+.reveal-stagger > :nth-child(3) { transition-delay: 0.25s; }
+.reveal-stagger > :nth-child(4) { transition-delay: 0.35s; }
+.reveal-stagger > :nth-child(5) { transition-delay: 0.45s; }
+.reveal-stagger > :nth-child(6) { transition-delay: 0.55s; }
+.reveal-stagger > :nth-child(7) { transition-delay: 0.65s; }
+.reveal-stagger > :nth-child(8) { transition-delay: 0.75s; }
+
+/* CLS Prevention - reserved space for dynamic content */
+.destination-cards,
+.hotels-grid,
+.tours-grid,
+.packages-grid,
+.africasa-grid,
+.listing-grid,
+.blog-grid {
+    content-visibility: auto;
+    contain-intrinsic-size: 1000px;
+    min-height: var(--grid-min-height, 600px);
+}
+
 /* Stagger on scroll */
 .scroll-stagger > * {
     opacity: 0;
@@ -549,6 +699,607 @@
 .scroll-stagger.visible > * {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Native image loading improvements */
+img {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+img[loading="lazy"] {
+    opacity: 1;
+    transition: none;
+}
+
+/* Prevent layout shift for images with known aspect ratios */
+.aspect-ratio-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+}
+
+.aspect-ratio-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .reveal-slide-up {
+        transform: translateY(20px);
+        transition-duration: 0.5s;
+    }
+    
+    .reveal-slide-left,
+    .reveal-slide-right {
+        transform: translateX(20px);
+        transition-duration: 0.5s;
+    }
+    
+    .reveal-scale {
+        transform: scale(0.98);
+        transition-duration: 0.4s;
+    }
+    
+    .reveal-stagger > * {
+        transform: translateY(15px);
+        transition-duration: 0.4s;
+    }
+    
+    /* Faster stagger delays on mobile */
+    .reveal-stagger > :nth-child(1) { transition-delay: 0.03s; }
+    .reveal-stagger > :nth-child(2) { transition-delay: 0.08s; }
+    .reveal-stagger > :nth-child(3) { transition-delay: 0.13s; }
+    .reveal-stagger > :nth-child(4) { transition-delay: 0.18s; }
+    .reveal-stagger > :nth-child(5) { transition-delay: 0.23s; }
+    .reveal-stagger > :nth-child(6) { transition-delay: 0.28s; }
+    
+    /* Smaller scroll progress bar on mobile */
+    .scroll-progress-bar {
+        height: 2px;
+    }
+}
+
+/* ===========================================
+   PARALLAX EFFECTS
+   =========================================== */
+.parallax-layer {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+.parallax-depth-1 { transform: translateZ(-10px) scale(1.1); }
+.parallax-depth-2 { transform: translateZ(-20px) scale(1.2); }
+.parallax-depth-3 { transform: translateZ(-30px) scale(1.3); }
+
+/* Hero section parallax */
+.listing-hero,
+.dashboard-welcome,
+.page-header,
+.section-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.listing-hero::before,
+.dashboard-welcome::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 0;
+    width: 100%;
+    height: 140%;
+    background: inherit;
+    filter: blur(0);
+    z-index: -1;
+    will-change: transform;
+    transform: translateY(0);
+}
+
+/* Card parallax layers */
+.card,
+.destination-card,
+.experience-card,
+.listing-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+/* Timeline parallax */
+.timeline-item {
+    will-change: transform, opacity;
+}
+
+/* Timeline animations */
+.timeline-item {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-item.timeline-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item:nth-child(even) {
+    transform: translateX(30px);
+}
+
+.timeline-item:nth-child(even).timeline-visible {
+    transform: translateX(0);
+}
+
+.safari-journey-step {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.safari-journey-step.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ===========================================
+   MAP INTERACTION ANIMATIONS
+   =========================================== */
+.map-marker {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-marker:hover {
+    transform: scale(1.3);
+}
+
+.map-info-window {
+    animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.map-zoom-transition {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-pan-transition {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-filter-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
+}
+
+.map-filter-btn:hover {
+    transform: translateY(-2px);
+}
+
+.map-filter-btn.active {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .map-marker,
+    .map-info-window,
+    .map-zoom-transition,
+    .map-pan-transition,
+    .map-filter-btn {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}
+
+/* ===========================================
+   BOOKING FLOW ANIMATIONS
+   =========================================== */
+/* Selection states */
+.selectable-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
+}
+
+.selectable-item.selected {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 2px var(--accent), 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.selectable-item:active {
+    transform: scale(0.98);
+}
+
+/* Step indicator progress bar */
+.booking-steps {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-item.active {
+    opacity: 1;
+}
+
+.step-item.completed {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-input);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-item.active .step-number {
+    background: var(--accent);
+    color: var(--text-on-accent);
+    transform: scale(1.1);
+}
+
+.step-item.completed .step-number {
+    background: var(--success, #2ecc71);
+    color: white;
+}
+
+.step-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    transition: all 0.3s ease;
+}
+
+.step-connector.completed {
+    background: var(--accent);
+}
+
+/* Form validation states */
+.form-input.valid {
+    border-color: var(--success, #2ecc71);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.form-input.invalid {
+    border-color: var(--error, #e74c3c);
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes shake {
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-4px); }
+    40%, 60% { transform: translateX(4px); }
+}
+
+/* Confirmation celebration animation */
+.celebration-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.confetti-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: confetti 1s ease-out forwards;
+}
+
+@keyframes confetti {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(200px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.success-checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    animation: success-check 0.6s ease-in-out forwards;
+}
+
+.success-checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: var(--success, #2ecc71);
+    fill: none;
+    animation: success-circle 0.6s ease-in-out forwards;
+}
+
+.success-checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: success-check 0.3s 0.6s ease-in-out forwards;
+}
+
+@keyframes success-circle {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes success-check {
+    100% { stroke-dashoffset: 0; }
+}
+
+/* Booking timeline animations */
+.booking-timeline .timeline-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.booking-timeline .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.booking-timeline .timeline-item.completed .timeline-dot {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--shadow-glow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .selectable-item,
+    .step-item,
+    .step-number,
+    .form-input,
+    .confetti-particle,
+    .success-checkmark,
+    .booking-timeline .timeline-item {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .parallax-layer,
+    .listing-hero::before,
+    .dashboard-welcome::before,
+    .card,
+    .timeline-item,
+    .safari-journey-step {
+        transform: none !important;
+        opacity: 1 !important;
+        will-change: auto;
+    }
+    .tilt-card,
+    .tilt-effect,
+    [data-tilt] {
+        transform: none !important;
+    }
+}
+
+/* ===========================================
+   3D CARD TILT EFFECT
+   =========================================== */
+.tilt-card,
+.tilt-effect,
+[data-tilt] {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.tilt-card::before,
+.tilt-effect::before,
+[data-tilt]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    background: radial-gradient(
+        800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.15),
+        transparent 40%
+    );
+    z-index: 1;
+}
+
+.tilt-card:hover::before,
+.tilt-effect:hover::before,
+[data-tilt]:hover::before {
+    opacity: 1;
+}
+
+/* Ambient light effect */
+.tilt-ambient-light {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        var(--accent-glow) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    opacity: 0;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    mix-blend-mode: screen;
+}
+
+.tilt-ambient-light.active {
+    opacity: 0.15;
+}
+
+/* 3D tilt rotation limits */
+.tilt-rotate-x {
+    --tilt-rotate-x: 0deg;
+    --tilt-rotate-y: 0deg;
+    transform: perspective(1000px) 
+        rotateX(var(--tilt-rotate-x)) 
+        rotateY(var(--tilt-rotate-y));
+}
+
+/* ===========================================
+   ADVANCED SCROLLING
+   =========================================== */
+/* Smooth scroll container */
+.smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Snap-to-section scrolling */
+.snap-scroll,
+.snap-container {
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+/* Experience card snap grid */
+.experience-cards-scroll {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg-secondary);
+}
+
+.experience-cards-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.experience-cards-scroll::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 3px;
+}
+
+.experience-cards-scroll::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.experience-cards-scroll > * {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+}
+
+/* Momentum scrolling enhancement */
+.momentum-scroll {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: auto;
+    overscroll-behavior: contain;
+}
+
+/* Scroll indicators */
+.scroll-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollBounce 2s ease-in-out infinite;
+    opacity: 0.7;
+}
+
+@keyframes scrollBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* Hide scroll indicators on scroll */
+.scroll-indicator.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Section snap with minimum height */
+.snap-section {
+    min-height: 80vh;
+    scroll-snap-align: start;
+}
+
+/* Parallax background layers */
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    z-index: -1;
 }
 
 /* ===========================================
@@ -633,6 +1384,61 @@
 
 .gallery-item:hover img {
     transform: scale(1.1);
+}
+
+/* Lightbox Modal Animations */
+.lightbox-modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lightbox-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-image {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lightbox-modal.active .lightbox-image {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.lightbox-image.fade-transition {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Thumbnail hover indicators */
+.gallery-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.gallery-item:hover::before {
+    opacity: 1;
+}
+
+.gallery-item .gallery-item-overlay {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover .gallery-item-overlay {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 /* Image Zoom on Hover */
@@ -786,6 +1592,135 @@
 }
 
 /* ===========================================
+   ICON MICROINTERACTIONS
+   =========================================== */
+.nav-item svg,
+.btn svg,
+button svg,
+a svg,
+.icon {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item:hover svg,
+.btn:hover svg,
+button:hover svg,
+a:hover svg,
+.icon:hover {
+    transform: scale(1.1);
+}
+
+/* Icon pulse on active states */
+.nav-item.active svg {
+    animation: iconPulse 0.8s ease-out;
+}
+
+@keyframes iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* ===========================================
+   PROGRESSIVE LOADING STATES
+   =========================================== */
+.skeleton {
+    background: linear-gradient(90deg, 
+        var(--bg-hover) 25%, 
+        var(--border) 50%, 
+        var(--bg-hover) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    will-change: background-position;
+}
+
+/* Exact dimension skeleton components - prevents layout shift */
+.skeleton-text {
+    height: 16px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+}
+
+.skeleton-text.small { height: 12px; }
+.skeleton-text.large { height: 20px; }
+.skeleton-text.title { height: 24px; }
+
+.skeleton-card {
+    border-radius: 0;
+    background: var(--bg-card);
+    overflow: hidden;
+}
+
+.skeleton-card-image {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 12px;
+}
+
+.skeleton-card-body {
+    padding: 0 12px 12px 12px;
+}
+
+/* Progressive image loading */
+.progressive-image {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-hover);
+}
+
+.progressive-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    will-change: opacity;
+}
+
+.progressive-image img.loaded {
+    opacity: 1;
+}
+
+.progressive-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg-hover);
+    filter: blur(20px);
+    transform: scale(1.1);
+}
+
+/* Content fade-in */
+.fade-in-content {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+}
+
+.fade-in-content.loaded {
+    opacity: 1;
+}
+
+/* Prevent layout shift - reserve space */
+.content-reserved {
+    min-height: var(--content-height, auto);
+}
+
+/* Grid loading states */
+.grid-loading > * {
+    visibility: hidden;
+}
+
+.grid-loading::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ===========================================
    UTILITY CLASSES
    =========================================== */
 .animate-in { animation: fadeIn 0.4s ease-out; }
@@ -795,7 +1730,6 @@
 .animate-bounce { animation: bounce 1s infinite; }
 .animate-pulse { animation: pulse 2s infinite; }
 .animate-spin { animation: spin 1s linear infinite; }
-.animate-shake { animation: shake 0.4s; }
 .animate-shimmer { animation: shimmer 1.5s infinite; }
 
 .transition-fast { transition: all var(--transition-fast); }

@@ -115,6 +115,12 @@
     </style>
 </head>
 <body>
+    <script>
+    // Disable ALL console output globally - prevents any debug messages showing on page
+    if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
+        console.log = console.warn = console.error = console.info = function() {};
+    }
+    </script>
     <div class="loader">
         <h1>MUTS_SAFARIS</h1>
         <div class="loading-bar"><div class="loading-progress"></div></div>
@@ -141,9 +147,9 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/js/sw.js').then(function(reg) {
-                    console.log('[App] Service Worker registered:', reg.scope);
+                    // Silent
                 }).catch(function(err) {
-                    console.log('[App] SW registration failed:', err);
+                    // Silent
                 });
             });
         }

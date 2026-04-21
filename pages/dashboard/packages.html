@@ -32,9 +32,12 @@
 </ul></nav><div class="sidebar-footer"><a href="#" class="logout-btn" id="logout-btn"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span class="nav-label">Logout</span></a></div></aside>
     <div class="mobile-sidebar-toggle" id="mobile-sidebar-toggle"><span></span><span></span><span></span></div><div class="sidebar-overlay" id="sidebar-overlay"></div>
     <main class="dashboard-main">
+        <div class="scroll-progress-bar">
+            <div class="scroll-progress-fill" id="scrollProgress"></div>
+        </div>
         <header class="dashboard-topbar"><div class="user-profile"><div class="user-info"><span class="user-name" id="user-name">Traveler</span><span class="user-tier">Traveler Pro</span></div><div class="user-avatar" id="user-avatar">T</div></div></header>
-        <div class="listing-hero"><h1>Tour Packages</h1><p>Expertly curated itineraries designed to showcase the very best of Kenya, tailored to your interests.</p></div>
-        <div class="listing-grid" id="packages-grid"></div>
+        <div class="listing-hero reveal-slide-up"><h1>Tour Packages</h1><p>Expertly curated itineraries designed to showcase the very best of Kenya, tailored to your interests.</p></div>
+        <div class="listing-grid reveal-stagger" id="packages-grid"></div>
     </main>
 </div>
 <script src="../../js/api-config.js"></script>
@@ -42,6 +45,7 @@
     <script src="../../js/auth-guard.js"></script>
     <script src="../../js/init-dashboard.js"></script>
 <script src="../../js/services/listings-service.js"></script>
+<script src="../../js/animations.js"></script>
 <script src="../../js/dashboard-theme.js"></script>
 <script>
 (function() {
@@ -94,5 +98,6 @@
     });
 })();
 </script>
+<script src="../../js/animations.js"></script>
 </body>
 </html>

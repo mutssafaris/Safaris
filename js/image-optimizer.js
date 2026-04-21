@@ -50,7 +50,7 @@
             // Preload critical hero images
             this.preloadHeroImages();
             
-            console.log('[ImageOptim] Initialized with CDN:', CDNs.primary);
+            // Silent init
         },
 
         /**
@@ -73,6 +73,11 @@
             
             var baseUrl = this.buildUrl(path);
             
+            // In local dev without CDN, return single plain image without srcset
+            if (!CDNs.primary) {
+                return baseUrl;
+            }
+            
             return sizes.map(function(w) {
                 var separator = baseUrl.includes('?') ? '&' : '?';
                 return baseUrl + separator + 'w=' + w + '&q=' + defaults.quality + ' ' + w + 'w';
@@ -87,6 +92,14 @@
          */
         srcsetWebP: function(path, sizes) {
             if (!path) return '';
+            
+            // In local dev without CDN, don't return WebP sources
+            if (!CDNs.primary) {
+                return '';
+            }
+            
+            // Replace extension for WebP in production
+            path = path.replace(/\.(jpg|jpeg|png)$/i, '.webp');
             
             if (!sizes) sizes = defaults.breakpoints;
             
@@ -111,28 +124,25 @@
                 return path;
             }
             
-            // Handle relative paths (starting with .. or .) - return as-is for local dev
-            if (path.startsWith('..') || path.startsWith('./')) {
-                // Add query params even for relative paths
-                var queryParams = [];
-                if (params) {
-                    if (params.width) queryParams.push('w=' + params.width);
-                    if (params.height) queryParams.push('h=' + params.height);
-                    if (params.quality) queryParams.push('q=' + params.quality);
-                    if (params.format) queryParams.push('fmt=' + params.format);
-                    if (params.fit) queryParams.push('fit=' + params.fit);
-                }
-                
-                var result = path;
-                if (queryParams.length > 0) {
-                    result += '?' + queryParams.join('&');
-                }
-                
-                if (!CDNs.primary) {
-                    return result;
-                }
-                return CDNs.primary + '/' + path + (queryParams.length > 0 ? '?' + queryParams.join('&') : '');
-            }
+             // Handle relative paths (starting with .. or .)
+             if (path.startsWith('..') || path.startsWith('./')) {
+                 // In local dev, return plain path without query params - static files server doesn't support them
+                 if (!CDNs.primary) {
+                     return path;
+                 }
+                 
+                 // In production, add query params
+                 var queryParams = [];
+                 if (params) {
+                     if (params.width) queryParams.push('w=' + params.width);
+                     if (params.height) queryParams.push('h=' + params.height);
+                     if (params.quality) queryParams.push('q=' + params.quality);
+                     if (params.format) queryParams.push('fmt=' + params.format);
+                     if (params.fit) queryParams.push('fit=' + params.fit);
+                 }
+                 
+                 return CDNs.primary + '/' + path + (queryParams.length > 0 ? '?' + queryParams.join('&') : '');
+             }
             
             // Ensure leading slash for absolute paths
             if (!path.startsWith('/')) {

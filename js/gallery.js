@@ -71,6 +71,9 @@
         
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        
+        // Trigger reflow to enable CSS transition
+        void modal.offsetWidth;
     }
 
     function closeLightbox() {
@@ -85,7 +88,19 @@
         currentIndex += direction;
         if (currentIndex < 0) currentIndex = currentImages.length - 1;
         if (currentIndex >= currentImages.length) currentIndex = 0;
-        openLightbox(currentIndex);
+        
+        var imgEl = document.getElementById('lightbox-image');
+        if (imgEl) {
+            imgEl.classList.add('fade-transition');
+            setTimeout(function() {
+                openLightbox(currentIndex);
+                setTimeout(function() {
+                    imgEl.classList.remove('fade-transition');
+                }, 50);
+            }, 150);
+        } else {
+            openLightbox(currentIndex);
+        }
     }
 
     function initLightbox() {

@@ -62,7 +62,6 @@
             if (indicator) {
                 document.body.appendChild(indicator);
             }
-            console.log('[MockIndicator] Demo mode active');
         }
     }
 

@@ -112,9 +112,10 @@ a:hover {
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
     font-family: inherit;
+    transform-origin: center bottom;
 }
 
 .btn-primary {
@@ -3187,11 +3188,28 @@ a:hover {
     top: 0;
     z-index: 100;
     background: var(--bg-primary);
-    padding-bottom: 1rem;
+    padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
-    margin: -2rem -2rem 1.5rem -2rem;
+    margin: -2rem -2rem 1rem -2rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+    will-change: transform;
+}
+
+/* Collapse header on scroll */
+.dashboard-main.scrolled-down .africasa-sticky-header {
+    transform: translateY(-40px);
+    padding-bottom: 0.25rem;
+}
+
+.dashboard-main.scrolled-down .compact-hero {
+    padding: 0;
+    margin-bottom: 0.25rem;
+}
+
+.dashboard-main.scrolled-down .compact-hero h1 {
+    font-size: 1rem;
 }
 
 .compact-topbar {
@@ -3297,6 +3315,96 @@ a:hover {
     padding: 0.5rem 0;
     margin: 0;
     border: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    row-gap: 0.3rem;
+}
+
+.sticky-toolbar .filter-chips {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    min-width: 200px;
+}
+
+.sticky-toolbar .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.sticky-toolbar .price-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.sticky-toolbar .price-filter input {
+    width: 70px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.sticky-toolbar .sort-select {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: 110px;
+}
+
+@media (max-width: 768px) {
+    .sticky-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    
+    .sticky-toolbar .filter-chips {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.3rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    .sticky-toolbar .filter-chips::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .sticky-toolbar .toolbar-right {
+        justify-content: space-between;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .sticky-toolbar .price-filter {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    
+    .sticky-toolbar .sort-select {
+        flex: 1;
+        max-width: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sticky-toolbar .price-filter span {
+        display: none;
+    }
+    
+    .sticky-toolbar .price-filter {
+        gap: 0.25rem;
+    }
+    
+    .sticky-toolbar .price-filter input {
+        width: 55px;
+    }
 }
 
 .africasa-grid + .loading-skeleton,
@@ -4094,11 +4202,23 @@ input:checked + .slider:before {
         min-width: 0;
         width: 100%;
         overflow-x: hidden;
-        height: auto;
-        min-height: 100vh;
         padding: 1rem;
-        padding-top: 4rem;
+        padding-top: 3.5rem;
         padding-left: 3rem;
+    }
+    
+    /* Mobile scroll progress positioning */
+    .scroll-progress-bar {
+        top: 45px;
+        z-index: 140;
+        height: 2px;
+        margin: 0 -1rem;
+        width: calc(100% + 2rem);
+    }
+    
+    /* Ensure sidebar toggle stays on top */
+    .mobile-sidebar-toggle {
+        z-index: 150;
     }
 
     .dashboard-sidebar {
@@ -6680,8 +6800,28 @@ picture img {
 }
 
 .onboarding-slide {
+    width: 100%;
     display: none;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    padding: 2rem;
+}
+
+.onboarding-slide.active {
+    display: flex;
+}
+
+.onboarding-slide img {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    background: var(--bg-hover);
 }
 
 .onboarding-slide.active {
@@ -6746,6 +6886,43 @@ picture img {
     background: var(--accent);
     border: none;
     color: var(--text-on-accent);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 3px;
+    background: var(--bg-hover);
+    margin: 0 -2rem;
+    width: calc(100% + 4rem);
+    flex-shrink: 0;
+}
+
+.scroll-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+    transition: width 0.05s linear;
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Mobile adjustments for scroll progress */
+@media (max-width: 768px) {
+    .scroll-progress-bar {
+        top: 50px;
+        z-index: 140;
+        height: 2px;
+        margin: 0 -1rem;
+        width: calc(100% + 2rem);
+    }
+    
+    /* Ensure sidebar toggle stays above */
+    .mobile-sidebar-toggle {
+        z-index: 150;
+    }
 }
 
 .onboarding-done:hover {

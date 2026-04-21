@@ -25,7 +25,7 @@
         init: function() {
             this.convertElements();
             this.observeNewElements();
-            console.log('[ImageAutoConvert] Initialized');
+            // Silent init
         },
         
         /**
@@ -109,13 +109,14 @@
             
             // Build URLs
             var jpgUrl = cdnBase + path;
-            var webpPath = path.replace(/\.jpg$/i, '.webp');
-            var webpUrl = cdnBase + webpPath;
-            
             var html = '<picture>';
             
-            // WebP source
-            html += '<source srcset="' + webpUrl + '" type="image/webp">';
+            // WebP source - ONLY in production with CDN
+            if (USE_CDN) {
+                var webpPath = path.replace(/\.jpg$/i, '.webp');
+                var webpUrl = cdnBase + webpPath;
+                html += '<source srcset="' + webpUrl + '" type="image/webp">';
+            }
             
             // Fallback JPEG
             html += '<img';

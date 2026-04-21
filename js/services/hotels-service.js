@@ -762,13 +762,18 @@
         getImageSrcSet: function(path, sizes) {
             if (!path) return '';
             
+            // In local dev without CDN, return single plain image
+            var cdn = this.getCDN();
+            if (!cdn) {
+                return path;
+            }
+            
             if (window.MutsImageUtils && window.MutsImageUtils.buildSrcSet) {
                 return window.MutsImageUtils.buildSrcSet(path, sizes);
             }
             
             // Fallback: build srcset manually
             if (!sizes) sizes = [320, 640, 960, 1280];
-            var cdn = this.getCDN();
             var baseUrl = path.startsWith('http') ? path : (cdn + path);
             
             return sizes.map(function(w) {

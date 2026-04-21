@@ -68,6 +68,9 @@
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
         <main class="dashboard-main">
+            <div class="scroll-progress-bar">
+                <div class="scroll-progress-fill" id="scrollProgress"></div>
+            </div>
             <header class="dashboard-topbar">
                 <div class="search-bar">
                     <input type="text" placeholder="Search destinations..." id="dashboard-search">
@@ -91,16 +94,16 @@
                 <p class="welcome-subtitle">Welcome back and explore the world.</p>
             </section>
 
-            <section class="dashboard-section scroll-reveal">
+            <section class="dashboard-section reveal-slide-up">
                 <div class="section-header">
                     <h2>Popular Safari Destinations</h2>
                     <a href="tours.html" class="view-all hover-lift">View All</a>
                 </div>
-<div class="destination-cards stagger" id="destination-cards"></div>
+<div class="destination-cards reveal-stagger" id="destination-cards"></div>
             </section>
 
             <div class="dashboard-grid-2col">
-                <section class="dashboard-section scroll-reveal">
+                <section class="dashboard-section reveal-slide-left">
                     <div class="section-header">
                         <h2>Calendar</h2>
                         <div class="calendar-nav">
@@ -112,7 +115,7 @@
                     <div class="dashboard-calendar" id="calendar-widget"></div>
                 </section>
 
-                <section class="dashboard-section scroll-reveal">
+                <section class="dashboard-section reveal-slide-right">
                     <div class="section-header">
                         <h2>Bookings</h2>
                         <a href="my-trips.html" class="view-all hover-lift">View All</a>
@@ -159,7 +162,7 @@
             </div>
             
             <div class="onboarding-slide active" data-slide="1">
-                <img src="../../images/hero/kenya-safari.jpg" alt="Welcome">
+                <img src="../../images/hero/kenya-safari.jpg" alt="Welcome" width="800" height="400" fetchpriority="high">
                 <h2>WELCOME TO MUTS_SAFARIS</h2>
                 <p>Your journey into the heart of African wilderness begins here. Experience Kenya like never before with our premium safari expeditions.</p>
                 <div class="onboarding-nav">
@@ -169,7 +172,7 @@
             </div>
             
             <div class="onboarding-slide" data-slide="2">
-                <img src="../../images/hero/tours.jpg" alt="Book Safaris">
+                <img src="../../images/hero/tours.jpg" alt="Book Safaris" width="800" height="400">
                 <h2>BOOK YOUR EXPEDITION</h2>
                 <p>Choose from curated safari packages, luxury lodges, and unique experiences. Our neural-linked system ensures real-time availability.</p>
                 <div class="onboarding-nav">
@@ -179,7 +182,7 @@
             </div>
             
             <div class="onboarding-slide" data-slide="3">
-                <img src="../../images/hero/gallery.jpg" alt="Gallery">
+                <img src="../../images/hero/gallery.jpg" alt="Gallery" width="800" height="400">
                 <h2>EXPLORE THE GALLERY</h2>
                 <p>Browse stunning wildlife photography and travel videos. Get inspired by the beauty of Kenya's national parks and reserves.</p>
                 <div class="onboarding-nav">
@@ -189,7 +192,7 @@
             </div>
             
             <div class="onboarding-slide" data-slide="4">
-                <img src="../../images/hero/africasa.jpg" alt="Africasa">
+                <img src="../../images/hero/africasa.jpg" alt="Africasa" width="800" height="400">
                 <h2>AFRICASA MARKET</h2>
                 <p>Own a piece of African heritage. Purchase authenticated artifacts and handcrafted souvenirs through our secure blockchain system.</p>
                 <div class="onboarding-nav">

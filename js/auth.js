@@ -1,17 +1,20 @@
 /* Auth Module — Muts Safaris */
 /* Security Enhanced - Token-Based Auth Ready */
 // DEBUG: Log immediately when auth loads
-console.log('[Auth] ===== AUTH MODULE LOADED =====');
-console.log('[Auth] Time:', new Date().toISOString());
+// DEBUG: Disable console in production (prevent messages appearing on page)
+// console.log and console.warn replaced with no-ops in production below
 
 try {
     (function () {
+        // Disable all console output in production - prevents messages showing on page
+        if (!window.location.hostname.includes('localhost')) {
+            console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+        }
+        
         if (window.mutsAuthInitialized) {
-            console.log('[Auth] Already initialized, skipping');
             return;
         }
         window.mutsAuthInitialized = true;
-        console.log('[Auth] Initializing...');
 
         var SESSION_KEY = 'muts_session';
     var USERS_KEY = 'muts_users';

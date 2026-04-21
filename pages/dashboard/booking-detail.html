@@ -68,6 +68,30 @@
 
             <div class="booking-detail-header">
                 <a href="my-trips.html" class="back-link">&larr; Back to My Trips</a>
+                
+                <!-- Booking progress steps -->
+                <div class="booking-steps reveal-fade" style="margin: 1rem 0;">
+                    <div class="step-item completed">
+                        <div class="step-number">1</div>
+                        <span>Confirmed</span>
+                    </div>
+                    <div class="step-connector completed"></div>
+                    <div class="step-item completed">
+                        <div class="step-number">2</div>
+                        <span>Payment</span>
+                    </div>
+                    <div class="step-connector completed"></div>
+                    <div class="step-item active">
+                        <div class="step-number">3</div>
+                        <span>Itinerary</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <span>Complete</span>
+                    </div>
+                </div>
+
                 <h1 class="booking-detail-title" id="booking-title">Loading...</h1>
                 <span class="booking-status-badge" id="booking-status">-</span>
             </div>
@@ -208,5 +232,6 @@
     <script src="../../js/services/bookings-service.js"></script>
     <script src="../../js/booking-detail.js"></script>
     <script src="../../js/dashboard-theme.js"></script>
+<script src="../../js/animations.js"></script>
 </body>
 </html>

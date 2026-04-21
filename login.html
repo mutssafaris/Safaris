@@ -49,6 +49,12 @@
     </script>
 </head>
 <body>
+    <script>
+    // Disable ALL console output globally - prevents any debug messages showing on page
+    if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
+        console.log = console.warn = console.error = console.info = function() {};
+    }
+    </script>
     
     <div class="hud-overlay"></div>
     <div class="ambient-particles"></div>
@@ -426,7 +432,7 @@ document.getElementById('signup-form').onsubmit = function(e) {
         
         function initGoogle() {
             if (typeof google === 'undefined') {
-                console.log('[Social] Google SDK not loaded yet');
+                // Silent google init
                 setTimeout(initGoogle, 500);
                 return;
             }
@@ -436,12 +442,11 @@ document.getElementById('signup-form').onsubmit = function(e) {
                 auto_select: false,
                 cancel_on_tap_outside: false
             });
-            console.log('[Social] Google Identity Services initialized');
         }
         
         function handleGoogleResponse(response) {
             var credential = response.credential;
-            console.log('[Social] Google credential received');
+            // Silent
             if (window.MutsAuth) {
                 var btn = document.getElementById('google-login-btn');
                 if (btn) {
@@ -529,9 +534,9 @@ document.getElementById('signup-form').onsubmit = function(e) {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('/sw.js').then(function(reg) {
-                console.log('[App] Service Worker registered:', reg.scope);
+                // Silent SW registration
             }).catch(function(err) {
-                console.log('[App] Service Worker registration failed:', err);
+                // Silent fail
             });
         });
     }

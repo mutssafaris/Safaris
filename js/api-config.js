@@ -34,8 +34,6 @@
             this._detectEnvironment();
             this._registerServices();
             this._initialized = true;
-            console.log('[MutsAPI] Initialized in ' + this._environment + ' mode');
-            console.log('[MutsAPI] Base URL: ' + this.getBaseURL());
             
             if (this._apiReady) {
                 this.connectAll();
@@ -92,7 +90,7 @@
             });
             
             this._apiReady = true;
-            console.log('[MutsAPI] All services connected to ' + baseURL);
+            // Silent connect
         },
 
         disconnectAll: function() {
@@ -104,13 +102,13 @@
                 }
             });
             this._apiReady = false;
-            console.log('[MutsAPI] All services disconnected');
+            // Silent disconnect
         },
 
         setEnvironment: function(env) {
             if (this._env[env]) {
                 this._environment = env;
-                console.log('[MutsAPI] Environment: ' + env);
+                // Silent env
                 if (this._apiReady) {
                     this.connectAll();
                 }
@@ -175,7 +173,7 @@
                 this.disconnectAll();
             }
             
-            console.log('[MutsAPI] Configuration applied:', options);
+            // Silent apply
         }
     };
 
@@ -209,11 +207,11 @@
     };
     
     window.addEventListener('online', function() {
-        console.log('[MutsAPI] Back online');
+        // Silent
     });
     
     window.addEventListener('offline', function() {
-        console.warn('[MutsAPI] Gone offline');
+        // Silent
     });
 
 })(window);

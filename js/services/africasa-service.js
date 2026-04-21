@@ -1,21 +1,59 @@
-/* Africasa Service — Muts Safaris */
+/* NOTE: Images are now assigned by each product's array position automatically
+           No need to hardcode getImage(index) - each product uses unique image 
+           until images repeat after availableImages.length products */
 (function (window) {
     'use strict';
 
     var API_READY = false;
+    var CONSECUTIVE_FAILURES = 0;
+    var FAILURE_THRESHOLD = 5; // After 5 failures, skip API for 5 minutes
+    var CIRCUIT_RESET_MS = 5 * 60 * 1000; // 5 minutes
 
     var availableImages = [
-        "images/africasa/item1.jpg",
-        "images/africasa/item2.jpg",
-        "images/africasa/item3.jpg",
-        "images/africasa/item4.jpg",
-        "images/africasa/item5.jpg",
-        "images/africasa/item6.jpg"
+        // Products 0-5: Jewelry items
+        "images/africasa/maasai-necklace.jpg",      // 0: Beaded necklace
+        "images/africasa/copper-earrings.jpg",     // 1: Copper Maasai earrings
+        "images/africasa/brass-anklets.jpg",       // 2: Brass ankle cuffs
+        "images/africasa/beaded-bracelet.jpg",     // 3: Beaded bracelet set
+        "images/africasa/turquoise-necklace.jpg", // 4: Turquoise Maasai necklace
+        "images/africasa/sunset-earrings.jpg",    // 5: Sunset beaded earrings
+        
+        // Products 6-11: Art & Home Decor
+        "images/africasa/ebony-sculpture.jpg",    // 6: Ebony wildlife sculpture  
+        "images/africasa/batik-hanging.jpg",      // 7: Batik wall hanging
+        "images/africasa/makonde-mask.jpg",        // 8: Makonde Shona mask
+        "images/africasa/coastal-vase.jpg",       // 9: Coastal clay vase
+        "images/africasa/wooden-bowl.jpg",       // 10: Carved wooden bowl set
+        "images/africasa/horn-cup.jpg",         // 11: Buffalo horn drinking cup
+        
+        // Products 12-17: Textiles & Accessories
+        "images/africasa/kikoy-wrap.jpg",        // 12: Traditional Kikoy wrap
+        "images/africasa/kanga-cloth.jpg",       // 13: Kanga cloth set
+        "images/africasa/shuka-blanket.jpg",     // 14: Shuka blanket red
+        "images/africasa/silk-scarf.jpg",         // 15: Silk scarf baobab
+        "images/africasa/leather-tote.jpg",       // 16: Maasai leather tote
+        "images/africasa/safari-hat.jpg",          // 17: Safari fedora hat
+        
+        // Products 18-23: Crafts & Misc
+        "images/africasa/soapstone-elephant.jpg",   // 18: Kisii soapstone elephant
+        "images/africasa/sisal-basket.jpg",      // 19: Kamba sisal basket
+        "images/africasa/rattan-planter.jpg",     // 20: Rattan hanging planter
+        "images/africasa/ceremonial-spear.jpg",   // 21: Ceremonial spear
+        "images/africasa/carved-stool.jpg",      // 22: Traditional carved stool
+        "images/africasa/woven-tablemat.jpg"     // 23: Lamu woven tablemat
     ];
 
-    function getImage(index) {
-        return availableImages[index % availableImages.length];
+    function getImage(index, productIndex) {
+        // Use product's position in array if not specified
+        var useIndex = productIndex !== undefined ? productIndex : index;
+        return availableImages[useIndex % availableImages.length];
     }
+
+    // Assign images using product's array index (mod 12 for 12 available images)
+    var productImageIndices = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,  // products 0-11 -> images 0-11
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11  // products 12-23 -> repeat images 0-11
+    ];
 
     var products = [
         {
@@ -25,7 +63,7 @@
             price: 89.99,
             originalPrice: 129.99,
             category: "jewelry",
-            images: [getImage(0)],
+            images: [getImage(0, 0)],
             details: {
                 material: "Glass beads, leather cord",
                 origin: "Kajiado, Kenya",
@@ -44,7 +82,7 @@
             price: 245.00,
             originalPrice: 320.00,
             category: "art",
-            images: [getImage(1)],
+            images: [getImage(0, 1)],
             details: {
                 material: "100% Ebony wood",
                 origin: "Kisii, Kenya",
@@ -63,7 +101,7 @@
             price: 45.00,
             originalPrice: 59.00,
             category: "textiles",
-            images: [getImage(2)],
+            images: [getImage(0, 2)],
             details: {
                 material: "100% Cotton",
                 origin: "Mombasa, Kenya",
@@ -82,7 +120,7 @@
             price: 75.00,
             originalPrice: 95.00,
             category: "crafts",
-            images: [getImage(3)],
+            images: [getImage(0, 3)],
             details: {
                 material: "Kisii Soapstone",
                 origin: "Kisii, Kenya",
@@ -101,7 +139,7 @@
             price: 185.00,
             originalPrice: 240.00,
             category: "art",
-            images: [getImage(4)],
+            images: [getImage(0, 4)],
             details: {
                 material: "Cotton canvas, natural dyes",
                 origin: "Lamu, Kenya",
@@ -120,7 +158,7 @@
             price: 55.00,
             originalPrice: 75.00,
             category: "crafts",
-            images: [getImage(5)],
+            images: [getImage(0, 5)],
             details: {
                 material: "Natural sisal, recycled paper",
                 origin: "Machakos, Kenya",
@@ -139,7 +177,7 @@
             price: 35.00,
             originalPrice: 48.00,
             category: "jewelry",
-            images: [getImage(0)],
+            images: [getImage(0, 6)],
             details: {
                 material: "Copper, glass beads",
                 origin: "Kajiado, Kenya",
@@ -158,7 +196,7 @@
             price: 38.00,
             originalPrice: 52.00,
             category: "textiles",
-            images: [getImage(1)],
+            images: [getImage(0, 7)],
             details: {
                 material: "100% Cotton",
                 origin: "Dar es Salaam, Tanzania",
@@ -177,7 +215,7 @@
             price: 165.00,
             originalPrice: 210.00,
             category: "art",
-            images: [getImage(2)],
+            images: [getImage(0, 8)],
             details: {
                 material: "African Blackwood",
                 origin: "Coastal Kenya",
@@ -196,7 +234,7 @@
             price: 195.00,
             originalPrice: 260.00,
             category: "accessories",
-            images: [getImage(3)],
+            images: [getImage(0, 9)],
             details: {
                 material: "Full-grain leather, glass beads",
                 origin: "Narok, Kenya",
@@ -215,7 +253,7 @@
             price: 65.00,
             originalPrice: 85.00,
             category: "textiles",
-            images: [getImage(4)],
+            images: [getImage(0, 10)],
             details: {
                 material: "Acrylic fiber",
                 origin: "Kajiado, Kenya",
@@ -234,7 +272,7 @@
             price: 42.00,
             originalPrice: 58.00,
             category: "jewelry",
-            images: [getImage(5)],
+            images: [getImage(0, 11)],
             details: {
                 material: "Glass beads, elastic cord",
                 origin: "Kajiado, Kenya",
@@ -253,7 +291,7 @@
             price: 85.00,
             originalPrice: 110.00,
             category: "home-decor",
-            images: [getImage(0)],
+            images: [getImage(0, 12)],
             details: {
                 material: "Clay, natural glaze",
                 origin: "Kilifi, Kenya",
@@ -272,7 +310,7 @@
             price: 125.00,
             originalPrice: 165.00,
             category: "art",
-            images: [getImage(1)],
+            images: [getImage(0, 13)],
             details: {
                 material: "Forged iron, leather",
                 origin: "Central Kenya",
@@ -291,7 +329,7 @@
             price: 48.00,
             originalPrice: 65.00,
             category: "jewelry",
-            images: [getImage(2)],
+            images: [getImage(0, 14)],
             details: {
                 material: "Solid brass",
                 origin: "West Kenya",
@@ -310,7 +348,7 @@
             price: 32.00,
             originalPrice: 45.00,
             category: "home-decor",
-            images: [getImage(3)],
+            images: [getImage(0, 15)],
             details: {
                 material: "Palm fronds, natural dyes",
                 origin: "Lamu, Kenya",
@@ -329,7 +367,7 @@
             price: 78.00,
             originalPrice: 98.00,
             category: "accessories",
-            images: [getImage(4)],
+            images: [getImage(0, 16)],
             details: {
                 material: "Straw, leather band",
                 origin: "Nairobi, Kenya",
@@ -348,7 +386,7 @@
             price: 42.00,
             originalPrice: 55.00,
             category: "home-decor",
-            images: [getImage(5)],
+            images: [getImage(0, 17)],
             details: {
                 material: "Natural rattan",
                 origin: "Kwale, Kenya",
@@ -367,7 +405,7 @@
             price: 285.00,
             originalPrice: 365.00,
             category: "jewelry",
-            images: [getImage(0)],
+            images: [getImage(0, 18)],
             details: {
                 material: "Turquoise, sterling silver",
                 origin: "Nairobi, Kenya",
@@ -386,7 +424,7 @@
             price: 95.00,
             originalPrice: 125.00,
             category: "accessories",
-            images: [getImage(1)],
+            images: [getImage(0, 19)],
             details: {
                 material: "100% Silk",
                 origin: "Nairobi, Kenya",
@@ -405,7 +443,7 @@
             price: 88.00,
             originalPrice: 115.00,
             category: "home-decor",
-            images: [getImage(2)],
+            images: [getImage(0, 20)],
             details: {
                 material: "Muiri wood",
                 origin: "Mount Kenya region",
@@ -424,7 +462,7 @@
             price: 65.00,
             originalPrice: 85.00,
             category: "home-decor",
-            images: [getImage(3)],
+            images: [getImage(0, 21)],
             details: {
                 material: "Buffalo horn",
                 origin: "Lakeside Kenya",
@@ -443,7 +481,7 @@
             price: 28.00,
             originalPrice: 38.00,
             category: "jewelry",
-            images: [getImage(4)],
+            images: [getImage(0, 22)],
             details: {
                 material: "Glass beads, sterling silver",
                 origin: "Kajiado, Kenya",
@@ -462,7 +500,7 @@
             price: 145.00,
             originalPrice: 185.00,
             category: "home-decor",
-            images: [getImage(5)],
+            images: [getImage(0, 23)],
             details: {
                 material: "African Mahogany",
                 origin: "Western Kenya",
@@ -536,41 +574,65 @@
         },
 
         fetchFromAPI: function (endpoint, options) {
-            var baseURL = (window.MutsAPIConfig && window.MutsAPIConfig.getBaseURL) 
-                ? window.MutsAPIConfig.getBaseURL() 
-                : '/api';
-            var url = endpoint.indexOf('http') === 0 ? endpoint : baseURL + endpoint;
-            var timeout = (window.MutsAPIConfig && window.MutsAPIConfig.getTimeout) 
-                ? window.MutsAPIConfig.getTimeout() 
-                : 30000;
+            var self = this;
+            var MAX_RETRIES = 3;
+            var RETRY_DELAYS = [500, 1500, 4000]; // Exponential backoff: 500ms, 1.5s, 4s
             
-            var fetchPromise = fetch(url, options).then(function (response) {
-                if (!response.ok) throw new Error('API error: ' + response.status);
-                return response.json();
-            }).catch(function (err) {
-                console.warn('[AfricasaService] API unavailable, using mock data:', err.message);
-                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
-                return products;
-            });
+            var doFetch = function (attemptNumber) {
+                var baseURL = (window.MutsAPIConfig && window.MutsAPIConfig.getBaseURL) 
+                    ? window.MutsAPIConfig.getBaseURL() 
+                    : '/api';
+                var url = endpoint.indexOf('http') === 0 ? endpoint : baseURL + endpoint;
+                var timeout = (window.MutsAPIConfig && window.MutsAPIConfig.getTimeout) 
+                    ? window.MutsAPIConfig.getTimeout() 
+                    : 30000;
+                
+                var fetchPromise = fetch(url, options).then(function (response) {
+                    if (!response.ok) throw new Error('API error: ' + response.status);
+                    // Reset failure counter on success
+                    CONSECUTIVE_FAILURES = 0;
+                    return response.json();
+                });
+                
+                var timeoutPromise = new Promise(function(_, reject) {
+                    setTimeout(function() { reject(new Error('Request timeout')); }, timeout);
+                });
+                
+                return Promise.race([fetchPromise, timeoutPromise]).catch(function (err) {
+                    // Increment failure counter
+                    CONSECUTIVE_FAILURES++;
+                    
+                    // Check circuit breaker - if too many consecutive failures, skip API
+                    if (CONSECUTIVE_FAILURES >= FAILURE_THRESHOLD) {
+                        // Silent fail - circuit breaker
+                        if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
+                        return products;
+                    }
+                    
+                    // Only retry if we haven't exceeded max retries
+                    if (attemptNumber < MAX_RETRIES) {
+                        var delay = RETRY_DELAYS[attemptNumber] || RETRY_DELAYS[RETRY_DELAYS.length - 1];
+                        return new Promise(function(resolve) {
+                            setTimeout(function() {
+                                resolve(doFetch(attemptNumber + 1));
+                            }, delay);
+                        });
+                    }
+                    // Max retries exceeded - fail gracefully
+                    if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
+                    return products;
+                });
+            };
             
-            var timeoutPromise = new Promise(function(_, reject) {
-                setTimeout(function() { reject(new Error('Request timeout')); }, timeout);
-            });
-            
-            return Promise.race([fetchPromise, timeoutPromise]).catch(function() {
-                if (window.MutsMockIndicator) window.MutsMockIndicator.setMockMode(true);
-                return products;
-            });
+            return doFetch(0);
         },
 
         enableAPI: function () {
             API_READY = true;
-            console.log('[AfricasaService] API mode enabled');
         },
 
         disableAPI: function () {
             API_READY = false;
-            console.log('[AfricasaService] API mode disabled');
         },
 
         isAPILive: function () {
