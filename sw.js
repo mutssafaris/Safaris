@@ -126,9 +126,10 @@ function staleWhileRevalidate(request) {
     var cacheResponse = caches.match(request);
     var fetchPromise = fetch(request).then(function(networkResponse) {
         if (networkResponse && networkResponse.status === 200) {
-            var cache = caches.open(CACHE_NAME);
-            cache.then(function(c) {
-                c.put(request, networkResponse.clone());
+            // Clone BEFORE the response body is consumed
+            var responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(function(cache) {
+                cache.put(request, responseClone);
             });
         }
         return networkResponse;

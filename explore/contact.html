@@ -121,7 +121,10 @@
         
         var staticContact = {
             office: { type: 'Main Office', details: 'Nairobi, Kenya' },
-            phones: [{ type: 'Phone', details: '+254 700 000 000' }],
+            phones: [
+                { type: 'Phone', details: '+254 700 017 301' },
+                { type: 'Phone', details: '+254 707 538 668' }
+            ],
             emails: [{ type: 'Email', details: 'info@mutssafaris.com' }],
             hours: 'Mon-Fri 8AM-6PM'
         };
@@ -154,7 +157,8 @@
         
         function renderStaticContact() {
             return '<div class="contact-card-mini"><span class="contact-card-label">Main Office</span><span class="contact-card-value">Nairobi, Kenya</span></div>' +
-                '<div class="contact-card-mini"><span class="contact-card-label">Phone</span><a href="tel:+254700000000" class="contact-card-value">+254 700 000 000</a></div>' +
+                '<div class="contact-card-mini"><span class="contact-card-label">Phone</span><a href="tel:+254700017301" class="contact-card-value">+254 700 017 301</a></div>' +
+                '<div class="contact-card-mini"><span class="contact-card-label">Phone</span><a href="tel:+254707538668" class="contact-card-value">+254 707 538 668</a></div>' +
                 '<div class="contact-card-mini"><span class="contact-card-label">Email</span><a href="mailto:info@mutssafaris.com" class="contact-card-value">info@mutssafaris.com</a></div>' +
                 '<div class="contact-card-mini"><span class="contact-card-label">Hours</span><span class="contact-card-value">Mon-Fri 8AM-6PM</span></div>';
         }
@@ -172,16 +176,6 @@
         function loadContactData() {
             renderContactInfo(staticContact);
             populateSubjects();
-            
-            fetch('/data/contact.json')
-                .then(function(res) { return res.json(); })
-                .then(function(data) {
-                    if (data.contactInfo) renderContactInfo(data.contactInfo);
-                    if (data.formOptions && data.formOptions.subjects) populateSubjects(data.formOptions.subjects);
-                })
-                .catch(function() {
-                    // Keep static data on error
-                });
         }
         
         // Defer data loading until after initial render
@@ -205,7 +199,18 @@
     <script src="../js/auth.js"></script>
     <script>
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
 </body>

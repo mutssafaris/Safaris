@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="description" content="Destinations - Muts Safaris. Explore Kenya's beaches, mountains, forests and deserts.">
+    <meta name="keywords" content="kenya destinations, diani beach, mount kenya, masai mara, chalbi desert, safari">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Destinations - Muts Safaris">
+    <meta property="og:description" content="Discover Kenya's most spectacular destinations.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://mutssafaris.com/explore/destinations">
+    <title>Destinations - Muts Safaris</title>
+    <link rel="preconnect" href="https://images.mutssafaris.com">
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
+    <link rel="icon" href="../assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'corporate-light';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="explore-navbar">
+        <a href="../login.html" class="explore-brand">MUTS_SAFARIS</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="explore-nav-links" id="explore-nav-links">
+            <a href="index.html">Home</a>
+            <a href="packages.html">Packages</a>
+            <a href="accommodation.html">Accommodation</a>
+            <a href="destinations.html" class="active">Destinations</a>
+            <a href="africasa.html">Africasa</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <a href="../login.html" class="explore-login-btn">Login</a>
+    </nav>
+
+    <main class="explore-main">
+        <!-- HERO SECTION -->
+        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/kenya-safari.jpg') center/cover no-repeat;">
+            <div class="hero-content">
+                <span class="hero-badge">Discover Kenya</span>
+                <h1 class="hero-title">DESTINATIONS</h1>
+                <p class="hero-subtitle">From pristine beaches to majestic mountains, explore Kenya's diverse landscapes.</p>
+            </div>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section class="explore-section">
+            <h2 class="section-title">Explore by Type</h2>
+            <div class="categories-grid categories-grid-4">
+                <a href="#beaches" class="category-card">
+                    <div class="category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 15c6.667-6 13.333 0 20-6v9H2v-3z"/>
+                            <path d="M2 21h20"/>
+                            <circle cx="12" cy="5" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Beaches</h3>
+                    <p>Indian Ocean coastline</p>
+                </a>
+                <a href="#mountains" class="category-card">
+                    <div class="category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 3l4 8h-8l4-8z"/>
+                            <path d="M4 21l5-8 3 5 3-5 5 8H4z"/>
+                        </svg>
+                    </div>
+                    <h3>Mountains</h3>
+                    <p>Alpine peaks & highlands</p>
+                </a>
+                <a href="#forests" class="category-card">
+                    <div class="category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22V8l-4 4-4-4v14h8z"/>
+                            <path d="M12 22V4l4 4 4-4v14h-8z"/>
+                        </svg>
+                    </div>
+                    <h3>Forests</h3>
+                    <p>Ancient wilderness areas</p>
+                </a>
+                <a href="#deserts" class="category-card">
+                    <div class="category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="5" r="3"/>
+                            <path d="M3 21h18"/>
+                            <path d="M7 17l5-10 5 10"/>
+                        </svg>
+                    </div>
+                    <h3>Deserts</h3>
+                    <p>Northern frontier plains</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- BEACHES -->
+        <section id="beaches" class="explore-section">
+            <h2 class="section-title">Coastal Destinations</h2>
+            <p class="explore-section-desc">Pristine white sand beaches along the Indian Ocean coastline.</p>
+            <div class="explore-grid" id="beach-cards">
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+            </div>
+        </section>
+
+        <!-- MOUNTAINS -->
+        <section id="mountains" class="explore-section">
+            <h2 class="section-title">Mountain Destinations</h2>
+            <p class="explore-section-desc">Majestic peaks, highlands and breathtaking mountain landscapes.</p>
+            <div class="explore-grid" id="mountain-cards">
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+            </div>
+        </section>
+
+        <!-- FORESTS -->
+        <section id="forests" class="explore-section">
+            <h2 class="section-title">Forest Destinations</h2>
+            <p class="explore-section-desc">Ancient forests, wildlife reserves and natural wilderness areas.</p>
+            <div class="explore-grid" id="forest-cards">
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+            </div>
+        </section>
+
+        <!-- DESERTS -->
+        <section id="deserts" class="explore-section">
+            <h2 class="section-title">Desert Destinations</h2>
+            <p class="explore-section-desc">Vast arid landscapes, dramatic desert sunsets and unique wildlife.</p>
+            <div class="explore-grid" id="desert-cards">
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+                <div class="experience-card skeleton"></div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready for Your Adventure?</h2>
+                <p>Login to book your destination and create unforgettable memories.</p>
+                <a href="../login.html" class="btn btn-primary btn-large">Get Started</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="explore-footer">
+        <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
+        <p>Don't be a Tourist, be a Traveller</p>
+    </footer>
+
+    <script>
+    (function() {
+        const CDN = 'https://images.mutssafaris.com';
+        
+        function getImageUrl(path) {
+            if (!path) return '../images/placeholder.jpg';
+            if (path.startsWith('http')) return path;
+            return '../images/' + path;
+        }
+
+        function createDestinationCard(item) {
+            return `
+                <div class="experience-card">
+                    <img src="${getImageUrl(item.image)}" alt="${item.name}" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="experience-content">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                        <span>${item.location}</span>
+                        <button onclick="redirectToLogin()" class="btn btn-outline btn-small" style="margin-top: 0.75rem; width: 100%;">Explore</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBeaches() {
+            const beaches = [
+                { name: 'Diani Beach', description: 'Pristine white sand beach with crystal clear waters', image: 'packages/coastal/diani.jpg', location: 'Kwale County' },
+                { name: 'Malindi', description: 'Historic coastal town with beautiful beaches', image: 'packages/coastal/malindi.jpg', location: 'Kilifi County' },
+                { name: 'Lamu Island', description: 'UNESCO World Heritage site with traditional Swahili culture', image: 'packages/coastal/lamu.jpg', location: 'Lamu County' },
+                { name: 'Watamu', description: 'Marine national park and turtle conservation area', image: 'packages/coastal/watamu.jpg', location: 'Kilifi County' }
+            ];
+            document.getElementById('beach-cards').innerHTML = beaches.map(createDestinationCard).join('');
+        }
+
+        function renderMountains() {
+            const mountains = [
+                { name: 'Mount Kenya', description: 'Africa\'s second highest peak with glaciers and alpine zones', image: 'packages/mountain/mount-kenya.jpg', location: 'Central Kenya' },
+                { name: 'Aberdare Ranges', description: 'Mountain range with waterfalls and wildlife reserves', image: 'packages/mountain/aberdare.jpg', location: 'Nyandarua' },
+                { name: 'Mount Elgon', description: 'Extinct volcano with vast caldera and forests', image: 'packages/mountain/mt-elgon.jpg', location: 'Western Kenya' },
+                { name: 'Ngong Hills', description: 'Iconic ridge with panoramic views of Nairobi', image: 'packages/mountain/gong.png', location: 'Kajiado County' }
+            ];
+            document.getElementById('mountain-cards').innerHTML = mountains.map(createDestinationCard).join('');
+        }
+
+        function renderForests() {
+            const forests = [
+                { name: 'Mau Forest', description: 'Largest indigenous forest in Kenya, critical water tower', image: 'packages/forest/mau-forest.jpg', location: 'Rift Valley' },
+                { name: 'Kakamega Forest', description: 'Last remaining part of the ancient Guineo-Congolian rainforest', image: 'packages/forest/kakamega.jpg', location: 'Western Kenya' },
+                { name: 'Arabuko Sokoke', description: 'Coastal forest reserve with unique biodiversity', image: 'packages/forest/arabuko.jpg', location: 'Kilifi County' },
+                { name: 'Aberdare Forest', description: 'Montane forest sanctuary with diverse wildlife', image: 'packages/forest/aberdare.jpg', location: 'Central Kenya' }
+            ];
+            document.getElementById('forest-cards').innerHTML = forests.map(createDestinationCard).join('');
+        }
+
+        function renderDeserts() {
+            const deserts = [
+                { name: 'Chalbi Desert', description: 'Mars-like black lava desert in northern Kenya', image: 'packages/desert/chalbi.jpg', location: 'Marsabit County' },
+                { name: 'Tsavo East', description: 'Vast arid landscape with red earth and wildlife', image: 'packages/desert/tsavo.jpg', location: 'Taita-Taveta' },
+                { name: 'Samburu', description: 'Semi-arid region with unique wildlife species', image: 'packages/desert/samburu.jpg', location: 'Samburu County' },
+                { name: 'Lake Turkana', description: 'World\'s largest desert lake with volcanic landscapes', image: 'packages/desert/Lake-Turkana.jpg', location: 'Turkana County' }
+            ];
+            document.getElementById('desert-cards').innerHTML = deserts.map(createDestinationCard).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBeaches();
+            renderMountains();
+            renderForests();
+            renderDeserts();
+            
+            // Add visible class to all cards
+            setTimeout(function() {
+                document.querySelectorAll('.experience-card').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        });
+    })();
+    </script>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/performance.js"></script>
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        function redirectToLogin() {
+            window.location.href = '../login.html';
+        }
+    </script>
+</body>
+</html>

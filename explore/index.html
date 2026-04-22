@@ -44,8 +44,9 @@
         </button>
         <div class="explore-nav-links" id="explore-nav-links">
             <a href="index.html" class="active">Home</a>
-            <a href="beaches.html">Beaches</a>
             <a href="packages.html">Packages</a>
+            <a href="accommodation.html">Accommodation</a>
+            <a href="destinations.html">Destinations</a>
             <a href="africasa.html">Africasa</a>
             <a href="gallery.html">Gallery</a>
             <a href="blog.html">Blog</a>
@@ -288,7 +289,7 @@
                 html += '<article class="blog-preview-card">' +
                     '<img src="' + img(item.image || item.coverImage) + '" alt="' + item.title + '" loading="lazy" onload="onImageLoad(this)">' +
                     '<div class="blog-preview-content">' +
-                        '<span class="blog-tag">' + item.category + '</span>' +
+                        '<span class="blog-tag">' + (item.category || item.tag) + '</span>' +
                         '<h3>' + item.title + '</h3>' +
                         '<p>' + (item.excerpt || item.description || item.desc) + '</p>' +
                         '<span onclick="redirectToLogin()">Read More →</span>' +
@@ -298,52 +299,24 @@
             document.getElementById('blog-grid').innerHTML = html;
         }
         
-        // Fetch with fallback
-        function fetchWithFallback(endpoint, renderFn, fallbackData) {
-            var container;
-            if (endpoint.includes('destination')) container = document.getElementById('destinations-grid');
-            else if (endpoint.includes('experience')) container = document.getElementById('experience-grid');
-            else if (endpoint.includes('gallery')) container = document.getElementById('gallery-grid');
-            else if (endpoint.includes('blog')) container = document.getElementById('blog-grid');
-            
-            // Show skeleton while loading
-            if (container) {
-                if (endpoint.includes('destination')) container.innerHTML = skeletonCard(4);
-                else if (endpoint.includes('experience')) container.innerHTML = skeletonExperience(4);
-                else if (endpoint.includes('gallery')) container.innerHTML = '<div class="skeleton skeleton-image"></div><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-image"></div>';
-                else if (endpoint.includes('blog')) container.innerHTML = skeletonCard(3);
-            }
-            
-            renderFn(fallbackData);
-            
-            fetch(API_BASE + endpoint)
-                .then(function(res) { return res.json(); })
-                .then(function(response) {
-                    if (response.success && response.data && response.data.length > 0) {
-                        renderFn(response.data);
-                    }
-                })
-                .catch(function() {
-                    // Keep static data on error
-                });
-        }
-        
-        // Initialize
+        // Initialize - fully static
         function loadData() {
-            fetchWithFallback('/destinations', renderDestinations, staticDestinations);
-            fetchWithFallback('/tours', renderExperiences, staticExperiences);
-            fetchWithFallback('/gallery', renderGallery, staticGallery);
-            fetchWithFallback('/blogs', renderBlog, staticBlog);
+            renderDestinations(staticDestinations);
+            renderExperiences(staticExperiences);
+            renderGallery(staticGallery);
+            renderBlog(staticBlog);
+            
+            // Add visible class to all cards
+            setTimeout(function() {
+                document.querySelectorAll('.destination-card, .experience-card, .blog-preview-card, .category-card').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }, 100);
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Use requestIdleCallback to defer data loading until after initial render
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(loadData);
-            } else {
-                // Fallback for browsers without requestIdleCallback
-                setTimeout(loadData, 100);
-            }
+            // Load content immediately
+            loadData();
             
             // Add visibility animations
             var observer = new IntersectionObserver(function(entries) {
@@ -369,7 +342,18 @@
     <script src="../js/auth.js"></script>
     <script>
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         function redirectToLogin() {

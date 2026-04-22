@@ -383,25 +383,31 @@ html, body {
     left: 0;
     right: 0;
     padding: 1.5rem;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.92));
     color: #ffffff;
 }
 
 .experience-content h3 {
     font-size: 1.1rem;
     margin-bottom: 0.25rem;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6), 0 0 10px rgba(0,0,0,0.4);
+    font-weight: 700;
 }
 
 .experience-content p {
     font-size: 0.8rem;
-    opacity: 0.8;
+    color: #ffffff;
     margin-bottom: 0.25rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    opacity: 0.95;
 }
 
 .experience-content span {
     font-size: 0.85rem;
-    color: var(--explore-accent);
-    font-weight: 600;
+    color: #39FF14;
+    font-weight: 800;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6), 0 0 8px rgba(57,255,20,0.3);
 }
 
 /* GALLERY */

@@ -76,6 +76,11 @@
         </section>
     </main>
 
+    <!-- Blog Read Modal -->
+    <div id="blog-modal" class="blog-modal">
+        <div id="blog-modal-content" class="blog-modal-content"></div>
+    </div>
+
     <footer class="explore-footer">
         <div class="footer-links">
             <a href="contact.html">Contact</a>
@@ -101,17 +106,189 @@
         }
         
         var staticBlog = [
-            { title: 'Best Time to Visit Kenya', description: 'A complete guide to planning your safari timing for the best wildlife sightings and weather conditions.', category: 'Guide', image: 'blog/best-time.jpg' },
-            { title: 'Great Migration Guide', description: 'Everything you need to know about Africa\'s greatest natural wonder.', category: 'Wildlife', image: 'blog/migration.jpg' },
-            { title: 'Family Safari Tips', description: 'How to make the most of your family adventure in the African bush.', category: 'Tips', image: 'blog/family.jpg' },
-            { title: 'Maasai Culture', description: 'Understanding the traditions of Kenya\'s indigenous people.', category: 'Culture', image: 'blog/culture.jpg' },
-            { title: 'Birdwatching Guide', description: 'Spotting Kenya\'s 1,000+ bird species in their natural habitat.', category: 'Wildlife', image: 'blog/birdwatching.jpg' },
-            { title: 'Packing Essentials', description: 'What to bring for your safari adventure.', category: 'Tips', image: 'blog/packing.jpg' }
+            { 
+                title: 'Hell\'s Gate National Park', 
+                description: 'Adventure awaits in Kenya\'s dramatic Rift Valley landscape.',
+                content: 'Nestled in the heart of Kenya\'s Great Rift Valley, Hell\'s Gate National Park is a testament to the raw beauty of nature. Named for its intense geothermal activity, this park offers a unique blend of dramatic landscapes, diverse wildlife, and thrilling adventures. From towering cliffs and deep gorges to open savannah and bubbling hot springs, Hell\'s Gate is a microcosm of Kenya\'s natural wonders. As one of the only parks in Kenya where walking, cycling, and rock climbing are permitted, it\'s ideal for independent travelers and adventure seekers. Don\'t miss the spectacular Fischer\'s Tower, a 25-meter volcanic pinnacle named after German climber Gustav Fischer who first scaled it in the early 20th century.',
+                category: 'Destination', 
+                image: 'blog/hells-gate.jpg',
+                author: 'James Mwangi',
+                date: 'April 22, 2024',
+                readTime: '11 min read'
+            },
+            { 
+                title: 'Fort Jesus: Mombasa\'s UNESCO Gem', 
+                description: 'Step back in time at East Africa\'s most iconic fortress.',
+                content: 'Fort Jesus stands as a monumental testament to the clash of civilizations that shaped East Africa\'s coast. Built by the Portuguese between 1593-1596 from designs by Giovanni Battista Cairati, this UNESCO World Heritage Site protected the port of Mombasa for over a century. The fort\'s layout reflects Renaissance military architecture, with perfect geometric proportions inspired by the human form. It changed hands nine times between Portuguese, Arab, Swahili, and British control, each leaving their mark on its walls. Today, the fort houses a museum showcasing artifacts from 400 years of coastal history, and hosts spectacular sound and light shows that bring its dramatic past to life.',
+                category: 'History', 
+                image: 'blog/fort-jesus.jpg',
+                author: 'Fatima Ali',
+                date: 'April 20, 2024',
+                readTime: '10 min read'
+            },
+            { 
+                title: 'Lake Naivasha: Rift Valley Paradise', 
+                description: 'Discover Kenya\'s freshwater wonderland and its wildlife.',
+                content: 'Hugged by grassy banks and shingled with cacti and sand olive trees, Lake Naivasha is the Rift Valley\'s highest lake at 1884m above sea level. Spanning approximately 139 square kilometers, this freshwater lake hosts over 400 bird species and wildlife such as hippos, giraffes, and buffaloes. The area offers unique experiences including boat safaris, walking tours on Crescent Island where you can walk among giraffes and zebras, and visits to Elsamere, the former home of Born Free personality Joy Adamson. Don\'t miss the chance to cycle through Hell\'s Gate National Park right next door—a rare opportunity in Kenya.',
+                category: 'Destination', 
+                image: 'blog/naivasha.jpg',
+                author: 'Robert Kipkoech',
+                date: 'April 18, 2024',
+                readTime: '9 min read'
+            },
+            { 
+                title: 'Why Choose Muts Safaris', 
+                description: 'What sets our safari experiences apart from the rest.',
+                content: 'At Muts Safaris, we believe travel is about transformation, not just tourism. Our approach combines authentic cultural immersion, sustainable tourism practices, and expert local knowledge to create unforgettable African adventures. We work directly with local communities, ensuring your safari dollars directly benefit the people who protect these wild places. Our guides are not just drivers—they\'re naturalists, historians, and storytellers who bring Kenya\'s landscapes and cultures alive. We limit group sizes, use eco-friendly lodges, and create personalized itineraries that match your travel style, whether you seek adventure, relaxation, or deep cultural connection.',
+                category: 'About', 
+                image: 'blog/muts-safaris.jpg',
+                author: 'Muts Safaris Team',
+                date: 'April 16, 2024',
+                readTime: '7 min read'
+            },
+            { 
+                title: 'The Luo Culture', 
+                description: 'Exploring Kenya\'s vibrant Nilotic heritage.',
+                content: 'The Luo are Kenya\'s fourth largest ethnic group, settled around the shores of Lake Victoria with a cultural heritage spanning over five centuries. Traditionally semi-nomadic pastoralists who migrated from the Nile Valley, they evolved into fishermen, farmers, and influential leaders in Kenya\'s nation-building. Their rich traditions include the nyatiti (eight-stringed lyre), elaborate funeral customs that reinforce clan bonds, and a spiritual system centered on Nyasaye, the creator God, and ancestor spirits. Luo musical innovations birthed Benga music, East Africa\'s most popular genre, blending traditional melodies with electric guitar. Visiting Luo homesteads offers profound insights into their communal way of life.',
+                category: 'Culture', 
+                image: 'blog/luo-culture.jpg',
+                author: 'Dr. Amolo Omondi',
+                date: 'April 14, 2024',
+                readTime: '12 min read'
+            },
+            { 
+                title: 'African Artifacts', 
+                description: 'The stories behind Kenya\'s traditional crafts and treasures.',
+                content: 'Kenya\'s artistic heritage spans thousands of years, from 9,000-year-old rock art at Kakapel to the intricate beadwork that still adorns Maasai warriors today. Each artifact tells a story: the Maasai rungu (throwing club) represents leadership and protection, its dense hardwood carved from ancient acacia trees. Akamba woodcarvings, passed down through generations, transform mahogany and ebony into elegant sculptures of wildlife and daily life. Beadwork is a visual language—colors and patterns communicate social status, age, and marital status. When you purchase these crafts, you\'re not buying souvenirs—you\'re carrying pieces of living culture that connect you to Kenya\'s artisans and their ancestors.',
+                category: 'Culture', 
+                image: 'blog/artifacts.jpg',
+                author: 'Wanjiku Kamau',
+                date: 'April 12, 2024',
+                readTime: '8 min read'
+            },
+            { 
+                title: 'From Farm to Table', 
+                description: 'Kenya\'s culinary journey and local food traditions.',
+                content: 'Kenyan cuisine tells the story of a nation where agriculture shapes daily life and community. The farm-to-table journey begins at dawn in markets across the country, where farmers bring maize, sukuma wiki (collard greens), sweet potatoes, and tropical fruits harvested just hours before. Traditional meals are communal affairs—matoke (steamed green bananas) served with nyama choma (grilled meat) brings families and communities together. Coastal regions offer Swahili-inspired dishes like pilau rice infused with cardamom, cinnamon, and cloves, while western Kenya features fish from Lake Victoria prepared in coconut milk. Every meal is a celebration of the land and the hands that tend it.',
+                category: 'Food', 
+                image: 'blog/farm-table.jpg',
+                author: 'Chef Margaret Wairimu',
+                date: 'April 10, 2024',
+                readTime: '9 min read'
+            },
+            { 
+                title: 'Nairobi City Tours', 
+                description: 'Discover Kenya\'s capital where wildlife meets urban life.',
+                content: 'Nairobi is one of the world\'s most unique capitals—a city where skyscrapers rise beside savannah where lions roar. The perfect Nairobi day blends urban history with unforgettable wildlife encounters. Start with a morning game drive in Nairobi National Park, the only capital city national park in the world, where you can spot rhinos, giraffes, and lions against a skyline backdrop. Then visit the David Sheldrick Wildlife Trust to feed orphaned elephants, the Giraffe Centre to kiss a Rothschild giraffe, and Karen Blixen Museum for a taste of colonial-era nostalgia. Complete your day with panoramic views from the KICC rooftop, and you\'ll understand why Nairobi is called the "Safari Capital of the World."',
+                category: 'Destination', 
+                image: 'blog/nairobi.jpg',
+                author: 'Kevin Omondi',
+                date: 'April 8, 2024',
+                readTime: '10 min read'
+            },
+            { 
+                title: 'Sunrise Safari Moments', 
+                description: 'The magic of golden hour in the African bush.',
+                content: 'There\'s something sacred about safari sunrise. You wake before dawn, when the air is still cold and the sky begins to glow with impossible colors. As your vehicle bumps across the savannah, the world awakens—first light catches lions returning from night hunts, elephants emerge silhouetted against the horizon, and birds fill the air with morning calls. This is when the bush feels most alive, when predators and prey share the fading darkness before the heat of the day sets in. These are the moments that stay with you forever—not just the wildlife sightings, but the feeling of being completely present in Africa\'s rhythm.',
+                category: 'Moments', 
+                image: 'blog/sunrise-safari.jpg',
+                author: 'Sarah Johnson',
+                date: 'April 6, 2024',
+                readTime: '8 min read'
+            },
+            { 
+                title: 'Wildlife Photography Tips', 
+                description: 'Capture Africa\'s magic through your lens.',
+                content: 'Exceptional safari photography blends technical skill with intimate understanding of the natural world. For early morning drives, use wide apertures (f/2.8-f/5.6) and higher ISO to maintain fast shutter speeds freezing motion without noise. When tracking cheetahs on the hunt, switch to Shutter Priority and continuous autofocus. Beyond settings, learn to anticipate behavior: a lion\'s yawn often precedes movement; bird calls can signal approaching predators. Use light creatively—side-lighting reveals texture, backlighting creates dramatic golden silhouettes. Patience is your most valuable gear; great photographs come to those who wait.',
+                category: 'Tips', 
+                image: 'blog/photography-tips.jpg',
+                author: 'Mark Davidson',
+                date: 'April 4, 2024',
+                readTime: '11 min read'
+            },
+            { 
+                title: 'Conservation Travel', 
+                description: 'How your safari protects Kenya\'s wildlife.',
+                content: 'Your safari does more than create memories—it fuels conservation. Kenya\'s community conservancy model demonstrates how tourism can save wild spaces. At Borana Conservancy, 24% of lodge rates directly fund protection, including ranger patrols, anti-poaching units, and community schools. In the Maasai Mara, conservancy fees guarantee landowners regular income, creating incentive to protect wildlife rather than convert land for agriculture. Every park entry fee, every guided walk, every night spent at a community lodge contributes to this vital work. Travel with intention, and your journey becomes part of the solution.',
+                category: 'Conservation', 
+                image: 'blog/conservation-travel.jpg',
+                author: 'Dr. Eleanor Vance',
+                date: 'April 2, 2024',
+                readTime: '9 min read'
+            },
+            { 
+                title: 'Hot Air Balloon Safaris', 
+                description: 'Floating silently over the Masai Mara at dawn.',
+                content: 'There\'s no safari experience quite like drifting over the Masai Mara in a hot air balloon at sunrise. As your pilot releases the last tether, you rise silently, watching the waking savannah spread beneath you. Herds of wildebeest flow like rivers across the plains; elephants march to waterholes unaware of your presence. The only sounds are the occasional burner firing and the distant roar of a lion. After landing, tradition calls for champagne breakfast in the bush—cold flutes, warm breakfast, and the shared wonder of having seen the Mara from the sky.',
+                category: 'Experience', 
+                image: 'blog/balloon-safari.jpg',
+                author: 'James Mwangi',
+                date: 'March 30, 2024',
+                readTime: '7 min read'
+            },
+            { 
+                title: 'Sundowners in the Bush', 
+                description: 'Africa\'s evening ritual of wonder.',
+                content: 'The sundowner is safari\'s most sacred ritual. As the sun dips toward the horizon, painting the sky in impossible shades of orange and purple, your guide finds the perfect viewpoint. Out come the canvas chairs, the clink of glasses, the quiet conversations as the day\'s heat fades. Elephants pass silhouetted against the sunset; hyenas begin their evening calls. These aren\'t just drinks with a view—they\'re moments of connection: with the land, with your traveling companions, with the ancient rhythm of Africa as day surrenders to night.',
+                category: 'Moments', 
+                image: 'blog/sundowner.jpg',
+                author: 'Emma Omondi',
+                date: 'March 28, 2024',
+                readTime: '6 min read'
+            },
+            { 
+                title: 'The Great Migration', 
+                description: 'Witnessing earth\'s greatest wildlife spectacle.',
+                content: 'The Great Migration is not just a sight—it\'s a feeling that reverberates through your bones. Over 1.5 million wildebeest, zebras, and gazelles move in a circular search for water and grass, creating drama at every river crossing. Crocodiles wait in the depths; lions and hyenas patrol the banks. What strikes most visitors isn\'t the scale—it\'s the sound: the thunder of hooves, the grunts of thousands, the splashes of crossing. This is Africa at her most primal, a reminder that the natural world still operates on timescales beyond human comprehension.',
+                category: 'Wildlife', 
+                image: 'blog/great-migration.jpg',
+                author: 'David Kimani',
+                date: 'March 26, 2024',
+                readTime: '12 min read'
+            }
         ];
+        
+        function openBlogPost(index) {
+            var post = staticBlog[index];
+            var modal = document.getElementById('blog-modal');
+            var content = document.getElementById('blog-modal-content');
+            
+            content.innerHTML = `
+                <div class="blog-modal-header">
+                    <button class="blog-modal-close" onclick="closeBlogPost()">&times;</button>
+                    <img src="${img(post.image)}" alt="${post.title}" loading="lazy">
+                </div>
+                <div class="blog-modal-body">
+                    <span class="blog-category">${post.category}</span>
+                    <h2>${post.title}</h2>
+                    <div class="blog-meta-details">
+                        <span class="blog-author">${post.author}</span>
+                        <span class="blog-date">${post.date}</span>
+                        <span class="blog-readtime">${post.readTime}</span>
+                    </div>
+                    <div class="blog-full-content">
+                        <p>${post.content}</p>
+                        <p>Continue exploring our website for more travel tips and safari guides.</p>
+                    </div>
+                    <div class="blog-readonly-notice modal-notice">
+                        <p>Reading mode only. <a href="../login.html">Login</a> to like, comment, and save posts.</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+        
+        function closeBlogPost() {
+            var modal = document.getElementById('blog-modal');
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
         
         function renderBlog(items) {
             var html = '';
-            items.forEach(function(item) {
+            items.forEach(function(item, index) {
                 html += '<article class="blog-card">' +
                     '<img src="' + img(item.image) + '" alt="' + item.title + '" loading="lazy" onload="onImageLoad(this)">' +
                     '<div class="blog-content">' +
@@ -121,7 +298,7 @@
                         '<h3 class="blog-title">' + item.title + '</h3>' +
                         '<p class="blog-excerpt">' + item.description + '</p>' +
                         '<div class="blog-footer">' +
-                            '<span class="blog-read-more" onclick="redirectToLogin()">Read More →</span>' +
+                            '<span class="blog-read-more" onclick="openBlogPost(' + index + ')">Read More →</span>' +
                         '</div>' +
                     '</div>' +
                 '</article>';
@@ -132,20 +309,11 @@
         function loadBlogData() {
             renderBlog(staticBlog);
             
-            fetch(API_BASE + '/blogs')
-                .then(function(res) { return res.json(); })
-                .then(function(response) {
-                    if (response.success && response.data && response.data.length > 0) {
-                        renderBlog(response.data);
-                    }
-                })
-                .catch(function() {
-                    // Keep static data on error
-                });
-            
             setTimeout(function() {
-                document.querySelectorAll('.blog-card').forEach(function(el) {
-                    el.classList.add('visible');
+                document.querySelectorAll('.blog-card').forEach(function(el, index) {
+                    setTimeout(function() {
+                        el.classList.add('visible');
+                    }, index * 100);
                 });
             }, 300);
         }
@@ -158,18 +326,48 @@
         }
         
         window.onImageLoad = onImageLoad;
+        window.openBlogPost = openBlogPost;
+        window.closeBlogPost = closeBlogPost;
     })();
     </script>
 
     <script src="../js/auth.js"></script>
     <script>
+        let scrollPosition = 0;
+        
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         function redirectToLogin() {
             window.location.href = '../login.html';
         }
+        
+        // Preserve scroll position for mobile
+        const originalOpenBlogPost = openBlogPost;
+        openBlogPost = function(index) {
+            scrollPosition = window.scrollY;
+            originalOpenBlogPost(index);
+        };
+        
+        const originalCloseBlogPost = closeBlogPost;
+        closeBlogPost = function() {
+            originalCloseBlogPost();
+            setTimeout(function() {
+                window.scrollTo(0, scrollPosition);
+            }, 100);
+        };
     </script>
 </body>
 </html>

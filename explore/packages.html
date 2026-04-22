@@ -41,8 +41,9 @@
         </button>
         <div class="explore-nav-links" id="explore-nav-links">
             <a href="index.html">Home</a>
-            <a href="beaches.html">Beaches</a>
             <a href="packages.html" class="active">Packages</a>
+            <a href="accommodation.html">Accommodation</a>
+            <a href="destinations.html">Destinations</a>
             <a href="africasa.html">Africasa</a>
             <a href="gallery.html">Gallery</a>
             <a href="blog.html">Blog</a>
@@ -124,17 +125,6 @@
         
         renderPackages(staticPackages);
         
-        fetch(API_BASE + '/packages')
-            .then(function(res) { return res.json(); })
-            .then(function(response) {
-                if (response.success && response.data && response.data.length > 0) {
-                    renderPackages(response.data);
-                }
-            })
-            .catch(function() {
-                // Keep static data on error
-            });
-        
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 document.querySelectorAll('.experience-card').forEach(function(el) {
@@ -150,7 +140,18 @@
     <script src="../js/auth.js"></script>
     <script>
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         function redirectToLogin() {

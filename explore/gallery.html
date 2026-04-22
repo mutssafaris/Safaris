@@ -66,6 +66,12 @@
             <button class="filter-btn" data-filter="wildlife">Wildlife</button>
             <button class="filter-btn" data-filter="landscapes">Landscapes</button>
             <button class="filter-btn" data-filter="accommodations">Accommodations</button>
+            <button class="filter-btn" data-filter="maasai-mara">Maasai Mara</button>
+            <button class="filter-btn" data-filter="amboseli">Amboseli</button>
+            <button class="filter-btn" data-filter="diani">Diani</button>
+            <button class="filter-btn" data-filter="mombasa">Mombasa</button>
+            <button class="filter-btn" data-filter="tsavo">Tsavo</button>
+            <button class="filter-btn" data-filter="guests">Guests</button>
         </section>
 
         <section class="gallery-section">
@@ -110,15 +116,110 @@
             img.classList.add('loaded');
         }
         
+        // Lazy load observer for gallery
+        if ('IntersectionObserver' in window) {
+            const galleryObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const img = entry.target.querySelector('img');
+                        if (img && img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '100px 0px' });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    document.querySelectorAll('.gallery-item').forEach(function(item) {
+                        galleryObserver.observe(item);
+                    });
+                }, 500);
+            });
+        }
+        
         var staticGallery = [
+            // Wildlife
             { category: 'wildlife', url: 'gallery/wildlife/elephant-family.jpg', title: 'Elephant Herd' },
             { category: 'wildlife', url: 'gallery/wildlife/buffalo-herd.jpg', title: 'Buffalo Herd' },
             { category: 'wildlife', url: 'gallery/wildlife/cheetah-hunt.jpg', title: 'Cheetah Hunt' },
             { category: 'wildlife', url: 'gallery/wildlife/giraffe-neck.jpg', title: 'Giraffe' },
+            { category: 'wildlife', url: 'gallery/wildlife/crocodile-ambush.jpg', title: 'Crocodile Ambush' },
+            { category: 'wildlife', url: 'gallery/wildlife/fish-eagle.jpg', title: 'Fish Eagle' },
+            { category: 'wildlife', url: 'gallery/wildlife/flamingo-lake.jpg', title: 'Flamingo Lake' },
+            { category: 'wildlife', url: 'gallery/wildlife/hippo-pool.jpg', title: 'Hippo Pool' },
+            { category: 'wildlife', url: 'gallery/wildlife/hyena-laugh.jpg', title: 'Hyena' },
+            { category: 'wildlife', url: 'gallery/wildlife/impala-group.jpg', title: 'Impala Group' },
+            { category: 'wildlife', url: 'gallery/wildlife/leopard-tree.jpg', title: 'Leopard in Tree' },
+            { category: 'wildlife', url: 'gallery/wildlife/lion-sunset.jpg', title: 'Lion Sunset' },
+            { category: 'wildlife', url: 'gallery/wildlife/monkey-troop.jpg', title: 'Monkey Troop' },
+            { category: 'wildlife', url: 'gallery/wildlife/rhino-dust.jpg', title: 'Rhino' },
+            { category: 'wildlife', url: 'gallery/wildlife/secretary-bird.jpg', title: 'Secretary Bird' },
+            { category: 'wildlife', url: 'gallery/wildlife/warthog-family.jpg', title: 'Warthog Family' },
+            { category: 'wildlife', url: 'gallery/wildlife/wildebeest-river.jpg', title: 'Wildebeest Crossing' },
+            { category: 'wildlife', url: 'gallery/wildlife/zebra-plains.jpg', title: 'Zebra Plains' },
+            
+            // Landscapes
             { category: 'landscapes', url: 'gallery/landscapes/sunset.jpg', title: 'Savanna Sunset' },
             { category: 'landscapes', url: 'gallery/landscapes/flamingo-lake.jpg', title: 'Flamingo Lake' },
+            { category: 'landscapes', url: 'gallery/landscapes/amboseli-elephants.jpg', title: 'Amboseli Elephants' },
+            { category: 'landscapes', url: 'gallery/landscapes/hells-gate-canyon.jpg', title: "Hell's Gate Canyon" },
+            { category: 'landscapes', url: 'gallery/landscapes/lake-nakuru-flamingos.jpg', title: 'Lake Nakuru Flamingos' },
+            { category: 'landscapes', url: 'gallery/landscapes/maasai-mara-plains.jpg', title: 'Maasai Mara Plains' },
+            { category: 'landscapes', url: 'gallery/landscapes/mount-kenya.jpg', title: 'Mount Kenya' },
+            { category: 'landscapes', url: 'gallery/landscapes/nairobi-national-park.jpg', title: 'Nairobi National Park' },
+            { category: 'landscapes', url: 'gallery/landscapes/samburu-landscape.jpg', title: 'Samburu Landscape' },
+            { category: 'landscapes', url: 'gallery/landscapes/tsavo-dust.jpg', title: 'Tsavo Dust' },
+            
+            // Accommodations
             { category: 'accommodations', url: 'gallery/accommodations/camp.jpg', title: 'Tented Camp' },
-            { category: 'accommodations', url: 'gallery/accommodations/luxury-tent.jpg', title: 'Safari Lodge' }
+            { category: 'accommodations', url: 'gallery/accommodations/luxury-tent.jpg', title: 'Safari Lodge' },
+            
+            // Maasai Mara
+            { category: 'maasai-mara', url: 'gallery/maasai-mara/cheetah.jpg', title: 'Mara Cheetah' },
+            { category: 'maasai-mara', url: 'gallery/maasai-mara/elephant.jpg', title: 'Mara Elephant' },
+            { category: 'maasai-mara', url: 'gallery/maasai-mara/leopard.jpg', title: 'Mara Leopard' },
+            { category: 'maasai-mara', url: 'gallery/maasai-mara/lion.jpg', title: 'Mara Lion' },
+            { category: 'maasai-mara', url: 'gallery/maasai-mara/maasai.jpg', title: 'Maasai Warrior' },
+            { category: 'maasai-mara', url: 'gallery/maasai-mara/migration.jpg', title: 'Great Migration' },
+            
+            // Amboseli
+            { category: 'amboseli', url: 'gallery/amboseli/cheetah.jpg', title: 'Amboseli Cheetah' },
+            
+            // Diani
+            { category: 'diani', url: 'gallery/diani/beach-sunset.jpg', title: 'Diani Sunset' },
+            { category: 'diani', url: 'gallery/diani/colobus-monkeys.jpg', title: 'Colobus Monkeys' },
+            { category: 'diani', url: 'gallery/diani/coral-reef.jpg', title: 'Coral Reef' },
+            { category: 'diani', url: 'gallery/diani/golf-course.jpg', title: 'Diani Golf Course' },
+            { category: 'diani', url: 'gallery/diani/swahili-architecture.jpg', title: 'Swahili Architecture' },
+            { category: 'diani', url: 'gallery/diani/water-sports.jpg', title: 'Water Sports' },
+            
+            // Mombasa
+            { category: 'mombasa', url: 'gallery/mombasa/beach.jpg', title: 'Mombasa Beach' },
+            { category: 'mombasa', url: 'gallery/mombasa/dhow-harbor.jpg', title: 'Dhow Harbor' },
+            { category: 'mombasa', url: 'gallery/mombasa/fort-jesus.jpg', title: 'Fort Jesus' },
+            { category: 'mombasa', url: 'gallery/mombasa/mombasa-tusks.jpg', title: 'Mombasa Tusks' },
+            { category: 'mombasa', url: 'gallery/mombasa/old-town.jpg', title: 'Old Town' },
+            { category: 'mombasa', url: 'gallery/mombasa/spice-market.jpg', title: 'Spice Market' },
+            
+            // Tsavo
+            { category: 'tsavo', url: 'gallery/tsavo/birds.jpg', title: 'Tsavo Birds' },
+            { category: 'tsavo', url: 'gallery/tsavo/lava-flows.jpg', title: 'Lava Flows' },
+            { category: 'tsavo', url: 'gallery/tsavo/lion.jpg', title: 'Tsavo Lion' },
+            { category: 'tsavo', url: 'gallery/tsavo/mzima-hippos.jpg', title: 'Mzima Springs Hippos' },
+            { category: 'tsavo', url: 'gallery/tsavo/red-elephants.jpg', title: 'Red Elephants' },
+            { category: 'tsavo', url: 'gallery/tsavo/rhino.jpg', title: 'Tsavo Rhino' },
+            
+            // Guests
+            { category: 'guests', url: 'gallery/guests/camel-ride.jpg', title: 'Camel Ride' },
+            { category: 'guests', url: 'gallery/guests/cooking-class.jpg', title: 'Cooking Class' },
+            { category: 'guests', url: 'gallery/guests/family-safari.jpg', title: 'Family Safari' },
+            { category: 'guests', url: 'gallery/guests/lion-cub.jpg', title: 'Lion Cub Encounter' },
+            { category: 'guests', url: 'gallery/guests/maasai-dance.jpg', title: 'Maasai Dance' },
+            { category: 'guests', url: 'gallery/guests/sunset-cocktail.jpg', title: 'Sunset Cocktails' },
+            { category: 'guests', url: 'gallery/guests/village-visit.jpg', title: 'Village Visit' }
         ];
         
         function renderGallery(items) {
@@ -135,16 +236,12 @@
         function loadGalleryData() {
             renderGallery(staticGallery);
             
-            fetch(API_BASE + '/gallery')
-                .then(function(res) { return res.json(); })
-                .then(function(response) {
-                    if (response.success && response.data && response.data.length > 0) {
-                        renderGallery(response.data);
-                    }
-                })
-                .catch(function() {
-                    // Keep static data on error
+            // Add visible class to all gallery items
+            setTimeout(function() {
+                document.querySelectorAll('.gallery-item').forEach(function(el) {
+                    el.classList.add('visible');
                 });
+            }, 100);
         }
         
         // Defer data loading until after initial render
@@ -186,7 +283,18 @@
     <script src="../js/auth.js"></script>
     <script>
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
 </body>

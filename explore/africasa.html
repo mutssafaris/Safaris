@@ -74,6 +74,11 @@
         </section>
     </main>
 
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="blog-modal">
+        <div id="product-modal-content" class="blog-modal-content"></div>
+    </div>
+
     <footer class="explore-footer">
         <div class="footer-links">
             <a href="contact.html">Contact</a>
@@ -99,18 +104,126 @@
         }
         
         var staticListings = [
-            { name: 'Maasai Beads', description: 'Handcrafted traditional jewelry', price: '$45', image: 'africasa/beads.jpg' },
-            { name: 'Wooden Carvings', description: 'Artisan carved sculptures', price: '$120', image: 'africasa/carvings.jpg' },
-            { name: 'Kikoi Fabric', description: 'Traditional Kenyan shawl', price: '$35', image: 'africasa/kikoi.jpg' },
-            { name: 'Safari Hat', description: 'Handwoven straw hat', price: '$55', image: 'africasa/hat.jpg' },
-            { name: 'Ceremonial Spear', description: 'Traditional Maasai spear', price: '$85', image: 'africasa/spear.jpg' },
-            { name: 'Maasai Shield', description: 'Hand-painted traditional shield', price: '$150', image: 'africasa/shield.jpg' }
+            { 
+                name: 'Maasai Beads', 
+                description: 'Handcrafted traditional jewelry',
+                price: '$45', 
+                image: 'africasa/beads.jpg',
+                details: 'Each Maasai bead necklace is handcrafted by Maasai women using traditional techniques passed down through generations. The vibrant colors carry specific meanings: red represents bravery, blue symbolizes the sky, green stands for health, and white signifies purity. Worn during ceremonies, dances, and daily life, these pieces are more than jewelry—they are living expressions of Maasai culture, identity, and storytelling. Every bead is carefully selected and strung by hand, making each piece unique.',
+                origin: 'Maasai Mara, Kenya',
+                materials: 'Glass beads, leather, natural fibers',
+                artisan: 'Handcrafted by Maasai women artisans'
+            },
+            { 
+                name: 'Wooden Carvings', 
+                description: 'Artisan carved sculptures',
+                price: '$120', 
+                image: 'africasa/carvings.jpg',
+                details: 'These exquisite wooden carvings are created by master artisans of the Akamba community, renowned for their woodworking expertise across East Africa. Using dense hardwoods like mahogany and ebony, each piece is carved by hand using simple tools, depicting wildlife, ancestral figures, and daily life scenes. The polishing process can take days, resulting in a deep, rich luster that enhances the wood\'s natural beauty. Each carving represents hours of dedicated craftsmanship.',
+                origin: 'Eastern Province, Kenya',
+                materials: 'Solid mahogany/ebony wood, natural oils',
+                artisan: 'Hand-carved by Akamba master artisans'
+            },
+            { 
+                name: 'Kikoi Fabric', 
+                description: 'Traditional Kenyan shawl',
+                price: '$35', 
+                image: 'africasa/kikoi.jpg',
+                details: 'The kikoi is a versatile traditional East African fabric worn by both men and women. Woven from 100% pure cotton on traditional looms, each kikoi features vibrant geometric patterns and bold stripes characteristic of Swahili coastal culture. Lightweight and breathable, it serves as a wrap, scarf, sarong, beach blanket, or head covering. The fringed edges are hand-tied, and each pattern carries cultural significance from the coastal communities where they are made.',
+                origin: 'Lamu Island, Kenya',
+                materials: '100% handwoven cotton',
+                artisan: 'Handwoven by Swahili coastal weavers'
+            },
+            { 
+                name: 'Safari Hat', 
+                description: 'Handwoven straw hat',
+                price: '$55', 
+                image: 'africasa/hat.jpg',
+                details: 'This authentic safari hat is handwoven from dried palm leaves by artisans in rural Kenya. Each hat takes three full days to complete, with every strand carefully selected and woven into the classic wide-brimmed design perfect for African sun protection. The natural fibers allow air circulation while providing excellent UV protection. Lightweight, durable, and completely biodegradable, this hat is both practical and a beautiful example of traditional craftsmanship.',
+                origin: 'Coastal Province, Kenya',
+                materials: 'Dried palm leaves, natural fibers',
+                artisan: 'Handwoven by rural Kenyan artisans'
+            },
+            { 
+                name: 'Ceremonial Spear', 
+                description: 'Traditional Maasai spear',
+                price: '$85', 
+                image: 'africasa/spear.jpg',
+                details: 'This ceremonial Maasai spear is a decorative reproduction of the weapons carried by Maasai warriors for centuries. The iron head is hand-forged by blacksmiths using traditional techniques, while the shaft is carved from solid acacia wood known for its strength and durability. Wrapped in leather bindings and adorned with traditional beadwork at the grip, each spear is a work of art that represents Maasai bravery, hunting prowess, and cultural heritage.',
+                origin: 'Narok, Kenya',
+                materials: 'Forged iron head, acacia wood shaft, leather',
+                artisan: 'Hand-forged by Maasai blacksmiths'
+            },
+            { 
+                name: 'Maasai Shield', 
+                description: 'Hand-painted traditional shield',
+                price: '$150', 
+                image: 'africasa/shield.jpg',
+                details: 'This decorative Maasai shield is handcrafted from buffalo hide stretched over a wooden frame, then hand-painted with symbolic geometric patterns in natural ochre, white, and black pigments. Each design element carries meaning: concentric circles represent cattle (the foundation of Maasai life), while zigzag patterns symbolize the journey of life. Traditionally used in ceremonies and dances, these shields are powerful symbols of Maasai identity, protection, and cultural pride.',
+                origin: 'Maasai Mara, Kenya',
+                materials: 'Buffalo hide, wood frame, natural pigments',
+                artisan: 'Handcrafted by Maasai warriors'
+            }
         ];
+
+        // Close modal on background click
+        document.getElementById('product-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProductModal();
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeProductModal();
+            }
+        });
         
+        function openProductModal(index) {
+            var product = staticListings[index];
+            var modal = document.getElementById('product-modal');
+            var content = document.getElementById('product-modal-content');
+            
+            content.innerHTML = `
+                <div class="blog-modal-header">
+                    <button class="blog-modal-close" onclick="closeProductModal()">&times;</button>
+                    <img src="${img(product.image)}" alt="${product.name}" loading="lazy">
+                </div>
+                <div class="blog-modal-body">
+                    <h2>${product.name}</h2>
+                    <div class="blog-meta-details">
+                        <span class="blog-author">${product.origin}</span>
+                        <span class="blog-readtime">${product.price}</span>
+                    </div>
+                    <div class="blog-full-content">
+                        <p>${product.details}</p>
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--explore-radius-sm);">
+                            <p style="margin: 0.5rem 0;"><strong>Materials:</strong> ${product.materials}</p>
+                            <p style="margin: 0.5rem 0;"><strong>Artisan:</strong> ${product.artisan}</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <button onclick="redirectToLogin()" class="btn btn-primary" style="margin-bottom: 1rem;">Login to Purchase</button>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Create an account to order authentic African artifacts</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+        
+        function closeProductModal() {
+            var modal = document.getElementById('product-modal');
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
         function renderListings(items) {
             var html = '';
-            items.forEach(function(item) {
-                html += '<div class="experience-card">' +
+            items.forEach(function(item, index) {
+                html += '<div class="experience-card" onclick="openProductModal(' + index + ')" style="cursor: pointer;">' +
                     '<img src="' + img(item.image) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
                     '<div class="experience-content">' +
                         '<h3>' + item.name + '</h3>' +
@@ -124,17 +237,6 @@
         
         renderListings(staticListings);
         
-        fetch(API_BASE + '/listings')
-            .then(function(res) { return res.json(); })
-            .then(function(response) {
-                if (response.success && response.data && response.data.length > 0) {
-                    renderListings(response.data);
-                }
-            })
-            .catch(function() {
-                // Keep static data on error
-            });
-        
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 document.querySelectorAll('.experience-card').forEach(function(el) {
@@ -144,18 +246,48 @@
         });
         
         window.onImageLoad = onImageLoad;
+        window.openProductModal = openProductModal;
+        window.closeProductModal = closeProductModal;
     })();
     </script>
 
     <script src="../js/auth.js"></script>
     <script>
+        let scrollPosition = 0;
+        
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         function redirectToLogin() {
             window.location.href = '../login.html';
         }
+        
+        // Preserve scroll position for mobile
+        const originalOpenProductModal = openProductModal;
+        openProductModal = function(index) {
+            scrollPosition = window.scrollY;
+            originalOpenProductModal(index);
+        };
+        
+        const originalCloseProductModal = closeProductModal;
+        closeProductModal = function() {
+            originalCloseProductModal();
+            setTimeout(function() {
+                window.scrollTo(0, scrollPosition);
+            }, 100);
+        };
     </script>
 </body>
 </html>

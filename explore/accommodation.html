@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="description" content="Accommodation - Muts Safaris. Find luxury hotels, lodges and camps across Kenya.">
+    <meta name="keywords" content="safari accommodation, kenya hotels, safari lodges, tented camps, luxury safari">
+    <meta name="author" content="Muts Safaris">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Accommodation - Muts Safaris">
+    <meta property="og:description" content="Discover Kenya's finest safari accommodation options.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://mutssafaris.com/explore/accommodation">
+    <title>Accommodation - Muts Safaris</title>
+    <link rel="preconnect" href="https://images.mutssafaris.com">
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
+    <link rel="icon" href="../assets/favicon/favicon.ico">
+    <script>
+        (function () {
+            var theme = 'corporate-light';
+            try {
+                var stored = localStorage.getItem('muts-safaris-theme');
+                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark') theme = stored;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="explore-navbar">
+        <a href="../login.html" class="explore-brand">MUTS_SAFARIS</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="explore-nav-links" id="explore-nav-links">
+            <a href="index.html">Home</a>
+            <a href="packages.html">Packages</a>
+            <a href="accommodation.html" class="active">Accommodation</a>
+            <a href="destinations.html">Destinations</a>
+            <a href="africasa.html">Africasa</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <a href="../login.html" class="explore-login-btn">Login</a>
+    </nav>
+
+    <main class="explore-main">
+        <!-- HERO SECTION -->
+        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/hotels.jpg') center/cover no-repeat;">
+            <div class="hero-content">
+                <span class="hero-badge">Rest in the Wild</span>
+                <h1 class="hero-title">ACCOMMODATION</h1>
+                <p class="hero-subtitle">From luxury lodges to authentic tented camps, find your perfect safari stay.</p>
+            </div>
+        </section>
+
+        <!-- FEATURED ACCOMMODATIONS -->
+        <section class="explore-section">
+            <h2 class="section-title">Featured Accommodations</h2>
+            <p class="explore-section-desc">Discover our most recommended stays that offer exceptional experiences and unmatched comfort.</p>
+            <div class="explore-grid">
+                <div class="experience-card">
+                    <img src="../images/hotels/matteos.jpg" alt="Matteos Italian Restaurant" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="experience-content">
+                        <h3>Matteos Italian Restaurant</h3>
+                        <p>Nestled in Karen, Nairobi, this authentic Italian restaurant offers wood-fired pizzas, homemade pastas, and a rustic garden ambiance. A beloved establishment since 1975, perfect for romantic dinners and family gatherings.</p>
+                        <button onclick="redirectToLogin()" class="btn btn-outline btn-small" style="margin-top: 0.75rem; width: 100%;">View Details</button>
+                    </div>
+                </div>
+                <div class="experience-card">
+                    <img src="../images/hotels/diani-luxury-resort.jpg" alt="Diani Luxury Resort" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="experience-content">
+                        <h3>Diani Luxury Resort</h3>
+                        <p>Experience pure coastal luxury with private beach access, infinity pools, and world-class amenities. This 5-star resort offers breathtaking ocean views and exceptional service on Kenya's south coast.</p>
+                        <button onclick="redirectToLogin()" class="btn btn-outline btn-small" style="margin-top: 0.75rem; width: 100%;">View Details</button>
+                    </div>
+                </div>
+                <div class="experience-card">
+                    <img src="../images/hotels/mombasa-city-hotel.jpg" alt="Mombasa Old Town" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="experience-content">
+                        <h3>Mombasa Old Town</h3>
+                        <p>Stay in the historic heart of Mombasa with traditional Swahili architecture, rooftop terraces, and easy access to Fort Jesus. Experience authentic coastal culture and heritage.</p>
+                        <button onclick="redirectToLogin()" class="btn btn-outline btn-small" style="margin-top: 0.75rem; width: 100%;">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACCOMMODATION CATEGORIES -->
+        <section class="explore-section">
+            <h2 class="section-title">Accommodation Categories</h2>
+            <p class="explore-section-desc">Choose the perfect accommodation category that matches your budget and travel style.</p>
+            <div class="categories-grid categories-grid-4">
+                <div class="category-card">
+                    <img src="../images/hotels/mid-range-category.jpg" alt="Mid Range" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Mid Range</h3>
+                    <p>Comfortable accommodation with great value, modern amenities, and excellent service for the discerning traveler.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/eco-budget-category.jpg" alt="Budget Friendly" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Budget Friendly</h3>
+                    <p>Affordable stays without compromising on comfort. Clean, convenient, and perfect for the adventurous traveler.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/luxury-category.jpg" alt="Luxury" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Luxury</h3>
+                    <p>Five-star experiences with premium amenities, private villas, personalized service, and exclusive locations.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/budget-camp.jpg" alt="Camping" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Camping</h3>
+                    <p>Authentic bush experiences ranging from basic campsites to luxury tented camps with stunning wilderness views.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FACILITIES & ACTIVITIES -->
+        <section class="explore-section">
+            <h2 class="section-title">Facilities & Activities</h2>
+            <p class="explore-section-desc">Enhance your stay with these exceptional facilities and activities available at our properties.</p>
+            <div class="categories-grid categories-grid-5">
+                <div class="category-card">
+                    <img src="../images/hotels/activities/barbeque.jpg" alt="Barbeque" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Barbeque</h3>
+                    <p>Open-air grills with authentic Kenyan nyama choma experiences.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/activities/golfing.jpg" alt="Golfing" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Golfing</h3>
+                    <p>Championship courses with stunning coastal and safari views.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/activities/parties.jpg" alt="Parties" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Parties</h3>
+                    <p>Beach bonfires, sunset cocktails, and special event venues.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/activities/boat-ride.jpg" alt="Boat Riding" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Boat Riding</h3>
+                    <p>Sunset cruises, deep sea fishing, and coastal explorations.</p>
+                </div>
+                <div class="category-card">
+                    <img src="../images/hotels/activities/swimming.jpg" alt="Swimming Pools" class="category-img" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='var(--bg-secondary)'">
+                    <h3>Swimming Pools</h3>
+                    <p>Infinity pools, beachfront pools, and private plunge pools.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready for Your Adventure?</h2>
+                <p>Login to book your accommodation and create unforgettable memories.</p>
+                <a href="../login.html" class="btn btn-primary btn-large">Get Started</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="explore-footer">
+        <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
+        <p>Don't be a Tourist, be a Traveller</p>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/performance.js"></script>
+    <script>
+        // Optimized image loading handler
+        window.addEventListener('load', function() {
+            // Force load all category images
+            document.querySelectorAll('.category-img').forEach(function(img) {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                }
+            });
+            
+            // Add visible class to all cards after load
+            setTimeout(function() {
+                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        });
+
+        // Lazy load observer for better performance
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: '50px 0px' });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+                imageObserver.observe(img);
+            });
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('explore-nav-links').classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.explore-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        function redirectToLogin() {
+            window.location.href = '../login.html';
+        }
+    </script>
+</body>
+</html>
