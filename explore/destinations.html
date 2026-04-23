@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
     <!-- CRITICAL: Prevent background flash - set background BEFORE any rendering -->
     <style>
         html {
@@ -49,7 +51,6 @@
         <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
-        <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
         <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
         <div class="explore-nav-links" id="explore-nav-links">
             <a href="index.html">
@@ -193,6 +194,24 @@
             </div>
         </section>
 
+        <!-- KENYA'S MOUNTAIN REALM -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">Kenya's Mountain Realm: Where the Earth Touches the Sky</h2>
+                <div class="text-block">
+                    <p>
+                        Kenya's mountains are more than geographical features—they're living cathedrals of stone and sky, where altitude transforms both landscape and spirit. From the snow-capped crown of Mount Kenya, Africa's second-highest peak, to the rolling highlands of the Aberdare Range, these mountains create their own climate, culture, and way of life. Here, equatorial sun meets alpine chill, creating microclimates where tropical flowers bloom beside frost-kissed rocks, and where communities have adapted to altitudes that would challenge even the hardiest explorers.
+                    </p>
+                    <p>
+                        The mountain regions of Kenya are biodiversity hotspots, harboring species found nowhere else on Earth. Ancient cedar forests cling to steep slopes, sheltering rare birds and primates. Moorlands sweep across high plateaus, dotted with giant lobelias and groundsels that look like something from another planet. Crystal-clear streams tumble down waterfalls, feeding fertile farmlands where coffee grows in volcanic soil and tea plantations carpet the hillsides. This is where Kenya's agricultural heart beats strongest, producing some of the world's finest coffee and tea.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "In Kenya's mountains, you don't climb to conquer—you ascend to understand. Each thousand feet reveals a new Kenya, a new way of seeing both the land and yourself."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
         <!-- FORESTS -->
         <section id="forests" class="explore-section">
             <h2 class="section-title">Forest Destinations</h2>
@@ -205,6 +224,24 @@
             </div>
         </section>
 
+        <!-- KENYA'S ANCIENT FORESTS -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">Kenya's Ancient Forests: Living Libraries of Biodiversity</h2>
+                <div class="text-block">
+                    <p>
+                        Kenya's forests are living museums of evolution, where trees older than human civilization stand sentinel over secrets of adaptation and survival. From the misty cloud forests of the Aberdare Mountains to the coastal rainforests of the Shimba Hills, these woodlands are biodiversity powerhouses that have shaped Kenya's ecological identity. Here, ancient fig trees with roots like elephant trunks provide shelter for countless species, while bamboo groves sway in mountain winds and palm-fringed rivers cut through dense undergrowth.
+                    </p>
+                    <p>
+                        The forests of Kenya are not just collections of trees—they're complex ecosystems where every layer tells a story. The canopy, far above, hosts birds and monkeys in a perpetual twilight. The understory pulses with life—vibrant orchids, medicinal herbs, and fungi that could revolutionize medicine. The forest floor, rich with decomposing leaves, sustains insects that feed the entire food chain. This vertical complexity creates niches for specialists: birds that never touch the ground, mammals that live their entire lives in the trees, and plants that have evolved to thrive in perpetual shade.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "A Kenyan forest isn't just a collection of trees—it's a vertical universe, where each layer holds its own miracles and mysteries, waiting to be discovered by those who look beyond the obvious."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
         <!-- DESERTS -->
         <section id="deserts" class="explore-section">
             <h2 class="section-title">Desert Destinations</h2>
@@ -214,6 +251,24 @@
                 <div class="experience-card skeleton"></div>
                 <div class="experience-card skeleton"></div>
                 <div class="experience-card skeleton"></div>
+            </div>
+        </section>
+
+        <!-- KENYA'S DESERT FRONTIER -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">Kenya's Desert Frontier: Where Arid Beauty Meets Resilient Life</h2>
+                <div class="text-block">
+                    <p>
+                        Kenya's northern deserts are landscapes of stark beauty and remarkable adaptation, where the harshness of the environment has forged some of nature's most ingenious survival strategies. From the cracked earth of the Chalbi Desert to the shimmering salt flats of Lake Turkana, these arid expanses challenge our perceptions of what life can endure. Here, acacia trees survive on dew alone, camels move like ships across sand seas, and nomadic communities have mastered the art of living with scarcity.
+                    </p>
+                    <p>
+                        The deserts of Kenya are not lifeless voids—they're theaters of survival where every adaptation tells a story of resilience. Flamingos paint the shores of alkaline lakes with pink, while gerenuks—giraffes of the desert—stretch impossibly long necks to browse thorny shrubs. Volcanic craters dot the landscape, remnants of Earth's fiery past, and ancient rock formations speak of geological dramas played out over millions of years. In this harsh environment, water is life, and the communities that call these deserts home have developed sophisticated systems for harvesting it from unlikely sources.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "Kenya's deserts teach us that true beauty isn't always lush and green—sometimes it's found in the stark poetry of survival, where life persists against impossible odds."
+                    </blockquote>
+                </div>
             </div>
         </section>
 
@@ -422,6 +477,106 @@
         function redirectToLogin() {
             window.location.href = '../login.html';
         }
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        }
+
+        // Setup scroll-triggered animations
+        function setupScrollAnimations() {
+            var titleObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+            var textObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+            var cardObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            var ctaObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            setTimeout(function() {
+                document.querySelectorAll('.section-title').forEach(function(el) { titleObserver.observe(el); });
+                document.querySelectorAll('.text-content-section').forEach(function(el) { textObserver.observe(el); });
+                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) { cardObserver.observe(el); });
+                document.querySelectorAll('.cta-section').forEach(function(el) { ctaObserver.observe(el); });
+            }, 300);
+        }
+
+        // Parallax effect
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    var hero = document.querySelector('.landing-hero');
+                    if (hero && hero.classList.contains('loaded')) {
+                        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                        var rate = scrolled * 0.25;
+                        hero.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+            updateScrollProgress();
+        });
+
+        // Mouse tracking for glow
+        document.addEventListener('mousemove', function(e) {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup animations
+            setTimeout(setupScrollAnimations, 100);
+
+            // Initial scroll progress
+            updateScrollProgress();
+
+            // Hero loaded state
+            setTimeout(function() {
+                var hero = document.querySelector('.landing-hero');
+                if (hero) {
+                    hero.classList.add('loaded');
+                }
+            }, 300);
+        });
     </script>
 </body>
 </html>

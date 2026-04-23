@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
     <script>
         (function () {
             var theme = 'corporate-light';
@@ -90,25 +92,170 @@
             </div>
         </section>
 
-        <section class="featured-section">
-            <h2 class="section-title">Coastal Destinations</h2>
-            <div class="destinations-grid" id="beaches-grid"></div>
+        <!-- DIANI BEACH -->
+        <section class="beach-section explore-section">
+            <div class="experience-card">
+                <img src="../images/beaches/diani-beach.jpg" alt="Diani Beach" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Diani Beach</h3>
+                    <p>Pristine white sand beach with turquoise waters, ranked among Africa's top beaches.</p>
+                    <span>From $800</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Diani Beach: Paradise Found in the Heart of the Coast</h2>
+                    <div class="text-block">
+                        <p>
+                            Diani Beach stands as Kenya's crown jewel of coastal luxury, a 22-kilometer stretch of pristine white sand that has earned its place among Africa's most celebrated beaches. Here, the Indian Ocean's turquoise waters meet powdery silica sands in what can only be described as a postcard come to life. Palm trees sway gently in the sea breeze, while traditional Maasai villages dot the landscape just inland, creating a perfect fusion of beach paradise and cultural authenticity.
+                        </p>
+                        <p>
+                            What sets Diani apart is its extraordinary biodiversity—both above and below the waves. The coral gardens that fringe the shore teem with colorful fish and marine life, making it a snorkeler's dream. Above water, the beach serves as a sanctuary for bird species, from the majestic fish eagles to flocks of flamingos that sometimes visit the nearby lagoons. The waters are calm and clear, perfect for swimming, while the consistent offshore breeze makes it ideal for water sports like kitesurfing and windsurfing.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "Diani Beach isn't just beautiful—it's alive. Every grain of sand tells a story, every wave brings a secret, and every sunset paints the sky with colors that seem too perfect to be real."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- THE KENYAN COAST: WHERE OCEAN MEETS CULTURE -->
-        <section class="text-content-section explore-section">
-            <div class="content-container">
-                <h2 class="section-title">The Kenyan Coast: Where Ocean Meets Culture</h2>
-                <div class="text-block">
-                    <p>
-                        Kenya's coastline stretches for over 350 kilometers along the Indian Ocean, a breathtaking amalgamation of powder-white sands, turquoise waters, and a cultural tapestry woven over centuries of Swahili civilization. Here, the rhythm of the ocean dictates the pace of life—dhows sail at dawn, kitesurfers dance with afternoon winds, and fishermen return at sunset with the day's catch. Whether you seek complete tranquility on an untouched island, vibrant nightlife in a beach town, or world-class snorkeling in protected marine parks, Kenya's beaches deliver an experience unlike any other.
-                    </p>
-                    <p>
-                        But the coast is more than just beautiful beaches—it's a living museum of East African history and culture. The ancient stone town of Lamu, a UNESCO World Heritage Site, transports you to a 14th-century Swahili settlement where donkeys remain the primary mode of transport and life moves to the rhythm of the mosque call. In Malindi, Arab and Portuguese influences blend in the architecture and cuisine. Watamu's coral gardens teem with marine life, while Diani's iconic palm-fringed shores attract travelers from around the world. Every beach tells a story—of traders, explorers, and the resilient coastal communities that call this paradise home.
-                    </p>
-                    <blockquote class="travel-quote">
-                        "On Kenya's coast, you discover that paradise isn't just a place—it's a feeling. The warm Indian Ocean breeze, the scent of coconut and spices in the air, and the gentle sway of a hammock between two coconut trees become your definition of peace."
-                    </blockquote>
+        <!-- MALINDI BEACH -->
+        <section class="beach-section explore-section">
+            <div class="experience-card">
+                <img src="../images/beaches/malindi.jpg" alt="Malindi" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Malindi</h3>
+                    <p>Historic coastal town with beautiful beaches and coral reefs.</p>
+                    <span>From $650</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Malindi: Where History Meets the Sea</h2>
+                    <div class="text-block">
+                        <p>
+                            Malindi is Kenya's living bridge between past and present, a coastal town where ancient Portuguese fortresses stand watch over modern beach resorts, and where the traditions of Swahili culture blend seamlessly with contemporary coastal life. Founded over 800 years ago, Malindi served as a vital trading post along the ancient Spice Route, connecting Africa with Arabia, India, and the Far East. Today, this rich history manifests in the well-preserved Portuguese Chapel, the ancient baobab trees that line the streets, and the distinctive Swahili architecture that gives the town its unique character.
+                        </p>
+                        <p>
+                            The beaches of Malindi are as diverse as its history—from the protected coves perfect for family swimming to the rugged stretches ideal for surfing and water sports. The coral reefs that lie just offshore create natural barriers that protect the shoreline while providing world-class snorkeling and diving opportunities. Fishermen still use traditional dhows to harvest the sea's bounty, and the fresh seafood served in local restaurants reflects this direct connection to the ocean. Malindi's blend of historical significance and natural beauty makes it a destination that appeals to those seeking depth alongside their beach holiday.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "In Malindi, every stone and every wave carries the weight of history. The sea that brought explorers and traders now welcomes travelers seeking connection to Africa's storied past."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAMU ISLAND -->
+        <section class="beach-section explore-section">
+            <div class="experience-card">
+                <img src="../images/beaches/lamu.jpg" alt="Lamu Island" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Lamu Island</h3>
+                    <p>Ancient Swahili island with rich culture and peaceful beaches.</p>
+                    <span>From $900</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Lamu Island: A UNESCO Treasure of Timeless Beauty</h2>
+                    <div class="text-block">
+                        <p>
+                            Lamu Island is a UNESCO World Heritage Site that transports visitors to a different era entirely—a 14th-century Swahili settlement where time seems to have stood still. This car-free island, accessible only by boat or small aircraft, preserves the architectural and cultural traditions of the Swahili coast in their purest form. Stone houses with intricate wooden carvings, narrow winding alleys, and flat-roofed mosques create an atmosphere of serene beauty that has captivated visitors for centuries. Donkeys remain the primary mode of transport, and the rhythm of life follows the traditional Islamic calendar rather than the modern clock.
+                        </p>
+                        <p>
+                            The beaches of Lamu are pristine and peaceful, with powdery white sands that seem untouched by modern development. Mangrove forests fringe the shorelines, creating natural harbors and supporting rich ecosystems of marine life. The waters are calm and clear, perfect for traditional dhow sailing or simply floating in the warm Indian Ocean. Lamu's isolation has preserved not just its architecture but its cultural authenticity—the call to prayer echoes through narrow streets, traditional Swahili cuisine is prepared in wood-fired ovens, and the art of storytelling and music remains central to community life.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "Lamu Island teaches us that true beauty requires no modern embellishments. Here, the simple elegance of coral stone, white sand, and turquoise sea creates a paradise that has endured for centuries."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WATAMU BEACH -->
+        <section class="beach-section explore-section">
+            <div class="experience-card">
+                <img src="../images/beaches/watamu.jpg" alt="Watamu" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Watamu</h3>
+                    <p>Marine park with excellent snorkeling and diving sites.</p>
+                    <span>From $750</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Watamu: Kenya's Underwater Paradise</h2>
+                    <div class="text-block">
+                        <p>
+                            Watamu is Kenya's premier marine conservation destination, a coastal village that has transformed itself into a sanctuary for both terrestrial and marine wildlife. The Watamu Marine National Park and Reserve, established in 1968, protects one of Kenya's most biodiverse coral ecosystems. Here, the Indian Ocean reveals its hidden treasures—vibrant coral gardens teeming with colorful fish, majestic turtles gliding through crystal-clear waters, and even the occasional dolphin pod playing in the waves. The marine park encompasses both the fragile coral reefs and the mangrove forests that fringe the shore, creating a complete ecosystem that supports an extraordinary variety of marine life.
+                        </p>
+                        <p>
+                            Beyond its underwater wonders, Watamu offers the authentic charm of a traditional Kenyan coastal village. Local communities have embraced conservation tourism, offering traditional dhow trips, mangrove forest walks, and cultural experiences that deepen visitors' connection to the region. The beaches are pristine and relatively undeveloped, allowing for peaceful swims and sunset walks. Watamu's commitment to sustainable tourism means that every visit directly supports marine conservation efforts, creating a virtuous cycle where tourism funds protection and education ensures the continuation of this underwater paradise for future generations.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "In Watamu, the ocean reveals its secrets willingly. Every dive, every snorkel, every swim becomes a revelation of colors, shapes, and life forms that exist nowhere else on Earth."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOMBASA NORTH BEACH -->
+        <section class="beach-section explore-section">
+            <div class="experience-card">
+                <img src="../images/beaches/mombasa.jpg" alt="Mombasa North" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Mombasa North</h3>
+                    <p>Popular beach resort area with diverse activities.</p>
+                    <span>From $500</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Mombasa North: Urban Beach Life with Island Vibes</h2>
+                    <div class="text-block">
+                        <p>
+                            Mombasa North Coast represents the vibrant, accessible face of Kenyan beach tourism—a collection of beach resorts and boutique hotels that offer world-class amenities while remaining connected to the cultural heartbeat of Mombasa city. This stretch of coastline, easily accessible from Moi International Airport, has become Kenya's primary beach gateway, welcoming travelers from around the world with its combination of luxury, culture, and convenience. The beaches here are diverse—some with the powdery white sands of luxury resorts, others with the character of local fishing villages.
+                        </p>
+                        <p>
+                            What makes Mombasa North special is its location at the crossroads of cultures and experiences. You're never far from the ancient stone city of Mombasa, with its Fort Jesus, spice markets, and Swahili architecture. Yet you can retreat to secluded coves for private beach experiences or join the vibrant resort scene with its water sports, spa treatments, and international cuisine. The area has become a hub for adventure tourism, offering everything from deep-sea fishing to cultural safaris into nearby communities. Mombasa North demonstrates that beach holidays can be both luxurious and culturally immersive, blending modern comfort with authentic East African experiences.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "Mombasa North shows that paradise can be both accessible and authentic. Here, the gateway to Africa opens onto beaches that welcome everyone, from first-time visitors to seasoned explorers."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NYALI BEACH -->
+        <section class="beach-section explore-section">
+            <div class="experience-card">
+                <img src="../images/beaches/nyali.jpg" alt="Nyali Beach" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Nyali Beach</h3>
+                    <p>Family-friendly beach with calm waters and amenities.</p>
+                    <span>From $550</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Nyali Beach: Mombasa's Family Paradise</h2>
+                    <div class="text-block">
+                        <p>
+                            Nyali Beach is Mombasa's family-friendly answer to coastal perfection—a calm, protected stretch of shoreline that offers safety and comfort for visitors of all ages. Located just north of Mombasa Island, Nyali combines the convenience of urban accessibility with the tranquility of a protected marine environment. The beach's gentle slope and calm waters make it ideal for children to play and swim safely, while adults can relax in the shade of mature coconut palms or enjoy the resort amenities that line the shore.
+                        </p>
+                        <p>
+                            What sets Nyali apart is its thoughtful balance of natural beauty and family-oriented development. The beach maintains its natural charm while offering amenities like shaded picnic areas, children's play zones, and easy access to restaurants and shops. The coral reef that lies offshore creates a natural barrier that protects swimmers while providing excellent snorkeling opportunities for older children and adults. Nyali's location makes it easy to combine beach time with cultural exploration—day trips to Mombasa's old town, visits to spice farms, or even safari excursions into Tsavo National Park are all feasible from this convenient base.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "Nyali Beach proves that paradise can be both beautiful and welcoming. Here, families create memories that become the foundation of a lifetime love affair with Kenya's coastal magic."
+                        </blockquote>
+                    </div>
                 </div>
             </div>
         </section>
@@ -147,7 +294,8 @@
             img.classList.add('loaded');
         }
         
-var staticBeaches = [
+        // Beach data for reference - now using individual cards above text sections
+        var staticBeaches = [
             { name: 'Diani Beach', description: 'Pristine white sand beach with turquoise waters, ranked among Africa\'s top beaches.', price: 'From $800', image: 'beaches/diani-beach.jpg' },
             { name: 'Malindi', description: 'Historic coastal town with beautiful beaches and coral reefs.', price: 'From $650', image: 'beaches/malindi.jpg' },
             { name: 'Lamu Island', description: 'Ancient Swahili island with rich culture and peaceful beaches.', price: 'From $900', image: 'beaches/lamu.jpg' },
@@ -155,24 +303,6 @@ var staticBeaches = [
             { name: 'Mombasa North', description: 'Popular beach resort area with diverse activities.', price: 'From $500', image: 'beaches/mombasa.jpg' },
             { name: 'Nyali Beach', description: 'Family-friendly beach with calm waters and amenities.', price: 'From $550', image: 'beaches/nyali.jpg' }
         ];
-        
-        function renderBeaches(items) {
-            var html = '';
-            items.forEach(function(item) {
-                html += '<div class="experience-card">' +
-                    '<img src="' + img(item.image) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
-                    '<div class="experience-content">' +
-                        '<h3>' + item.name + '</h3>' +
-                        '<p>' + item.description + '</p>' +
-                        '<span>' + item.price + '</span>' +
-                    '</div>' +
-                '</div>';
-            });
-            document.getElementById('beaches-grid').innerHTML = html;
-        }
-
-        // Show static data immediately - no waiting
-        renderBeaches(staticBeaches);
         
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
@@ -236,6 +366,104 @@ var staticBeaches = [
 
     <script src="../js/auth.js"></script>
     <script>
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        }
+
+        // Setup scroll-triggered animations
+        function setupScrollAnimations() {
+            var titleObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+            var textObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+            var cardObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            var ctaObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            setTimeout(function() {
+                document.querySelectorAll('.section-title').forEach(function(el) { titleObserver.observe(el); });
+                document.querySelectorAll('.text-content-section').forEach(function(el) { textObserver.observe(el); });
+                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) { cardObserver.observe(el); });
+                document.querySelectorAll('.cta-section').forEach(function(el) { ctaObserver.observe(el); });
+            }, 300);
+        }
+
+        // Parallax effect
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    var hero = document.querySelector('.landing-hero');
+                    if (hero && hero.classList.contains('loaded')) {
+                        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                        var rate = scrolled * 0.25;
+                        hero.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+            updateScrollProgress();
+        });
+
+        // Mouse tracking for glow
+        document.addEventListener('mousemove', function(e) {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+
+        // Hero loaded state
+        setTimeout(function() {
+            var hero = document.querySelector('.landing-hero');
+            if (hero) {
+                hero.classList.add('loaded');
+            }
+        }, 300);
+    </script>
+    <script>
+        // Setup animations on page load
+        window.addEventListener('load', function() {
+            setupScrollAnimations();
+            updateScrollProgress();
+        });
+
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');

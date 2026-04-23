@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
     <script>
         (function () {
             var theme = 'corporate-light';
@@ -434,6 +436,13 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+            document.getElementById('mobile-nav-backdrop').classList.toggle('active');
+        });
+
+        document.getElementById('mobile-nav-backdrop').addEventListener('click', function() {
+            document.getElementById('mobile-menu-btn').classList.remove('active');
+            document.getElementById('explore-nav-links').classList.remove('active');
+            document.getElementById('mobile-nav-backdrop').classList.remove('active');
         });
 
         // Navbar scroll effect
@@ -478,21 +487,106 @@
         function redirectToLogin() {
             window.location.href = '../login.html';
         }
-        
-        // Preserve scroll position for mobile
-        const originalOpenBlogPost = openBlogPost;
-        openBlogPost = function(index) {
-            scrollPosition = window.scrollY;
-            originalOpenBlogPost(index);
-        };
-        
-        const originalCloseBlogPost = closeBlogPost;
-        closeBlogPost = function() {
-            originalCloseBlogPost();
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        }
+
+        // Setup scroll-triggered animations
+        function setupScrollAnimations() {
+            var titleObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+            var textObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+            var cardObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            var ctaObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
             setTimeout(function() {
-                window.scrollTo(0, scrollPosition);
-            }, 100);
-        };
+                document.querySelectorAll('.section-title').forEach(function(el) { titleObserver.observe(el); });
+                document.querySelectorAll('.text-content-section').forEach(function(el) { textObserver.observe(el); });
+                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) { cardObserver.observe(el); });
+                document.querySelectorAll('.cta-section').forEach(function(el) { ctaObserver.observe(el); });
+            }, 300);
+        }
+
+        // Parallax effect
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    var hero = document.querySelector('.landing-hero');
+                    if (hero && hero.classList.contains('loaded')) {
+                        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                        var rate = scrolled * 0.25;
+                        hero.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+            updateScrollProgress();
+        });
+
+        // Mouse tracking for glow
+        document.addEventListener('mousemove', function(e) {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup animations
+            setTimeout(setupScrollAnimations, 100);
+
+            // Initial scroll progress
+            updateScrollProgress();
+
+            // Hero loaded state
+            setTimeout(function() {
+                var hero = document.querySelector('.landing-hero');
+                if (hero) {
+                    hero.classList.add('loaded');
+                }
+            }, 300);
+        });
     </script>
 </body>
 </html>

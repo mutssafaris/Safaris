@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
     <script>
         (function () {
             var theme = 'corporate-light';
@@ -90,11 +92,6 @@
             </div>
         </section>
 
-        <section class="featured-section">
-            <h2 class="section-title">Featured Packages</h2>
-            <div class="destinations-grid" id="packages-grid"></div>
-        </section>
-
         <!-- CRAFTING YOUR PERFECT SAFARI -->
         <section class="text-content-section explore-section">
             <div class="content-container">
@@ -109,6 +106,174 @@
                     <blockquote class="travel-quote">
                         "The right safari package doesn't just show you Africa—it reveals its secrets, one sunrise at a time, until you realize you've fallen in love with a continent."
                     </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLASSIC SAFARI PACKAGE -->
+        <section class="package-section explore-section">
+            <div class="experience-card">
+                <img src="../images/tours/maasai-mara.jpg" alt="Classic Safari" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Classic Safari</h3>
+                    <p>5 days exploring the best of Kenya's parks</p>
+                    <span>$2,500/person</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Classic Safari: Kenya's Iconic Wildlife Symphony</h2>
+                    <div class="text-block">
+                        <p>
+                            The Classic Safari is Kenya's calling card, a carefully orchestrated introduction to the country's most spectacular wildlife encounters. Over five days, you'll traverse the golden triangle of game reserves—Maasai Mara, Amboseli, and Tsavo—witnessing the Big Five in their natural habitats. This isn't just sightseeing; it's an immersion in the rhythms of the wild, where you'll learn to anticipate the drama of predator and prey, understand migration patterns, and appreciate the delicate balance that sustains Kenya's ecosystems.
+                        </p>
+                        <p>
+                            What makes our Classic Safari special is the seamless flow between destinations, the insider knowledge of our guides, and the perfect balance of comfort and authenticity. You'll stay in characterful lodges that blend colonial charm with modern amenities, enjoy meals prepared with local ingredients, and participate in activities that deepen your connection to Kenya's landscapes. Whether watching lions on a kill or elephants at a waterhole, every moment is crafted to create memories that will last a lifetime.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "A Classic Safari isn't just about seeing animals—it's about understanding the ancient dance of life that has played out on these plains for millennia."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LUXURY ESCAPE PACKAGE -->
+        <section class="package-section explore-section">
+            <div class="experience-card">
+                <img src="../images/hotels-luxury.jpg" alt="Luxury Escape" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Luxury Escape</h3>
+                    <p>7 days in premium lodges with exclusive experiences</p>
+                    <span>$5,000/person</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Luxury Escape: Indulgence Meets Wilderness</h2>
+                    <div class="text-block">
+                        <p>
+                            Our Luxury Escape redefines safari indulgence, where every detail is elevated to create an experience of pure opulence. Seven days of seamless luxury transport you between Kenya's finest private conservancies and exclusive lodges, where champagne breakfasts on private verandas meet gourmet dinners under the stars. This isn't just a safari—it's a journey where the wilderness becomes your personal playground, with helicopter transfers between destinations, private game drives in custom vehicles, and access to experiences reserved for the most discerning travelers.
+                        </p>
+                        <p>
+                            The Luxury Escape includes bespoke touches that transform ordinary moments into extraordinary memories: personal chefs preparing meals tailored to your preferences, spa treatments overlooking wildlife, and evenings spent in villas with infinity pools that merge seamlessly with the savannah. Our expert guides provide insights usually reserved for researchers, while our partnerships with luxury operators ensure you always have the best rooms, the quietest locations, and the most exclusive access.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "True luxury in the wild isn't about excess—it's about having the entire African landscape as your private domain, with every comfort anticipated and every moment perfected."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAMILY ADVENTURE PACKAGE -->
+        <section class="package-section explore-section">
+            <div class="experience-card">
+                <img src="../images/experiences/family.jpg" alt="Family Adventure" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Family Adventure</h3>
+                    <p>6 days perfect for families with kids</p>
+                    <span>$3,200/person</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Family Adventure: Creating Magical Memories Together</h2>
+                    <div class="text-block">
+                        <p>
+                            Family safaris are about more than just seeing animals—they're about creating shared experiences that become the stories your family tells for generations. Our six-day Family Adventure is designed around children's natural curiosity and attention spans, with game drives that alternate between thrilling wildlife encounters and relaxed picnic lunches. You'll stay in family-friendly lodges with kid-oriented amenities, participate in age-appropriate activities, and learn about conservation through interactive experiences that make environmental stewardship fun and meaningful.
+                        </p>
+                        <p>
+                            What sets our Family Adventure apart is the careful balance of excitement and education. Children participate in junior ranger programs, learn about Maasai culture through storytelling sessions, and engage with wildlife through photography and drawing activities. Parents enjoy dedicated adult time during certain activities, while the whole family comes together for magical moments like hot-air balloon safaris over the Mara or sunset celebrations with traditional Maasai dances. Every detail is crafted to ensure both children and adults return home with hearts full of wonder and minds expanded by new perspectives.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "A family safari isn't just a trip—it's the foundation of a lifetime love affair with Africa's wild beauty, shared between generations."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HONEYMOON SPECIAL PACKAGE -->
+        <section class="package-section explore-section">
+            <div class="experience-card">
+                <img src="../images/experiences/honeymoon.jpg" alt="Honeymoon Special" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Honeymoon Special</h3>
+                    <p>Romantic getaway in luxury tented camps</p>
+                    <span>$4,500/person</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Honeymoon Special: Romance Under African Stars</h2>
+                    <div class="text-block">
+                        <p>
+                            Begin your life together in one of Africa's most romantic settings, where the wild beauty of Kenya becomes the backdrop for your love story. Our Honeymoon Special creates intimate, unforgettable moments in luxury tented camps that combine the romance of traditional safari with modern comforts. Four days of privacy and indulgence allow you to focus on each other while the African wilderness provides a spectacular stage for your celebration.
+                        </p>
+                        <p>
+                            The Honeymoon Special includes touches that transform ordinary romance into extraordinary memories: private dining experiences under the stars, couples' massages at sunset viewpoints, and personalized ceremonies that can incorporate Maasai traditions. You'll have your own guide who understands the importance of timing—knowing when to give you space for quiet moments and when to position you perfectly for wildlife encounters that will take your breath away. Every detail, from the champagne chilling in your room to the Maasai beads exchanged during your welcome, is designed to create a honeymoon that becomes the stuff of legend.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "In Kenya's wilderness, love finds its perfect mirror—wild, passionate, and utterly unforgettable."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BIRDWATCHING SAFARI PACKAGE -->
+        <section class="package-section explore-section">
+            <div class="experience-card">
+                <img src="../images/gallery/wildlife/flamingo-lake.jpg" alt="Birdwatching Safari" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Birdwatching Safari</h3>
+                    <p>Focus on Kenya's 1,000+ bird species</p>
+                    <span>$2,800/person</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Birdwatching Safari: Wings of Wonder Across Kenya</h2>
+                    <div class="text-block">
+                        <p>
+                            Kenya is a birdwatcher's paradise, home to over 1,000 species including many found nowhere else on Earth. Our specialized Birdwatching Safari takes you to the country's most ornithologically rich habitats, from the flamingo-filled lakes of the Rift Valley to the montane forests where rare turacos and trogons hide. Five days of expert guidance help you discover Kenya's avian treasures, with early morning starts to catch birds at their most active and evenings spent identifying nocturnal species by their calls.
+                        </p>
+                        <p>
+                            Our birdwatching packages are led by ornithologists with decades of experience, who combine scientific knowledge with practical field skills. You'll learn to identify birds by song, flight pattern, and behavior, and understand how Kenya's diverse habitats support such incredible avian diversity. From the massive flocks of lesser flamingos at Lake Nakuru to the elusive African crowned eagle in the highlands, every sighting becomes a lesson in ecology and adaptation. Whether you're a seasoned birder or just discovering this hobby, our safari provides the perfect blend of education, excitement, and natural beauty.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "Birdwatching in Kenya isn't just about ticking species off a list—it's about discovering how birds paint the sky with stories of migration, survival, and natural harmony."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHOTOGRAPHY TOUR PACKAGE -->
+        <section class="package-section explore-section">
+            <div class="experience-card">
+                <img src="../images/gallery/wildlife/cheetah-hunt.jpg" alt="Photography Tour" loading="lazy" onload="onImageLoad(this)">
+                <div class="experience-content">
+                    <h3>Photography Tour</h3>
+                    <p>Professional wildlife photography guidance</p>
+                    <span>$3,500/person</span>
+                </div>
+            </div>
+            <div class="text-content-section">
+                <div class="content-container">
+                    <h2 class="section-title">Photography Tour: Capturing Kenya's Wild Spirit</h2>
+                    <div class="text-block">
+                        <p>
+                            For photographers seeking to capture Kenya's raw beauty and wildlife drama, our Photography Tour provides professional guidance in the country's most photogenic locations. Six days of expert-led shoots combine technical instruction with insider knowledge of animal behavior and lighting conditions. You'll learn to anticipate decisive moments—from a cheetah's explosive sprint to an elephant's majestic approach—and use Kenya's diverse landscapes as natural studios for creating images that tell stories of the wild.
+                        </p>
+                        <p>
+                            Our photography packages are led by professional wildlife photographers who understand both the technical aspects of the craft and the artistic vision needed to create compelling images. You'll work with premium equipment, learn composition techniques specific to wildlife photography, and receive personalized feedback on your shots. Whether you're shooting with a smartphone or DSLR, our tours adapt to your skill level while pushing you to see Kenya through a photographer's eye. The result isn't just beautiful images—it's a deeper understanding of how light, movement, and emotion combine to capture the essence of Africa's wilderness.
+                        </p>
+                        <blockquote class="travel-quote">
+                            "Photography in Kenya teaches you that the best shots aren't taken—they're felt. Every image becomes a window into the soul of the wild."
+                        </blockquote>
+                    </div>
                 </div>
             </div>
         </section>
@@ -147,6 +312,7 @@
             img.classList.add('loaded');
         }
         
+        // Package data for reference - now using individual cards above text sections
         var staticPackages = [
             { name: 'Classic Safari', description: '5 days exploring the best of Kenya\'s parks', price: '$2,500/person', image: 'tours/maasai-mara.jpg' },
             { name: 'Luxury Escape', description: '7 days in premium lodges with exclusive experiences', price: '$5,000/person', image: 'hotels-luxury.jpg' },
@@ -155,23 +321,6 @@
             { name: 'Birdwatching Safari', description: 'Focus on Kenya\'s 1,000+ bird species', price: '$2,800/person', image: 'gallery/wildlife/flamingo-lake.jpg' },
             { name: 'Photography Tour', description: 'Professional wildlife photography guidance', price: '$3,500/person', image: 'gallery/wildlife/cheetah-hunt.jpg' }
         ];
-        
-        function renderPackages(items) {
-            var html = '';
-            items.forEach(function(item) {
-                html += '<div class="experience-card">' +
-                    '<img src="' + img(item.image) + '" alt="' + item.name + '" loading="lazy" onload="onImageLoad(this)">' +
-                    '<div class="experience-content">' +
-                        '<h3>' + item.name + '</h3>' +
-                        '<p>' + item.description + '</p>' +
-                        '<span>' + item.price + '</span>' +
-                    '</div>' +
-                '</div>';
-            });
-            document.getElementById('packages-grid').innerHTML = html;
-        }
-        
-        renderPackages(staticPackages);
         
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
@@ -235,9 +384,17 @@
 
     <script src="../js/auth.js"></script>
     <script>
+        // Mobile menu button event listener
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+            document.getElementById('mobile-nav-backdrop').classList.toggle('active');
+        });
+
+        document.getElementById('mobile-nav-backdrop').addEventListener('click', function() {
+            document.getElementById('mobile-menu-btn').classList.remove('active');
+            document.getElementById('explore-nav-links').classList.remove('active');
+            document.getElementById('mobile-nav-backdrop').classList.remove('active');
         });
 
         // Navbar scroll effect
@@ -282,6 +439,106 @@
         function redirectToLogin() {
             window.location.href = '../login.html';
         }
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        }
+
+        // Setup scroll-triggered animations
+        function setupScrollAnimations() {
+            var titleObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+            var textObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+            var cardObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            var ctaObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            setTimeout(function() {
+                document.querySelectorAll('.section-title').forEach(function(el) { titleObserver.observe(el); });
+                document.querySelectorAll('.text-content-section').forEach(function(el) { textObserver.observe(el); });
+                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) { cardObserver.observe(el); });
+                document.querySelectorAll('.cta-section').forEach(function(el) { ctaObserver.observe(el); });
+            }, 300);
+        }
+
+        // Parallax effect
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    var hero = document.querySelector('.landing-hero');
+                    if (hero && hero.classList.contains('loaded')) {
+                        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                        var rate = scrolled * 0.25;
+                        hero.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+            updateScrollProgress();
+        });
+
+        // Mouse tracking for glow
+        document.addEventListener('mousemove', function(e) {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup animations
+            setTimeout(setupScrollAnimations, 100);
+
+            // Initial scroll progress
+            updateScrollProgress();
+
+            // Hero loaded state
+            setTimeout(function() {
+                var hero = document.querySelector('.landing-hero');
+                if (hero) {
+                    hero.classList.add('loaded');
+                }
+            }, 300);
+        });
     </script>
 </body>
 </html>

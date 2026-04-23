@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
     <!-- CRITICAL: Prevent background flash - set background BEFORE any rendering -->
     <style>
         html {
@@ -49,7 +51,6 @@
         <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
-        <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
         <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
         <div class="explore-nav-links" id="explore-nav-links">
             <a href="index.html">
@@ -302,6 +303,98 @@
     <script src="../js/auth.js"></script>
     <script src="../js/performance.js"></script>
     <script>
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        }
+
+        // Setup scroll-triggered animations
+        function setupScrollAnimations() {
+            var titleObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+            var textObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+            var cardObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            var ctaObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            setTimeout(function() {
+                document.querySelectorAll('.section-title').forEach(function(el) { titleObserver.observe(el); });
+                document.querySelectorAll('.text-content-section').forEach(function(el) { textObserver.observe(el); });
+                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) { cardObserver.observe(el); });
+                document.querySelectorAll('.cta-section').forEach(function(el) { ctaObserver.observe(el); });
+            }, 300);
+        }
+
+        // Parallax effect
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    var hero = document.querySelector('.landing-hero');
+                    if (hero && hero.classList.contains('loaded')) {
+                        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                        var rate = scrolled * 0.25;
+                        hero.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+            updateScrollProgress();
+        });
+
+        // Mouse tracking for glow
+        document.addEventListener('mousemove', function(e) {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+
+        // Hero loaded state
+        setTimeout(function() {
+            var hero = document.querySelector('.landing-hero');
+            if (hero) {
+                hero.classList.add('loaded');
+            }
+        }, 300);
+    </script>
+    <script>
         // Optimized image loading handler
         window.addEventListener('load', function() {
             // Force load all category images
@@ -310,13 +403,12 @@
                     img.classList.add('loaded');
                 }
             });
-            
-            // Add visible class to all cards after load
-            setTimeout(function() {
-                document.querySelectorAll('.experience-card, .category-card').forEach(function(el) {
-                    el.classList.add('visible');
-                });
-            }, 100);
+
+            // Setup animations
+            setupScrollAnimations();
+
+            // Initial scroll progress
+            updateScrollProgress();
         });
 
         // Lazy load observer for better performance
