@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050510">
+    <meta name="theme-color" content="#002147">
     <meta name="description" content="Accommodation - Muts Safaris. Find luxury hotels, lodges and camps across Kenya.">
     <meta name="keywords" content="safari accommodation, kenya hotels, safari lodges, tented camps, luxury safari">
     <meta name="author" content="Muts Safaris">
@@ -20,12 +20,24 @@
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- CRITICAL: Prevent background flash - set background BEFORE any rendering -->
+    <style>
+        html {
+            background: #f5f9fd !important;
+            background-size: 300% 300% !important;
+            background-attachment: fixed !important;
+        }
+        html[data-theme="dark"] { background: #050510 !important; }
+        html[data-theme="corporate-light"] { background: #f5f9fd !important; }
+        html[data-theme="corporate-dark"] { background: #0f172a !important; }
+        html[data-theme="light"] { background: #f5f9fd !important; }
+    </style>
     <script>
         (function () {
             var theme = 'corporate-light';
             try {
                 var stored = localStorage.getItem('muts-safaris-theme');
-                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark') theme = stored;
+                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark' || stored === 'light') theme = stored;
             } catch (e) {}
             document.documentElement.setAttribute('data-theme', theme);
         })();
@@ -37,22 +49,52 @@
         <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
+        <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+        <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
         <div class="explore-nav-links" id="explore-nav-links">
-            <a href="index.html">Home</a>
-            <a href="packages.html">Packages</a>
-            <a href="accommodation.html" class="active">Accommodation</a>
-            <a href="destinations.html">Destinations</a>
-            <a href="africasa.html">Africasa</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
+            <a href="index.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Home
+            </a>
+            <a href="beaches.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h-10a1 1 0 01-1-1v-8a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1z"/><path d="M2 20h20"/><path d="M5 20v-4"/><path d="M9 20v-2"/><path d="M13 20v-6"/></svg>
+                Beaches
+            </a>
+            <a href="packages.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="16" y1="10" x2="8" y2="10"/><line x1="16" y1="14" x2="8" y2="14"/></svg>
+                Packages
+            </a>
+            <a href="accommodation.html" class="active">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Accommodation
+            </a>
+            <a href="destinations.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Destinations
+            </a>
+            <a href="africasa.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Africasa
+            </a>
+            <a href="gallery.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2v14z"/><circle cx="12" cy="13" r="4"/></svg>
+                Gallery
+            </a>
+            <a href="blog.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Blog
+            </a>
+            <a href="contact.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Contact
+            </a>
         </div>
         <a href="../login.html" class="explore-login-btn">Login</a>
     </nav>
 
     <main class="explore-main">
         <!-- HERO SECTION -->
-        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/hotels.jpg') center/cover no-repeat;">
+        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(0,33,71,0.04) 0%, rgba(0,33,71,0.04) 100%), url('../images/hero/hotels.jpg') center/cover no-repeat;">
             <div class="hero-content">
                 <span class="hero-badge">Rest in the Wild</span>
                 <h1 class="hero-title">ACCOMMODATION</h1>
@@ -88,6 +130,24 @@
                         <p>Stay in the historic heart of Mombasa with traditional Swahili architecture, rooftop terraces, and easy access to Fort Jesus. Experience authentic coastal culture and heritage.</p>
                         <button onclick="redirectToLogin()" class="btn btn-outline btn-small" style="margin-top: 0.75rem; width: 100%;">View Details</button>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE ART OF SAFARI LODGING -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">Where the Wild Meets Welcome: The Art of Safari Lodging</h2>
+                <div class="text-block">
+                    <p>
+                        Your accommodation is more than just a place to sleep—it's your front-row seat to the African wilderness. From the moment you arrive at a secluded bush camp to the final sunrise over the savannah, where you stay shapes how you experience Kenya's wild heart. Whether you're listening to lions roar from a luxury suite with canvas walls, sipping tea on a private veranda as elephants graze below, or falling asleep to the symphony of nocturnal creatures, Kenya's lodges and camps turn every moment into a memory.
+                    </p>
+                    <p>
+                        The beauty of safari accommodation lies in its diversity. Towering treehouses suspended in the forest canopy offer an intimate connection with the canopy's birdlife and the rustle of leaves. Classic tented camps bring you the romance of early African exploration with modern comforts—think four-poster beds under mosquito nets, en-suite bathrooms with hot showers, and gourmet meals served under a canopy of stars. In the cities, boutique hotels blend Swahili architecture with contemporary luxury, placing you within reach of cultural heritage and culinary delights.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "In the bush, luxury isn't about opulence—it's about being so close to nature you can feel the earth breathe, while knowing every comfort has been thoughtfully provided."
+                    </blockquote>
                 </div>
             </div>
         </section>
@@ -153,6 +213,24 @@
             </div>
         </section>
 
+        <!-- THE MEMORY MAKERS: BEYOND THE LODGE -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">More Than a Stay: Crafting Unforgettable Moments</h2>
+                <div class="text-block">
+                    <p>
+                        The magic of a Kenyan safari extends far beyond the game drives—it lives in the details of where you rest, dine, and reflect. Imagine awakening to a private sunrise breakfast on your balcony as a herd of giraffes passes beneath, or unwinding in a copper bathtub overlooking the waterhole as elephants bathe in the afternoon light. Our carefully curated accommodations are designed to be destinations in themselves, where each lodge tells a story of design, sustainability, and deep respect for the environment.
+                    </p>
+                    <p>
+                        From eco-luxury camps that operate entirely off-grid to heritage properties that preserve Swahili cultural legacy, every stay is an opportunity to connect—with nature, with local communities, and with yourself. Many of our partner lodges offer immersive experiences beyond wildlife viewing: guided nature walks with Maasai elders, stargazing sessions with resident astronomers, traditional cooking classes, and visits to community projects you directly support. These are the moments that transform a vacation into a journey, a trip into a story you'll tell for years.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "The best safari lodges don't just shelter you—they hold you in the embrace of Africa itself, leaving footprints on your soul long after you've left."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA -->
         <section class="cta-section">
             <div class="cta-content">
@@ -172,6 +250,54 @@
         <p>&copy; 2024 Muts Safaris. All rights reserved.</p>
         <p>Don't be a Tourist, be a Traveller</p>
     </footer>
+
+    <!-- Floating Action Button Menu -->
+    <div class="fab-container">
+        <button class="fab-main" id="fab-main">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+        </button>
+        <div class="fab-menu" id="fab-menu">
+            <button class="fab-item" title="Switch Theme" id="fab-theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="WhatsApp" onclick="window.open('https://wa.me/254700000000', '_blank')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.67-.501-.175 0-.462.074-.697.371-.235.297-.897.878-1.375 1.425-.478.546-.971 1.695-.896 3.241.075 1.545.895 3.045 1.813 3.878 1.004.924 2.14 1.379 2.535 1.554.394.174 1.487.628 1.743.747.257.124.42.186.48.298.061.113.061.298.042.434-.02.135.21.282.387.478.177.195.787 1.012.938 1.212.15.2.3.25.498.165.199-.084.849-.351.965-.466.117-.115.208-.173.287-.298z"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="Facebook" onclick="window.open('https://facebook.com/mutssafaris', '_blank')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="Twitter" onclick="window.open('https://twitter.com/mutssafaris', '_blank')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="Create Account" onclick="window.location.href='../login.html#register'">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="8.5" cy="7" r="4"/>
+                    <line x1="20" y1="8" x2="20" y2="14"/>
+                    <line x1="23" y1="11" x2="17" y2="11"/>
+                </svg>
+            </button>
+        </div>
+    </div>
 
     <script src="../js/auth.js"></script>
     <script src="../js/performance.js"></script>
@@ -216,6 +342,13 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             this.classList.toggle('active');
             document.getElementById('explore-nav-links').classList.toggle('active');
+            document.getElementById('mobile-nav-backdrop').classList.toggle('active');
+        });
+        
+        document.getElementById('mobile-nav-backdrop').addEventListener('click', function() {
+            document.getElementById('mobile-menu-btn').classList.remove('active');
+            document.getElementById('explore-nav-links').classList.remove('active');
+            document.getElementById('mobile-nav-backdrop').classList.remove('active');
         });
 
         // Navbar scroll effect
@@ -225,6 +358,35 @@
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+        });
+
+        
+        // FAB Menu toggle
+        document.getElementById('fab-main').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('fab-menu').classList.toggle('active');
+        });
+
+        // Theme switch toggle
+        document.getElementById('fab-theme').addEventListener('click', function() {
+            var currentTheme = document.documentElement.getAttribute('data-theme');
+            var themes = ['corporate-light', 'light', 'corporate-dark', 'dark'];
+            var nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
+            var newTheme = themes[nextIndex];
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('muts-safaris-theme', newTheme);
+            
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) {
+                var colors = { 
+                    'corporate-light': '#f5f9fd', 
+                    'corporate-dark': '#0f172a', 
+                    'dark': '#050510',
+                    'light': '#f5f9fd' 
+                };
+                meta.setAttribute('content', colors[newTheme] || '#002147');
             }
         });
 

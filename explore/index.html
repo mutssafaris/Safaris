@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050510">
-    <meta name="description" content="Explore Muts Safaris - Discover Kenya's finest safari destinations, beaches, and experiences.">
-    <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, travel, adventure, beaches">
+    <meta name="theme-color" content="#002147">
+    <meta name="description" content="Muts Safaris - Premium African Safari Experiences in Kenya. Explore Maasai Mara, Amboseli, and more. Book your dream safari adventure.">
+    <meta name="keywords" content="safari, kenya, africa, maasai mara, amboseli, wildlife, tourism, travel, adventure">
     <meta name="author" content="Muts Safaris">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Explore - Muts Safaris">
-    <meta property="og:description" content="Discover Kenya's most spectacular destinations with Muts Safaris.">
+    <meta property="og:title" content="Muts Safaris - Premium African Safari Experiences">
+    <meta property="og:description" content="Explore Kenya's most spectacular destinations with Muts Safaris. Book your dream safari adventure today.">
     <meta property="og:type" content="website">
-    <link rel="canonical" href="https://mutssafaris.com/explore">
-    <title>Explore - Muts Safaris</title>
+    <link rel="canonical" href="https://mutssafaris.com/">
+    <title>Muts Safaris - Premium African Safari Experiences</title>
     <!-- Preconnect to critical resources -->
     <link rel="preconnect" href="https://images.mutssafaris.com">
     <link rel="dns-prefetch" href="http://localhost:3000">
@@ -25,12 +25,26 @@
     <link rel="stylesheet" href="../css/dashboard-theme.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
     <link rel="icon" href="../assets/favicon/favicon.ico">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    <!-- CRITICAL: Prevent background flash - set background BEFORE any rendering -->
+    <style>
+        html {
+            background: #f5f9fd !important;
+            background-size: 300% 300% !important;
+            background-attachment: fixed !important;
+        }
+        html[data-theme="dark"] { background: #050510 !important; }
+        html[data-theme="corporate-light"] { background: #f5f9fd !important; }
+        html[data-theme="corporate-dark"] { background: #0f172a !important; }
+        html[data-theme="light"] { background: #f5f9fd !important; }
+    </style>
     <script>
         (function () {
             var theme = 'corporate-light';
             try {
                 var stored = localStorage.getItem('muts-safaris-theme');
-                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark') theme = stored;
+                if (stored === 'dark' || stored === 'corporate-light' || stored === 'corporate-dark' || stored === 'light') theme = stored;
             } catch (e) {}
             document.documentElement.setAttribute('data-theme', theme);
         })();
@@ -42,22 +56,51 @@
         <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
+        <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
         <div class="explore-nav-links" id="explore-nav-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="packages.html">Packages</a>
-            <a href="accommodation.html">Accommodation</a>
-            <a href="destinations.html">Destinations</a>
-            <a href="africasa.html">Africasa</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
+            <a href="index.html" class="active">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Home
+            </a>
+            <a href="beaches.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h-10a1 1 0 01-1-1v-8a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1z"/><path d="M2 20h20"/><path d="M5 20v-4"/><path d="M9 20v-2"/><path d="M13 20v-6"/></svg>
+                Beaches
+            </a>
+            <a href="packages.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="16" y1="10" x2="8" y2="10"/><line x1="16" y1="14" x2="8" y2="14"/></svg>
+                Packages
+            </a>
+            <a href="accommodation.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Accommodation
+            </a>
+            <a href="destinations.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Destinations
+            </a>
+            <a href="africasa.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Africasa
+            </a>
+            <a href="gallery.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2v14z"/><circle cx="12" cy="13" r="4"/></svg>
+                Gallery
+            </a>
+            <a href="blog.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Blog
+            </a>
+            <a href="contact.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Contact
+            </a>
         </div>
         <a href="../login.html" class="explore-login-btn">Login</a>
     </nav>
 
     <main class="explore-main">
         <!-- HERO SECTION -->
-        <section class="landing-hero" style="background: linear-gradient(180deg, rgba(5,5,16,0.5) 0%, rgba(5,5,16,0.8) 100%), url('../images/hero/kenya-safari.jpg') center/cover no-repeat;">
+        <section class="landing-hero" style="background: linear-gradient(180deg, rgba(0,33,71,0.04) 0%, rgba(0,33,71,0.04) 100%), url('../images/hero/kenya-safari.jpg') center/cover no-repeat;">
             <div class="hero-content">
                 <span class="hero-badge">Don't be a Tourist, be a Traveller</span>
                 <h1 class="hero-title">DISCOVER<br>KENYA</h1>
@@ -109,6 +152,24 @@
             </div>
         </section>
 
+        <!-- AFRICAN SAVANNAH EXPERIENCE -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">The Soul of African Safari</h2>
+                <div class="text-block">
+                    <p>
+                        There’s something soul-stirring about the golden savannahs of Kenya—the roar of a distant lion, the rustle of acacia trees in the breeze, and the graceful stride of giraffes silhouetted against a setting sun. For travelers seeking an immersive, once-in-a-lifetime experience without sacrificing comfort, a luxury safari in Kenya offers the perfect blend of wild adventure and refined indulgence.
+                    </p>
+                    <p>
+                        From the snow-capped silhouette of Mount Kenya to the amber plains of the Mara and the palm-fringed coast, Kenya is the beating heart of African safari. A Kenya safari blends dramatic scenery, storied wildlife populations, and a hospitality culture refined over a century of exploration. Whether floating at dawn in a hot-air balloon over herds of wildebeest or sipping sundowners beneath an acacia, the country’s rhythm invites deep immersion—without sacrificing comfort.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "In Kenya, you don’t just visit the wild. You become part of its ancient rhythm, where every sunrise brings new possibility and every sunset leaves you breathless."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
         <!-- FEATURED DESTINATIONS -->
         <section class="featured-section">
             <h2 class="section-title">Popular Destinations</h2>
@@ -123,6 +184,24 @@
             </div>
         </section>
 
+        <!-- THE GREAT MIGRATION -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">The Great Migration: Nature's Greatest Spectacle</h2>
+                <div class="text-block">
+                    <p>
+                        Each year, over two million wildebeest, zebras, and gazelles embark on a perilous 1,800-mile journey across the Serengeti-Mara ecosystem—a breathtaking display of nature's raw drama known as the Great Migration. This circular odyssey follows ancient rhythms of rainfall and fresh grass, culminating in the dramatic river crossings where predators lurk and survival hangs in the balance.
+                    </p>
+                    <p>
+                        Witnessing the migration is akin to watching the pulse of the planet. Between July and October, the herds converge in Kenya's Maasai Mara, where the Mara River becomes a churning gauntlet of crocodiles. The thunder of hooves, the dust clouds rising on the horizon, and the raw emotion of life and death play out before your eyes—this is wildlife documentary made real, unfolding in real-time just meters from your safari vehicle.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "The Great Migration isn't just a wildlife event—it's the oldest and most powerful story on Earth, written across the African plains in the tracks of a million hooves."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
         <!-- EXPERIENCE TYPES -->
         <section class="experience-section">
             <h2 class="section-title">Choose Your Experience</h2>
@@ -131,6 +210,24 @@
                 <div class="experience-card skeleton"></div>
                 <div class="experience-card skeleton"></div>
                 <div class="experience-card skeleton"></div>
+            </div>
+        </section>
+
+        <!-- LUXURY SAFARI EXPERIENCE -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">Luxury Safari: Where Wilderness Meets Elegance</h2>
+                <div class="text-block">
+                    <p>
+                        A luxury safari in Kenya redefines wilderness immersion. Imagine waking to the distant roar of lions in a tented camp that combines Victorian elegance with modern sustainability, where your private deck overlooks a waterhole frequented by elephants, and personal Maasai guides share ancestral wisdom about tracking wildlife. From infinity pools that merge with savannah vistas to gourmet cuisine under star-strewn skies, every detail is curated to immerse you in nature without forgoing an ounce of comfort.
+                    </p>
+                    <p>
+                        Kenya's flagship lodges—set within private conservancies—offer exclusive access to pristine wilderness areas, game drives with expert naturalists, and evening sundowners that transform the African sunset into a nightly celebration. Whether it's a boutique lodge in the Maasai Mara, a treehouse suite in the forest canopy, or an eco-friendly camp on the Laikipia plateau, luxury here means intimacy, authenticity, and service that anticipates your every desire.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "True luxury isn't about opulence—it's about having the entire African wilderness as your private playground, with every need met before you even think of it."
+                    </blockquote>
+                </div>
             </div>
         </section>
 
@@ -145,6 +242,24 @@
             </div>
             <div class="section-cta">
                 <a href="gallery.html" class="btn btn-outline">Explore Gallery</a>
+            </div>
+        </section>
+
+        <!-- CONSERVATION & COMMUNITY -->
+        <section class="text-content-section explore-section">
+            <div class="content-container">
+                <h2 class="section-title">Conservation: Protecting Kenya's Wild Heritage</h2>
+                <div class="text-block">
+                    <p>
+                        At Muts Safaris, we believe that tourism must be a force for good—protecting wildlife, empowering communities, and preserving Kenya's natural heritage for generations to come. Our safaris are designed to support anti-poaching initiatives, fund community conservancies, and promote sustainable practices that ensure the survival of iconic species like elephants, lions, and rhinos.
+                    </p>
+                    <p>
+                        When you travel with us, you contribute directly to conservation efforts that have transformed Kenya's wilderness. From supporting the Maasai Mara's ranger patrols to funding school scholarships in bordering communities, your safari becomes part of a larger story—one where conservation and community thrive side by side. We partner with local Maasai guides, employ staff from neighboring villages, and source supplies locally, ensuring tourism revenue stays within Kenya and benefits those who share their land with wildlife.
+                    </p>
+                    <blockquote class="travel-quote">
+                        "The wilderness doesn't need us—we need it. And by protecting it today, we ensure tomorrow's travelers inherit the same awe-inspiring Africa we are privileged to experience."
+                    </blockquote>
+                </div>
             </div>
         </section>
 
@@ -184,19 +299,20 @@
     <script>
     (function() {
         var API_BASE = '/api';
-        
+
         // Local image helper
         function img(src) {
             if (!src) return '';
             if (src.startsWith('http')) return src;
             return '../images/' + src;
         }
-        
+
         // Image load handler with fade
         function onImageLoad(img) {
             img.classList.add('loaded');
         }
-        
+        window.onImageLoad = onImageLoad;
+
         // Skeleton HTML generators
         function skeletonCard(count) {
             var html = '';
@@ -205,7 +321,7 @@
             }
             return html;
         }
-        
+
         function skeletonExperience(count) {
             var html = '';
             for (var i = 0; i < count; i++) {
@@ -213,35 +329,35 @@
             }
             return html;
         }
-        
-        // Static fallback data - these will always show
+
+        // Static fallback data
         var staticDestinations = [
             { name: 'Maasai Mara', desc: 'Witness the Great Migration', price: 'From $2,500', image: 'tours/maasai-mara.jpg' },
             { name: 'Amboseli', desc: 'Elephants with Kilimanjaro', price: 'From $1,800', image: 'tours/amboseli.jpg' },
             { name: 'Tsavo', desc: 'Land of red elephants', price: 'From $1,200', image: 'tours/tsavo.jpg' },
             { name: 'Samburu', desc: 'Northern frontier magic', price: 'From $1,500', image: 'tours/samburu.jpg' }
         ];
-        
+
         var staticExperiences = [
             { name: 'Luxury Safari', desc: 'Premium lodges & exclusive', price: 'From $5,000', image: 'hotels-luxury.jpg' },
             { name: 'Family Friendly', desc: 'Perfect for the whole family', price: 'From $3,200', image: 'experiences/family.jpg' },
             { name: 'Honeymoon', desc: 'Romantic getaways', price: 'From $4,500', image: 'experiences/honeymoon.jpg' },
             { name: 'Adventure', desc: 'Treks & extreme experiences', price: 'From $2,000', image: 'experiences/adventure.jpg' }
         ];
-        
+
         var staticGallery = [
             'gallery/wildlife/elephant-family.jpg',
             'gallery/wildlife/buffalo-herd.jpg',
             'gallery/landscapes/sunset.jpg',
             'gallery/accommodations/camp.jpg'
         ];
-        
+
         var staticBlog = [
             { title: 'Best Time to Visit Kenya', desc: 'Plan your safari for the perfect experience.', tag: 'Guide', image: 'blog/best-time.jpg' },
             { title: 'Great Migration', desc: 'Everything about this natural wonder.', tag: 'Wildlife', image: 'blog/migration.jpg' },
             { title: 'Family Safari Tips', desc: 'Making magical memories together.', tag: 'Tips', image: 'blog/family.jpg' }
         ];
-        
+
         // Render functions
         function renderDestinations(items) {
             var html = '';
@@ -257,7 +373,7 @@
             });
             document.getElementById('destinations-grid').innerHTML = html;
         }
-        
+
         function renderExperiences(items) {
             var html = '';
             items.forEach(function(item) {
@@ -272,23 +388,22 @@
             });
             document.getElementById('experience-grid').innerHTML = html;
         }
-        
+
         function renderGallery(items) {
             var html = '';
             items.forEach(function(item) {
-                // Handle both string (static) and object (API) formats
                 var src = typeof item === 'string' ? item : (item.image || item.url);
                 html += '<img src="' + img(src) + '" alt="Gallery" loading="lazy" onload="onImageLoad(this)">';
             });
             document.getElementById('gallery-grid').innerHTML = html;
         }
-        
+
         function renderBlog(items) {
             var html = '';
             items.forEach(function(item) {
-                html += '<article class="blog-preview-card">' +
+                html += '<article class="blog-review-card">' +
                     '<img src="' + img(item.image || item.coverImage) + '" alt="' + item.title + '" loading="lazy" onload="onImageLoad(this)">' +
-                    '<div class="blog-preview-content">' +
+                    '<div class="blog-review-content">' +
                         '<span class="blog-tag">' + (item.category || item.tag) + '</span>' +
                         '<h3>' + item.title + '</h3>' +
                         '<p>' + (item.excerpt || item.description || item.desc) + '</p>' +
@@ -298,61 +413,318 @@
             });
             document.getElementById('blog-grid').innerHTML = html;
         }
-        
-        // Initialize - fully static
+
         function loadData() {
             renderDestinations(staticDestinations);
             renderExperiences(staticExperiences);
             renderGallery(staticGallery);
             renderBlog(staticBlog);
-            
-            // Add visible class to all cards
+
             setTimeout(function() {
-                document.querySelectorAll('.destination-card, .experience-card, .blog-preview-card, .category-card').forEach(function(el) {
+                document.querySelectorAll('.destination-card, .experience-card, .blog-review-card, .category-card').forEach(function(el) {
                     el.classList.add('visible');
                 });
             }, 100);
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load content immediately
-            loadData();
-            
-            // Add visibility animations
-            var observer = new IntersectionObserver(function(entries) {
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        }
+
+        // Setup scroll-triggered animations
+        function setupScrollAnimations() {
+            var titleObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+            var textObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+            var cardObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+            var ctaObserver = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, { threshold: 0.1 });
-            
+            }, { threshold: 0.3 });
+
             setTimeout(function() {
-                document.querySelectorAll('.destination-card, .experience-card, .blog-preview-card, .category-card').forEach(function(el) {
-                    el.classList.add('visible');
-                    observer.observe(el);
+                document.querySelectorAll('.section-title').forEach(function(el) { titleObserver.observe(el); });
+                document.querySelectorAll('.text-content-section').forEach(function(el) { textObserver.observe(el); });
+                document.querySelectorAll('.experience-card, .destination-card, .blog-review-card, .category-card, .gallery-item').forEach(function(el) { cardObserver.observe(el); });
+                document.querySelectorAll('.cta-section').forEach(function(el) { ctaObserver.observe(el); });
+            }, 300);
+        }
+
+        // Parallax effect
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    var hero = document.querySelector('.landing-hero');
+                    if (hero && hero.classList.contains('loaded')) {
+                        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                        var rate = scrolled * 0.25;
+                        hero.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+                    }
+                    ticking = false;
                 });
-            }, 500);
+                ticking = true;
+            }
+            updateScrollProgress();
         });
-        
-        window.onImageLoad = onImageLoad;
+
+        // Mouse tracking for glow
+        document.addEventListener('mousemove', function(e) {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+
+        function redirectToLogin() {
+            window.location.href = '../login.html';
+        }
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load data
+            loadData();
+
+            // Setup animations
+            setTimeout(setupScrollAnimations, 100);
+
+            // Initial scroll progress
+            updateScrollProgress();
+
+            // Mobile menu
+            var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            var exploreNavLinks = document.getElementById('explore-nav-links');
+            var mobileNavBackdrop = document.getElementById('mobile-nav-backdrop');
+
+            if (mobileMenuBtn && exploreNavLinks && mobileNavBackdrop) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    exploreNavLinks.classList.toggle('active');
+                    mobileNavBackdrop.classList.toggle('active');
+                });
+                mobileNavBackdrop.addEventListener('click', function() {
+                    mobileMenuBtn.classList.remove('active');
+                    exploreNavLinks.classList.remove('active');
+                    mobileNavBackdrop.classList.remove('active');
+                });
+            }
+
+            // FAB menu
+            var fabMain = document.getElementById('fab-main');
+            var fabMenu = document.getElementById('fab-menu');
+            if (fabMain && fabMenu) {
+                fabMain.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    fabMenu.classList.toggle('active');
+                });
+            }
+
+            // Theme toggle
+            var fabTheme = document.getElementById('fab-theme');
+            if (fabTheme) {
+                fabTheme.addEventListener('click', function() {
+                    var currentTheme = document.documentElement.getAttribute('data-theme');
+                    var themes = ['corporate-light', 'light', 'corporate-dark', 'dark'];
+                    var nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
+                    var newTheme = themes[nextIndex];
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('muts-safaris-theme', newTheme);
+                    var meta = document.querySelector('meta[name="theme-color"]');
+                    if (meta) {
+                        var colors = {
+                            'corporate-light': '#f5f9fd',
+                            'corporate-dark': '#0f172a',
+                            'dark': '#050510',
+                            'light': '#f5f9fd'
+                        };
+                        meta.setAttribute('content', colors[newTheme] || '#002147');
+                    }
+                });
+            }
+
+            // Navbar scroll
+            window.addEventListener('scroll', function() {
+                var navbar = document.querySelector('.explore-navbar');
+                if (navbar) {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                }
+            });
+
+            // Hero loaded state
+            setTimeout(function() {
+                var hero = document.querySelector('.landing-hero');
+                if (hero) {
+                    hero.classList.add('loaded');
+                }
+            }, 300);
+        });
     })();
     </script>
 
+    <!-- Floating Action Button Menu -->
+    <div class="fab-container">
+        <button class="fab-main" id="fab-main">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+        </button>
+        <div class="fab-menu" id="fab-menu">
+            <button class="fab-item" title="Switch Theme" id="fab-theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="WhatsApp" onclick="window.open('https://wa.me/254700000000', '_blank')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.67-.501-.175 0-.462.074-.697.371-.235.297-.897.878-1.375 1.425-.478.546-.971 1.695-.896 3.241.075 1.545.895 3.045 1.813 3.878 1.004.924 2.14 1.379 2.535 1.554.394.174 1.487.628 1.743.747.257.124.42.186.48.298.061.113.061.298.042.434-.02.135.21.282.387.478.177.195.787 1.012.938 1.212.15.2.3.25.498.165.199-.084.849-.351.965-.466.117-.115.208-.173.287-.298z"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="Facebook" onclick="window.open('https://facebook.com/mutssafaris', '_blank')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="Twitter" onclick="window.open('https://twitter.com/mutssafaris', '_blank')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                </svg>
+            </button>
+            <button class="fab-item" title="Create Account" onclick="window.location.href='../login.html#register'">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="8.5" cy="7" r="4"/>
+                    <line x1="20" y1="8" x2="20" y2="14"/>
+                    <line x1="23" y1="11" x2="17" y2="11"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <script src="../js/auth.js"></script>
     <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.getElementById('explore-nav-links').classList.toggle('active');
+        // Wait for DOM to be fully loaded before attaching event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu button event listener
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const exploreNavLinks = document.getElementById('explore-nav-links');
+            const mobileNavBackdrop = document.getElementById('mobile-nav-backdrop');
+
+            if (mobileMenuBtn && exploreNavLinks && mobileNavBackdrop) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    exploreNavLinks.classList.toggle('active');
+                    mobileNavBackdrop.classList.toggle('active');
+                });
+
+                mobileNavBackdrop.addEventListener('click', function() {
+                    mobileMenuBtn.classList.remove('active');
+                    exploreNavLinks.classList.remove('active');
+                    mobileNavBackdrop.classList.remove('active');
+                });
+            }
+
+            // FAB Menu toggle
+            const fabMain = document.getElementById('fab-main');
+            const fabMenu = document.getElementById('fab-menu');
+
+            if (fabMain && fabMenu) {
+                fabMain.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    fabMenu.classList.toggle('active');
+                });
+            }
+
+            // Theme switch toggle
+            const fabTheme = document.getElementById('fab-theme');
+
+            if (fabTheme) {
+                fabTheme.addEventListener('click', function() {
+                    var currentTheme = document.documentElement.getAttribute('data-theme');
+                    var themes = ['corporate-light', 'light', 'corporate-dark', 'dark'];
+                    var nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
+                    var newTheme = themes[nextIndex];
+
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('muts-safaris-theme', newTheme);
+
+                    var meta = document.querySelector('meta[name="theme-color"]');
+                    if (meta) {
+                        var colors = {
+                            'corporate-light': '#f5f9fd',
+                            'corporate-dark': '#0f172a',
+                            'dark': '#050510',
+                            'light': '#f5f9fd'
+                        };
+                        meta.setAttribute('content', colors[newTheme] || '#002147');
+                    }
+                });
+            }
+
+            // Animate hero floating buttons in when page loads
+            setTimeout(function() {
+                const hero = document.querySelector('.landing-hero');
+                if (hero) {
+                    hero.classList.add('loaded');
+                }
+            }, 300);
         });
 
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.explore-navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+            if (navbar) {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
             }
         });
 
