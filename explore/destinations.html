@@ -12,6 +12,7 @@
     <meta property="og:description" content="Discover Kenya's most spectacular destinations.">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://mutssafaris.com/explore/destinations">
+    <link rel="preload" href="../images/hero/kenya-safari.jpg" as="image">
     <title>Destinations - Muts Safaris</title>
     <link rel="preconnect" href="https://images.mutssafaris.com">
     <link rel="stylesheet" href="../css/themes.css">
@@ -95,7 +96,11 @@
 
     <main class="explore-main">
         <!-- HERO SECTION -->
-        <section class="landing-hero" style="min-height: 50vh; background: linear-gradient(180deg, rgba(0,33,71,0.04) 0%, rgba(0,33,71,0.04) 100%), url('../images/hero/kenya-safari.jpg') center/cover no-repeat;">
+        <section class="landing-hero" style="min-height: 50vh;">
+            <div class="hero-bg">
+                <img src="../images/hero/kenya-safari.jpg" alt="Kenya Destinations" class="hero-bg-img">
+            </div>
+            <div class="hero-overlay"></div>
             <div class="hero-content">
                 <span class="hero-badge">Discover Kenya</span>
                 <h1 class="hero-title">DESTINATIONS</h1>
@@ -563,19 +568,23 @@
 
         // DOM Content Loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Preload hero background image
+            var heroImg = document.querySelector('.hero-bg-img');
+            if (heroImg) {
+                if (heroImg.complete) {
+                    heroImg.classList.add('loaded');
+                } else {
+                    heroImg.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                    });
+                }
+            }
+
             // Setup animations
             setTimeout(setupScrollAnimations, 100);
 
             // Initial scroll progress
             updateScrollProgress();
-
-            // Hero loaded state
-            setTimeout(function() {
-                var hero = document.querySelector('.landing-hero');
-                if (hero) {
-                    hero.classList.add('loaded');
-                }
-            }, 300);
         });
     </script>
 </body>

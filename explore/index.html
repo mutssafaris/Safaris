@@ -12,6 +12,7 @@
     <meta property="og:description" content="Explore Kenya's most spectacular destinations with Muts Safaris. Book your dream safari adventure today.">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://mutssafaris.com/">
+    <link rel="preload" href="../images/hero/kenya-safari.jpg" as="image">
     <title>Muts Safaris - Premium African Safari Experiences</title>
     <!-- Preconnect to critical resources -->
     <link rel="preconnect" href="https://images.mutssafaris.com">
@@ -99,8 +100,12 @@
     </nav>
 
     <main class="explore-main">
-        <!-- HERO SECTION -->
-        <section class="landing-hero" style="background: linear-gradient(180deg, rgba(0,33,71,0.04) 0%, rgba(0,33,71,0.04) 100%), url('../images/hero/kenya-safari.jpg') center/cover no-repeat;">
+        <!-- HERO SECTION WITH ZOOM ANIMATION -->
+        <section class="landing-hero">
+            <div class="hero-bg">
+                <img src="../images/hero/kenya-safari.jpg" alt="Kenya Safari" class="hero-bg-img">
+            </div>
+            <div class="hero-overlay"></div>
             <div class="hero-content">
                 <span class="hero-badge">Don't be a Tourist, be a Traveller</span>
                 <h1 class="hero-title">DISCOVER<br>KENYA</h1>
@@ -516,6 +521,18 @@
 
         // DOM Content Loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Preload hero background image
+            var heroImg = document.querySelector('.hero-bg-img');
+            if (heroImg) {
+                if (heroImg.complete) {
+                    heroImg.classList.add('loaded');
+                } else {
+                    heroImg.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                    });
+                }
+            }
+
             // Load data
             loadData();
 
