@@ -1,58 +1,33 @@
-# AGENTS.md - Muts Safaris
+# Repository Guidelines
 
-## Project Type
-Static HTML/CSS/JS website - no build system, no package.json. Pure vanilla JavaScript with mock data services.
+## Project Structure & Module Organization
+This is a static PWA built with vanilla JavaScript, HTML5, and CSS3. The application follows a service-oriented architecture where business logic is encapsulated in "services" found in `./js/services/`.
+- **Global Services**: Services are exposed on the `window` object (e.g., `window.MutsHotelsService`).
+- **Data Layer**: Services use a mock-first approach, falling back to JSON files in `./data/` if the API is disabled.
+- **API Mode**: Managed via `MutsAPIConfig.configure({ enableAll: true })` in `./js/api-config.js`.
+- **Routing**: `index.html` handles entry routing to `login.html` or `./pages/dashboard/` based on `MutsAuth` sessions.
 
-## Dev Server
-```bash
-python3 -m http.server 8080
-# or
-npx serve -p 8080
-```
+## Build, Test, and Development Commands
+The project is a static site and does not require a build step.
+- **Development Server**: `python3 -m http.server 8080` or `npx serve -p 8080`.
+- **Running Tests**: Append `?test=true` to the URL or execute `window.runTests()` in the browser console.
 
-## Architecture
-- **Entry**: `index.html` - Routes to `login.html` or `pages/dashboard/index.html` based on `MutsAuth.getSession()`
-- **Services**: Exposed on `window.*` (e.g., `MutsHotelsService`, `MutsBookingsService`)
-- **Mock data**: All services fall back to JSON in `/data/` folder
-- **API mode**: `MutsAPIConfig.configure({ enableAll: true })` connects to live API
-- **API base**: `http://localhost:3000/api` (dev)
-- **Manager API**: `http://localhost:3000/api/manager`
+## Coding Style & Naming Conventions
+- **JavaScript**: Use ES5-compatible syntax (prefer `var`) and `'use strict'`.
+- **Naming**: Use PascalCase for service names (e.g., `MutsAuth`) and camelCase for methods.
+- **State**: Persistent data uses localStorage keys: `muts-safaris-theme`, `muts_user_session`, and `muts_manager_session`.
 
-## Services (`window.*`)
-| Service | Data File |
-|---------|-----------|
-| MutsHotelsService | data/hotels.json |
-| MutsBookingsService | data/bookings.json |
-| MutsDestinationsService | data/destinations.json |
-| MutsListingsService | data/listings.json |
-| MutsTransactionsService | data/transactions.json |
-| MutsMessagesService | data/messages.json |
-| MutsToursService | data/tours.json |
-| MutsLoyaltyService | data/loyalty.json |
+## Testing Guidelines
+- **Framework**: Custom unit test runner implemented in `./js/tests.js`.
+- **Verification**: Tests must be run in the browser to validate `window`-scoped services and utilities (Validation, Cache, RateLimiter).
 
-## Key Files
-- `index.html` - Entry routing (SPA-like via hash)
-- `js/api-config.js` - API environment switching (auto-detects localhost/staging/production)
-- `js/auth.js` - User authentication, session storage
-- `pages/dashboard/` - Protected manager dashboard pages
-
-## API Response Format
-```json
-{ "success": true, "data": {...}, "message": "..." }
-```
-
-## Environment Keys
-- `muts-safaris-theme` - Theme (light/dark)
-- `muts_user_session` - User session JWT
-- `muts_manager_session` - Manager session JWT (separate from user)
+## Commit & Pull Request Guidelines
+Follow the existing pattern of descriptive, concise commit messages:
+- `UI fix`: Visual adjustments.
+- `mtheme X.X`: Theme version updates.
+- `Performance and UI fixes`: Grouped optimizations.
 
 ## Gotchas
-- **Service methods vary** - Some expected methods like `getBeachByName` may not exist; check service file first
-- Manager dashboard uses `/api/manager/auth/login` (separate auth endpoint)
-- Services have `fetchFromAPI()` but no explicit `getByName` - filter with `getByFilter()` instead
-- Images use CDN: `https://images.mutssafaris.com`
-
-## Reference Docs
-- `API_SPECIFICATION.md` - Full endpoint reference
-- `FRONTEND_INTEGRATION.md` - Integration notes and error tracking
-- `IMPLEMENTATION_PLAN.md` - Feature phases
+- **Service Consistency**: Method availability varies by service; verify signatures in `./js/services/` before use.
+- **Auth Endpoints**: Manager dashboard uses a separate auth endpoint (`/api/manager/auth/login`).
+- **Assets**: Images are served via CDN: `https://images.mutssafaris.com`.
